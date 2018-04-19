@@ -1,0 +1,19 @@
+{
+    "name": "projects",
+    "at_least_one_item_checked":true,
+    "primary_item":0,
+    "items": [
+        {
+            "name": "Show all",
+            "checked": true
+        },
+        {
+            "name": "V2PHF",
+            "checked": false
+        },
+        {
+            "name": "HCB",
+            "checked": false
+        }
+    ]
+}

@@ -1,0 +1,77 @@
+$rkt_viewer_patient_line_header_bg_color:#5C4EE5;
+
+.rkt_viewer_jpg_png_multi_frame_controls{
+
+    .play{
+        padding: 12px;
+        bottom: 1px;
+        font-size: 1.7rem;
+        color:$rkt_viewer_patient_line_header_bg_color;
+    }
+
+    a{
+        color:$rkt_viewer_patient_line_header_bg_color;
+    }
+
+    .slider-label{
+        padding: 10px;
+        padding-top: 15px;
+        color: $rkt_viewer_patient_line_header_bg_color;
+        width: 100px;
+        text-align: center;
+    }
+
+    .slider-controler{
+        background-color: transparent;
+    }
+
+    input[type="range"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        display: block;
+        width: 100%;
+        height: auto;
+        cursor: pointer;
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+        border: 0;
+        line-height: 1; 
+        border-radius: 6px;
+      }
+      input[type="range"]:focus {
+        outline: 0; 
+      }
+      input[type="range"]::-webkit-slider-runnable-track {
+          height: 0.4rem;
+          background: white; 
+          border-radius: 6px;
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        background: $rkt_viewer_patient_line_header_bg_color;
+        height: 20px;
+        border-radius: 50%; 
+        width: 1rem;
+        height: 1rem;
+        margin-top: -0.35rem;
+      }
+      /*input[type="range"]::-moz-range-track {
+        -moz-appearance: none;
+        height: 1rem;
+        background: #ccc; 
+        border-radius: 6px;
+      }*/
+      input[type="range"]::-moz-range-thumb {
+        -moz-appearance: none;
+        background: $rkt_viewer_patient_line_header_bg_color;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-top: -0.25rem; 
+        border-radius: 6px;
+      }
+
+      video-controls{
+        color: #eee;
+        background-color: transparent;
+      }
+}

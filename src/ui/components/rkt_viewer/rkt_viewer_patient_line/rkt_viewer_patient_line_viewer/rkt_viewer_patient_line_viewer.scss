@@ -1,0 +1,7 @@
+@import './../../rkt_viewer_jpg_png/rkt_viewer_jpg_png_multi_frame/rkt_viewer_jpg_png_multi_frame.scss';
+@import './../../rkt_viewer_jpg_png/rkt_viewer_jpg_png_one_frame/rkt_viewer_jpg_png_one_frame.scss';
+
+.rkt_viewer_patient_line_viewer{
+    background-color: $rkt_viewer_patient_line_viewer_bg_color;
+    color:$rkt_viewer_patient_line_header_color;
+}

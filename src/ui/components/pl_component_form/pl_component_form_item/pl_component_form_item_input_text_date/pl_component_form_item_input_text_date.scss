@@ -1,0 +1,70 @@
+@import './../pl_component_form_item_label/pl_component_form_item_label.scss';
+@import './../pl_component_form_item_message/pl_component_form_item_message.scss';
+
+.pl_component_form_item_input_text_date {
+
+    margin-top:5px;
+    margin-bottom:15px;
+    margin-left:35px;
+    margin-right:10px;
+    overflow:hidden;
+    
+    form {
+        input[type=date]{
+            background-color: rgba(255, 255, 255, 0.201); //#ffffff;
+            color: rgba(58, 153, 216, 0.697);//$color_main_blur;
+            font-size: 20px;
+            height:41px;
+            border: 1px solid rgba(58, 153, 216, 0.201);//$color_main_blur;
+            overflow:hidden;
+
+            &:hover{
+                background-color: #ffffff;
+                color: $color_main;
+                border: 1px solid rgba(58, 153, 216, 0.8);
+                overflow:hidden;
+            }
+
+            &:focus{
+                background-color: rgba(255, 255, 255, 0.8); //#ffffff;
+                color: $color_main;
+                border: 1px solid rgba(58, 153, 216, 0.8);//1px solid rgba(58, 153, 216, 0.8);
+                overflow:hidden;
+            }
+        }
+    }
+}
+
+.pl_component_form_item_input_text_date_invalid {
+
+    margin-top:5px;
+    margin-bottom:15px;
+    margin-left:35px;
+    margin-right:10px;
+    overflow:hidden;
+    
+    form {
+        input[type=date]{
+            background-color: rgba(255, 255, 255, 0.201); //#ffffff;
+            color: red;
+            font-size: 20px;
+            height:41px;
+            border: 1px solid red;
+            overflow:hidden;
+
+            // &:hover{
+            //     background-color: #ffffff;
+            //     color: $color_main;
+            //     border: 1px solid rgba(58, 153, 216, 0.8);
+            //     overflow:hidden;
+            // }
+
+            // &:focus{
+            //     background-color: rgba(255, 255, 255, 0.8); //#ffffff;
+            //     color: $color_main;
+            //     border: 1px solid rgba(58, 153, 216, 0.8);//1px solid rgba(58, 153, 216, 0.8);
+            //     overflow:hidden;
+            // }
+        }
+    }
+}

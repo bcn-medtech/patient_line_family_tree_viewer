@@ -1,0 +1,12 @@
+@import './../../../../pl_component_label/pl_component_label.scss';
+
+.pl_component_list_vertical_metadata_item{
+    padding: 5px;
+    //padding-left:25px;
+    border-bottom: 1px solid $separator_color;
+    overflow:hidden;
+    
+    &:hover{
+        background-color: $background-color-hover;
+    }
+}

@@ -1,0 +1,27 @@
+.pl_component_form_item_label{
+    padding:5px;
+    font-size:20px;
+    color:$color_normal;
+    opacity:0.697;
+    overflow:hidden;
+
+    .pl_component_form_item_label_number{
+        width:30px;
+        margin-right:5px;
+        overflow:hidden;
+    }
+}
+
+.pl_component_form_item_label_highlighted{
+    padding:5px;
+    font-size:20px;
+    color:$color_normal_2;
+    opacity:0.697;
+    overflow:hidden;
+
+    .pl_component_form_item_label_number{
+        width:30px;
+        margin-right:5px;
+        overflow:hidden;
+    }
+}

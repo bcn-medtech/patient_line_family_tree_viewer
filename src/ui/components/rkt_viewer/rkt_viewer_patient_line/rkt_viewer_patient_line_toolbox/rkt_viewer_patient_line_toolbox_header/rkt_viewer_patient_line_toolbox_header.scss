@@ -1,0 +1,25 @@
+.rtk_viewer_patient_line_toolbox_header{
+    
+    background-color: $rkt_viewer_patient_line_header_bg_color;
+    color:$rkt_viewer_patient_line_header_color;
+    padding: 10px;
+    padding-bottom:20px;
+    
+    h4{
+        color:$rkt_viewer_patient_line_header_color;
+    }
+
+    .menu{
+       
+    }
+
+    .content{
+        overflow: hidden;
+    }
+
+    .user_email{
+        padding-top: 12px;
+        height:30px;
+        font-size: 0.9rem;
+    }
+}

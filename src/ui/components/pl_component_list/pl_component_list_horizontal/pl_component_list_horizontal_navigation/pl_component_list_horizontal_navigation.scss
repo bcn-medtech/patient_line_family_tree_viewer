@@ -1,0 +1,23 @@
+@import './../../../pl_component_button/pl_component_button_text/pl_component_button_text.scss';
+@import './../../../pl_component_title/pl_component_title.scss';
+
+.pl_component_list_horizontal_navigation_items {
+
+    .pl_component_list_horizontal_navigation_item{
+        padding:10px;
+        overflow:hidden;
+
+        a{
+            font: 25px Helvetica; //"Helvetica Neue";
+        }
+    }
+
+    .pl_component_list_horizontal_navigation_item_selected{
+        padding:10px;
+        overflow:hidden;
+
+        a{
+            font: bold 25px Helvetica; //"Helvetica Neue";
+        }
+    }
+}

@@ -1,0 +1,376 @@
+@import './../../../../pl_component_button/pl_component_button_icon/pl_component_button_icon.scss';
+@import './../../../../pl_component_form/pl_component_form_item/pl_component_form_item_input_text/pl_component_form_item_input_text.scss';
+
+.pl_component_list_vertical_info_item {
+
+    font: 20px Helvetica; //"Helvetica Neue";
+    overflow:hidden;
+
+    .tooltip{
+        position: relative;
+        display: inline-block;
+
+        .pl_component_list_vertical_info_item_name{
+            padding-top:10px;
+            padding-bottom:6.5px;
+            width:73.5px;
+            text-align:center;
+            z-index:-1;
+
+            font: 20px Helvetica;//"Helvetica Neue";
+            color:$color_main;
+            background-color:#ffffff;
+            border-right: 1px solid rgba(58, 153, 216, 0.1);
+        }
+
+        .tooltiptext_item_name {
+            visibility: hidden;
+            width: fit-content;
+            
+            background-color: #fff;
+            color: $color_main;
+
+            text-align: center;
+            padding: 5px;
+            border-radius: 6px;
+            border: 1px solid rgba(58, 153, 216, 0.6);
+            font: 18px Helvetica;//"Helvetica Neue";
+
+            /* Position the tooltip text */
+            position: absolute;
+            z-index: 1;
+            /* right */
+            top: 5px; // half of the padding-top of the item's name
+            left: 110%;
+
+            &::after {
+                content: " ";
+                position: absolute;
+                top: 50%;
+                right: 100%; /* To the left of the tooltip */
+                margin-top: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: transparent $color_main transparent transparent;
+            }
+
+        }
+
+        &:hover{
+            .tooltiptext_item_name {
+                visibility: visible;
+            }
+        }
+
+    }
+
+    .pl_component_list_vertical_info_item_name.editable{
+        padding:0px;
+        margin:0px;
+        border-bottom: 1px solid rgba(58, 153, 216, 0.2);
+        width:250px;
+
+        .pl_component_form_item_input_text {
+            margin:0px;
+
+            form {
+                input[type=text]{
+                    padding-top:10px;
+                    padding-left:14.5px;
+                    padding-bottom:6.5px;
+
+                    margin:0px;
+                    border:0px;
+                    width:100%;
+                    height:100%;
+
+                    background-color:transparent; // to override the color of the form_item_input_text
+
+                    &:hover{
+                        background-color:aliceblue;//rgba(58, 153, 216, 0.03);
+                        overflow:hidden;
+                    }
+        
+                    &:focus{
+                        background-color:aliceblue;//rgba(58, 153, 216, 0.03);
+                        overflow:hidden;
+                    }
+                }
+
+                ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                    color: rgba(149, 152, 154, 0.6);//$color_normal;
+                    opacity: 1; /* Firefox */
+                }
+                
+                :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                    color:rgba(149, 152, 154, 0.6);//$color_normal;
+                }
+                
+                ::-ms-input-placeholder { /* Microsoft Edge */
+                    color:rgba(149, 152, 154, 0.6);//$color_normal;
+                }
+            }
+        }
+    
+        .pl_component_form_item_input_text_invalid {
+            margin:0px;
+            color: red;
+            border: 1px solid red;
+    
+            form {
+                input[type=text]{
+                    padding-top:10px;
+                    padding-left:14.5px;
+                    padding-bottom:6.5px;
+
+                    margin:0px;
+                    border:0px;
+                    width:100%;
+                    height:100%;
+
+                    background-color:transparent; // to override the color of the form_item_input_text
+                }
+
+                ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                    color: rgba(255, 0, 0, 0.6);//$color_normal;
+                    opacity: 1; /* Firefox */
+                }
+                
+                :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                    color:rgba(255, 0, 0, 0.6);//$color_normal;
+                }
+                
+                ::-ms-input-placeholder { /* Microsoft Edge */
+                    color:rgba(255, 0, 0, 0.6);//$color_normal;
+                }
+            }
+
+        }
+
+        .pl_component_form_item_message {
+            display:none;
+        }
+        
+    }
+
+    .pl_component_list_vertical_info_item_value.one{
+        align-items:center;
+        
+        padding-left:14.5px;
+        padding-right:14.5px;
+        padding-top:10px;
+        padding-bottom:6.5px;   
+        margin:0px;
+        
+        color:$color_normal;
+        background-color:#f8fcff;//#f9fcff;//rgba(58, 153, 216, 0.01);
+        border-bottom: 1px solid rgba(58, 153, 216, 0.2);
+        overflow:hidden;
+        
+    }
+
+    .pl_component_list_vertical_info_item_value.one.hoverable{
+        &:hover{
+            background-color:aliceblue;//rgba(58, 153, 216, 0.03);
+        } 
+    }
+
+    .pl_component_list_vertical_info_item_value.one.editable{
+        padding:0px;
+        margin:0px;
+        
+        .pl_component_form_item_input_text {
+            margin:0px;
+
+            form {
+                input[type=text]{
+                    padding-top:10px;
+                    padding-left:14.5px;
+                    padding-bottom:6.5px;
+
+                    margin:0px;
+                    border:0px;
+                    width:100%;
+                    height:100%;
+
+                    background-color:transparent; // to override the color of the form_item_input_text
+
+                    &:hover{
+                        background-color:aliceblue;//rgba(58, 153, 216, 0.03);
+                        color: $color_main;
+                        overflow:hidden;
+                    }
+        
+                    &:focus{
+                        background-color:aliceblue;//rgba(58, 153, 216, 0.03);
+                        color: $color_main;
+                        overflow:hidden;
+                    }
+                }
+
+                ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                    color: rgba(149, 152, 154, 0.6);//$color_normal;
+                    opacity: 1; /* Firefox */
+                }
+                
+                :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                    color:rgba(149, 152, 154, 0.6);//$color_normal;
+                }
+                
+                ::-ms-input-placeholder { /* Microsoft Edge */
+                    color:rgba(149, 152, 154, 0.6);//$color_normal;
+                }
+            }
+        }
+    
+        .pl_component_form_item_input_text_invalid {
+            margin:0px;
+            color: red;
+            border: 1px solid red;
+    
+            form {
+                input[type=text]{
+                    padding-top:10px;
+                    padding-left:14.5px;
+                    padding-bottom:6.5px;
+
+                    margin:0px;
+                    border:0px;
+                    width:100%;
+                    height:100%;
+
+                    background-color:transparent; // to override the color of the form_item_input_text
+                }
+
+                ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                    color: rgba(255, 0, 0, 0.6);//$color_normal;
+                    opacity: 1; /* Firefox */
+                }
+                
+                :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                    color:rgba(255, 0, 0, 0.6);//$color_normal;
+                }
+                
+                ::-ms-input-placeholder { /* Microsoft Edge */
+                    color:rgba(255, 0, 0, 0.6);//$color_normal;
+                }
+            }
+
+        }
+
+        .pl_component_form_item_message {
+            display:none;
+        }
+    }
+
+    .pl_component_list_vertical_info_item_value.two{
+        align-items:center;
+        
+        padding-left:14.5px;
+        padding-right:14.5px;
+        padding-top:10px;
+        padding-bottom:6.5px;   
+        margin:0px;
+            
+        color:$color_normal;
+        background-color:#f8fcff;//#f9fcff;//rgba(58, 153, 216, 0.01);
+        border-bottom: 1px solid rgba(58, 153, 216, 0.2);
+        overflow:hidden;
+    }
+
+    .pl_component_list_vertical_info_item_value.two.hoverable{
+        &:hover{
+            background-color:aliceblue;//rgba(58, 153, 216, 0.03);
+        }
+    }
+
+    .pl_component_list_vertical_info_item_value.two.editable{
+        padding:0px;
+        margin:0px;
+        
+        .pl_component_form_item_input_text {
+            margin:0px;
+
+            form {
+                input[type=text]{
+                    padding-top:10px;
+                    padding-left:14.5px;
+                    padding-bottom:6.5px;
+
+                    margin:0px;
+                    border:0px;
+                    width:100%;
+                    height:100%;
+
+                    background-color:transparent; // to override the color of the form_item_input_text
+                    
+                    &:hover{
+                        background-color:aliceblue;//rgba(58, 153, 216, 0.04);
+                        color: $color_main;
+                        overflow:hidden;
+
+                    }
+        
+                    &:focus{
+                        background-color:aliceblue;//rgba(58, 153, 216, 0.04);
+                        color: $color_main;
+                        overflow:hidden;
+                        
+                    }
+                }
+
+                ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                    color:rgba(149, 152, 154, 0.6);//$$color_normal;//$color_hover;
+                    opacity: 1; /* Firefox */
+                }
+                
+                :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                    color:rgba(149, 152, 154, 0.6);//$color_normal;//$color_hover;
+                }
+                
+                ::-ms-input-placeholder { /* Microsoft Edge */
+                    color:rgba(149, 152, 154, 0.6);//$color_normal;//$color_hover;
+                }
+            }
+        }
+    
+        .pl_component_form_item_input_text_invalid {
+            margin:0px;
+            color: red;
+            border: 1px solid red;
+    
+            form {
+                input[type=text]{
+                    padding-top:10px;
+                    padding-left:14.5px;
+                    padding-bottom:6.5px;
+
+                    margin:0px;
+                    border:0px;
+                    width:100%;
+                    height:100%;
+
+                    background-color:transparent; // to override the color of the form_item_input_text
+                }
+
+                ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                    color: rgba(255, 0, 0, 0.6);//$color_normal;
+                    opacity: 1; /* Firefox */
+                }
+                
+                :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                    color:rgba(255, 0, 0, 0.6);//$color_normal;
+                }
+                
+                ::-ms-input-placeholder { /* Microsoft Edge */
+                    color:rgba(255, 0, 0, 0.6);//$color_normal;
+                }
+            }
+
+        }
+
+        .pl_component_form_item_message {
+            display:none;
+        }
+    }
+}

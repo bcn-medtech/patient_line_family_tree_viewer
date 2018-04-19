@@ -1,0 +1,37 @@
+@import './pl_component_form_item/pl_component_form_item_input_options/pl_component_form_item_input_options.scss';
+@import './pl_component_form_item/pl_component_form_item_input_text/pl_component_form_item_input_text.scss';
+@import './pl_component_form_item/pl_component_form_item_input_text_date/pl_component_form_item_input_text_date.scss';
+@import './pl_component_form_item/pl_component_form_item_input_text_suggestion/pl_component_form_item_input_text_suggestion.scss';
+
+.pl_component_form{
+    overflow:hidden;
+
+    .pl_component_form_content{
+        overflow-y:auto;
+        margin-bottom:200px;
+    }
+
+    .pl_component_form_bottom_bar{
+        
+        .pl_component_form_bottom_bar_form_status{
+            font: 20px Helvetica;//"Helvetica Neue";
+            color:$color_main;
+            overflow:hidden;
+            position:fixed;
+            bottom:0px;
+            left:0px;
+            margin-left:38px;
+            margin-bottom:27px;
+        }
+    
+        .pl_component_form_bottom_bar_save_button{
+            overflow:hidden;
+            position:fixed;
+            bottom:0px;
+            right:0px;
+            margin-right:38px;
+            margin-bottom:27px;
+        }
+    }
+}
+

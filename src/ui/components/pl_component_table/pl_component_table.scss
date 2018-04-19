@@ -1,0 +1,21 @@
+.pl-component-table{
+
+    .bx--table-row{
+            
+        background-color: $rkt-viewer-background-color;
+        border: 0px solid $rkt-viewer-background-color;
+    }
+
+    .bx--responsive-table{
+        border: 0px solid $rkt-viewer-background-color;
+    }
+
+    .bx--table-header{
+        border: 1px solid $rkt_viewer_patient_line_header_bg_color;
+    }
+    
+    td{
+        border-right: 1px solid $rkt-viewer-background-color;
+    }
+    
+}

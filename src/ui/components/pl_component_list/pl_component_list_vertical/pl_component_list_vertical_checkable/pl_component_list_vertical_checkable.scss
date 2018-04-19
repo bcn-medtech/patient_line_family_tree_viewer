@@ -1,0 +1,21 @@
+@import './pl_component_list_vertical_checkable_item/pl_component_list_vertical_checkable_item.scss';
+
+.pl_component_list_vertical_checkable_title{
+    font: bold 20px Helvetica;//"Helvetica Neue";
+    color:$color_main;
+    padding: 10px;
+    //overflow:hidden;
+    overflow-y:auto;
+}
+
+.pl_component_list_vertical_checkable_option{
+    font: 16px Helvetica;//"Helvetica Neue";
+    color:$color_main;
+    padding-top:5px;
+    padding-bottom:5px;
+    overflow:hidden;
+
+    &:hover{
+        color:$color_hover;
+    }
+}

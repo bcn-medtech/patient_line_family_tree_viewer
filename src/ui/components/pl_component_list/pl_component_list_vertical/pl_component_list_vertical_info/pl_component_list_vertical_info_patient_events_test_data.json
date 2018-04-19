@@ -1,0 +1,30 @@
+[
+    {
+        "name":"EF",
+        "value":"45"
+    },
+    {
+        "name":"ESV",
+        "value":"68"
+    },
+    {
+        "name":"EDV",
+        "value":"35"
+    },
+    {
+        "name":"AVO",
+        "value":"0.054"
+    },
+    {
+        "name":"AVC",
+        "value":"0.068"
+    },
+    {
+        "name":"MVO",
+        "value":"0.86"
+    },
+    {
+        "name":"MVC",
+        "value":"0.98"
+    }
+]

@@ -1,0 +1,29 @@
+.pl_component_list_vertical_options_item {
+
+    border-bottom:1px solid $color_normal;
+    background-color:white;
+    margin-left:5.5px;
+    overflow:hidden;
+
+    .pl_component_list_vertical_options_item_name{
+        color:$color_normal;
+        font: 20px Helvetica; //"Helvetica Neue";
+        padding-top:20.5px;
+        padding-bottom:3px;
+        overflow:hidden;
+    }
+
+    .pl_component_list_vertical_options_item_author{
+        color:$color_normal;
+        font: 17px Helvetica; //"Helvetica Neue";
+        padding-bottom:8.5px;
+        overflow:hidden;
+    }
+
+    .pl_component_list_vertical_options_item_option{
+        color:$color_main;
+        font: 20px Helvetica; //"Helvetica Neue";
+        padding-top:20.5px;
+        overflow:hidden;
+    }
+}

@@ -1,0 +1,36 @@
+$rkt-second-color:white;
+$rkt-main-color:$color-normal;
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+    0%   {fill: $rkt-second-color}
+    100% {fill:$rkt-main-color}
+    100%   {fill: $rkt-second-color}
+}
+
+/* Standard syntax */
+@keyframes example {
+    0%   {fill: $rkt-second-color}
+    50% {fill:$rkt-main-color};
+    100%   {fill: $rkt-second-color}
+}
+
+.pl-upload-icon{
+    fill:$rkt-main-color;
+    -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-iteration-count: 30;
+    animation-name: example;
+    animation-duration: 4s;
+    animation-iteration-count: 30;
+}
+
+.pl-upload-message{
+    padding-top: 10px;
+    a{
+        color:$rkt_viewer_patient_line_header_bg_color;
+        &:hover{
+            color:$color-normal-2
+        }
+    }
+}

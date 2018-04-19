@@ -1,0 +1,7 @@
+{
+    "_comment_url_api":"https://rocketdev.upf.edu",
+    "_comment_url_api":"https://api-physense.upf.edu",
+    "url_api":"http://localhost:4000",
+    "url_app":"http://localhost:3000",
+    "_comment_url_app":"http://patientlineimageviewer.surge.sh"
+}

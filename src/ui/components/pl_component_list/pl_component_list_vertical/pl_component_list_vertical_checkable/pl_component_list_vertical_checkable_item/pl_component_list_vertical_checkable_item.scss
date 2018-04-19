@@ -1,0 +1,48 @@
+.pl_component_list_vertical_checkable_item{
+
+    padding-left:10px;
+    padding-right:15px;
+    padding-top:5px;
+    padding-bottom:5px;
+    overflow-y:auto;
+
+    &:hover{
+        background-color:$background-color-hover;
+    }
+
+    .pl_component_list_vertical_checkable_item_name{
+        align-items:center;
+        font: 16px Helvetica;//"Helvetica Neue";
+        color:$color_normal;
+    }
+
+    .pl_component_list_vertical_checkable_item_switch{
+
+        overflow:hidden;
+
+        .switch{
+            label { // label of the non-checked switch
+                background:#ffffff;
+                border-radius:15px;
+                border: 1px solid $color_main;
+            }
+
+            input[type=checkbox]:checked+label { // label of the checked switch
+                background:$color_second;
+                border-radius:15px;
+                border: 1px solid $color_second;
+            }
+
+            label::after{ // "circle" inside the label of the switch
+                background: $color_main;
+                background-clip:content-box;
+                border-radius:15px;
+                border:3.5px solid transparent;
+                transition: left .15s ease-out;
+                -webkit-transition: left .15s ease-out;
+                -moz-transition: left .15s ease-out;
+                -o-transition: left .15s ease-out;
+            }
+        } 
+    }
+}

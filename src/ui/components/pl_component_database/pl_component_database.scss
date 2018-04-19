@@ -1,0 +1,44 @@
+@import './../../components/pl_component_form/pl_component_form_item/pl_component_form_item_input_text/pl_component_form_item_input_text.scss';
+@import './../../components/pl_component_table/pl_component_table.scss';
+
+
+.pl-component-database-header{
+    h3{
+        padding-right:10px;
+    }
+}
+
+.mode_selected{
+    color:$rkt_viewer_patient_line_header_bg_color;
+}
+
+.mode_unselected{
+    color:$color-un-selected
+}
+
+.table{
+    padding: 10px;
+}
+
+.table-columns-menu{
+
+    padding-left:10px;
+    padding-top: 3px; 
+    overflow: scroll;
+}
+
+.tag-un-selected{
+    margin-right: 5px;
+    border: 1px solid $rkt_viewer_patient_line_header_bg_color;
+    background-color: transparent;
+    color: $rkt_viewer_patient_line_header_bg_color;
+}
+
+.tag-selected{
+    margin-right: 5px;
+    border: 1px solid $rkt_viewer_patient_line_header_bg_color;
+    background-color: $rkt_viewer_patient_line_header_bg_color;
+    color: white;
+}
+
+

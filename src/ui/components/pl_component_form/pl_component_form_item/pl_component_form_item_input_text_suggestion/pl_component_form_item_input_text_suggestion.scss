@@ -1,0 +1,126 @@
+@import './../pl_component_form_item_label/pl_component_form_item_label.scss';
+@import './../pl_component_form_item_message/pl_component_form_item_message.scss';
+
+.pl_component_form_item_input_text_suggestion {
+
+    margin-top:5px;
+    margin-bottom:15px;
+    margin-left:35px;
+    margin-right:10px;
+    overflow:hidden;
+    
+    form {
+        span{ // the 'react-autocomplete-input' component is contained in a <span>
+            width:100%;
+            input[type=text]{
+                background-color: rgba(255, 255, 255, 0.201); //#ffffff;
+                color: rgba(58, 153, 216, 0.697);//$color_main_blur;
+                font-size: 20px;
+                height:41px;
+                border: 1px solid rgba(58, 153, 216, 0.201);
+                overflow:hidden;
+        
+                &:hover{
+                    background-color: #ffffff;
+                    color: $color_main;
+                    border: 1px solid rgba(58, 153, 216, 0.8);
+                    overflow:hidden;
+                }
+        
+                &:focus{
+                    background-color: rgba(255, 255, 255, 0.8); //#ffffff;
+                    color: $color_main;
+                    border: 1px solid rgba(58, 153, 216, 0.8);
+                    overflow:hidden;
+                }
+            }
+        } 
+    }
+}
+
+.pl_component_form_item_input_text_suggestion_invalid {
+
+    margin-top:5px;
+    margin-bottom:15px;
+    margin-left:35px;
+    margin-right:10px;
+    overflow:hidden;
+    
+    form {
+        span{ // the 'react-autocomplete-input' component is contained in a <span>
+            width:100%;
+            input[type=text]{
+                background-color: rgba(255, 255, 255, 0.201); //#ffffff;
+                color: red;
+                font-size: 20px;
+                height:41px;
+                border: 1px solid red;
+                overflow:hidden;
+        
+                // &:hover{
+                //     background-color: #ffffff;
+                //     color: $color_main;
+                //     border: 1px solid rgba(58, 153, 216, 0.8);
+                //     overflow:hidden;
+                // }
+        
+                // &:focus{
+                //     background-color: rgba(255, 255, 255, 0.8); //#ffffff;
+                //     color: $color_main;
+                //     border: 1px solid rgba(58, 153, 216, 0.8);
+                //     overflow:hidden;
+                // }
+            }
+        } 
+    }
+}
+
+// elements in 'react-autocomplete-input'
+ul.react-autocomplete-input{ // autocomplete option list of 'react-autocomplete-input'
+    position:inherit;
+    margin:0px;
+    padding:0px;
+    width:50%;//100%;
+    overflow-y:auto;
+    border: 2px solid rgba(58, 153, 216, 0.1);
+}
+
+ul.react-autocomplete-input > li{ // element of the autocomplete option list
+    background-color:"ffffff";
+    color:$color_main;
+    border-bottom: 1px solid rgba(58, 153, 216, 0.1);
+    padding:6px;
+    font: 16px Helvetica;//"Helvetica Neue";
+}
+
+ul.react-autocomplete-input > li.active{ // active element of the autocomplete option list
+    background-color:rgba(58, 153, 216, 0.201);
+    color:$color_main;
+    border-bottom: 1px solid rgba(58, 153, 216, 0.1);
+    padding:6px;
+    font: 16px Helvetica;//"Helvetica Neue";
+}
+
+// icon
+.pl_component_form_item_input_text_suggestion_icon{
+    margin-left:10px;
+    height:41px;
+    align-items:center; // vertical centering of the icon
+    justify-content:center; // horizontal centering of the icon
+
+    color: rgba(58, 153, 216, 0.697);//$color_main_blur;
+    font-size:30px;
+    overflow:hidden;
+}
+    
+.pl_component_form_item_input_text_suggestion_icon_highlighted{
+    margin-left:10px;
+    height:41px;
+    align-items:center; // vertical centering of the icon
+    justify-content:center; // horizontal centering of the icon
+
+    color: $color_main;
+    font-size:30px;
+    overflow:hidden;
+}
+

@@ -1,0 +1,12 @@
+@import './../node_modules/carbon-components/css/carbon-components.css';
+@import './../node_modules/foundation-apps/scss/foundation.scss';
+@import './colors.scss';
+@import './ui/pages/pl_pages.scss';
+
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%; 
+  overflow: hidden
+}

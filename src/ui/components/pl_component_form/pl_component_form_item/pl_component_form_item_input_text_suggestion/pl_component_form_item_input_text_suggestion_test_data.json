@@ -1,0 +1,5 @@
+{ 
+    "key":"study",
+    "label":"In which clinical study would you like to include this patient?",
+    "suggestions":["suggestion1","suggestion2","suggestion3","suggestion4","suggestion5"]
+}

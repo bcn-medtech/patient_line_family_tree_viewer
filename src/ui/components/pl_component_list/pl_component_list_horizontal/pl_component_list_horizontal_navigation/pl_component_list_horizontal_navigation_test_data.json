@@ -1,0 +1,4 @@
+{
+    "title":"Patient",
+    "items": ["General","Events","Measurements","Reports"]
+}

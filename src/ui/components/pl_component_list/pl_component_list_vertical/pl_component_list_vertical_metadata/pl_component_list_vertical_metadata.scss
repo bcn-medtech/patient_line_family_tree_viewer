@@ -1,0 +1,13 @@
+@import './pl_component_list_vertical_metadata_item/pl_component_list_vertical_metadata_item.scss';
+
+.pl_component_list_vertical_metadata {
+    overflow:hidden;
+    margin-bottom:54px;
+
+    .pl_component_list_vertical_metadata_title{
+        font-size: 28px;
+        color:$color_main;
+        padding: 10px;
+        overflow:hidden; 
+    }
+}

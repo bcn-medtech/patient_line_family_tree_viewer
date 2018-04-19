@@ -1,0 +1,46 @@
+.pl_header{
+    
+    background-color: $rkt_viewer_patient_line_header_bg_color;
+    color:$rkt_viewer_patient_line_header_color;
+    padding: 10px;
+    padding-bottom:20px;
+    
+    .tittle{
+        color:$rkt_viewer_patient_line_header_color;
+        padding:10px;
+        padding-left:20px;
+        padding-top:30px;
+    }
+
+    .menu{
+       margin-right:150px;
+    }
+
+    .menu-options-label{
+        padding-top:11px;
+        font-size:14px;
+    }
+
+    .menu-options-button{
+        padding-left:5px;
+    }
+
+    .content{
+        overflow: hidden;
+    }
+
+    a{
+        color:white;
+        &:hover{
+            color:white;
+        }
+    }
+
+    i{
+        color:white;
+        &:hover{
+            color:white;
+        }
+        padding: 5px;
+    }
+}

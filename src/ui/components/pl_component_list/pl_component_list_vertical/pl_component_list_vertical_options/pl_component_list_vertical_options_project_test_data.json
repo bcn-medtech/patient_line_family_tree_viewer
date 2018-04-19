@@ -1,0 +1,22 @@
+[
+    {
+        "name":"Carlos Yagüe Méndez",
+        "author":"@cyague",
+        "option":"admin"
+    },
+    {
+        "name":"Sergio Sánchez",
+        "author":"@ssanchez",
+        "option":"admin"
+    },
+    {
+        "name":"Bart Bijnens",
+        "author":"@bbijnens",
+        "option":"editor"
+    },
+    {
+        "name":"Oscar Cámara",
+        "author":"@ocamara",
+        "option":"editor"
+    }
+]

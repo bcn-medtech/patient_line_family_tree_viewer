@@ -1,0 +1,24 @@
+{
+    "name":"John Doe",
+    "date":"24/05/1983",
+    "author":"@cyague",
+    "metadata":[
+        {
+            "name":"follow-ups",
+            "value":4
+        },
+        {
+            "name":"diagnostic",
+            "value":"Yes"
+        },
+        {
+            "name":"responder",
+            "value":"Yes"
+        },
+        {
+            "name":"study",
+            "value":"HCB"
+        }
+
+    ]
+}
