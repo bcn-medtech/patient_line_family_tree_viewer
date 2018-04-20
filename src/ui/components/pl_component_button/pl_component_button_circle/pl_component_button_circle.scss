@@ -1,0 +1,19 @@
+.pl_component_button_circle{
+    width:43px;
+    height:43px;
+    border-radius:50%;
+
+    box-shadow: 0px 3px 6px $color_shadow;
+
+    font-size:20px;
+
+    overflow:hidden;
+    
+    align-items:center; // vertical centering of the icon
+    justify-content:center; // horizontal centering of the icon
+
+    .button_circle_icon{
+        font-size:20px;
+        //margin-top:13px;
+    }
+}

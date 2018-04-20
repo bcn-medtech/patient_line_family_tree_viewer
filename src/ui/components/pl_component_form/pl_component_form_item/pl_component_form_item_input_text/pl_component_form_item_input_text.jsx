@@ -18,6 +18,26 @@ export class PlComponentFormItemInputText extends Component {
         };
     }
 
+    /*componentWillReceiveProps(nextProps){
+
+        if(nextProps.input !== this.state.input){
+
+            this.setState({
+                input:nextProps.input
+            });
+        }
+    }*/
+
+    resetComponent(){
+
+        this.setState({
+            input: "",
+            isFormItemSelected: false,
+            isInputInvalid: true,
+            message: ""
+        });
+    }
+
     onInputChange(e) {
         var text_field_value = e.target.value;
         var required_input = this.props.required_input;

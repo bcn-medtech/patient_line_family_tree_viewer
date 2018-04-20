@@ -1,6 +1,7 @@
 @import './../../components/pl_component_form/pl_component_form_item/pl_component_form_item_input_text/pl_component_form_item_input_text.scss';
 @import './../../components/pl_component_table/pl_component_table.scss';
-
+@import './../../components/pl_component_menu/pl_component_menu.scss';
+//@import './../../components/pl_component_button/pl_component_button_circle/pl_component_button_circle.scss';
 
 .pl-component-database-header{
     h3{
@@ -39,6 +40,31 @@
     border: 1px solid $rkt_viewer_patient_line_header_bg_color;
     background-color: $rkt_viewer_patient_line_header_bg_color;
     color: white;
+}
+
+.bottom_bar{
+    position: absolute;
+    bottom:55px;
+    right:12px;
+    align-items:center;
+
+    z-index: 10;
+    overflow:hidden;
+    
+    /*.rkt_pl_component_view_patients_bottom_bar_plus_button{
+        overflow:hidden;
+    }
+    
+    .rkt_pl_component_view_patients_bottom_bar_add_info_buttons {
+        align-items:center;
+        overflow:hidden;
+    
+        .rkt_pl_component_button_circle{
+            width:35px;
+            height:35px;
+        }
+    
+    }*/
 }
 
 

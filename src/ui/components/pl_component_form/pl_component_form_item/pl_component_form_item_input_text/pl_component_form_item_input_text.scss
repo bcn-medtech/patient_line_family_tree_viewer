@@ -33,16 +33,16 @@
             }
         }
         ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-            color: rgba(58, 153, 216, 0.697);
+            color: $color-un-selected;
             opacity: 1; /* Firefox */
         }
         
         :-ms-input-placeholder { /* Internet Explorer 10-11 */
-            color: rgba(58, 153, 216, 0.697);
+            color: $color-un-selected;
         }
         
         ::-ms-input-placeholder { /* Microsoft Edge */
-            color: rgba(58, 153, 216, 0.697);
+            color: $color-un-selected;
         }
     }
 }
