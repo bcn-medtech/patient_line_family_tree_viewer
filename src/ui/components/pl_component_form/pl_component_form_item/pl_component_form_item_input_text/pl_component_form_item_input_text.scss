@@ -11,7 +11,7 @@
     
     form {
         input[type=text]{
-            background-color: rgba(255, 255, 255, 0.201); //#ffffff;
+            background-color: transparent; //#ffffff;
             color: rgba(58, 153, 216, 0.697);//$color_main_blur;
             font-size: 20px;
             height:41px;
@@ -19,14 +19,14 @@
             overflow:hidden;
 
             &:hover{
-                background-color: #ffffff;
+                background-color: transparent;
                 color: $color_main;
                 border: 1px solid rgba(58, 153, 216, 0.8);
                 overflow:hidden;
             }
 
             &:focus{
-                background-color: rgba(255, 255, 255, 0.8); //#ffffff;
+                background-color: transparent; //#ffffff;
                 color: $color_main;
                 border: 1px solid rgba(58, 153, 216, 0.8);//1px solid rgba(58, 153, 216, 0.8);
                 overflow:hidden;
@@ -57,7 +57,7 @@
     
     form {
         input[type=text]{
-            background-color: rgba(255, 255, 255, 0.201); //#ffffff;
+            background-color: transparent; //#ffffff;
             color: red;
             font-size: 20px;
             height:41px;

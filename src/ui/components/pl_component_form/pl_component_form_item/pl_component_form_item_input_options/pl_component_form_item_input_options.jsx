@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { isObjectAFunction } from './../../../../modules/pl_modules_object';
+import { isObjectAFunction } from './../../../../../modules/rkt_module_object.js';
 
 //components
 import { PlComponentFormItemLabel } from './../pl_component_form_item_label/pl_component_form_item_label';

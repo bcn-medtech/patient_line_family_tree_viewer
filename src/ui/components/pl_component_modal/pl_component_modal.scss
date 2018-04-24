@@ -1,3 +1,7 @@
+@import './../pl_component_title/pl_component_title.scss';
+@import './../pl_component_button/pl_component_button_text/pl_component_button_text.scss';
+@import './../pl_component_button/pl_component_button_rect/pl_component_button_rect.scss';
+
 .pl_component_modal{
 
     width: 100%;
@@ -6,15 +10,19 @@
     position:fixed;
     z-index: 1000;
     overflow: hidden;
-    background-color: rgba(255, 255, 255, 0.9216);
+    background-color:$rkt_viewer_patient_line_wiewer_bg_color_modal;
 
     .pl_component_modal_top_bar{
         margin-top:30px;
         margin-bottom:30px;//71px;
-        margin-left:10px;
+        margin-left:30px;
         margin-right:38px;
     }
 
+}
+
+.pl_component_modal_esc_button{
+    padding-top: 15px;
 }
 
 /* Safari 4.0 - 8.0 */

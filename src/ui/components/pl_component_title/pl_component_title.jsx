@@ -18,7 +18,7 @@ export class PlComponentTitle extends Component {
 
         return (
             <div className="grid-block shrink pl_component_title">
-                {title}
+                <h3>{title}</h3>
             </div>
         );
     }

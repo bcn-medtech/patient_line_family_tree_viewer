@@ -30,9 +30,11 @@ import { Pagination } from 'carbon-components-react';
 import { Tag } from 'carbon-components-react';
 import { PlComponentTable } from './../pl_component_table/pl_component_table';
 import { PlComponentMenu } from './../pl_component_menu/pl_component_menu';
+import { PlComponentModal } from './../../components/pl_component_modal/pl_component_modal';
 
 //modules
-import { isObjectEmpty } from './../../../modules/rkt_module_object';
+import { isObjectEmpty, isObjectAFunction } from './../../../modules/rkt_module_object';
+
 
 //actions
 import { 
@@ -210,6 +212,13 @@ export class PlComponentDatabase extends Component {
     on_click_database_button(item){
         
         console.log("Database action:"+item);
+
+        if(isObjectAFunction(this.props.perform_database_action)){
+
+            this.props.perform_database_action(item);
+
+        }
+
     }
 
     render_database_component_header(mode, data) {

@@ -3,6 +3,10 @@
     padding-top:10px;
     padding-bottom:10px;
     font-size:28px;
-    color: $color_main;
+    color: $rkt_viewer_patient_line_header_color;
     overflow:hidden;
+
+    h3{
+        color:$rkt_viewer_patient_line_header_color;
+    }
 }

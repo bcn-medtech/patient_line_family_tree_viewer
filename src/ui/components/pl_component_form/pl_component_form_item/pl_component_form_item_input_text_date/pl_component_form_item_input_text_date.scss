@@ -11,24 +11,24 @@
     
     form {
         input[type=date]{
-            background-color: rgba(255, 255, 255, 0.201); //#ffffff;
-            color: rgba(58, 153, 216, 0.697);//$color_main_blur;
+            background-color: transparent; //#ffffff;
+            color: $color_main;//$color_main_blur;
             font-size: 20px;
             height:41px;
             border: 1px solid rgba(58, 153, 216, 0.201);//$color_main_blur;
             overflow:hidden;
 
             &:hover{
-                background-color: #ffffff;
+                background-color: transparent;
                 color: $color_main;
-                border: 1px solid rgba(58, 153, 216, 0.8);
+                border: 1px solid $color_main;
                 overflow:hidden;
             }
 
             &:focus{
-                background-color: rgba(255, 255, 255, 0.8); //#ffffff;
+                background-color: transparent; //#ffffff;
                 color: $color_main;
-                border: 1px solid rgba(58, 153, 216, 0.8);//1px solid rgba(58, 153, 216, 0.8);
+                border: 1px solid $color_main;//1px solid rgba(58, 153, 216, 0.8);
                 overflow:hidden;
             }
         }

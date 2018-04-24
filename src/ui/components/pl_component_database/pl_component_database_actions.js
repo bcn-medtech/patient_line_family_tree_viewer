@@ -85,8 +85,6 @@ export function filter_data_by_ids(data, ids) {
 
     var data_filtered = data;
 
-    console.log("hola");
-
     if (!isObjectEmpty(ids)) {
 
         console.log(ids);

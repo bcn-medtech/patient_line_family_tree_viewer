@@ -13,26 +13,39 @@
         span{ // the 'react-autocomplete-input' component is contained in a <span>
             width:100%;
             input[type=text]{
-                background-color: rgba(255, 255, 255, 0.201); //#ffffff;
-                color: rgba(58, 153, 216, 0.697);//$color_main_blur;
+                background-color: transparent; //#ffffff;
+                color: $color_main;//$color_main_blur;
                 font-size: 20px;
                 height:41px;
                 border: 1px solid rgba(58, 153, 216, 0.201);
                 overflow:hidden;
         
                 &:hover{
-                    background-color: #ffffff;
+                    background-color: transparent;
                     color: $color_main;
-                    border: 1px solid rgba(58, 153, 216, 0.8);
+                    border: 1px solid $color_main;
                     overflow:hidden;
                 }
         
                 &:focus{
-                    background-color: rgba(255, 255, 255, 0.8); //#ffffff;
+                    background-color: transparent; //#ffffff;
                     color: $color_main;
-                    border: 1px solid rgba(58, 153, 216, 0.8);
+                    border: 1px solid $color_main;
                     overflow:hidden;
                 }
+            }
+
+            ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                color: $color-un-selected;
+                opacity: 1; /* Firefox */
+            }
+            
+            :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                color: $color-un-selected;
+            }
+            
+            ::-ms-input-placeholder { /* Microsoft Edge */
+                color: $color-un-selected;
             }
         } 
     }
@@ -50,7 +63,7 @@
         span{ // the 'react-autocomplete-input' component is contained in a <span>
             width:100%;
             input[type=text]{
-                background-color: rgba(255, 255, 255, 0.201); //#ffffff;
+                background-color: transparent; //#ffffff;
                 color: red;
                 font-size: 20px;
                 height:41px;
@@ -108,7 +121,7 @@ ul.react-autocomplete-input > li.active{ // active element of the autocomplete o
     align-items:center; // vertical centering of the icon
     justify-content:center; // horizontal centering of the icon
 
-    color: rgba(58, 153, 216, 0.697);//$color_main_blur;
+    color: $color_main;//$color_main_blur;
     font-size:30px;
     overflow:hidden;
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { isObjectAFunction } from './../../../../modules/pl_modules_object';
+import { isObjectAFunction } from './../../../../../modules/rkt_module_object.js';
 import TextInput from 'react-autocomplete-input';
 
 //components

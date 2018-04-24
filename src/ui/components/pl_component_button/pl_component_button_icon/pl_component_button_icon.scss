@@ -1,0 +1,15 @@
+.pl_component_button_icon{
+    width:43px;
+    height:43px;
+    border-radius:50%;
+
+    overflow:hidden;
+    
+    align-items:center; // vertical centering of the icon
+    justify-content:center; // horizontal centering of the icon
+
+    .button_icon_content{
+        font-size:20px;
+        //margin-top:13px;
+    }
+}

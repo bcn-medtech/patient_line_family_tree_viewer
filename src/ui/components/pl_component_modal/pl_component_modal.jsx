@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 
 //modules
-import { isObjectEmpty, isObjectAFunction } from './../../modules/pl_modules_object';
+import {isObjectAFunction } from './../../../modules/rkt_module_object.js';
 //components
 import { PlComponentTitle } from './../pl_component_title/pl_component_title';
-import { PlComponentForm } from './../pl_component_form/pl_component_form';
 import { PlComponentButtonText } from './../pl_component_button/pl_component_button_text/pl_component_button_text';
 //import plComponentFormTestData from './../pl_component_form/pl_component_form_test_data.json';
 
@@ -55,7 +54,7 @@ export class PlComponentModal extends Component {
                             text={"ESC"}
                             backgroundcolor={"transparent"}
                             backgroundhovercolor={"transparent"}
-                            fontcolor={"#95989A"} fonthovercolor={"#5D5B5B"}
+                            fontcolor={"#5C4EE5"} fonthovercolor={"#8c83ea"}
                             bordercolor={"transparent"} borderhovercolor={"transparent"}
                             onclickelement={this.closeModal.bind(this)} />
                     </div>

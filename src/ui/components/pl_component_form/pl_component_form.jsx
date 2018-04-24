@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { isObjectAFunction } from './../../modules/pl_modules_object';
+import { isObjectAFunction } from './../../../modules/rkt_module_object.js';
 
 //components
 import { PlComponentFormItemInputOptions } from './pl_component_form_item/pl_component_form_item_input_options/pl_component_form_item_input_options';
@@ -172,12 +172,12 @@ export class PlComponentForm extends Component {
                         <div className="pl_component_form_bottom_bar_save_button">
                             <PlComponentButtonRect
                                 text={"Save"}
-                                backgroundcolor={"#ffffff"}
-                                backgroundhovercolor={"#3A99D8"}
-                                fontcolor={"#3A99D8"}
+                                backgroundcolor={"transparent"}
+                                backgroundhovercolor={"#5C4EE5"}
+                                fontcolor={"#5C4EE5"}
                                 fonthovercolor={"#ffffff"}
-                                bordercolor={"#3A99D8"}
-                                borderhovercolor={"#3A99D8"}
+                                bordercolor={"#5C4EE5"}
+                                borderhovercolor={"#5C4EE5"}
                                 onclickelement={this.saveAndSendFormInputs.bind(this)} />
                         </div>
                     </div>
