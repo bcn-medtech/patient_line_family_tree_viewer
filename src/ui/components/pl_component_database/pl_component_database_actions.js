@@ -86,8 +86,6 @@ export function filter_data_by_ids(data, ids) {
     var data_filtered = data;
 
     if (!isObjectEmpty(ids)) {
-
-        console.log(ids);
        
         data_filtered = map(ids, function (id) {
 

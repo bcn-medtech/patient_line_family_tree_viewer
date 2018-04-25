@@ -17,5 +17,25 @@
     td{
         border-right: 1px solid $rkt-viewer-background-color;
     }
+
+    .pl-component-right-menu{
+        
+        position: relative;
+        z-index: 10;
+        overflow:hidden;
+        display: none;
+
+        .pl-component-right-menu-button{
+            fill:$color-normal;
+            &:hover{
+                fill:$color-normal-2;
+            }
+        }
+    }
+
+    .pl-component-table-row:hover .pl-component-right-menu{
+        display: block;
+    }
     
 }
+

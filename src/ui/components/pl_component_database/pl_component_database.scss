@@ -1,13 +1,9 @@
 @import './../../components/pl_component_form/pl_component_form_item/pl_component_form_item_input_text/pl_component_form_item_input_text.scss';
 @import './../../components/pl_component_table/pl_component_table.scss';
-@import './../../components/pl_component_menu/pl_component_menu.scss';
+@import './../../components/pl_component_menu/pl_component_menu/pl_component_menu.scss';
+@import './pl_component_database_header/pl_component_database_header.scss';
 //@import './../../components/pl_component_button/pl_component_button_circle/pl_component_button_circle.scss';
 
-.pl-component-database-header{
-    h3{
-        padding-right:10px;
-    }
-}
 
 .mode_selected{
     color:$rkt_viewer_patient_line_header_bg_color;

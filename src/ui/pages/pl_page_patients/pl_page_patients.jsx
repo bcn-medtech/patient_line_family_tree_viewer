@@ -73,6 +73,7 @@ export default class PlPagePatients extends Component {
   setUrl(url) {
 
     if (url !== false) {
+
       var browserHistory = this.props.history;
       browserHistory.push("/patients" + url);
 
@@ -146,22 +147,22 @@ export default class PlPagePatients extends Component {
 
   }
 
-  get_modal_information(info){
-    
+  get_modal_information(info) {
+
     console.log(info);
 
-    if(!isObjectEmpty(this.refs.database_component)){
-        
-      if(this.refs.database_component.state.mode === "families"){
+    if (!isObjectEmpty(this.refs.database_component)) {
+
+      if (this.refs.database_component.state.mode === "families") {
 
         console.log("families");
         console.log(info);
 
-      }else if(this.refs.database_component.state.mode === "patients"){
+      } else if (this.refs.database_component.state.mode === "patients") {
 
         console.log("patients");
         console.log(info);
-        
+
       }
 
     }
@@ -170,19 +171,19 @@ export default class PlPagePatients extends Component {
 
   }
 
-  close_modal(){
+  close_modal() {
+    
     this.setState({
       isModalOpen: false
     })
+    
   }
 
   show_modal(action) {
 
-    console.log("Perform database action:" + action);
-
-    this.setState({
-      isModalOpen: true
-    })
+      this.setState({
+        isModalOpen: true
+      });
 
   }
 
@@ -192,20 +193,20 @@ export default class PlPagePatients extends Component {
 
     if (this.state.isModalOpen) {
 
-      if(!isObjectEmpty(this.refs.database_component)){
-        
-        if(this.refs.database_component.state.mode === "families"){
-  
+      if (!isObjectEmpty(this.refs.database_component)) {
+
+        if (this.refs.database_component.state.mode === "families") {
+
           form = <PlComponentForm form={plPagePatientsFormSchemeAddFamily} onclicksave={this.get_modal_information.bind(this)} />;
 
-        }else if(this.refs.database_component.state.mode === "patients"){
+        } else if (this.refs.database_component.state.mode === "patients") {
 
           form = <PlComponentForm form={plPagePatientsFormSchemeAddPatients} onclicksave={this.get_modal_information.bind(this)} />;
-        
+
         }
-  
+
       }
-      
+
 
 
       return (

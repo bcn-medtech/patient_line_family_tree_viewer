@@ -29,7 +29,8 @@ import { PlComponentFormItemInputText } from './../pl_component_form/pl_componen
 import { Pagination } from 'carbon-components-react';
 import { Tag } from 'carbon-components-react';
 import { PlComponentTable } from './../pl_component_table/pl_component_table';
-import { PlComponentMenu } from './../pl_component_menu/pl_component_menu';
+import { PlComponentMenu } from './../pl_component_menu/pl_component_menu/pl_component_menu';
+import { PlComponentDatabaseHeader} from './pl_component_database_header/pl_component_database_header';
 import { PlComponentModal } from './../../components/pl_component_modal/pl_component_modal';
 
 //modules
@@ -47,8 +48,6 @@ import {
 import {
     keys
 } from 'underscore';
-//config
-//import config from './../../../config/config.json';
 
 export class PlComponentDatabase extends Component {
 
@@ -210,8 +209,6 @@ export class PlComponentDatabase extends Component {
     }
 
     on_click_database_button(item){
-        
-        console.log("Database action:"+item);
 
         if(isObjectAFunction(this.props.perform_database_action)){
 
@@ -219,34 +216,6 @@ export class PlComponentDatabase extends Component {
 
         }
 
-    }
-
-    render_database_component_header(mode, data) {
-
-        var families_button;
-        var patients_button;
-
-        if (mode === "families") {
-            families_button = <a onClick={this.set_database_component_mode.bind(this, "families")}><h3 className="mode_selected">Families</h3></a>;
-            patients_button = <a onClick={this.set_database_component_mode.bind(this, "patients")}><h3 className="mode_unselected">Patients</h3></a>;
-        } else {
-            families_button = <a onClick={this.set_database_component_mode.bind(this, "families")}><h3 className="mode_unselected">Families</h3></a>;
-            patients_button = <a onClick={this.set_database_component_mode.bind(this, "patients")}><h3 className="mode_selected">Patients</h3></a>;
-        }
-
-        return (
-            <div className="grid-block sub-header shrink pl-component-database-header">
-                <div className="grid-block shrink">
-                    {families_button}
-                </div>
-                <div className="grid-block">
-                    {patients_button}
-                </div>
-                <div className="grid-block shrink">
-                    <h3 className="mode_selected">{data.length}</h3>
-                </div>
-            </div>
-        );
     }
 
     render_database_columns_controler(data, keys_selected) {
@@ -300,7 +269,8 @@ export class PlComponentDatabase extends Component {
             },
             {
                 "name":"delete",
-                "icon":<svg width='10' height='21' viewBox='0 0 16 24' fill-rule='evenodd'><path d='M4 0h8v2H4zM0 3v4h1v17h14V7h1V3H0zm13 18H3V8h10v13z'></path><path d='M5 10h2v9H5zm4 0h2v9H9z'></path></svg>
+                "icon":<svg width='10' height='21' viewBox='0 0 16 24' fill-rule='evenodd'><path d='M4 0h8v2H4zM0 3v4h1v17h14V7h1V3H0zm13 18H3V8h10v13z'></path><path d='M5 10h2v9H5zm4 0h2v9H9z'></path></svg>,
+                "selected":false
             },
             {
                 "name":"export",
@@ -324,7 +294,7 @@ export class PlComponentDatabase extends Component {
 
         return (
             <div className="grid-block vertical pl-component-database">
-                {this.render_database_component_header(this.state.mode, data)}
+                <PlComponentDatabaseHeader mode={this.state.mode} data={data} set_database_component_mode={this.set_database_component_mode.bind(this)}></PlComponentDatabaseHeader>
                 <div className="grid-block shrink">
                     <PlComponentFormItemInputText
                         className="pl_component_form_item_input_text"
