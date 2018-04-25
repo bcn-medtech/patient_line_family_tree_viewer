@@ -1,0 +1,43 @@
+{
+    "form_elements":[
+        {
+            "form_type":"input_text",
+            "data":
+            { 
+                "key":"id",
+                "label":"Which is the ID of the new family?",
+                "required_input":"letter"
+            }
+        },
+        {
+            "form_type":"input_text",
+            "data":
+            { 
+                "key":"name",
+                "label":"Could you provide the name of the patient?",
+                "required_input":"letter"
+            }
+        },
+        {
+            "form_type":"input_text_suggestion",
+            "data":
+            { 
+                "key":"father",
+                "label":"Could you provide the id of his/her father if exist in the database?",
+                "suggestions":["suggestion1","suggestion2","suggestion3","suggestion4","suggestion5"],
+                "required_input":""
+            }
+        },
+        {
+            "form_type":"input_text_suggestion",
+            "data":
+            { 
+                "key":"mother",
+                "label":"Could you provide the id of his/her mother if exist in the database?",
+                "suggestions":["suggestion1","suggestion2","suggestion3","suggestion4","suggestion5"],
+                "required_input":""
+            }
+        }
+        
+    ]
+}

@@ -1,5 +1,15 @@
 .pl-component-database-header{
+    
     h3{
         padding-right:10px;
     }
+
+    .mode_selected{
+        color:$rkt_viewer_patient_line_header_bg_color;
+    }
+    
+    .mode_unselected{
+        color:$color-un-selected
+    }
 }
+

@@ -25,14 +25,26 @@ export class PlComponentMenu extends Component {
 
     onClickMenuButton(item) {
 
-        this.setState({
-            show_menu: !this.state.show_menu
-        })
+        if(this.state.show_menu){
+            
+            this.setState({
+                show_menu: false
+            })
+
+            if (isObjectAFunction(this.props.on_click_button)) {
+                this.props.on_click_button("close");
+            }
+
+        }else{
+            
+            this.setState({
+                show_menu: true
+            })
+        }
+
     }
 
     render_menu() {
-
-        console.log(this.props.menu_items);
 
         var menu_items = this.props.menu_items;
 

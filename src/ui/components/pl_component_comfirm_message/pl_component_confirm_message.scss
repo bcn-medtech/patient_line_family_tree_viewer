@@ -1,0 +1,28 @@
+.pl_component_confirm_message {
+    overflow: hidden;
+
+    .pl_component_confirm_message_main_message {
+        font: bold 20px Helvetica;//"Helvetica Neue";
+        color: $color_main;
+        padding:10px;
+    }
+
+    .pl_component_confirm_message_extra_message {
+        padding:10px;
+    }
+
+    .pl_component_confirm_message_bottom_bar {
+        padding:10px;
+        
+        .pl_component_confirm_message_bottom_bar_answer_button {
+            overflow:hidden;
+            padding-top:10px;
+            padding-right:5px;
+        }
+    }
+
+    .pl_component_footer{
+        height: 31%;
+    }
+
+}

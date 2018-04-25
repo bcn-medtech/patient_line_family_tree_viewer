@@ -1,0 +1,33 @@
+{
+    "type":"families",
+    "form_elements":[
+        {
+            "form_type":"input_text",
+            "data":
+            { 
+                "key":"id",
+                "label":"Which is the ID of the new family?",
+                "required_input":"letter"
+            }
+        },
+        {
+            "form_type":"input_text",
+            "data":
+            { 
+                "key":"name",
+                "label":"Could you provide the name of the family?",
+                "required_input":"letter"
+            }
+        },
+        {
+            "form_type":"input_text",
+            "data":
+            { 
+                "key":"description",
+                "label":"Could you provide a brief description about it?",
+                "required_input":"letter"
+            }
+        }
+        
+    ]
+}

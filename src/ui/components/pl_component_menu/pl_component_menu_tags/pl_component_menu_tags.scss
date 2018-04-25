@@ -1,0 +1,21 @@
+.pl-component-menu-tags{
+
+    padding-left:10px;
+    padding-top: 3px; 
+    overflow: scroll;
+
+    .tag-un-selected{
+        margin-right: 5px;
+        border: 1px solid $rkt_viewer_patient_line_header_bg_color;
+        background-color: transparent;
+        color: $rkt_viewer_patient_line_header_bg_color;
+    }
+    
+    .tag-selected{
+        margin-right: 5px;
+        border: 1px solid $rkt_viewer_patient_line_header_bg_color;
+        background-color: $rkt_viewer_patient_line_header_bg_color;
+        color: white;
+    }
+    
+}

@@ -27,27 +27,26 @@ import React, { Component } from 'react';
 //components
 import { PlComponentFormItemInputText } from './../pl_component_form/pl_component_form_item/pl_component_form_item_input_text/pl_component_form_item_input_text';
 import { Pagination } from 'carbon-components-react';
-import { Tag } from 'carbon-components-react';
 import { PlComponentTable } from './../pl_component_table/pl_component_table';
 import { PlComponentMenu } from './../pl_component_menu/pl_component_menu/pl_component_menu';
-import { PlComponentDatabaseHeader} from './pl_component_database_header/pl_component_database_header';
+import { PlComponentDatabaseHeader } from './pl_component_database_header/pl_component_database_header';
+import { PlComponentMenuTags } from './../pl_component_menu/pl_component_menu_tags/pl_component_menu_tags';
+import { PlComponentForm } from './../pl_component_form/pl_component_form';
+import { PlComponentConfirmMessage } from './../pl_component_comfirm_message/pl_component_confirm_message';
 import { PlComponentModal } from './../../components/pl_component_modal/pl_component_modal';
-
+//schemes
+import plComponentDatabaseModalAddSchemeFamily from './pl_component_database_modal_add_scheme/pl_component_database_modal_add_scheme_family.json';
+import plComponentDatabaseModalAddSchemePatients from './pl_component_database_modal_add_scheme/pl_component_database_modal_add_scheme_patients.json';
 //modules
 import { isObjectEmpty, isObjectAFunction } from './../../../modules/rkt_module_object';
 
-
 //actions
-import { 
+import {
     clean_data_table,
     query_data,
     filter_data_by_ids,
     create_search_bar_place_holder_from_data
 } from './pl_component_database_actions';
-
-import {
-    keys
-} from 'underscore';
 
 export class PlComponentDatabase extends Component {
 
@@ -60,7 +59,9 @@ export class PlComponentDatabase extends Component {
             patient_default_columns: ["id", "name", "gender", "mother", "married_with", "family_id", "center"],
             family_columns_selected: ["id", "name", "description"],
             patient_columns_selected: ["id", "name", "gender", "mother", "married_with", "family_id", "center"],
-            data_to_display:[]
+            data_to_display: [],
+            menu_action: false,
+            delete_row:false
         }
     }
     componentDidMount() {
@@ -76,23 +77,23 @@ export class PlComponentDatabase extends Component {
 
         var data_to_display;
 
-        if(this.state.mode === "families"){
+        if (this.state.mode === "families") {
 
             data_to_display = this.props.families;
 
-        }else{
+        } else {
 
             data_to_display = this.props.patients;
         }
 
-        if(!isObjectEmpty(data_to_display)){
+        if (!isObjectEmpty(data_to_display)) {
 
-            data_to_display = query_data(data_to_display,text_field_value);
+            data_to_display = query_data(data_to_display, text_field_value);
 
-            if(!isObjectEmpty(data_to_display)){
+            if (!isObjectEmpty(data_to_display)) {
 
                 this.setState({
-                    "data_to_display":data_to_display
+                    "data_to_display": data_to_display
                 });
             }
         }
@@ -122,12 +123,13 @@ export class PlComponentDatabase extends Component {
 
         this.setState({
             mode: mode,
-            data_to_display:[]
+            data_to_display: []
         });
     }
 
     database_hide_column(column) {
 
+        console.log(column);
         var columns = [];
         var index = -1;
 
@@ -171,7 +173,7 @@ export class PlComponentDatabase extends Component {
 
     database_show_column(column) {
 
-
+        console.log(column);
         var columns = [];
         var index = -1;
 
@@ -208,51 +210,153 @@ export class PlComponentDatabase extends Component {
         }
     }
 
-    on_click_database_button(item){
 
-        if(isObjectAFunction(this.props.perform_database_action)){
 
-            this.props.perform_database_action(item);
+    on_click_database_menu_button(action) {
 
-        }
 
-    }
+        if (action === "add") {
 
-    render_database_columns_controler(data, keys_selected) {
+            this.setState({
+                menu_action: "add"
+            });
 
-        if (!isObjectEmpty(data)) {
+        } else if (action === "delete") {
 
-            if (data.length >= 1) {
+            if (this.state.menu_action === "delete") {
 
-                var columns = keys(data[0]);
+                this.setState({
+                    menu_action: false
+                });
 
-                return (
+            } else {
 
-                    columns.map((item, index) => {
-
-                        if (keys_selected.indexOf(item) !== -1) {
-                            return (
-
-                                <a onClick={this.database_hide_column.bind(this, item)} className="grid-block shrink"><Tag className="tag-selected" type="beta">{item}</Tag></a>
-
-                            );
-                        } else {
-                            return (
-
-                                <a onClick={this.database_show_column.bind(this, item)} className="grid-block shrink"><Tag className="tag-un-selected" type="beta">{item}</Tag></a>
-
-                            );
-                        }
-
-                    })
-
-                );
+                this.setState({
+                    menu_action: "delete"
+                });
             }
-        }
 
+
+        } else if (action === "export") {
+
+            this.setState({
+                menu_action: false
+            });
+
+        } else if (action === "close") {
+
+            this.setState({
+                menu_action: false
+            });
+        }
 
     }
 
+    on_save_add_modal(data) {
+
+        console.log(data);
+
+        this.setState({
+            menu_action: false,
+            delete_row:false
+        })
+    }
+
+    on_close_add_modal() {
+
+        if(this.state.delete_row !== false){
+            this.setState({
+                delete_row:false
+            })
+        }else{
+            this.setState({
+                menu_action: false,
+                delete_row:false
+            })
+        }
+       
+
+    }
+
+    on_select_element_to_remove(element) {
+        
+        this.setState({
+            delete_row: element
+        })
+
+    }
+
+    on_remove_element(element){
+
+        console.log(element);
+
+        if(element === "Yes"){
+
+            console.log(this.state.delete_row);
+
+        }
+
+        this.setState({
+            delete_row:false
+        });
+    }
+
+    render_modal() {
+
+        var form;
+        var mode = this.state.mode;
+        var menu_action = this.state.menu_action;
+        var delete_row = this.state.delete_row;
+
+        if (menu_action === "add") {
+
+            if (!isObjectEmpty(mode)) {
+
+                if (mode === "families") {
+
+                    form = <PlComponentForm form={plComponentDatabaseModalAddSchemeFamily} onclicksave={this.on_save_add_modal.bind(this)} />;
+
+                } else if (mode === "patients") {
+
+                    form = <PlComponentForm form={plComponentDatabaseModalAddSchemePatients} onclicksave={this.on_save_add_modal.bind(this)} />;
+
+                }
+
+            }
+
+            return (
+                <PlComponentModal
+                    ref="ModalForm"
+                    title={"Add Patient"}
+                    Modal_content={form}
+                    onclickesc={this.on_close_add_modal.bind(this)} />
+            );
+
+        }else if(delete_row !== false){
+
+            var message_to_show = "";
+
+            if(mode === "families"){
+
+                message_to_show = "Are you sure you want to remove the family " + delete_row.id + "?";
+
+            }else if(mode === "patients"){
+
+                message_to_show = "Are you sure you want to remove the patient " + delete_row.id + "?";
+
+            }
+
+            var content = <PlComponentConfirmMessage message={message_to_show} extra_message={"this action will remove it forever"} onclickanswerbutton={this.on_remove_element.bind(this)} />;;
+
+            return (
+                <PlComponentModal
+                    ref="ModalForm"
+                    title={""}
+                    Modal_content={content}
+                    onclickesc={this.on_close_add_modal.bind(this)} />
+            );
+        }
+    }
 
     render() {
 
@@ -262,38 +366,51 @@ export class PlComponentDatabase extends Component {
         var data_keys_selected;
         var data_filtered;
         var search_bar_place_holder;
+        var table_mode;
+
         var menu_items = [
             {
-                "name":"add",
-                "icon":<svg width='16' height='16' viewBox='0 0 24 24' fill-rule='evenodd'><path d='M14 0h-4v10H0v4h10v10h4V14h10v-4H14z'></path></svg>
+                "name": "add",
+                "icon": <svg width='16' height='16' viewBox='0 0 24 24' fill-rule='evenodd'><path d='M14 0h-4v10H0v4h10v10h4V14h10v-4H14z'></path></svg>
             },
             {
-                "name":"delete",
-                "icon":<svg width='10' height='21' viewBox='0 0 16 24' fill-rule='evenodd'><path d='M4 0h8v2H4zM0 3v4h1v17h14V7h1V3H0zm13 18H3V8h10v13z'></path><path d='M5 10h2v9H5zm4 0h2v9H9z'></path></svg>,
-                "selected":false
+                "name": "delete",
+                "icon": <svg width='10' height='21' viewBox='0 0 16 24' fill-rule='evenodd'><path d='M4 0h8v2H4zM0 3v4h1v17h14V7h1V3H0zm13 18H3V8h10v13z'></path><path d='M5 10h2v9H5zm4 0h2v9H9z'></path></svg>,
+                "selected": false
             },
             {
-                "name":"export",
-                "icon":<svg width='15' height='15' viewBox='0 0 24 24' fill-rule='evenodd'><path d='M19 9.4l-1.2-1.1L13 13V0h-2v13L6.2 8.3 5 9.4l7 6.6z'></path><path d='M22 14v6H2v-6H0v10h24V14z'></path></svg>
+                "name": "export",
+                "icon": <svg width='15' height='15' viewBox='0 0 24 24' fill-rule='evenodd'><path d='M19 9.4l-1.2-1.1L13 13V0h-2v13L6.2 8.3 5 9.4l7 6.6z'></path><path d='M22 14v6H2v-6H0v10h24V14z'></path></svg>
             }
         ]
+
+        if (this.state.menu_action === "delete") {
+
+            table_mode = "delete";
+
+            for (var i = 0; i < menu_items.length; i++) {
+                if (menu_items[i].name === "delete") {
+                    menu_items[i].selected = true;
+                }
+            }
+        }
 
         if (this.state.mode === "families") {
             data = families;
             data_keys_selected = this.state.family_columns_selected;
-           
+
         } else {
             data = patients;
             data_keys_selected = this.state.patient_columns_selected;
 
         }
-    
+
         search_bar_place_holder = create_search_bar_place_holder_from_data(data);
-        data = filter_data_by_ids(data,this.state.data_to_display);
+        data = filter_data_by_ids(data, this.state.data_to_display);
         data_filtered = clean_data_table(data, data_keys_selected);
 
         return (
-            <div className="grid-block vertical pl-component-database">
+            <div className="grid-block vertical pl_component_database">
                 <PlComponentDatabaseHeader mode={this.state.mode} data={data} set_database_component_mode={this.set_database_component_mode.bind(this)}></PlComponentDatabaseHeader>
                 <div className="grid-block shrink">
                     <PlComponentFormItemInputText
@@ -304,11 +421,12 @@ export class PlComponentDatabase extends Component {
                         placeholder={search_bar_place_holder}
                         onInputChange={this.onProcessQuery.bind(this)} />
                 </div>
-                <div className="grid-block shrink table-columns-menu">
-                    {this.render_database_columns_controler(data, data_keys_selected)}
-                </div>
+                <PlComponentMenuTags data={data} keys_selected={data_keys_selected} on_select_tag={this.database_show_column.bind(this)} on_un_selected_tag={this.database_hide_column.bind(this)}></PlComponentMenuTags>
                 <div className="grid-block table">
-                    <PlComponentTable data={data_filtered} on_click_row={this.onClickRow.bind(this)} />
+                    <PlComponentTable data={data_filtered}
+                        on_click_row={this.onClickRow.bind(this)}
+                        table_mode={table_mode}
+                        on_remove_element={this.on_select_element_to_remove.bind(this)} />
                 </div>
                 <div className="grid-block shrink">
                     <Pagination
@@ -318,7 +436,8 @@ export class PlComponentDatabase extends Component {
                         pageInputDisabled
                     />
                 </div>
-                <div className="grid-block bottom_bar"><PlComponentMenu menu_items={menu_items} on_click_button={this.on_click_database_button.bind(this)}/></div>
+                <div className="grid-block bottom_bar"><PlComponentMenu menu_items={menu_items} on_click_button={this.on_click_database_menu_button.bind(this)} /></div>
+                {this.render_modal()}
             </div>
         );
     }

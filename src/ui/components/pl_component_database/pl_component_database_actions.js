@@ -122,3 +122,4 @@ export function create_search_bar_place_holder_from_data(data){
     
     return text;
 }
+

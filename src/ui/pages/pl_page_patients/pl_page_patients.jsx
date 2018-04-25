@@ -171,21 +171,6 @@ export default class PlPagePatients extends Component {
 
   }
 
-  close_modal() {
-    
-    this.setState({
-      isModalOpen: false
-    })
-    
-  }
-
-  show_modal(action) {
-
-      this.setState({
-        isModalOpen: true
-      });
-
-  }
 
   renderModal() {
 
@@ -230,7 +215,7 @@ export default class PlPagePatients extends Component {
     if (isObjectEmpty(families)) {
       body = <PlComponentDragAndDrop get_files_from_drag_and_drop={this.get_files_from_drag_and_drop.bind(this)} />
     } else {
-      body = <PlComponentDatabase families={families} patients={patients} perform_database_action={this.show_modal.bind(this)} ref="database_component" />
+      body = <PlComponentDatabase families={families} patients={patients}  ref="database_component" />
     }
 
     return (
