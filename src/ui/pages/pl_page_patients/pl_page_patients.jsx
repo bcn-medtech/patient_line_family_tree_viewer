@@ -28,18 +28,12 @@ import React, { Component } from 'react';
 import PlHeader from './../../components/pl_component_header/pl_component_header';
 import { PlComponentDragAndDrop } from './../../components/pl_component_drag_and_drop/pl_component_drag_and_drop';
 import { PlComponentDatabase } from './../../components/pl_component_database/pl_component_database.jsx';
-import { PlComponentForm } from './../../components/pl_component_form/pl_component_form';
-import { PlComponentModal } from './../../components/pl_component_modal/pl_component_modal';
-import plPagePatientsFormSchemeAddFamily from './pl_page_patients_form_scheme/pl_page_patients_form_scheme_add_family.json';
-import plPagePatientsFormSchemeAddPatients from './pl_page_patients_form_scheme/pl_page_patients_form_scheme_add_patients.json';
-
 
 import {
   get_data_from_database,
   import_data_to_app,
   perform_database_action
 } from './pl_page_patients_actions';
-
 
 //modules
 import { isObjectEmpty } from './../../../modules/rkt_module_object';

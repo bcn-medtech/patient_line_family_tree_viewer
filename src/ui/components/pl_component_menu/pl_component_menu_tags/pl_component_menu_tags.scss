@@ -17,5 +17,12 @@
         background-color: $rkt_viewer_patient_line_header_bg_color;
         color: white;
     }
+
+    .tag-info{
+        margin-right: 5px;
+        border: 1px solid $color-normal-3;
+        background-color: $color-normal-3;
+        color: white;
+    }
     
 }
