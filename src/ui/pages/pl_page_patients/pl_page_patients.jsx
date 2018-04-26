@@ -133,8 +133,9 @@ export default class PlPagePatients extends Component {
   perform_database_action(data){
     
     var myComponent = this;
-
-    perform_database_action(data,function(resut){
+    var browserHistory = this.props.history;
+    
+    perform_database_action(data,browserHistory,function(resut){
 
         myComponent.update_component_state_from_database() 
     });

@@ -55,13 +55,13 @@ export class PlComponentDatabase extends Component {
 
         this.state = {
             mode: "families",
-            family_default_columns: ["id", "name", "description","num_family_members"],
-            patient_default_columns: ["id", "name", "gender", "mother", "married_with", "family_id", "center","num_relatives"],
-            family_columns_selected: ["id", "name", "description","num_family_members"],
-            patient_columns_selected: ["id", "name", "gender", "mother", "married_with", "family_id", "center","num_relatives"],
+            family_default_columns: ["id", "name", "description", "num_family_members"],
+            patient_default_columns: ["id", "name", "gender", "mother", "married_with", "family_id", "center", "num_relatives"],
+            family_columns_selected: ["id", "name", "description", "num_family_members"],
+            patient_columns_selected: ["id", "name", "gender", "mother", "married_with", "family_id", "center", "num_relatives"],
             data_to_display: [],
             menu_action: false,
-            delete_row:false
+            delete_row: false
         }
     }
     componentDidMount() {
@@ -101,20 +101,24 @@ export class PlComponentDatabase extends Component {
 
     onClickRow(element_selected) {
 
-        //console.log(element_selected);
+        if (isObjectAFunction(this.props.perform_database_action)) {
 
-        /*var url_api = config.url_api;
-        var patient_id = study_selected.patient;
-        var modality_id = study_selected.modality;
-        var followup_id = study_selected.date;
-    
-        var url_to_navigate = config.url_app + '/viewer?';
-        url_to_navigate = url_to_navigate+"url="+url_api+"&";
-        url_to_navigate = url_to_navigate+"patient_id="+patient_id+"&";
-        url_to_navigate = url_to_navigate+"modality_id="+modality_id+"&";
-        url_to_navigate = url_to_navigate+"followup_id="+followup_id+"&";
-    
-        navigate_to_url(url_to_navigate);*/
+            if (this.state.mode === "families") {
+
+                var action = {};
+                action["action"] = "explore_family";
+                action["data"] = element_selected;
+                this.props.perform_database_action(action);
+
+            } else if (this.state.mode === "patients") {
+
+                var action = {};
+                action["action"] = "explore_patient";
+                action["data"] = element_selected;
+                this.props.perform_database_action(action);
+            }
+
+        }
     }
 
     set_database_component_mode(mode) {
@@ -238,11 +242,11 @@ export class PlComponentDatabase extends Component {
             });
 
 
-            if(isObjectAFunction(this.props.perform_database_action)){
+            if (isObjectAFunction(this.props.perform_database_action)) {
 
-                var action={};
-                action["action"]="export";
-                action["data"]={};
+                var action = {};
+                action["action"] = "export";
+                action["data"] = {};
                 this.props.perform_database_action(action);
             }
 
@@ -251,27 +255,27 @@ export class PlComponentDatabase extends Component {
             this.setState({
                 menu_action: false
             });
-        } 
+        }
 
     }
 
     on_save_add_modal(data) {
 
-        if(isObjectAFunction(this.props.perform_database_action)){
+        if (isObjectAFunction(this.props.perform_database_action)) {
 
             var action = {}
 
-            if(this.state.mode === "families"){
+            if (this.state.mode === "families") {
 
-                action["action"]="add_family";
-                action["data"]=data;
+                action["action"] = "add_family";
+                action["data"] = data;
 
-            }else if(this.state.mode === "patients"){
+            } else if (this.state.mode === "patients") {
 
-                action["action"]="add_patient";
-                action["data"]=data;
+                action["action"] = "add_patient";
+                action["data"] = data;
 
-            } 
+            }
 
             this.props.perform_database_action(action);
 
@@ -279,62 +283,62 @@ export class PlComponentDatabase extends Component {
 
         this.setState({
             menu_action: false,
-            delete_row:false
+            delete_row: false
         })
     }
 
     on_close_add_modal() {
 
-        if(this.state.delete_row !== false){
+        if (this.state.delete_row !== false) {
             this.setState({
-                delete_row:false
+                delete_row: false
             })
-        }else{
+        } else {
             this.setState({
                 menu_action: false,
-                delete_row:false
+                delete_row: false
             })
         }
-       
+
 
     }
 
     on_select_element_to_remove(element) {
-        
+
         this.setState({
             delete_row: element
         })
 
     }
 
-    on_remove_element(element){
+    on_remove_element(element) {
 
-        if(element === "Yes"){
+        if (element === "Yes") {
 
-            if(isObjectAFunction(this.props.perform_database_action)){
+            if (isObjectAFunction(this.props.perform_database_action)) {
 
                 var action = {}
-    
-                if(this.state.mode === "families"){
-    
-                    action["action"]="remove_family";
-                    action["data"]=this.state.delete_row;
-    
-                }else if(this.state.mode === "patients"){
-    
-                    action["action"]="remove_patient";
-                    action["data"]=this.state.delete_row;
-    
-                } 
+
+                if (this.state.mode === "families") {
+
+                    action["action"] = "remove_family";
+                    action["data"] = this.state.delete_row;
+
+                } else if (this.state.mode === "patients") {
+
+                    action["action"] = "remove_patient";
+                    action["data"] = this.state.delete_row;
+
+                }
 
                 this.props.perform_database_action(action);
-    
+
             }
 
         }
 
         this.setState({
-            delete_row:false
+            delete_row: false
         });
     }
 
@@ -369,15 +373,15 @@ export class PlComponentDatabase extends Component {
                     onclickesc={this.on_close_add_modal.bind(this)} />
             );
 
-        }else if(delete_row !== false){
+        } else if (delete_row !== false) {
 
             var message_to_show = "";
 
-            if(mode === "families"){
+            if (mode === "families") {
 
                 message_to_show = "Are you sure you want to remove the family " + delete_row.id + "?";
 
-            }else if(mode === "patients"){
+            } else if (mode === "patients") {
 
                 message_to_show = "Are you sure you want to remove the patient " + delete_row.id + "?";
 

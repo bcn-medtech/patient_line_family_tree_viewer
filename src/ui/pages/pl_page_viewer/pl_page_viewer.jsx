@@ -23,19 +23,27 @@
 */
 
 import React, { Component } from 'react';
+//actions
+import {get_family} from './pl_page_viewer_actions';
 //components
-import RktViewerPatientLine from './../../components/rkt_viewer/rkt_viewer_patient_line/rkt_viewer_patient_line';
+import {PlComponentFamilyTreeViewer} from './../../components/pl_component_family_tree_viewer/pl_component_family_tree_viewer';
+//modules
+import { url_getParameterByName } from './../../../modules/rkt_module_url';
 
 export default class PlPageViewer extends Component {
 
-  setUrl(url) {
-    
-    if (url !== false) {
-        var browserHistory = this.props.history;
-        browserHistory.push("/viewer"+url);
+  componentDidMount(){
 
-    } else {
-        alert("URL not compatible");
+    var location = window.location;
+
+    if ("href" in location) {
+
+      var location_url = location.href;
+      var family_id = url_getParameterByName("family_id", location_url);
+      var patient_id = url_getParameterByName("patient_id", location_url);
+
+      get_family(family_id);
+      
     }
   }
 
@@ -43,7 +51,7 @@ export default class PlPageViewer extends Component {
 
     return (
       <div className="grid-frame pl-page-viewer">
-         <RktViewerPatientLine/>
+         <PlComponentFamilyTreeViewer/>
       </div>
     );
   }

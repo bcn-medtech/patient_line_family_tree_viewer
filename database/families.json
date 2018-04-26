@@ -1,0 +1,17 @@
+[
+    {
+        "id": "1",
+        "name": "Familia 001",
+        "description": "Familia con caso único de manifestación fenotípica."
+    },
+    {
+        "id": "2",
+        "name": "Familia 002",
+        "description": "Familia con caso único de manifestación-fenotípica. "
+    },
+    {
+        "id": "3",
+        "name": "Familia 003",
+        "description": "Familia con caso único de muerte súbita e mutaciones en los genes KCNE1, KCNH2 y JUP+. "
+    }
+]

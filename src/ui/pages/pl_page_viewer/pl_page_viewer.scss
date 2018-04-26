@@ -1,5 +1,9 @@
-@import './../../components/rkt_viewer/rkt_viewer_patient_line/rkt_viewer_patient_line.scss';
+@import './../../components/pl_component_family_tree_viewer/pl_component_family_tree_viewer.scss';
 
 .pl-page-viewer{
-    margin: 0; height: 100%; overflow: hidden
+    margin: 0; height: 100%; 
+    overflow: hidden;
+    background-color:$rkt-viewer-background-color;
+    color:white;
 }
+

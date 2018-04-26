@@ -141,7 +141,7 @@ export function create_database_structure_from_form_json(form_json){
     return database_json;
 }
 
-export function perform_database_action(data,callback){
+export function perform_database_action(data,browserHistory,callback){
 
     console.log(data);
 
@@ -226,6 +226,28 @@ export function perform_database_action(data,callback){
             }else if(data.action === "export"){
 
                 export_data();
+
+            }else if(data.action === "explore_patient"){                
+
+                if(!isObjectEmpty(data.data)){
+
+                    var family_id = data.data.family_id;
+                    var patient_id = data.data.id;
+
+                    var url_to_navigate = '/viewer?family_id='+family_id+'&patient_id='+patient_id;
+                    browserHistory.push(url_to_navigate)
+                }
+
+            }else if(data.action === "explore_family"){
+
+                if(!isObjectEmpty(data.data)){
+
+                    var family_id = data.data.id;
+
+                    var url_to_navigate = '/viewer?family_id='+family_id;
+                    browserHistory.push(url_to_navigate)
+                }
+
             }
         }
     }
