@@ -35,6 +35,11 @@ import {
   perform_database_action
 } from './pl_page_patients_actions';
 
+import {
+  get_patients,
+  get_families
+} from './pl_page_patients_data_analisis';
+
 //modules
 import { isObjectEmpty } from './../../../modules/rkt_module_object';
 
@@ -146,6 +151,10 @@ export default class PlPagePatients extends Component {
     if (isObjectEmpty(families)) {
       body = <PlComponentDragAndDrop get_files_from_drag_and_drop={this.import_data.bind(this)} />
     } else {
+
+      patients = get_patients(patients);
+      families = get_families(patients,families);
+
       body = <PlComponentDatabase families={families} patients={patients} perform_database_action={this.perform_database_action.bind(this)}/>
     }
 
