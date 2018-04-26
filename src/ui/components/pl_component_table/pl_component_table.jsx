@@ -25,6 +25,7 @@
 import React, { Component } from 'react';
 import { Table, TableRow, TableHeader, TableHead, TableBody, TableData } from 'carbon-components-react';
 import { isObjectAFunction } from './../../../modules/rkt_module_object';
+import {process_data_to_show_in_table} from './pl_component_table_actions';
 
 
 export class PlComponentTable extends Component {
@@ -152,6 +153,7 @@ export class PlComponentTable extends Component {
     render() {
 
         var data = this.props.data;
+        data = process_data_to_show_in_table(data);
 
         return (
             <div className="grid-block pl-component-table">

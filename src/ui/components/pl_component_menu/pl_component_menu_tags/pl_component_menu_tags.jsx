@@ -28,8 +28,8 @@ import { Tag } from 'carbon-components-react';
 import { isObjectEmpty, isObjectAFunction } from './../../../../modules/rkt_module_object';
 
 import {
-    keys
-} from 'underscore';
+    get_keys_from_data
+} from './pl_component_menu_tags_actions';
 
 export class PlComponentMenuTags extends Component {
 
@@ -59,7 +59,7 @@ export class PlComponentMenuTags extends Component {
 
             if (data.length >= 1) {
 
-                var columns = keys(data[0]);
+                var columns = get_keys_from_data(data);
 
                 return (
 

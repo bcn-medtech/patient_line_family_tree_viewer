@@ -69,8 +69,8 @@ export class PlComponentDatabase extends Component {
     }
 
     onChangePagination(element) {
-        console.log("On change pagination");
-        console.log(element);
+        //console.log("On change pagination");
+        //console.log(element);
     }
 
     onProcessQuery(index, isInputInvalid, text_field_value) {
@@ -101,7 +101,7 @@ export class PlComponentDatabase extends Component {
 
     onClickRow(element_selected) {
 
-        console.log(element_selected);
+        //console.log(element_selected);
 
         /*var url_api = config.url_api;
         var patient_id = study_selected.patient;
@@ -129,7 +129,6 @@ export class PlComponentDatabase extends Component {
 
     database_hide_column(column) {
 
-        console.log(column);
         var columns = [];
         var index = -1;
 
@@ -173,7 +172,6 @@ export class PlComponentDatabase extends Component {
 
     database_show_column(column) {
 
-        console.log(column);
         var columns = [];
         var index = -1;
 
@@ -209,8 +207,6 @@ export class PlComponentDatabase extends Component {
 
         }
     }
-
-
 
     on_click_database_menu_button(action) {
 
@@ -254,7 +250,25 @@ export class PlComponentDatabase extends Component {
 
     on_save_add_modal(data) {
 
-        console.log(data);
+        if(isObjectAFunction(this.props.perform_database_action)){
+
+            var action = {}
+
+            if(this.state.mode === "families"){
+
+                action["action"]="add_family";
+                action["data"]=data;
+
+            }else if(this.state.mode === "patients"){
+
+                action["action"]="add_patient";
+                action["data"]=data;
+
+            } 
+
+            this.props.perform_database_action(action);
+
+        }
 
         this.setState({
             menu_action: false,
@@ -288,11 +302,27 @@ export class PlComponentDatabase extends Component {
 
     on_remove_element(element){
 
-        console.log(element);
-
         if(element === "Yes"){
 
-            console.log(this.state.delete_row);
+            if(isObjectAFunction(this.props.perform_database_action)){
+
+                var action = {}
+    
+                if(this.state.mode === "families"){
+    
+                    action["action"]="remove_family";
+                    action["data"]=this.state.delete_row;
+    
+                }else if(this.state.mode === "patients"){
+    
+                    action["action"]="remove_patient";
+                    action["data"]=this.state.delete_row;
+    
+                } 
+
+                this.props.perform_database_action(action);
+    
+            }
 
         }
 

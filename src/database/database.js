@@ -29,6 +29,8 @@ export function families_get_list(callback) {
 
 export function family_insert(family, callback) {
 
+    console.log(family);
+    
     db.families
         .where("id").equalsIgnoreCase(family.id)
         .toArray(function (families) {

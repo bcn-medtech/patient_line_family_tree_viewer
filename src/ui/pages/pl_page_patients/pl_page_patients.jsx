@@ -34,24 +34,12 @@ import plPagePatientsFormSchemeAddFamily from './pl_page_patients_form_scheme/pl
 import plPagePatientsFormSchemeAddPatients from './pl_page_patients_form_scheme/pl_page_patients_form_scheme_add_patients.json';
 
 
-//actions
-/*import {
-  dowload_studies_from_api,
-  obtainStudiesFromQuery,
-  obtain_user_token,
-  obtain_user_email_from_token,
-  logout,
-  devLogin,
-  navigate_to_url
-} from './pl_page_patients_actions';*/
-
 import {
-  get_data_from_database
+  get_data_from_database,
+  import_data_to_app,
+  perform_database_action
 } from './pl_page_patients_actions';
 
-import {
-  import_data_to_app
-} from './pl_page_patients_actions';
 
 //modules
 import { isObjectEmpty } from './../../../modules/rkt_module_object';
@@ -127,12 +115,8 @@ export default class PlPagePatients extends Component {
 
   }
 
-  onChangePagination(element) {
-    console.log("On change pagination");
-    console.log(element);
-  }
 
-  get_files_from_drag_and_drop(file) {
+  import_data(file) {
 
     import_data_to_app(file, function (result) {
 
@@ -147,62 +131,15 @@ export default class PlPagePatients extends Component {
 
   }
 
-  get_modal_information(info) {
+  perform_database_action(data){
+    
+    var myComponent = this;
 
-    console.log(info);
+    perform_database_action(data,function(resut){
 
-    if (!isObjectEmpty(this.refs.database_component)) {
+        myComponent.update_component_state_from_database() 
+    });
 
-      if (this.refs.database_component.state.mode === "families") {
-
-        console.log("families");
-        console.log(info);
-
-      } else if (this.refs.database_component.state.mode === "patients") {
-
-        console.log("patients");
-        console.log(info);
-
-      }
-
-    }
-
-    this.close_modal();
-
-  }
-
-
-  renderModal() {
-
-    var form;
-
-    if (this.state.isModalOpen) {
-
-      if (!isObjectEmpty(this.refs.database_component)) {
-
-        if (this.refs.database_component.state.mode === "families") {
-
-          form = <PlComponentForm form={plPagePatientsFormSchemeAddFamily} onclicksave={this.get_modal_information.bind(this)} />;
-
-        } else if (this.refs.database_component.state.mode === "patients") {
-
-          form = <PlComponentForm form={plPagePatientsFormSchemeAddPatients} onclicksave={this.get_modal_information.bind(this)} />;
-
-        }
-
-      }
-
-
-
-      return (
-        <PlComponentModal
-          ref="ModalForm"
-          title={"Add Patient"}
-          Modal_content={form}
-          onclickesc={this.close_modal.bind(this)} />
-      );
-
-    }
   }
 
   render() {
@@ -213,9 +150,9 @@ export default class PlPagePatients extends Component {
     var patients = this.state.patients;
 
     if (isObjectEmpty(families)) {
-      body = <PlComponentDragAndDrop get_files_from_drag_and_drop={this.get_files_from_drag_and_drop.bind(this)} />
+      body = <PlComponentDragAndDrop get_files_from_drag_and_drop={this.import_data.bind(this)} />
     } else {
-      body = <PlComponentDatabase families={families} patients={patients}  ref="database_component" />
+      body = <PlComponentDatabase families={families} patients={patients} perform_database_action={this.perform_database_action.bind(this)}/>
     }
 
     return (
@@ -223,7 +160,6 @@ export default class PlPagePatients extends Component {
         <div className="grid-block vertical">
           <PlHeader />
           {body}
-          {this.renderModal()}
         </div>
       </div>
     );

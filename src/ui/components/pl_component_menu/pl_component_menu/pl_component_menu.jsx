@@ -62,13 +62,13 @@ export class PlComponentMenu extends Component {
                                     icon={item.icon}
                                     backgroundcolor={"transparent"}
                                     backgroundhovercolor={"#5C4EE5"}
-                                    backgroundselectedcolor={"transparent"}
+                                    backgroundselectedcolor={"#5C4EE5"}
                                     fontcolor={"#5C4EE5"}
                                     fonthovercolor={"white"}
-                                    fontselectedcolor={"red"}
+                                    fontselectedcolor={"white"}
                                     bordercolor={"#5C4EE5"}
                                     borderhovercolor={"#5C4EE5"}
-                                    borderselectedcolor={"red"}
+                                    borderselectedcolor={"#5C4EE5"}
                                     selected={item.selected}
                                     onclickelement={this.onClickButton.bind(this, item.name)} />
                                 )
