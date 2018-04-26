@@ -1,7 +1,8 @@
 import {
     readXlsxWorkbook,
     convertWorkbookToCSVMap,
-    convertCSVMapInJSONMap
+    convertCSVMapInJSONMap,
+    writeXlsxWoorkbook
 } from './../../../modules/rkt_pl_module_file_formats_xlsx';
 
 import {
@@ -114,6 +115,16 @@ export function import_data_to_app(file, callback) {
 
 }
 
+export function export_data(){
+
+    get_data_from_database(function(data){
+    
+        writeXlsxWoorkbook(data);
+        
+    })
+
+}
+
 //This method creates the structure needed to import data in the databa
 export function create_database_structure_from_form_json(form_json){
 
@@ -212,6 +223,9 @@ export function perform_database_action(data,callback){
                     }
                 }
 
+            }else if(data.action === "export"){
+
+                export_data();
             }
         }
     }

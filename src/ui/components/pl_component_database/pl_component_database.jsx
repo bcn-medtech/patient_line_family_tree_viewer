@@ -210,7 +210,6 @@ export class PlComponentDatabase extends Component {
 
     on_click_database_menu_button(action) {
 
-
         if (action === "add") {
 
             this.setState({
@@ -232,19 +231,27 @@ export class PlComponentDatabase extends Component {
                 });
             }
 
-
         } else if (action === "export") {
 
             this.setState({
                 menu_action: false
             });
 
+
+            if(isObjectAFunction(this.props.perform_database_action)){
+
+                var action={};
+                action["action"]="export";
+                action["data"]={};
+                this.props.perform_database_action(action);
+            }
+
         } else if (action === "close") {
 
             this.setState({
                 menu_action: false
             });
-        }
+        } 
 
     }
 
