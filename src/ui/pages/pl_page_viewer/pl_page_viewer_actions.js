@@ -13,7 +13,10 @@ import patients from './test_patients.json';
 import { isObjectEmpty } from '../../../modules/rkt_module_object';
 
 //actions
-import {treeBuilder} from './pl_page_viewer_actions_d3_tree_parser';
+import {
+    treeBuilder,
+    siblingsBuilder
+} from './pl_page_viewer_actions_d3_tree_parser';
 
 export function get_data_from_database(callback){
 
@@ -55,8 +58,7 @@ export function get_all_patients_from_family(family_id,patients){
     return array_patients_family;
 }
 
-//#todo tomorrow :(
-export function get_family(family_id){
+export function get_family(family_id,callback){
 
     if(!isObjectEmpty(family_id)){
 
@@ -65,21 +67,28 @@ export function get_family(family_id){
             if("patients" in result){
 
                 var array_patients_family=get_all_patients_from_family(family_id,result.patients);
-                var root_node_tree = treeBuilder(array_patients_family);
-
                 console.log(array_patients_family);
-                console.log(root_node_tree);
+                var root = treeBuilder(array_patients_family);
+                var siblings = siblingsBuilder(array_patients_family);
 
-                
+                //console.log(array_patients_family);
+                //console.log(root);
+                //console.log(siblings);
+
+                var data = {};
+                data["root"]=root;
+                data["siblings"]=siblings;
+
+                callback(data);
+
             }
 
         });
 
-        console.log("********************************************");
-        var array_patients_family1=get_all_patients_from_family("2",patients);
-
+        //console.log("********************************************");
+        //var array_patients_family1=get_all_patients_from_family("2",patients);
         //console.log(patients);
-        console.log(array_patients_family1);
+        //console.log(array_patients_family1);
         //var root_node_tree = treeBuilder(array_patients_family);
         //console.log(root_node_tree);
     }

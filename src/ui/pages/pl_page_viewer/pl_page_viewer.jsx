@@ -29,12 +29,23 @@ import {get_family} from './pl_page_viewer_actions';
 import {PlComponentFamilyTreeViewer} from './../../components/pl_component_family_tree_viewer/pl_component_family_tree_viewer';
 //modules
 import { url_getParameterByName } from './../../../modules/rkt_module_url';
+import { isObjectEmpty } from './../../../modules/rkt_module_object';
 
 export default class PlPageViewer extends Component {
+
+  constructor(){
+    super();
+
+    this.state={
+      root:false,
+      siblings:false
+    };
+  }
 
   componentDidMount(){
 
     var location = window.location;
+    var myComponent = this;
 
     if ("href" in location) {
 
@@ -42,16 +53,32 @@ export default class PlPageViewer extends Component {
       var family_id = url_getParameterByName("family_id", location_url);
       var patient_id = url_getParameterByName("patient_id", location_url);
 
-      get_family(family_id);
+      get_family(family_id,function(result){
+          
+          var root = result.root;
+          var siblings = result.siblings;
+
+          myComponent.setState({
+            root:root,
+            siblings:siblings
+          });
+
+      });
       
     }
   }
 
   render() {
 
+    var tree_viewer;
+
+    if(this.state.root !== false && this.state.siblings !== false){
+        tree_viewer=<PlComponentFamilyTreeViewer root={this.state.root} siblings={this.state.siblings}/>;
+    }
+
     return (
       <div className="grid-frame pl-page-viewer">
-         <PlComponentFamilyTreeViewer/>
+          {tree_viewer}
       </div>
     );
   }
