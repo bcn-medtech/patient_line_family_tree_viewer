@@ -1,15 +1,14 @@
-body {
+/*body {
     text-align: center;
-  }
-  svg {
+  }*/
+
+  /*svg {
     margin-top: 32px;
     color:white;
-  }
+  }*/
 
   .text{
     fill:white;
-    text-anchor:"middle";
-    alignment-baseline:"central";
   }
   
   .muerte-subita {
