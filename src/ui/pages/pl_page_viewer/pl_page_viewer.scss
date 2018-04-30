@@ -1,9 +1,19 @@
 @import './../../components/pl_component_family_tree_viewer/pl_component_family_tree_viewer.scss';
+@import './../../components/pl_component_sidebar/pl_component_sidebar.scss';
 
 .pl-page-viewer{
     margin: 0; height: 100%; 
     overflow: hidden;
     background-color:$rkt-viewer-background-color;
     color:white;
+
+    .bottom_bar{
+        position: absolute;
+        bottom:55px;
+        right:12px;
+        align-items:center;
+        z-index: 10;
+        overflow:hidden;
+    }
 }
 

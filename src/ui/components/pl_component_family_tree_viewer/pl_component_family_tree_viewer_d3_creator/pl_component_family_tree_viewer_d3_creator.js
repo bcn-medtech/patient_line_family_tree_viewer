@@ -11,8 +11,13 @@ console.log(d3);
 export default class TreeDisplayer {
 
     create(el, props, root, sib, addDaughter, addSon, addWife, addHusband, addSister, addBrother, deleteMember, onClick, changeStatus) {
-        var w = 1000;
-        var h = 800;
+        
+       
+        var w = props.width;
+        var h = props.height;
+
+        //var w = 600;
+        //var h = 600;
         // Setup zoom and pan
         var zoom = d3.behavior.zoom()
             .scaleExtent([.1, 1])

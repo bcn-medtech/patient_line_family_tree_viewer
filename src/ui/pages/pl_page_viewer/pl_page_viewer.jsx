@@ -27,6 +27,8 @@ import React, { Component } from 'react';
 import {get_family} from './pl_page_viewer_actions';
 //components
 import {PlComponentFamilyTreeViewer} from './../../components/pl_component_family_tree_viewer/pl_component_family_tree_viewer';
+import {PlComponentSidebar } from './../../components/pl_component_sidebar/pl_component_sidebar';
+import { PlComponentMenu } from './../../components/pl_component_menu/pl_component_menu/pl_component_menu';
 //modules
 import { url_getParameterByName } from './../../../modules/rkt_module_url';
 import { isObjectEmpty } from './../../../modules/rkt_module_object';
@@ -68,17 +70,32 @@ export default class PlPageViewer extends Component {
     }
   }
 
+  on_click_menu(action){
+    console.log(action);
+  }
+
   render() {
 
     var tree_viewer;
+    var sidebar;
+
+    var menu_items = [
+      {
+          "name": "go_back",
+          "icon": <svg width='16' height='14' viewBox='0 0 16 14' fill-rule='evenodd'><path d='M3.4 8H16V6H3.3l5-4.7L7 0 0 7l7 7 1.3-1.3z'></path></svg>
+      }
+  ]
 
     if(this.state.root !== false && this.state.siblings !== false){
         tree_viewer=<PlComponentFamilyTreeViewer root={this.state.root} siblings={this.state.siblings}/>;
+        sidebar = <PlComponentSidebar/>
     }
 
     return (
       <div className="grid-frame pl-page-viewer">
-          {tree_viewer}
+          <div className="grid-block medium-8">{tree_viewer}</div>
+          <div className="grid-block medium-4">{sidebar}</div>
+          <div className="grid-block bottom_bar"><PlComponentMenu menu_items={menu_items} on_click_button={this.on_click_menu.bind(this)} /></div>
       </div>
     );
   }
