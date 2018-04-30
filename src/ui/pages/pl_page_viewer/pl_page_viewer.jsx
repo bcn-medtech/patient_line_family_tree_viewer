@@ -93,6 +93,7 @@ export default class PlPageViewer extends Component {
 
     var tree_viewer;
     var sidebar;
+    var viewer_legend;
 
     var bottom_button_left =
       {
@@ -110,6 +111,10 @@ export default class PlPageViewer extends Component {
     if (this.state.root !== false && this.state.siblings !== false) {
       tree_viewer = <PlComponentFamilyTreeViewer root={this.state.root} siblings={this.state.siblings} />;
       sidebar = <PlComponentSidebar />
+    }
+
+    if(this.state.show_legend){
+      viewer_legend = <PlComponentLegend/>;
     }
 
     return (
@@ -145,14 +150,12 @@ export default class PlPageViewer extends Component {
               onclickelement={this.on_click_button.bind(this, bottom_button_right.name)} />
           </div>
           <div className="grid-block shrink legend">
-          <PlComponentLegend/>
+          {viewer_legend}
           </div>
         </div>
         <div className="grid-block medium-4">
         {sidebar}
-        
         </div>
-
       </div>
     );
   }
