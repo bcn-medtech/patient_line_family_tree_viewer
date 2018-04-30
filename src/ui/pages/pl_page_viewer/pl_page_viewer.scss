@@ -1,5 +1,6 @@
 @import './../../components/pl_component_family_tree_viewer/pl_component_family_tree_viewer.scss';
 @import './../../components/pl_component_sidebar/pl_component_sidebar.scss';
+@import './../../components/pl_component_legend/pl_component_legend.scss';
 
 .pl-page-viewer{
     margin: 0; height: 100%; 
@@ -7,13 +8,32 @@
     background-color:$rkt-viewer-background-color;
     color:white;
 
-    .bottom_bar{
+    .bottom_bar_left{
         position: absolute;
-        bottom:55px;
+        bottom:15px;
+        left:12px;
+        align-items:center;
+        z-index: 15;
+        overflow:hidden;
+    }
+    .bottom_bar_right{
+        position: absolute;
+        bottom:15px;
         right:12px;
         align-items:center;
-        z-index: 10;
+        z-index: 15;
         overflow:hidden;
+    }
+
+    .legend{
+        position: absolute;
+    bottom: 15px;
+    right: -36px;
+    align-items: center;
+    z-index: 10;
+    overflow: hidden;
+    width: 332px;
+    height: 310px;
     }
 }
 
