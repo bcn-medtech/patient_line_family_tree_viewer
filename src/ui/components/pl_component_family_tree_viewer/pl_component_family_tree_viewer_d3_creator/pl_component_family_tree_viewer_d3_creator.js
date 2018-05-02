@@ -256,7 +256,7 @@ export default class TreeDisplayer {
         // Create the node rectangles for males.
         nodes.append("rect")
             .filter(function (d) { 
-                console.log(d);
+                //console.log(d);
                 return d.gender === "male"; 
             })
             .attr("class", function (d) { return d.status; })

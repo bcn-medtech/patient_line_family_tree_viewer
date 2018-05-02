@@ -38,8 +38,6 @@ export class PlComponentFamilyTreeViewer extends Component {
             var height = el.clientHeight;
             var width = el.clientWidth;
             var size = { width: width, height: height };
-
-            console.log(el);
             
             this.d3TreeCreator.create(el,size,root,siblings,this.addDaughter, this.addSon, this.addWife, this.addHusband, this.addSister, this.addBrother, this.deleteMember, this.onClick, this.changeStatus);
         }

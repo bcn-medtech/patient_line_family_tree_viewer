@@ -60,15 +60,15 @@ export function exploreSiblingsTree(couplesArray, dataJson) {
     var sibling = [];
     var childrenArray = getChildren(couplesArray, dataJson);
     couplesArray = getCouplesArray(childrenArray, dataJson);
-    console.log("couplesArray: ", couplesArray);
+    //console.log("couplesArray: ", couplesArray);
     for (var i in couplesArray) {
         children = exploreSiblingsTree(couplesArray[i], dataJson);
-        console.log("For couplesArray: ", children);
+        //console.log("For couplesArray: ", children);
         if (isCouple(couplesArray[i])) {
             children = addSiblingObject(couplesArray[i]);
-            console.log("If isCouple: ", children);
+            //console.log("If isCouple: ", children);
             sibling = sibling.concat(children);
-            console.log("If isCouple, sibling: ", sibling);
+            //console.log("If isCouple, sibling: ", sibling);
 
         }
         children = sibling;
@@ -96,10 +96,10 @@ export function siblingsBuilder(dataJson) {
     if (typeof siblings != 'undefined') {
         for (var i in siblings) {
             siblingsTree = siblingsTree.concat(siblings[i]);
-            console.log("siblingsTree: ", siblingsTree);
+            //console.log("siblingsTree: ", siblingsTree);
         }
     }
-    console.log("siblingsTree: ", siblingsTree);
+    //console.log("siblingsTree: ", siblingsTree);
     return siblingsTree;
 }
 

@@ -1,0 +1,42 @@
+.pl-component-card-patient{
+    
+    h4{
+        color:$color-normal;
+    }
+
+
+    .card-item{
+        padding-right: 10px;
+    }
+
+    .icon{
+        width:25px;
+        height: 25px;
+    }
+
+    .gender{
+        
+        margin-top: 6px;
+        stroke: transparent;
+
+        circle{
+            stroke:$color-normal;
+            fill: transparent;
+        }
+
+        rect{
+            stroke:$color-normal;
+            fill: transparent;
+        }   
+    }
+
+    .gender-text{
+        margin-top: -8px;
+    }
+
+    .pl_component_button_circle{
+        margin-top: 10px;
+        width: 35px;
+        height: 35px;
+    }
+}

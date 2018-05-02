@@ -26,6 +26,7 @@ import React, { Component } from 'react';
 
 //modules
 import { isObjectAFunction } from './../../../../modules/rkt_module_object';
+import { capitalize_first_letter } from './../../../../modules/rkt_module_string';
 
 
 export class PlComponentSidebarHeader extends Component {
@@ -43,27 +44,26 @@ export class PlComponentSidebarHeader extends Component {
     render() {
 
         var mode = this.props.mode;
-        var data = this.props.data;
-
-        var families_button;
-        var patients_button;
-
-        if (mode === "families") {
-            families_button = <a onClick={this.set_database_component_mode.bind(this, "families")}><h3 className="mode_selected">Families</h3></a>;
-            patients_button = <a onClick={this.set_database_component_mode.bind(this, "patients")}><h3 className="mode_unselected">Patients</h3></a>;
-        } else {
-            families_button = <a onClick={this.set_database_component_mode.bind(this, "families")}><h3 className="mode_unselected">Families</h3></a>;
-            patients_button = <a onClick={this.set_database_component_mode.bind(this, "patients")}><h3 className="mode_selected">Patients</h3></a>;
-        }
+        var items = this.props.items;
 
         return (
-            <div className="grid-block sub-header shrink pl-component-sidebar-header">
-                <div className="grid-block shrink">
-                    {families_button}
-                </div>
-                <div className="grid-block">
-                    {patients_button}
-                </div>
+            <div className="grid-block sub-header pl-component-sidebar-header">
+
+                {
+                    items.map((item, index) => {
+
+                        if (item === mode) {
+                            return (
+                                <a onClick={this.set_database_component_mode.bind(this,item)}><h3 className="mode_selected">{capitalize_first_letter(item)}</h3></a>
+                            )
+                        } else {
+                            return(
+                                <a onClick={this.set_database_component_mode.bind(this, item)}><h3 className="mode_unselected">{capitalize_first_letter(item)}</h3></a>
+                            )
+                        }
+
+                    })
+                }
             </div>
         );
 

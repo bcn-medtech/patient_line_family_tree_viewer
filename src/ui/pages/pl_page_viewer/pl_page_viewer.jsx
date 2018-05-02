@@ -24,7 +24,11 @@
 
 import React, { Component } from 'react';
 //actions
-import { get_family } from './pl_page_viewer_actions';
+import { 
+  get_data,
+  get_family,
+  get_patient
+} from './pl_page_viewer_actions';
 //components
 import { PlComponentFamilyTreeViewer } from './../../components/pl_component_family_tree_viewer/pl_component_family_tree_viewer';
 import { PlComponentSidebar } from './../../components/pl_component_sidebar/pl_component_sidebar';
@@ -43,7 +47,9 @@ export default class PlPageViewer extends Component {
     this.state = {
       root: false,
       siblings: false,
-      show_legend:false
+      show_legend:true,
+      family:false,
+      patient:false
     };
   }
 
@@ -58,15 +64,27 @@ export default class PlPageViewer extends Component {
       var family_id = url_getParameterByName("family_id", location_url);
       var patient_id = url_getParameterByName("patient_id", location_url);
 
-      get_family(family_id, function (result) {
+      get_data(family_id,patient_id,function(result){
 
-        var root = result.root;
-        var siblings = result.siblings;
+        console.log(result);
+        if("patient" in result){
+          
+          myComponent.setState({
+            root: result.root,
+            siblings: result.siblings,
+            family:result.family,
+            patient:result.patient
+          });
 
-        myComponent.setState({
-          root: root,
-          siblings: siblings
-        });
+        }else{
+
+          myComponent.setState({
+            root: result.root,
+            siblings: result.siblings,
+            family:result.family,
+          });
+
+        }
 
       });
 
@@ -94,6 +112,8 @@ export default class PlPageViewer extends Component {
     var tree_viewer;
     var sidebar;
     var viewer_legend;
+    var patient = this.state.patient;
+    var family = this.state.family;
 
     var bottom_button_left =
       {
@@ -110,7 +130,7 @@ export default class PlPageViewer extends Component {
 
     if (this.state.root !== false && this.state.siblings !== false) {
       tree_viewer = <PlComponentFamilyTreeViewer root={this.state.root} siblings={this.state.siblings} />;
-      sidebar = <PlComponentSidebar />
+      sidebar = <PlComponentSidebar patient={patient} family={family}/>
     }
 
     if(this.state.show_legend){

@@ -1,0 +1,16 @@
+.pl-component-sidebar-header{
+    
+    h3{
+        padding-right:10px;
+    }
+
+    border-bottom: 1px solid $color-normal;
+
+    .mode_selected{
+        color:$rkt_viewer_patient_line_header_bg_color;
+    }
+    
+    .mode_unselected{
+        color:$color-un-selected
+    }
+}
