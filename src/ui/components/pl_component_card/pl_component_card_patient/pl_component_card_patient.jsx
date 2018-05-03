@@ -24,11 +24,12 @@
 
 import React, { Component } from 'react';
 import { PlComponentButtonCircle } from './../../pl_component_button/pl_component_button_circle/pl_component_button_circle';
+import { PlComponentCardPatientStatus } from './pl_component_card_patient_status/pl_component_card_patient_status';
 
 
 export class PlComponentCardPatient extends Component {
 
-    on_add_patient(){
+    on_add_patient() {
         alert("On add patient");
     }
 
@@ -73,16 +74,16 @@ export class PlComponentCardPatient extends Component {
         var gender;
 
         var button_add =
-        {
-          "name": "add",
-          "icon": <svg width='15' height='15' viewBox='0 0 24 24' fill-rule='evenodd'><path d='M14 0h-4v10H0v4h10v10h4V14h10v-4H14z'></path></svg>
-        }
+            {
+                "name": "add",
+                "icon": <svg width='15' height='15' viewBox='0 0 24 24' fill-rule='evenodd'><path d='M14 0h-4v10H0v4h10v10h4V14h10v-4H14z'></path></svg>
+            }
 
-        var button_delete = 
-        {
-            "name":"delete",
-            "icon":<svg width='10' height='18' viewBox='0 0 16 24' fill-rule='evenodd'><path d='M4 0h8v2H4zM0 3v4h1v17h14V7h1V3H0zm13 18H3V8h10v13z'></path><path d='M5 10h2v9H5zm4 0h2v9H9z'></path></svg>
-        }
+        var button_delete =
+            {
+                "name": "delete",
+                "icon": <svg width='10' height='18' viewBox='0 0 16 24' fill-rule='evenodd'><path d='M4 0h8v2H4zM0 3v4h1v17h14V7h1V3H0zm13 18H3V8h10v13z'></path><path d='M5 10h2v9H5zm4 0h2v9H9z'></path></svg>
+            }
 
         if ("id" in patient) {
             patient_id = patient.id;
@@ -106,39 +107,44 @@ export class PlComponentCardPatient extends Component {
         }
 
         return (
-            <div className="grid-block pl-component-card-patient">
-                <div className="grid-block vertical card-item">
-                    <div className="grid-block shrink"><h4>{patient_name}</h4></div>
-                    <div className="grid-block shrink">{patient_id}</div>
+            <div className="grid-block vertical pl-component-card-patient">
+                <div className="grid-block">
+                    <div className="grid-block vertical card-item">
+                        <div className="grid-block shrink"><h4>{patient_name}</h4></div>
+                        <div className="grid-block shrink">{patient_id}</div>
+                    </div>
+                    {gender}
+                    <div className="grid-block shrink vertical card-item">
+                        <div className="grid-block align-center"><h4>{patient_num_relatives}</h4></div>
+                        <div className="grid-block align-center">relatives</div>
+                    </div>
+                    <div className="grid-block shrink">
+                        <PlComponentButtonCircle
+                            text={""}
+                            icon={button_add.icon}
+                            backgroundcolor={"transparent"}
+                            backgroundhovercolor={"#5C4EE5"}
+                            fontcolor={"#5C4EE5"}
+                            fonthovercolor={"white"}
+                            bordercolor={"#5C4EE5"}
+                            borderhovercolor={"#5C4EE5"}
+                            onclickelement={this.on_add_patient.bind(this, button_add.name)} />
+                    </div>
+                    <div className="grid-block shrink">
+                        <PlComponentButtonCircle
+                            text={""}
+                            icon={button_delete.icon}
+                            backgroundcolor={"transparent"}
+                            backgroundhovercolor={"#5C4EE5"}
+                            fontcolor={"#5C4EE5"}
+                            fonthovercolor={"white"}
+                            bordercolor={"#5C4EE5"}
+                            borderhovercolor={"#5C4EE5"}
+                            onclickelement={this.on_add_patient.bind(this, button_delete.name)} />
+                    </div>
                 </div>
-                {gender}
-                <div className="grid-block shrink vertical card-item">
-                    <div className="grid-block align-center"><h4>{patient_num_relatives}</h4></div>
-                    <div className="grid-block align-center">relatives</div>
-                </div>
-                <div className="grid-block shrink">
-                    <PlComponentButtonCircle
-                        text={""}
-                        icon={button_add.icon}
-                        backgroundcolor={"transparent"}
-                        backgroundhovercolor={"#5C4EE5"}
-                        fontcolor={"#5C4EE5"}
-                        fonthovercolor={"white"}
-                        bordercolor={"#5C4EE5"}
-                        borderhovercolor={"#5C4EE5"}
-                        onclickelement={this.on_add_patient.bind(this, button_add.name)} />
-                </div>
-                <div className="grid-block shrink">
-                    <PlComponentButtonCircle
-                        text={""}
-                        icon={button_delete.icon}
-                        backgroundcolor={"transparent"}
-                        backgroundhovercolor={"#5C4EE5"}
-                        fontcolor={"#5C4EE5"}
-                        fonthovercolor={"white"}
-                        bordercolor={"#5C4EE5"}
-                        borderhovercolor={"#5C4EE5"}
-                        onclickelement={this.on_add_patient.bind(this, button_delete.name)} />
+                <div className="grid-block">
+                    <PlComponentCardPatientStatus />
                 </div>
             </div>
         );
