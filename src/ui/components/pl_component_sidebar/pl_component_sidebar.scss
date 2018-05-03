@@ -13,11 +13,20 @@
     }
 
     .pl_component_sidebar_element{
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
 
     .pl-component-menu-tags{
         padding-top: 15px;
         padding-left: 0px;
+    }
+
+    .pl_component_sidebar_element_footer{
+        position: absolute;
+        bottom:5px;
+        right:5px;
+        align-items:center;
+        z-index: 10;
+        overflow:hidden;
     }
 }

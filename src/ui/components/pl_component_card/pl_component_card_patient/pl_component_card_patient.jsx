@@ -78,6 +78,12 @@ export class PlComponentCardPatient extends Component {
           "icon": <svg width='15' height='15' viewBox='0 0 24 24' fill-rule='evenodd'><path d='M14 0h-4v10H0v4h10v10h4V14h10v-4H14z'></path></svg>
         }
 
+        var button_delete = 
+        {
+            "name":"delete",
+            "icon":<svg width='10' height='18' viewBox='0 0 16 24' fill-rule='evenodd'><path d='M4 0h8v2H4zM0 3v4h1v17h14V7h1V3H0zm13 18H3V8h10v13z'></path><path d='M5 10h2v9H5zm4 0h2v9H9z'></path></svg>
+        }
+
         if ("id" in patient) {
             patient_id = patient.id;
         }
@@ -121,6 +127,18 @@ export class PlComponentCardPatient extends Component {
                         bordercolor={"#5C4EE5"}
                         borderhovercolor={"#5C4EE5"}
                         onclickelement={this.on_add_patient.bind(this, button_add.name)} />
+                </div>
+                <div className="grid-block shrink">
+                    <PlComponentButtonCircle
+                        text={""}
+                        icon={button_delete.icon}
+                        backgroundcolor={"transparent"}
+                        backgroundhovercolor={"#5C4EE5"}
+                        fontcolor={"#5C4EE5"}
+                        fonthovercolor={"white"}
+                        bordercolor={"#5C4EE5"}
+                        borderhovercolor={"#5C4EE5"}
+                        onclickelement={this.on_add_patient.bind(this, button_delete.name)} />
                 </div>
             </div>
         );

@@ -10,6 +10,7 @@ import { PlComponentCardPatient } from './../pl_component_card/pl_component_card
 import { PlComponentMenuTags } from './../pl_component_menu/pl_component_menu_tags/pl_component_menu_tags';
 import { isObjectEmpty, isObjectAnArray } from './../../../modules/rkt_module_object';
 import { PlComponentTable } from './../pl_component_table/pl_component_table';
+import { PlComponentButtonRect } from './../pl_component_button/pl_component_button_rect/pl_component_button_rect';
 import { keys } from 'underscore';
 
 export class PlComponentSidebar extends Component {
@@ -45,50 +46,35 @@ export class PlComponentSidebar extends Component {
 
     }
 
-    /*render_data(data) {
-
-        var data_keys = keys(data);
-
-        return (
-
-            <div className="grid-block vertical">
-
-                {
-                    data_keys.map((item, index) => {
-
-                        return (
-                            <div className="grid-block">
-                                <div className="grid-block shrink">{item}:&nbsp;</div>
-                                <div className="grid-block shrink">{data[item]}</div>
-                            </div>
-                        )
-
-                    })
-
-                }
-
-            </div>
-        );
-    }*/
-
     render_menu_patient(patient) {
 
         var data_keys_selected = this.state.patient_columns_selected;
         var data = [];
         data.push(patient);
-        create_table(patient);
+        var data_table = create_table(patient);
+        console.log(data_table);
 
         return (
             <div className="grid-block vertical">
                 <div className="grid-block shrink pl_component_sidebar_element">
                     <PlComponentCardPatient patient={patient} />
                 </div>
-                <div className="grid-block shrink">
+                <div className="grid-block shrink pl_component_sidebar_element">
                     <PlComponentMenuTags data={data} keys_selected={data_keys_selected} on_select_tag={this.on_select_tag.bind(this)} on_un_selected_tag={this.on_unselect_tag.bind(this)}></PlComponentMenuTags>
                 </div>
-                <div className="grid-block">
-                    {/*this.render_data(patient)*/}
-                    {/*<PlComponentTable/>*/}
+                <div className="grid-block pl_component_sidebar_element">
+                    <PlComponentTable data={data_table} />
+                </div>
+                <div className="grid-block pl_component_sidebar_element_footer">
+                <PlComponentButtonRect 
+                text="Save"
+                backgroundcolor={"transparent"} 
+                backgroundhovercolor={"#5C4EE5"} 
+                fontcolor={"#5C4EE5"}
+                fonthovercolor={"white"}
+                bordercolor={"#5C4EE5"}
+                borderhovercolor={"#5C4EE5"}
+                onclickelement={this.on_save_data.bind(this)} />
                 </div>
             </div>
         )
