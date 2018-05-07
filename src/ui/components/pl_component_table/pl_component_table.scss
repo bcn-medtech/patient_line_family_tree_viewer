@@ -1,15 +1,30 @@
 .pl-component-table{
 
+    .bx--responsive-table-container{
+        
+        overflow: scroll;
+        width:100%;
+
+        .bx--responsive-table{
+            border: 0px solid $rkt-viewer-background-color;
+        }
+
+        /*.bx--table-head{
+            z-index: 1;
+            position: absolute;
+            
+        }*/
+    }
+
+
+
     .bx--table-row{
             
         background-color: $rkt-viewer-background-color;
         border: 0px solid $rkt-viewer-background-color;
     }
 
-    .bx--responsive-table{
-        border: 0px solid $rkt-viewer-background-color;
-    }
-
+    
     .bx--table-header{
         border: 1px solid $rkt_viewer_patient_line_header_bg_color;
     }

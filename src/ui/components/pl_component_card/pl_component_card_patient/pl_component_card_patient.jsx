@@ -143,9 +143,9 @@ export class PlComponentCardPatient extends Component {
                             onclickelement={this.on_add_patient.bind(this, button_delete.name)} />
                     </div>
                 </div>
-                <div className="grid-block">
+                {/*<div className="grid-block">
                     <PlComponentCardPatientStatus />
-                </div>
+        </div>*/}
             </div>
         );
 

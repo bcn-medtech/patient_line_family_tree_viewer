@@ -153,7 +153,7 @@ export class PlComponentTable extends Component {
     render_body(data) {
 
         return (
-            <TableBody>
+            <TableBody className="table-body">
                 {this.render_rows(data)}
             </TableBody>
         );

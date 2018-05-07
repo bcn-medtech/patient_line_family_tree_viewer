@@ -117,11 +117,15 @@ export default class PlPagePatients extends Component {
 
   import_data(file) {
 
+    var myComponent = this;
+
     import_data_to_app(file, function (result) {
 
       if (result) {
         console.log(result);
         console.log("Data imported");
+
+        myComponent.update_component_state_from_database();
       } else {
         console.log("Error! Problems importing data");
       }
