@@ -23,19 +23,64 @@
 */
 
 import React, { Component } from 'react';
+import { PlComponentCardPatientStatus } from './../pl_component_card_patient_status/pl_component_card_patient_status';
+
 import {
-    where
+    filter
 } from 'underscore';
-import { isObjectEmpty } from '../../../../../modules/rkt_module_object';
 
-export class PlComponentCardPatientStatus extends Component {
+import {
+    isObjectAFunction
+} from './../../../../../modules/rkt_module_object';
 
+export class PlComponentCardPatientStatusCombobox extends Component {
 
-    render() {
+    constructor(){
+        super();
+
+        this.state={
+            status:false,
+            gender:false,
+        }
+    }
+
+    init_component(status,gender){
+
+        this.setState({
+            status:status,
+            gender:gender
+        });
+
+    }
+
+    componentDidMount(){
 
         var status = this.props.status;
         var gender = this.props.gender;
-        var item;
+
+        this.init_component(status,gender);
+    }
+    
+    componentWillReceiveProps(nextprops){
+
+        var status = nextprops.status;
+        var gender = nextprops.gender;
+
+        if(this.state.gender !== gender && this.state.status !== status){
+            this.init_component(status,gender);
+        }
+        
+    }
+    
+    
+    set_item(item){
+        
+        this.setState({
+            status:item.status
+        })
+    }
+
+    render_list_items_status(current_status,gender) {
 
         var status_types = [
             {
@@ -190,32 +235,61 @@ export class PlComponentCardPatientStatus extends Component {
                     <text text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_62" y="28.928437" x="15.009093" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">+</text>
                 </svg>
             },
-
         ]
 
-        var patient_status = where(status_types, { status: status, gender: gender });
-        
-
-        if (!isObjectEmpty(patient_status)) {
-
-            if(patient_status.length === 1){
-                
-                item = patient_status[0].svg;
-
-            }else{
-                
-                item = <div className="grid-block"><h4>?</h4></div>;
-            }
+        status_types = filter(status_types,function(item){
             
-        } else {
+            if(item.gender === gender){
+                return true;
+            }
 
-            item = <div className="grid-block"><h4>?</h4></div>;
-        }
+        });
 
         return (
-            <div className="grid-block shrink pl-component-card-patient-status">
-                {item}
+
+            <div className="grid-block vertical list">
+
+                {
+                    status_types.map((item) => {
+
+                        if(item.status === current_status){
+                            return (
+                                <div className="grid-block shrink list-item-selected">{item.svg}</div>
+                            );
+                        }else{
+                            return (
+                                <div className="grid-block shrink list-item" onClick={this.set_item.bind(this,item)}>{item.svg}</div>
+                            );
+                        }
+                       
+                    })
+                }
+            </div>
+
+        )
+
+    }
+
+    render() {
+
+        var status = this.state.status;
+        var gender = this.state.gender;
+
+        console.log(status);
+        console.log(status);
+
+        return (
+            <div className="grid-block shrink vertical pl-component-card-patient-status-combobox tooltip">
+                <div className="grid-block align-center">
+                    <PlComponentCardPatientStatus status={status} gender={gender} />
+                    <div className="grid-block tooltipcontent">
+                        {this.render_list_items_status(status,gender)}
+                    </div>
+                </div>
+                <div className="grid-block align-center text">status</div>
             </div>
         );
+
+
     }
 }

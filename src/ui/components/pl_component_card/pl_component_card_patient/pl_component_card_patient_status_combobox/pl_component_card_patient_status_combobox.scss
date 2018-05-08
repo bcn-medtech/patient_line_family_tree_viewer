@@ -1,0 +1,63 @@
+@import './../pl_component_card_patient_status/pl_component_card_patient_status.scss';
+
+.pl-component-card-patient-status-combobox{
+
+    .text{
+        color:$color-normal;
+    }
+
+    .list{
+        height:200px;
+
+        .list-item{
+            
+            padding: 10px;
+
+            &:hover{
+                background-color: $color_shadow-2;
+                border-bottom: 1px solid $color-normal;
+                border-top: 1px solid $color-normal;
+            }
+        }
+
+        .list-item-selected{
+
+            padding: 10px;
+            background-color: $color-normal;
+        }
+    }
+
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.tooltip .tooltipcontent {
+    visibility: hidden;
+    //width: 120px;
+    background-color:$rkt_viewer_patient_line_viewer_bg_color;
+    color: #fff;
+    text-align: center;
+    //padding: 5px 0;
+    border: 1px solid $color-normal;
+
+    /* Position the tooltip */
+    position: fixed;
+    margin-top: 70px;
+    //padding: 10px;
+    z-index: 3;
+}
+
+.tooltip:hover{
+    background-color: $color_shadow-2;
+}
+
+.tooltip:hover .tooltipcontent {
+    visibility: visible;
+    
+}
+

@@ -23,15 +23,22 @@
 */
 
 import React, { Component } from 'react';
+
+//components
 import { PlComponentButtonCircle } from './../../pl_component_button/pl_component_button_circle/pl_component_button_circle';
 import { PlComponentCardPatientStatus } from './pl_component_card_patient_status/pl_component_card_patient_status';
-
+import { PlComponentCardPatientStatusCombobox } from './pl_component_card_patient_status_combobox/pl_component_card_patient_status_combobox';
+//modules
+import {
+    isObjectAFunction, isObjectEmpty, isObjectAnArray
+} from './../../../../modules/rkt_module_object';
 
 export class PlComponentCardPatient extends Component {
 
     on_add_patient() {
         alert("On add patient");
     }
+
 
     render_male() {
 
@@ -65,24 +72,46 @@ export class PlComponentCardPatient extends Component {
         );
     }
 
+    render_status_relative(relative, type) {
+
+        var status = relative.status;
+        var gender = relative.gender;
+
+        return (
+            <div className="grid-block vertical">
+                <div className="grid-block align-center"><PlComponentCardPatientStatus status={status} gender={gender} /></div>
+                {/*<div className="grid-block align-center">{relative.id}</div>*/}
+                <div className="grid-block align-center relative">{type}</div>
+            </div>
+        );
+    }
+
+
     render() {
 
         var patient = this.props.patient;
+        var father = this.props.father;
+        var mother = this.props.mother;
+        var children = this.props.children;
         var patient_id;
         var patient_name;
         var patient_num_relatives;
+        var patient_num_children;
         var gender;
 
-        var button_add =
-            {
-                "name": "add",
-                "icon": <svg width='15' height='15' viewBox='0 0 24 24' fill-rule='evenodd'><path d='M14 0h-4v10H0v4h10v10h4V14h10v-4H14z'></path></svg>
-            }
+        console.log(patient);
+
 
         var button_delete =
             {
                 "name": "delete",
                 "icon": <svg width='10' height='18' viewBox='0 0 16 24' fill-rule='evenodd'><path d='M4 0h8v2H4zM0 3v4h1v17h14V7h1V3H0zm13 18H3V8h10v13z'></path><path d='M5 10h2v9H5zm4 0h2v9H9z'></path></svg>
+            }
+
+        var button_edit =
+            {
+                "name": "edit",
+                "icon": <svg width='15' height='15' viewBox='0 0 16 16' fill-rule='evenodd'><path d='M2.032 10.924l7.99-7.99 2.97 2.97-7.99 7.99zm9.014-8.91l1.98-1.98 2.97 2.97-1.98 1.98zM0 16l3-1-2-2z'></path></svg>
             }
 
         if ("id" in patient) {
@@ -106,6 +135,23 @@ export class PlComponentCardPatient extends Component {
             }
         }
 
+        if(!isObjectEmpty(children)){
+
+            if(isObjectAnArray(children)){
+
+                patient_num_children = children.length;
+            
+            }else{
+
+                patient_num_children = 0;
+
+            }
+
+        }else{
+
+            patient_num_children = 0;
+        }
+
         return (
             <div className="grid-block vertical pl-component-card-patient">
                 <div className="grid-block">
@@ -113,22 +159,17 @@ export class PlComponentCardPatient extends Component {
                         <div className="grid-block shrink"><h4>{patient_name}</h4></div>
                         <div className="grid-block shrink">{patient_id}</div>
                     </div>
-                    {gender}
-                    <div className="grid-block shrink vertical card-item">
-                        <div className="grid-block align-center"><h4>{patient_num_relatives}</h4></div>
-                        <div className="grid-block align-center">relatives</div>
-                    </div>
                     <div className="grid-block shrink">
                         <PlComponentButtonCircle
                             text={""}
-                            icon={button_add.icon}
+                            icon={button_edit.icon}
                             backgroundcolor={"transparent"}
                             backgroundhovercolor={"#5C4EE5"}
                             fontcolor={"#5C4EE5"}
                             fonthovercolor={"white"}
                             bordercolor={"#5C4EE5"}
                             borderhovercolor={"#5C4EE5"}
-                            onclickelement={this.on_add_patient.bind(this, button_add.name)} />
+                            onclickelement={this.on_add_patient.bind(this, button_edit.name)} />
                     </div>
                     <div className="grid-block shrink">
                         <PlComponentButtonCircle
@@ -143,9 +184,20 @@ export class PlComponentCardPatient extends Component {
                             onclickelement={this.on_add_patient.bind(this, button_delete.name)} />
                     </div>
                 </div>
-                {/*<div className="grid-block">
-                    <PlComponentCardPatientStatus />
-        </div>*/}
+                <div className="grid-block card-row">
+                    <div className="grid-block shrink vertical card-item">
+                        <div className="grid-block align-center"><h4>{patient_num_relatives}</h4></div>
+                        <div className="grid-block align-center">relatives</div>
+                    </div>
+                    <div className="grid-block shrink vertical card-item">
+                        <div className="grid-block align-center"><h4>{patient_num_children}</h4></div>
+                        <div className="grid-block align-center">children</div>
+                    </div>
+                    <div className="grid-block card-item">{gender}</div>
+                    <div className="grid-block shrink"><PlComponentCardPatientStatusCombobox status={patient.status} gender={patient.gender} ref="patient_status"/></div>
+                    <div className="grid-block shrink card-item">{this.render_status_relative(father, "father")}</div>
+                    <div className="grid-block shrink card-item">{this.render_status_relative(mother, "mother")}</div>
+                </div>
             </div>
         );
 

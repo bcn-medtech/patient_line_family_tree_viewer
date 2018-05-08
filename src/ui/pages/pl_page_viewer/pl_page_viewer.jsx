@@ -24,7 +24,7 @@
 
 import React, { Component } from 'react';
 //actions
-import { 
+import {
   get_data,
   get_family,
   get_patient
@@ -47,9 +47,12 @@ export default class PlPageViewer extends Component {
     this.state = {
       root: false,
       siblings: false,
-      show_legend:true,
-      family:false,
-      patient:false
+      show_legend: true,
+      family: false,
+      patient: false,
+      father: false,
+      mother: false,
+      children:false
     };
   }
 
@@ -64,24 +67,26 @@ export default class PlPageViewer extends Component {
       var family_id = url_getParameterByName("family_id", location_url);
       var patient_id = url_getParameterByName("patient_id", location_url);
 
-      get_data(family_id,patient_id,function(result){
+      get_data(family_id, patient_id, function (result) {
 
-        console.log(result);
-        if("patient" in result){
-          
+        if ("patient" in result) {
+
           myComponent.setState({
             root: result.root,
             siblings: result.siblings,
-            family:result.family,
-            patient:result.patient
+            family: result.family,
+            patient: result.patient,
+            mother: result.mother,
+            father: result.father,
+            children:result.children
           });
 
-        }else{
+        } else {
 
           myComponent.setState({
             root: result.root,
             siblings: result.siblings,
-            family:result.family,
+            family: result.family,
           });
 
         }
@@ -100,9 +105,9 @@ export default class PlPageViewer extends Component {
 
     } else if (action === "show_legend") {
 
-        this.setState({
-          show_legend:!this.state.show_legend
-        })
+      this.setState({
+        show_legend: !this.state.show_legend
+      })
     }
 
   }
@@ -114,6 +119,9 @@ export default class PlPageViewer extends Component {
     var viewer_legend;
     var patient = this.state.patient;
     var family = this.state.family;
+    var father = this.state.father;
+    var mother = this.state.mother;
+    var children = this.state.children;
 
     var bottom_button_left =
       {
@@ -125,16 +133,22 @@ export default class PlPageViewer extends Component {
       {
         "name": "show_legend",
         "icon": <svg width='16' height='15' viewBox='0 0 12 11' fill-rule='evenodd'><path d='M1 9V1h2.8S6 1 6 2.5v7.1S5.7 9 3.7 9H1zm6.5-9C6.4 0 6 .8 6 .8S5.6 0 3.8 0H0v10h3.7S6 10 6 11c0-1 2.2-1 2.2-1H12V0H7.5z'></path></svg>,
-        "selected":this.state.show_legend
+        "selected": this.state.show_legend
       }
 
     if (this.state.root !== false && this.state.siblings !== false) {
       tree_viewer = <PlComponentFamilyTreeViewer root={this.state.root} siblings={this.state.siblings} />;
-      sidebar = <PlComponentSidebar patient={patient} family={family}/>
+      sidebar = <PlComponentSidebar
+        patient={patient}
+        family={family}
+        father={father}
+        mother={mother}
+        children = {children}
+        />
     }
 
-    if(this.state.show_legend){
-      viewer_legend = <PlComponentLegend/>;
+    if (this.state.show_legend) {
+      viewer_legend = <PlComponentLegend />;
     }
 
     return (
@@ -170,11 +184,11 @@ export default class PlPageViewer extends Component {
               onclickelement={this.on_click_button.bind(this, bottom_button_right.name)} />
           </div>
           <div className="grid-block shrink legend">
-          {viewer_legend}
+            {viewer_legend}
           </div>
         </div>
         <div className="grid-block medium-4">
-        {sidebar}
+          {sidebar}
         </div>
       </div>
     );

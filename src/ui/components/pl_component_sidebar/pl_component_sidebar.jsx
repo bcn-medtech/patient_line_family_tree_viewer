@@ -46,7 +46,7 @@ export class PlComponentSidebar extends Component {
 
     }
 
-    render_menu_patient(patient) {
+    render_menu_patient(patient,father,mother,children) {
 
         var data_keys_selected = this.state.patient_columns_selected;
         var data = [];
@@ -57,12 +57,12 @@ export class PlComponentSidebar extends Component {
         return (
             <div className="grid-block vertical">
                 <div className="grid-block shrink pl_component_sidebar_element">
-                    <PlComponentCardPatient patient={patient} />
+                    <PlComponentCardPatient patient={patient} father={father} mother={mother} children={children} ref="patient_card"/>
                 </div>
                 <div className="grid-block shrink pl_component_sidebar_element">
                     <PlComponentMenuTags data={data} keys_selected={data_keys_selected} on_select_tag={this.on_select_tag.bind(this)} on_un_selected_tag={this.on_unselect_tag.bind(this)}></PlComponentMenuTags>
                 </div>
-                <div className="grid-block pl_component_sidebar_element">
+                {/*<div className="grid-block pl_component_sidebar_element">
                     <PlComponentTable data={data_table} />
                 </div>
                 <div className="grid-block pl_component_sidebar_element_footer">
@@ -74,8 +74,8 @@ export class PlComponentSidebar extends Component {
                 fonthovercolor={"white"}
                 bordercolor={"#5C4EE5"}
                 borderhovercolor={"#5C4EE5"}
-                onclickelement={this.on_save_data.bind(this)} />
-                </div>
+        onclickelement={this.on_save_data.bind(this)} />
+        </div>*/}
             </div>
         )
     }
@@ -96,13 +96,15 @@ export class PlComponentSidebar extends Component {
         var sidebar_header_items = ["patient", "family"];
         var family = this.props.family;
         var patient = this.props.patient;
+        var father = this.props.father;
+        var mother = this.props.mother;
+        var children = this.props.children;
         var mode = this.state.mode;
         var sidebar;
 
-
         if (mode === "patient") {
 
-            sidebar = this.render_menu_patient(patient);
+            sidebar = this.render_menu_patient(patient,father,mother,children);
 
         } else if (mode === "family") {
 

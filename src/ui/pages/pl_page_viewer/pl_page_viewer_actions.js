@@ -135,8 +135,59 @@ export function get_data(family_id, patient_id, callback) {
                                 var patient = findWhere(patients,{id:patient_id});
                                
                                 if(!isObjectEmpty(patient)){
+                                    
                                     data["patient"]=patient;
+
+                                    if("father" in patient){
+
+                                        var father = false;
+
+                                        if(!isObjectEmpty(patient.father)){
+
+                                            father = findWhere(patients,{id:patient.father});
+                                        }
+
+                                        data["father"] = father;
+                                        
+                                    }
+
+                                    if("mother" in patient){
+
+                                        var mother = false;
+
+                                        if(!isObjectEmpty(patient.mother)){
+                                            
+                                            mother = findWhere(patients,{id:patient.mother});
+
+                                        }
+
+                                        data["mother"]=mother;
+                                    }
+
+                                    if("children" in patient){
+
+                                        var children = [];
+
+                                        if(!isObjectEmpty(patient.children)){
+
+                                            for(var i=0;i<patient.children.length;i++){
+
+                                                var child = findWhere(patients,{id:patient.children[i]});
+
+                                                if(!isObjectEmpty(child)){
+                                                    children.push(child);
+                                                }
+
+                                            }
+
+                                            data["children"]=children;
+
+                                        }
+                                    }
+
+
                                     callback(data);
+                                    
                                 }else{
                                     console.log("error");
                                 }
@@ -162,12 +213,5 @@ export function get_data(family_id, patient_id, callback) {
             }
 
         });
-
-        //console.log("********************************************");
-        //var array_patients_family1=get_all_patients_from_family("2",patients);
-        //console.log(patients);
-        //console.log(array_patients_family1);
-        //var root_node_tree = treeBuilder(array_patients_family);
-        //console.log(root_node_tree);
     }
 }

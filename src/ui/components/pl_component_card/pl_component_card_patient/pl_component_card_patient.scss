@@ -1,4 +1,5 @@
 @import './pl_component_card_patient_status/pl_component_card_patient_status.scss';
+@import './pl_component_card_patient_status_combobox/pl_component_card_patient_status_combobox.scss';
 
 .pl-component-card-patient{
     
@@ -9,6 +10,10 @@
 
     .card-item{
         padding-right: 10px;
+    }
+
+    .card-row{
+        padding-top:10px;
     }
 
     .icon{
@@ -41,4 +46,10 @@
         width: 35px;
         height: 35px;
     }
+
+    .relative{
+        color:$color-normal;
+    }
+
+
 }
