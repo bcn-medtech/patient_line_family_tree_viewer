@@ -10,12 +10,12 @@
     overflow:hidden;
     
     form {
-        input[type=text]{
-            background-color: transparent; //#ffffff;
-            color: rgba(58, 153, 216, 0.697);//$color_main_blur;
+        input[type=text],[type=password]{
+            background-color: transparent;
+            color: $color_main;
             font-size: 20px;
             height:41px;
-            border: 1px solid rgba(58, 153, 216, 0.201);//$color_main_blur;
+            border: 1px solid rgba(58, 153, 216, 0.201);
             overflow:hidden;
 
             &:hover{
@@ -26,57 +26,46 @@
             }
 
             &:focus{
-                background-color: transparent; //#ffffff;
+                background-color: transparent;
                 color: $color_main;
-                border: 1px solid rgba(58, 153, 216, 0.8);//1px solid rgba(58, 153, 216, 0.8);
+                border: 1px solid rgba(58, 153, 216, 0.8);
                 overflow:hidden;
             }
         }
+        
         ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
             color: $color-un-selected;
             opacity: 1; /* Firefox */
         }
         
         :-ms-input-placeholder { /* Internet Explorer 10-11 */
-            color: $color-un-selected;
+            color:$color-un-selected;
         }
         
         ::-ms-input-placeholder { /* Microsoft Edge */
-            color: $color-un-selected;
+            color:$color-un-selected;
         }
     }
 }
 
-.pl_component_form_item_input_text_invalid {
-
-    margin-top:5px;
-    margin-bottom:15px;
-    margin-left:35px;
-    margin-right:10px;
-    overflow:hidden;
-    
+.pl_component_form_item_input_text.invalid {
     form {
-        input[type=text]{
-            background-color: transparent; //#ffffff;
+        input[type=text],[type=password]{
             color: red;
-            font-size: 20px;
-            height:41px;
             border: 1px solid red;
-            overflow:hidden;
+        }
 
-            // &:hover{
-            //     background-color: #ffffff;
-            //     color: $color_main;
-            //     border: 1px solid rgba(58, 153, 216, 0.8);
-            //     overflow:hidden;
-            // }
-
-            // &:focus{
-            //     background-color: rgba(255, 255, 255, 0.8); //#ffffff;
-            //     color: $color_main;
-            //     border: 1px solid rgba(58, 153, 216, 0.8);//1px solid rgba(58, 153, 216, 0.8);
-            //     overflow:hidden;
-            // }
+        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: rgba(255, 0, 0, 0.6);
+            opacity: 1; /* Firefox */
+        }
+            
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color:rgba(255, 0, 0, 0.6);
+        }
+            
+        ::-ms-input-placeholder { /* Microsoft Edge */
+            color:rgba(255, 0, 0, 0.6);
         }
     }
 }
@@ -88,18 +77,19 @@
     align-items:center; // vertical centering of the icon
     justify-content:center; // horizontal centering of the icon
 
-    color: rgba(58, 153, 216, 0.697);//$color_main_blur;
+    color: rgba(58, 153, 216, 0.697);
     font-size:30px;
     overflow:hidden;
+
+    svg{
+        fill: rgba(58, 153, 216, 0.697);
+    }
 }
     
-.pl_component_form_item_input_text_icon_highlighted{
-    margin-left:10px;
-    height:41px;
-    align-items:center; // vertical centering of the icon
-    justify-content:center; // horizontal centering of the icon
-
+.pl_component_form_item_input_text_icon.highlighted{
     color: $color_main;
-    font-size:30px;
-    overflow:hidden;
+
+    svg{
+        fill: $color_main;
+    }
 }

@@ -27,7 +27,8 @@ import React, { Component } from 'react';
 import { 
   get_data,
   get_family,
-  get_patient
+  get_patient,
+  perform_database_action
 } from './pl_page_viewer_actions';
 //components
 import { PlComponentFamilyTreeViewer } from './../../components/pl_component_family_tree_viewer/pl_component_family_tree_viewer';
@@ -53,7 +54,7 @@ export default class PlPageViewer extends Component {
     };
   }
 
-  componentDidMount() {
+  update_component_state_from_database() {
 
     var location = window.location;
     var myComponent = this;
@@ -89,6 +90,23 @@ export default class PlPageViewer extends Component {
       });
 
     }
+  }
+
+  componentDidMount() {
+
+    this.update_component_state_from_database();
+    
+  }
+
+  perform_database_action(data){
+    
+    var myComponent = this;
+    
+    perform_database_action(data,function(result){
+      
+        myComponent.update_component_state_from_database(); 
+    });
+
   }
 
   on_click_button(action) {
@@ -130,7 +148,7 @@ export default class PlPageViewer extends Component {
 
     if (this.state.root !== false && this.state.siblings !== false) {
       tree_viewer = <PlComponentFamilyTreeViewer root={this.state.root} siblings={this.state.siblings} />;
-      sidebar = <PlComponentSidebar patient={patient} family={family}/>
+      sidebar = <PlComponentSidebar patient={patient} family={family} perform_database_action={this.perform_database_action.bind(this)}/>
     }
 
     if(this.state.show_legend){

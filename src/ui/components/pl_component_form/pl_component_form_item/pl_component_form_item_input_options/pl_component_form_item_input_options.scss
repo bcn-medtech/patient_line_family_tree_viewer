@@ -19,14 +19,12 @@
                 color:$color_normal;
                 opacity:0.697;
                 font: 20px Helvetica; //"Helvetica Neue";
-                //vertical-align:middle;
             }
 
             label:before{ // (customized) non-checked radio button
                 content: " ";
                 margin-right:10px;
                 display: inline-block;
-                //vertical-align:middle;
                 width:16px;
                 height:16px;
                 border-radius:50%;
@@ -39,64 +37,24 @@
                 content: " ";
                 margin-right:10px;
                 display:inline-block;
-                //vertical-align:middle;
                 width:16px;
                 height:16px;
                 border-radius:50%;
                 border: 1px solid rgba(58, 153, 216, 0.8);
-                background-color:rgba(58, 153, 216, 0.697);//$color_main_blur;
+                background-color:rgba(58, 153, 216, 0.697);
             }
         }        
     }
 }
 
-.pl_component_form_item_input_options_highlighted {
-
-    margin-top:5px;
-    margin-bottom:20px;//15px;
-    margin-left:25px;//35px;
-    margin-right:10px;
-    overflow:hidden;
-
+.pl_component_form_item_input_options.highlighted {
 
     form {
         .pl_component_form_item_input_option {
-            align-items:center;
-            overflow:hidden;
-            
-            input[type=radio]{
-                opacity:0;
-            }
             label{
                 color:$color_normal_2;
-                opacity:0.697;
-                font: 20px Helvetica; //"Helvetica Neue";
-                //vertical-align:middle;
-            }
-
-            label:before{ // (customized) non-checked radio button
-                content: " ";
-                margin-right:10px;
-                display: inline-block;
-                //vertical-align:middle;
-                width:16px;
-                height:16px;
-                border-radius:50%;
-                border: 1px solid rgba(58, 153, 216, 0.8);
-                background-color:"ffffff";
-            }
-
-            input[type=radio]:checked + label:before { // (customized) checked radio button
-                content: " ";
-                margin-right:10px;
-                display: inline-block;
-                //vertical-align:middle;
-                width:16px;
-                height:16px;
-                border-radius:50%;
-                border: 1px solid rgba(58, 153, 216, 0.8);
-                background-color:$color_main;
             }
         }
     }
+
 }

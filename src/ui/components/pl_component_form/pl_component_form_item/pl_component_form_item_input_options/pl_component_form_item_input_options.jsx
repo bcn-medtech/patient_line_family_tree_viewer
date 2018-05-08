@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { isObjectAFunction } from './../../../../../modules/rkt_module_object.js';
+import { isObjectAFunction } from './../../../../../modules/rkt_module_object';
 
 //components
 import { PlComponentFormItemLabel } from './../pl_component_form_item_label/pl_component_form_item_label';
@@ -17,6 +17,23 @@ export class PlComponentFormItemInputOptions extends Component {
         };
     }
 
+    resetInput() {
+
+        this.setState({
+            input: ""
+        });
+        
+    }
+
+    setErrorMessage(error_message) {
+
+        this.setState({
+            isInputInvalid: true,
+            message: error_message
+        });
+
+    }
+
     // order of execution: onBlur, onFocus, onClick, onChange
     onInputBlur(e) {
         this.setState({ isFormItemSelected: false });
@@ -26,6 +43,12 @@ export class PlComponentFormItemInputOptions extends Component {
         this.setState({ isFormItemSelected: true });
     }
 
+    onInputClick(e) {
+        if (isObjectAFunction(this.props.onclickelement)) {
+            this.props.onclickelement();
+        }
+    }
+
     onInputChange(e) {
         var isInputInvalid = false;
         this.setState({ input: e.target.value, isInputInvalid: false, message: "" });
@@ -33,12 +56,6 @@ export class PlComponentFormItemInputOptions extends Component {
         // this change is notified to the form
         if (isObjectAFunction(this.props.onInputChange)) {
             this.props.onInputChange(this.props.index, isInputInvalid);
-        }
-    }
-
-    onInputClick(e) {
-        if (isObjectAFunction(this.props.onclickelement)) {
-            this.props.onclickelement();
         }
     }
 
@@ -53,9 +70,10 @@ export class PlComponentFormItemInputOptions extends Component {
 
     renderOptions(options, index) {
         var isFormItemSelected = this.state.isFormItemSelected;
-        
+        var classNameDiv = "grid-block shrink pl_component_form_item_input_options";
+
         return (
-            <div className={this.state.isFormItemSelected ? "grid-block shrink pl_component_form_item_input_options_highlighted" : "grid-block shrink pl_component_form_item_input_options"}>
+            <div className={isFormItemSelected ? classNameDiv+" highlighted" : classNameDiv}>
                 <form className="grid-block vertical">
                     {options.map((option, index) => {
                         return (
@@ -69,7 +87,7 @@ export class PlComponentFormItemInputOptions extends Component {
                                     onFocus={this.onInputFocus.bind(this)}
                                     onChange={this.onInputChange.bind(this)}
                                     onClick={this.onInputClick.bind(this)} />
-                                <label className="grid-block" htmlFor={"option_" + parseInt(index + 1)}>{option}</label>
+                                <label className="grid-block shrink" htmlFor={"option_" + parseInt(index + 1)}>{option}</label>
                             </div>
                         );
                     })}
@@ -100,7 +118,7 @@ export class PlComponentFormItemInputOptions extends Component {
         if (index!==undefined) toWriteNumber = true;
 
         return (
-            <div className="grid-block vertical" style={{"overflow":"hidden"}}>
+            <div className="grid-block shrink vertical" style={{"overflow":"hidden"}}>
                 {this.renderFormItemLabel(toWriteNumber, index, label, isFormItemSelected)}
                 {this.renderOptions(options, index)}
                 {this.renderErrorMessage(message)}

@@ -1,0 +1,13 @@
+.pl_component_text_plain{
+    color:$color_normal;
+    font: 20px Helvetica; //"Helvetica Neue";
+
+    width: 100%;
+    max-height:350px; // test
+
+    text-align:justify;
+
+    white-space: pre-wrap; /* Whitespace is preserved by the browser. Text will wrap when necessary, and on line breaks */
+
+    overflow-y:auto;
+}

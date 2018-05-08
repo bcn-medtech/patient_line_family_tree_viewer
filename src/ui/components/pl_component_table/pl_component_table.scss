@@ -1,12 +1,13 @@
 .pl-component-table{
 
     .bx--responsive-table-container{
-        
+
         overflow: scroll;
         width:100%;
 
         .bx--responsive-table{
-            border: 0px solid $rkt-viewer-background-color;
+            //border: 0px solid $rkt-viewer-background-color;
+            border: 1px solid transparent;//$rkt-viewer-background-color;
         }
 
         /*.bx--table-head{
@@ -21,7 +22,8 @@
     .bx--table-row{
             
         background-color: $rkt-viewer-background-color;
-        border: 0px solid $rkt-viewer-background-color;
+        // border: 0px solid $rkt-viewer-background-color;
+        border: 1px solid transparent;
     }
 
     

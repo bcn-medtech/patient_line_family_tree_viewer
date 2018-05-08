@@ -8,15 +8,36 @@ import { PlComponentFormItemMessage } from './../pl_component_form_item_message/
 
 export class PlComponentFormItemInputTextSuggestion extends Component {
 
-    constructor() {
+    constructor(props) {
 
-        super();
+        super(props);
+
+        var input = props.value;
+        if (input === undefined) input = "";
+
         this.state = {
-            input: "",
+            input: input,
             isFormItemSelected: false,
             isInputInvalid: true,
             message: ""
         };
+    }
+
+    resetInput() {
+
+        this.setState({
+            input: ""
+        });
+        
+    }
+
+    setErrorMessage(error_message) {
+
+        this.setState({
+            isInputInvalid: true,
+            message: error_message
+        });
+
     }
 
     onInputChange(text_field_value) {
@@ -82,8 +103,7 @@ export class PlComponentFormItemInputTextSuggestion extends Component {
                     }
                     break;
 
-                case undefined:
-                default:
+                case '':
                     isInputInvalid = false;
                     this.setState({ input: text_field_value, isInputInvalid: false, message: '' });
                     break;
@@ -122,19 +142,19 @@ export class PlComponentFormItemInputTextSuggestion extends Component {
     renderTextField(suggestions) {
         var isInputInvalid = this.state.isInputInvalid;
         var message = this.state.message;
-
+        var classNameDiv = "grid-block pl_component_form_item_input_text_suggestion";
         return (
-            <div className={isInputInvalid && message ? "grid-block pl_component_form_item_input_text_suggestion_invalid" : "grid-block pl_component_form_item_input_text_suggestion"}>
+            <div className={(isInputInvalid && message) ? classNameDiv+" invalid" : classNameDiv}>
                 <form className="grid-block">
                     <TextInput
                         className="grid-block"
                         Component={"input"}
                         type={"text"}
                         value={this.state.input}
+                        placeholder={this.props.placeholder}
                         onChange={this.onInputChange.bind(this)}
                         onFocus={this.onInputFocus.bind(this)}
                         onBlur={this.onInputBlur.bind(this)}
-                        // onRequestOptions={this.handleRequestOptions}
                         trigger={""}
                         regex={"^[a-zA-Z0-9_\-\s]+$"}
                         maxOptions={0}
@@ -148,8 +168,9 @@ export class PlComponentFormItemInputTextSuggestion extends Component {
 
     renderIcon(icon) {
         if (icon !== undefined) {
+            var classNameDiv = "grid-block shrink pl_component_form_item_input_text_suggestion_icon";
             return (
-                <div className={this.state.isFormItemSelected ? "grid-block shrink pl_component_form_item_input_text_suggestion_icon_highlighted" : "grid-block shrink pl_component_form_item_input_text_suggestion_icon"}>
+                <div className={this.state.isFormItemSelected ? classNameDiv+" highlighted" : classNameDiv}>
                     {icon}
                 </div>
             );
@@ -183,4 +204,10 @@ export class PlComponentFormItemInputTextSuggestion extends Component {
             </div>
         );
     }
+}
+
+
+PlComponentFormItemInputTextSuggestion.defaultProps = {
+    placeholder: '',
+    required_input:''
 }

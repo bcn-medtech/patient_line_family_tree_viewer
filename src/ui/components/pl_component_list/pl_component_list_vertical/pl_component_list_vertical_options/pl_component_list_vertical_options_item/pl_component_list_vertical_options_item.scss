@@ -1,29 +1,155 @@
+@import './../../../../pl_component_button/pl_component_button_icon/pl_component_button_icon.scss';
+@import './../../../../pl_component_form/pl_component_form_item/pl_component_form_item_input_text/pl_component_form_item_input_text.scss';
+
 .pl_component_list_vertical_options_item {
 
     border-bottom:1px solid $color_normal;
     background-color:white;
     margin-left:5.5px;
     overflow:hidden;
+}
 
-    .pl_component_list_vertical_options_item_name{
-        color:$color_normal;
+.pl_component_list_vertical_options_item.hovered {
+
+    background-color:aliceblue;//rgba(58, 153, 216, 0.03);
+
+}
+
+.pl_component_list_vertical_options_item_name{
+    color:$color_normal;
+    font: 20px Helvetica; //"Helvetica Neue";
+    padding-top:20.5px;
+    padding-bottom:3px;
+    padding-right:14.5px;
+    overflow:hidden;
+}
+
+.pl_component_list_vertical_options_item_name.editable{
+    padding:0px;
+    margin:0px;
+        
+    .pl_component_form_item_input_text {
+        margin:0px;
+
+        form {
+            input[type=text]{
+                padding-top:10px;//20.5px;
+                padding-bottom:6.5px;//3px;
+
+                margin:0px;
+                border:0px;
+                border-right: 1px solid rgba(58, 153, 216, 0.2);
+                width:100%;
+                height:100%;
+
+                background-color:transparent; // to override the color of the form_item_input_text
+                    
+                &:hover{
+                    background-color:aliceblue;//rgba(58, 153, 216, 0.04);
+                    color: $color_main;
+                    overflow:hidden;
+
+                }
+        
+                &:focus{
+                    background-color:aliceblue;//rgba(58, 153, 216, 0.04);
+                    color: $color_main;
+                    overflow:hidden;
+                        
+                }
+            }
+        }
+    }
+    
+    .pl_component_form_item_input_text.invalid {
+        margin:0px;
+        color: red;
+        border: 1px solid red;
+    
+         form {
+
+            ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                color: rgba(255, 0, 0, 0.6);//$color_normal;
+                opacity: 1; /* Firefox */
+            }
+                
+            :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                color:rgba(255, 0, 0, 0.6);//$color_normal;
+            }
+                
+            ::-ms-input-placeholder { /* Microsoft Edge */
+                color:rgba(255, 0, 0, 0.6);//$color_normal;
+            }
+         }
+
+    }
+
+    .pl_component_form_item_message {
+        //display:none;
+        position:absolute;
+        top:0px;
+        right:0px;
+        height:100%;
+        padding-top:10px;//20.5px;
+        padding-bottom:6.5px;//3px;
+        align-items:center;
+    }
+
+}
+
+.pl_component_list_vertical_options_item_author{
+    color:$color_normal;
+    font: 17px Helvetica; //"Helvetica Neue";
+    padding-bottom:8.5px;
+    padding-right:14.5px;
+    overflow:hidden;
+}
+
+.pl_component_list_vertical_options_item_value{
+    color:$color_main;
+    font: 20px Helvetica; //"Helvetica Neue";
+    padding-top:20.5px;
+    padding-right:14.5px;
+    overflow:hidden;
+}
+
+.pl_component_list_vertical_options_item_value.editable{
+    padding:0px;
+    margin:0px;
+
+    align-items:center;
+
+    select {
+        
+        :disabled {
+            display: none !important;
+        }
+
+        padding-top:10px;//20.5px;
+        padding-bottom:6.5px;//3px;
+        margin:0px;
+        
+        width:100%;
+        height:100%;
+
         font: 20px Helvetica; //"Helvetica Neue";
-        padding-top:20.5px;
-        padding-bottom:3px;
-        overflow:hidden;
-    }
-
-    .pl_component_list_vertical_options_item_author{
-        color:$color_normal;
-        font: 17px Helvetica; //"Helvetica Neue";
-        padding-bottom:8.5px;
-        overflow:hidden;
-    }
-
-    .pl_component_list_vertical_options_item_option{
         color:$color_main;
-        font: 20px Helvetica; //"Helvetica Neue";
-        padding-top:20.5px;
-        overflow:hidden;
+        background-color:white;
+        border: 0px;
+        border-left: 1px solid rgba(58, 153, 216, 0.2);
+
+        &:hover {
+            background-color:aliceblue;//rgba(58, 153, 216, 0.03);  
+        }
+    }
+    
+}
+
+.pl_component_list_vertical_options_item_value.editable.invalid{
+
+    select {
+        color:rgba(255, 0, 0, 0.6);//$color_normal;
+        border: 1px solid red;
+
     }
 }

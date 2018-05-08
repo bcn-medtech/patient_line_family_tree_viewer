@@ -7,26 +7,20 @@ import { PlComponentFormItemMessage } from './../pl_component_form_item_message/
 
 export class PlComponentFormItemInputText extends Component {
 
-    constructor() {
+    constructor(props) {
 
-        super();
+        super(props);
+        
+        var input = props.value;
+        if (input === undefined) input = "";
+        
         this.state = {
-            input: "",
+            input: input,
             isFormItemSelected: false,
             isInputInvalid: true,
             message: ""
         };
     }
-
-    /*componentWillReceiveProps(nextProps){
-
-        if(nextProps.input !== this.state.input){
-
-            this.setState({
-                input:nextProps.input
-            });
-        }
-    }*/
 
     resetComponent(){
 
@@ -101,8 +95,7 @@ export class PlComponentFormItemInputText extends Component {
                     }
                     break;
 
-                case undefined:
-                default:
+                case '':
                     isInputInvalid = false;
                     this.setState({ input: text_field_value, isInputInvalid: false, message: '' });
                     break;
@@ -141,11 +134,13 @@ export class PlComponentFormItemInputText extends Component {
     renderTextField() {
         var isInputInvalid = this.state.isInputInvalid;
         var message = this.state.message;
+        var classNameDiv = "grid-block pl_component_form_item_input_text"
+
         return (
-            <div className={isInputInvalid && message ? "grid-block pl_component_form_item_input_text_invalid" : "grid-block pl_component_form_item_input_text"}>
+            <div className={(isInputInvalid && message) ? classNameDiv+" invalid": classNameDiv}>
                 <form className="grid-block">
                     <input className="grid-block"
-                        type="text"
+                        type={this.props.type} // either "text" or "password" (default:"text")
                         value={this.state.input}
                         placeholder={this.props.placeholder}
                         onChange={this.onInputChange.bind(this)}
@@ -160,8 +155,9 @@ export class PlComponentFormItemInputText extends Component {
 
     renderIcon(icon) {
         if (icon!==undefined){
+            var classNameDiv = "grid-block shrink pl_component_form_item_input_text_icon"
             return (
-                <div className={this.state.isFormItemSelected ? "grid-block shrink pl_component_form_item_input_text_icon_highlighted" : "grid-block shrink pl_component_form_item_input_text_icon"}>
+                <div className={this.state.isFormItemSelected ? classNameDiv+" highlighted": classNameDiv}>
                     {icon}
                 </div>
             );
@@ -187,6 +183,7 @@ export class PlComponentFormItemInputText extends Component {
         if (index !== undefined) toWriteNumber = true;
 
         return (
+            // <div className="grid-block shrink vertical">
             <div className="grid-block vertical">
                 {this.renderFormItemLabel(toWriteNumber, index, label, isFormItemSelected)}
                 {this.renderTextField()}
@@ -194,4 +191,10 @@ export class PlComponentFormItemInputText extends Component {
             </div>
         );
     }
+}
+
+PlComponentFormItemInputText.defaultProps = {
+    type:'text',
+    placeholder: '',
+    required_input:''
 }

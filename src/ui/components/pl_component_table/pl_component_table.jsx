@@ -27,6 +27,8 @@ import { Table, TableRow, TableHeader, TableHead, TableBody, TableData } from 'c
 import { isObjectAFunction } from './../../../modules/rkt_module_object';
 import { process_data_to_show_in_table } from './pl_component_table_actions';
 
+//components
+import { PlComponentFormItemInputText } from './../pl_component_form/pl_component_form_item/pl_component_form_item_input_text/pl_component_form_item_input_text';
 
 export class PlComponentTable extends Component {
 
@@ -69,7 +71,7 @@ export class PlComponentTable extends Component {
         var table_columns = Object.keys(data);
         var table_columns_last_column = table_columns[table_columns.length - 1];
         var table_mode = this.props.table_mode;
-
+        
         return (
 
             table_columns.map((key, index) => {
@@ -79,7 +81,7 @@ export class PlComponentTable extends Component {
                     if (key === table_columns_last_column) {
 
                         return (
-
+                            
                             <TableData key={index}>
                                 <div className="grid-block">
                                     <div className="grid-block">{data[key]}</div>
@@ -103,6 +105,32 @@ export class PlComponentTable extends Component {
                         )
 
                     }
+                } else if (table_mode === "edition") {
+                    
+                    if (key === "key") {
+
+                        return (
+
+                            <TableData key={index}>{data[key]}</TableData>
+                        )
+
+                    } else if (key === "value") {
+                        
+                        return (
+                            <TableData key={index}>
+                                <div className="grid-block shrink" >
+                                    <PlComponentFormItemInputText
+                                        className="pl_component_form_item_input_text"
+                                        ref={data["key"]}
+                                        key={data["key"]}
+                                        required_input={""}
+                                        value={data["value"]}
+                                        placeholder={data[key].toString()} />
+                                </div>
+                            </TableData>
+                        )
+                    }
+
                 } else {
 
                     if (key !== table_columns_last_column) {
@@ -111,14 +139,13 @@ export class PlComponentTable extends Component {
                             <TableData key={index} onClick={this.onClickRow.bind(this, data)}>{data[key]}</TableData>
                         )
                     } else {
+                        
                         return (
 
                             <TableData key={index}>{data[key]}</TableData>
                         )
                     }
-
                 }
-
 
             })
 
@@ -160,14 +187,21 @@ export class PlComponentTable extends Component {
     }
 
     render() {
-
+        
         var data = this.props.data;
         data = process_data_to_show_in_table(data);
 
         return (
-            <div className="grid-block pl-component-table">
+            // <div className="grid-block pl-component-table">
+            <div className="grid-block vertical pl-component-table">
+                {/* <Table>
+                    {this.render_header(data)}
+                    {this.render_body(data)}
+                </Table> */}
                 <Table>
                     {this.render_header(data)}
+                </Table>
+                <Table>
                     {this.render_body(data)}
                 </Table>
             </div>
