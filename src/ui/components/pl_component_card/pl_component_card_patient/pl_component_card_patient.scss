@@ -1,5 +1,8 @@
 @import './pl_component_card_patient_status/pl_component_card_patient_status.scss';
 @import './pl_component_card_patient_status_combobox/pl_component_card_patient_status_combobox.scss';
+@import './pl_component_card_patient_status_button/pl_component_card_patient_status_button.scss';
+@import './pl_component_card_patient_gender_combobox/pl_component_card_patient_gender_combobox.scss';
+@import './pl_component_card_patient_text_button/pl_component_card_patient_text_button.scss';
 
 .pl-component-card-patient{
     
@@ -7,38 +10,19 @@
         color:$color-normal;
     }
 
+    .card-header{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
 
     .card-item{
         padding-right: 10px;
     }
 
     .card-row{
-        padding-top:10px;
-    }
-
-    .icon{
-        width:25px;
-        height: 25px;
-    }
-
-    .gender{
-        
-        margin-top: 6px;
-        stroke: transparent;
-
-        circle{
-            stroke:$color-normal;
-            fill: transparent;
-        }
-
-        rect{
-            stroke:$color-normal;
-            fill: transparent;
-        }   
-    }
-
-    .gender-text{
-        margin-top: -8px;
+        padding:10px;
+        background-color: $color_shadow_3;
+        margin-top: 15px;
     }
 
     .pl_component_button_circle{
@@ -46,10 +30,4 @@
         width: 35px;
         height: 35px;
     }
-
-    .relative{
-        color:$color-normal;
-    }
-
-
 }

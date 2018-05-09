@@ -3,7 +3,7 @@
 .pl-component-card-patient-status-combobox{
 
     .text{
-        color:$color-normal;
+        margin-top:3px;
     }
 
     .list{
@@ -26,6 +26,12 @@
             background-color: $color-normal;
         }
     }
+
+    .pl-component-card-patient-status{
+        margin-top:-4px;
+    }
+
+
 
 }
 

@@ -26,11 +26,14 @@ import React, { Component } from 'react';
 
 //components
 import { PlComponentButtonCircle } from './../../pl_component_button/pl_component_button_circle/pl_component_button_circle';
-import { PlComponentCardPatientStatus } from './pl_component_card_patient_status/pl_component_card_patient_status';
 import { PlComponentCardPatientStatusCombobox } from './pl_component_card_patient_status_combobox/pl_component_card_patient_status_combobox';
+import { PlComponentCardPatientStatusButton } from './pl_component_card_patient_status_button/pl_component_card_patient_status_button';
+import { PlComponentCardPatientGenderCombobox } from './pl_component_card_patient_gender_combobox/pl_component_card_patient_gender_combobox';
+import { PlComponentCardPatientTextButton } from './pl_component_card_patient_text_button/pl_component_card_patient_text_button';
+
 //modules
 import {
-    isObjectAFunction, isObjectEmpty, isObjectAnArray
+     isObjectEmpty, isObjectAnArray
 } from './../../../../modules/rkt_module_object';
 
 export class PlComponentCardPatient extends Component {
@@ -39,51 +42,17 @@ export class PlComponentCardPatient extends Component {
         alert("On add patient");
     }
 
+    on_click_card_component(type){
 
-    render_male() {
-
-        return (
-            <div className="grid-block shrink vertical card-item">
-                <div className="grid-block align-center">
-                    <h4>
-                        <svg width="25" height="25" className="gender">
-                            <circle cx="11" cy="11" r="10" />
-                        </svg>
-                    </h4>
-                </div>
-                <div className="grid-block align-center gender-text">male</div>
-            </div>
-        );
-    }
-
-    render_female() {
-
-        return (
-            <div className="grid-block shrink vertical card-item">
-                <div className="grid-block align-center">
-                    <h4>
-                        <svg width="25" height="25" className="gender">
-                            <rect width="25" height="25" />
-                        </svg>
-                    </h4>
-                </div>
-                <div className="grid-block align-center gender-text">female</div>
-            </div>
-        );
-    }
-
-    render_status_relative(relative, type) {
-
-        var status = relative.status;
-        var gender = relative.gender;
-
-        return (
-            <div className="grid-block vertical">
-                <div className="grid-block align-center"><PlComponentCardPatientStatus status={status} gender={gender} /></div>
-                {/*<div className="grid-block align-center">{relative.id}</div>*/}
-                <div className="grid-block align-center relative">{type}</div>
-            </div>
-        );
+        if(type ===  "father"){
+            console.log("father");
+        }else if(type === "mother"){
+            console.log("mother");
+        }else if(type === "children"){
+            console.log("children");
+        }else if(type === "relatives"){
+            console.log("relatives");
+        }
     }
 
 
@@ -128,11 +97,8 @@ export class PlComponentCardPatient extends Component {
 
         if ("gender" in patient) {
 
-            if (patient.gender === "female") {
-                gender = this.render_female();
-            } else if (patient.gender === "male") {
-                gender = this.render_male();
-            }
+            gender = patient.gender;
+
         }
 
         if(!isObjectEmpty(children)){
@@ -154,7 +120,7 @@ export class PlComponentCardPatient extends Component {
 
         return (
             <div className="grid-block vertical pl-component-card-patient">
-                <div className="grid-block">
+                <div className="grid-block card-header">
                     <div className="grid-block vertical card-item">
                         <div className="grid-block shrink"><h4>{patient_name}</h4></div>
                         <div className="grid-block shrink">{patient_id}</div>
@@ -185,18 +151,12 @@ export class PlComponentCardPatient extends Component {
                     </div>
                 </div>
                 <div className="grid-block card-row">
-                    <div className="grid-block shrink vertical card-item">
-                        <div className="grid-block align-center"><h4>{patient_num_relatives}</h4></div>
-                        <div className="grid-block align-center">relatives</div>
-                    </div>
-                    <div className="grid-block shrink vertical card-item">
-                        <div className="grid-block align-center"><h4>{patient_num_children}</h4></div>
-                        <div className="grid-block align-center">children</div>
-                    </div>
-                    <div className="grid-block card-item">{gender}</div>
-                    <div className="grid-block shrink"><PlComponentCardPatientStatusCombobox status={patient.status} gender={patient.gender} ref="patient_status"/></div>
-                    <div className="grid-block shrink card-item">{this.render_status_relative(father, "father")}</div>
-                    <div className="grid-block shrink card-item">{this.render_status_relative(mother, "mother")}</div>
+                    <div className="grid-block shrink card-item"><PlComponentCardPatientTextButton text={patient_num_relatives} type="relatives" on_click_component={this.on_click_card_component.bind(this)}/></div>
+                    <div className="grid-block shrink card-item"><PlComponentCardPatientTextButton text={patient_num_children} type="children" on_click_component={this.on_click_card_component.bind(this)}/></div>
+                    <div className="grid-block shrink card-item"><PlComponentCardPatientGenderCombobox gender={gender} ref="patient_gender"/></div>
+                    <div className="grid-block shrink card-item"><PlComponentCardPatientStatusCombobox status={patient.status} gender={patient.gender} ref="patient_status"/></div>
+                    <div className="grid-block shrink card-item"><PlComponentCardPatientStatusButton relative={father} type="father" on_click_component={this.on_click_card_component.bind(this)}/></div>
+                    <div className="grid-block shrink card-item"><PlComponentCardPatientStatusButton relative={mother} type="mother" on_click_component={this.on_click_card_component.bind(this)}/></div>
                 </div>
             </div>
         );

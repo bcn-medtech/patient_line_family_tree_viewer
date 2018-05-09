@@ -279,7 +279,7 @@ export class PlComponentCardPatientStatusCombobox extends Component {
         console.log(status);
 
         return (
-            <div className="grid-block shrink vertical pl-component-card-patient-status-combobox tooltip">
+            <div className="grid-block vertical pl-component-card-patient-status-combobox tooltip">
                 <div className="grid-block align-center">
                     <PlComponentCardPatientStatus status={status} gender={gender} />
                     <div className="grid-block tooltipcontent">

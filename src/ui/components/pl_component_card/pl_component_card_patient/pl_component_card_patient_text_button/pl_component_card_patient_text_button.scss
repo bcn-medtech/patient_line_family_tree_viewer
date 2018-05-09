@@ -1,0 +1,9 @@
+.pl-component-card-patient-text-button{
+
+    &:hover{
+
+        .text{
+            color:$color-normal;
+        }
+    }
+}
