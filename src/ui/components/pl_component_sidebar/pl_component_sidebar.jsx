@@ -59,10 +59,10 @@ export class PlComponentSidebar extends Component {
                 <div className="grid-block shrink pl_component_sidebar_element">
                     <PlComponentCardPatient patient={patient} father={father} mother={mother} children={children} ref="patient_card"/>
                 </div>
-                <div className="grid-block shrink pl_component_sidebar_element">
+                {/*<div className="grid-block shrink pl_component_sidebar_element">
                     <PlComponentMenuTags data={data} keys_selected={data_keys_selected} on_select_tag={this.on_select_tag.bind(this)} on_un_selected_tag={this.on_unselect_tag.bind(this)}></PlComponentMenuTags>
                 </div>
-                {/*<div className="grid-block pl_component_sidebar_element">
+                <div className="grid-block pl_component_sidebar_element">
                     <PlComponentTable data={data_table} />
                 </div>
                 <div className="grid-block pl_component_sidebar_element_footer">

@@ -4,6 +4,7 @@
 
     .text{
         margin-top:3px;
+        display: block;
     }
 
     .list{
@@ -44,17 +45,12 @@
 
 .tooltip .tooltipcontent {
     visibility: hidden;
-    //width: 120px;
     background-color:$rkt_viewer_patient_line_viewer_bg_color;
     color: #fff;
     text-align: center;
-    //padding: 5px 0;
     border: 1px solid $color-normal;
-
-    /* Position the tooltip */
     position: fixed;
     margin-top: 70px;
-    //padding: 10px;
     z-index: 3;
 }
 
