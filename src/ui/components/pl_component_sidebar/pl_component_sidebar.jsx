@@ -7,11 +7,9 @@ import {create_table} from './pl_component_sidebar_actions';
 //import { PlComponentDatabaseHeader } from './../../components/pl_component_database/pl_component_database_header/pl_component_database_header';
 import { PlComponentSidebarHeader } from './pl_component_sidebar_header/pl_component_sidebar_header';
 import { PlComponentCardPatient } from './../pl_component_card/pl_component_card_patient/pl_component_card_patient';
-import { PlComponentMenuTags } from './../pl_component_menu/pl_component_menu_tags/pl_component_menu_tags';
-import { isObjectEmpty, isObjectAnArray } from './../../../modules/rkt_module_object';
-import { PlComponentTable } from './../pl_component_table/pl_component_table';
-import { PlComponentButtonRect } from './../pl_component_button/pl_component_button_rect/pl_component_button_rect';
+import { PlComponentCardPatientWidget } from './../pl_component_card/pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget';
 import { keys } from 'underscore';
+import { PlComponentSidebarPatient } from './pl_component_sidebar_patient/pl_component_sidebar_patient';
 
 export class PlComponentSidebar extends Component {
 
@@ -46,39 +44,20 @@ export class PlComponentSidebar extends Component {
 
     }
 
-    render_menu_patient(patient,father,mother,children) {
-
-        var data_keys_selected = this.state.patient_columns_selected;
-        var data = [];
-        data.push(patient);
-        var data_table = create_table(patient);
-        console.log(data_table);
+    /*render_menu_patient(patient,father,mother,children) {
 
         return (
             <div className="grid-block vertical">
                 <div className="grid-block shrink pl_component_sidebar_element">
                     <PlComponentCardPatient patient={patient} father={father} mother={mother} children={children} ref="patient_card"/>
                 </div>
-                {/*<div className="grid-block shrink pl_component_sidebar_element">
-                    <PlComponentMenuTags data={data} keys_selected={data_keys_selected} on_select_tag={this.on_select_tag.bind(this)} on_un_selected_tag={this.on_unselect_tag.bind(this)}></PlComponentMenuTags>
+                <div className="grid-block shrink">
+                    <PlComponentCardPatientWidget tittle="relatives"/>
                 </div>
-                <div className="grid-block pl_component_sidebar_element">
-                    <PlComponentTable data={data_table} />
-                </div>
-                <div className="grid-block pl_component_sidebar_element_footer">
-                <PlComponentButtonRect 
-                text="Save"
-                backgroundcolor={"transparent"} 
-                backgroundhovercolor={"#5C4EE5"} 
-                fontcolor={"#5C4EE5"}
-                fonthovercolor={"white"}
-                bordercolor={"#5C4EE5"}
-                borderhovercolor={"#5C4EE5"}
-        onclickelement={this.on_save_data.bind(this)} />
-        </div>*/}
+                
             </div>
         )
-    }
+    }*/
 
     render_menu_family(family) {
 
@@ -104,7 +83,7 @@ export class PlComponentSidebar extends Component {
 
         if (mode === "patient") {
 
-            sidebar = this.render_menu_patient(patient,father,mother,children);
+            sidebar = <PlComponentSidebarPatient patient={patient} mother={mother} father={father} children={children}/>
 
         } else if (mode === "family") {
 

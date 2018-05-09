@@ -33,7 +33,7 @@ import { PlComponentCardPatientTextButton } from './pl_component_card_patient_te
 
 //modules
 import {
-     isObjectEmpty, isObjectAnArray
+     isObjectEmpty, isObjectAnArray, isObjectAFunction
 } from './../../../../modules/rkt_module_object';
 
 export class PlComponentCardPatient extends Component {
@@ -44,14 +44,13 @@ export class PlComponentCardPatient extends Component {
 
     on_click_card_component(type){
 
-        if(type ===  "father"){
-            console.log("father");
-        }else if(type === "mother"){
-            console.log("mother");
-        }else if(type === "children"){
-            console.log("children");
-        }else if(type === "relatives"){
-            console.log("relatives");
+        if(type ===  "father" || type === "mother" || type === "children" || type=="relatives"){
+            
+            if(isObjectAFunction(this.props.on_click_action)){
+
+                this.props.on_click_action(type);
+
+            }
         }
     }
 

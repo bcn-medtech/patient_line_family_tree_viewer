@@ -23,29 +23,15 @@
 */
 
 import React, { Component } from 'react';
-import { isObjectAFunction } from './../../../../../modules/rkt_module_object';
 
-export class PlComponentCardPatientWidget extends Component {
+export class PlComponentSidebarFamily extends Component {
 
-
-    on_close_widget(type) {
-
-        if (isObjectAFunction(this.props.on_click_component)) {
-            this.props.on_click_component(type);
-        }
-    }
 
     render() {
 
-        var tittle = this.props.tittle;
-        var content = this.props.content;
-
-        console.log(tittle);
-
         return (
-            <div className="grid-block vertical pl-component-card-patient-widget">
-                <div className="grid-block"><h5>{tittle}</h5></div>
-                <div className="grid-block">{content}</div>
+            <div className="grid-block pl-component-sidebar-family">
+                PlComponentSidebarFamily
             </div>
         );
 

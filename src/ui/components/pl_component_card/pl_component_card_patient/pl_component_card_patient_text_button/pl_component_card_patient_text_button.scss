@@ -1,9 +1,18 @@
 .pl-component-card-patient-text-button{
 
+    padding:5px;
+
     &:hover{
+
+        background-color: $color_shadow-2;
+        border-radius: 5px;
 
         .text{
             color:$color-normal;
         }
     }
+
+    
+
+
 }
