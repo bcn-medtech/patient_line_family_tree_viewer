@@ -270,24 +270,36 @@ export class PlComponentCardPatientStatusCombobox extends Component {
 
     }
 
+    /*render_element(status,gender){
+        return();
+    }
+
+    render_element_edit_mode(status,gender){
+        return();
+    }*/
+
     render() {
 
         var status = this.state.status;
         var gender = this.state.gender;
+        var mode_edit = this.props.mode_edit;
 
-        console.log(status);
-        console.log(status);
 
         return (
-            <div className="grid-block vertical pl-component-card-patient-status-combobox tooltip">
-                <div className="grid-block align-center">
+            <div className="grid-block">
+                <a className="grid-block vertical pl-component-card-patient-status-combobox tooltip">
+                    <div className="grid-block align-center">
                     <PlComponentCardPatientStatus status={status} gender={gender} />
-                    <div className="grid-block tooltipcontent">
-                        {this.render_list_items_status(status,gender)}
+                        <div className="grid-block tooltipcontent">
+                        {
+                            this.render_list_items_status(status,gender)
+                        }
+                        </div>
                     </div>
-                </div>
-                <div className="grid-block align-center text">status</div>
+                    <div className="grid-block align-center text">status</div>
+                </a>
             </div>
+            
         );
 
 

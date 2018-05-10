@@ -1,6 +1,7 @@
 .pl-component-card-patient-text-button{
 
     padding:5px;
+    color:white;
 
     &:hover{
 
@@ -11,8 +12,8 @@
             color:$color-normal;
         }
     }
+}
 
-    
-
-
+.pl-component-card-patient-text-button-selected{
+    background-color: $color_shadow-2;
 }

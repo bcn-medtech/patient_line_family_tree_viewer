@@ -39,12 +39,25 @@ export class PlComponentCardPatientTextButton extends Component {
 
         var text = this.props.text;
         var type = this.props.type;
+        var selected = this.props.selected;
+        var component_style;
+
+        if(selected){
+
+            component_style = "grid-block vertical pl-component-card-patient-text-button pl-component-card-patient-text-button-selected";
+
+        }else{
+
+            component_style = "grid-block vertical pl-component-card-patient-text-button";
+
+        }
+
 
         return (
-            <div className="grid-block vertical pl-component-card-patient-text-button" onClick={this.on_click_component.bind(this, type)}>
+            <a className={component_style} onClick={this.on_click_component.bind(this, type)}>
                 <div className="grid-block align-center"><h4>{text}</h4></div>
                 <div className="grid-block align-center text">{type}</div>
-            </div>
+            </a>
         );
 
     }

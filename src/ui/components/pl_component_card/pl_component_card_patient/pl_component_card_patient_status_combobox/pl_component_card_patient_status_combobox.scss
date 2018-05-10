@@ -2,6 +2,12 @@
 
 .pl-component-card-patient-status-combobox{
 
+    color:white;
+
+    &:hover{
+        color: white;
+    }
+
     .text{
         margin-top:3px;
         display: block;

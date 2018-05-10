@@ -177,7 +177,7 @@ export class PlComponentCardPatientGenderCombobox extends Component {
         }
 
         return (
-            <div className="grid-block shrink vertical card-item pl-component-card-patient-gender-combobox pl-component-card-patient-gender-combobox-tooltip">
+            <a className="grid-block shrink vertical card-item pl-component-card-patient-gender-combobox pl-component-card-patient-gender-combobox-tooltip">
                 <div className="grid-block align-center">
                     <h4>
                         {svg}
@@ -187,7 +187,7 @@ export class PlComponentCardPatientGenderCombobox extends Component {
                     {this.render_combobox(gender)}
                 </div>
                 <div className="grid-block align-center text">{gender}</div>
-            </div>
+            </a>
         );
 
     }

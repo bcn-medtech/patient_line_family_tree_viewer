@@ -3,6 +3,7 @@
 .pl-component-status-button{
 
     padding:5px;
+    color: white;
 
     &:hover{
 
@@ -10,4 +11,8 @@
         background-color: $color_shadow-2;
         border-radius:5px;
     }
+}
+
+.pl-component-status-button-selected{
+    background-color: $color_shadow-2;
 }

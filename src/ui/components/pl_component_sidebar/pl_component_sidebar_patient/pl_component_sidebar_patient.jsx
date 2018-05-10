@@ -34,33 +34,58 @@ export class PlComponentSidebarPatient extends Component {
         super();
 
         this.state={
-            mode:false
+            mode_menu:false,
+            mode_edit:false
         }
     }
 
-    on_set_mode(mode){
+    on_set_mode_menu(mode){
 
-        console.log(mode);
-
+        if(this.state.mode_menu === mode){
+            this.setState({
+                mode_menu:false
+            })
+        }else{
+            this.setState({
+                mode_menu:mode
+            })
+        }
     }
 
-    render() {
+    on_set_mode_edit(){
+
+        this.setState({
+            mode_edit:!this.state.mode_edit
+        });
+    }
+
+    render(){
 
         var patient = this.props.patient;
         var father = this.props.father;
         var mother = this.props.mother;
         var children = this.props.children;
-        var mode = this.state.mode;
+        var mode_menu = this.state.mode_menu;
+        var mode_edit = this.state.mode_edit;
         var widget;
 
-        if(this.state.mode !== false){
-            widget = <PlComponentCardPatientWidget tittle={mode} />
+        if(this.state.mode_menu !== false){
+            widget = <PlComponentCardPatientWidget tittle={mode_menu} />
         }
 
         return (
             <div className="grid-block pl-component-sidebar-patient vertical">
                 <div className="grid-block shrink pl_component_sidebar_element">
-                    <PlComponentCardPatient patient={patient} father={father} mother={mother} on_click_action={this.on_set_mode.bind(this)} children={children} mode={mode} ref="patient_card" />
+                    <PlComponentCardPatient 
+                    patient={patient} 
+                    father={father} 
+                    mother={mother}
+                    on_click_action={this.on_set_mode_menu.bind(this)}
+                    on_set_mode_edit={this.on_set_mode_edit.bind(this)}
+                    on_set_children={children}
+                    mode_menu={mode_menu}
+                    mode_edit={mode_edit}
+                    ref="patient_card" />
                 </div>
                 <div className="grid-block shrink">
                     {widget}

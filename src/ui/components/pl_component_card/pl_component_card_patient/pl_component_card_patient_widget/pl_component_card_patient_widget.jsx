@@ -27,12 +27,8 @@ import { isObjectAFunction } from './../../../../../modules/rkt_module_object';
 
 export class PlComponentCardPatientWidget extends Component {
 
-
-    on_close_widget(type) {
-
-        if (isObjectAFunction(this.props.on_click_component)) {
-            this.props.on_click_component(type);
-        }
+    capitalize_first_letter(s) {
+        return s && s[0].toUpperCase() + s.slice(1);
     }
 
     render() {
@@ -44,7 +40,7 @@ export class PlComponentCardPatientWidget extends Component {
 
         return (
             <div className="grid-block vertical pl-component-card-patient-widget">
-                <div className="grid-block"><h5>{tittle}</h5></div>
+                <div className="grid-block"><h5>{this.capitalize_first_letter(tittle)}</h5></div>
                 <div className="grid-block">{content}</div>
             </div>
         );

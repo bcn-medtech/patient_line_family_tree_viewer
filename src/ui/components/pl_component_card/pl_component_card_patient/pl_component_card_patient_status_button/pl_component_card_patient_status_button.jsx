@@ -41,12 +41,25 @@ export class PlComponentCardPatientStatusButton extends Component {
         var status = this.props.relative.status;
         var type = this.props.type;
         var gender = this.props.relative.gender;
+        var selected = this.props.selected;
+
+        var component_style;
+
+        if(selected){
+
+            component_style = "grid-block vertical pl-component-status-button pl-component-status-button-selected";
+
+        }else{
+
+            component_style = "grid-block vertical pl-component-status-button";
+
+        }
 
         return (
-            <div className="grid-block vertical pl-component-status-button" onClick={this.on_click_component.bind(this, type)}>
+            <a className={component_style} onClick={this.on_click_component.bind(this, type)}>
                 <div className="grid-block align-center"><PlComponentCardPatientStatus status={status} gender={gender} /></div>
                 <div className="grid-block align-center">{type}</div>
-            </div>
+            </a>
         );
 
     }
