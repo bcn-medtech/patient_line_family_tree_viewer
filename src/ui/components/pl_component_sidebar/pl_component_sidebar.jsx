@@ -120,7 +120,7 @@ export class PlComponentSidebar extends Component {
         return (
             <div className="grid-block vertical">
                 <div className="grid-block shrink pl_component_sidebar_element">
-                    <PlComponentCardPatient patient={patient} />
+                    <PlComponentCardPatient patient={patient} card_mode={"edition"}/>
                 </div>
                 <div className="pl_component_sidebar_element">
                     <PlComponentMenuTags data={data} keys_selected={data_keys_selected} on_select_tag={this.on_select_tag.bind(this)} on_un_selected_tag={this.on_unselect_tag.bind(this)}></PlComponentMenuTags>

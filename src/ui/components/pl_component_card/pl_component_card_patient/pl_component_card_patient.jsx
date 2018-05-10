@@ -25,7 +25,7 @@
 import React, { Component } from 'react';
 import { PlComponentButtonCircle } from './../../pl_component_button/pl_component_button_circle/pl_component_button_circle';
 import { PlComponentCardPatientStatus } from './pl_component_card_patient_status/pl_component_card_patient_status';
-
+import { PlComponentTextFieldEditable } from './../../pl_component_text_field_editable/pl_component_text_field_editable';
 
 export class PlComponentCardPatient extends Component {
 
@@ -110,8 +110,20 @@ export class PlComponentCardPatient extends Component {
             <div className="grid-block vertical pl-component-card-patient">
                 <div className="grid-block">
                     <div className="grid-block vertical card-item">
-                        <div className="grid-block shrink"><h4>{patient_name}</h4></div>
-                        <div className="grid-block shrink">{patient_id}</div>
+                        <div className="grid-block shrink">
+                            <h4>
+                                <PlComponentTextFieldEditable
+                                    text={patient_name}
+                                    isEditionMode={this.props.card_mode === "edition" ? true : false} 
+                                />
+                            </h4>
+                        </div>
+                        <div className="grid-block shrink">
+                            <PlComponentTextFieldEditable 
+                                text={patient_id} 
+                                isEditionMode={this.props.card_mode === "edition" ? true : false} 
+                            />
+                        </div> 
                     </div>
                     {gender}
                     <div className="grid-block shrink vertical card-item">
