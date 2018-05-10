@@ -191,14 +191,14 @@ export class PlComponentCardPatient extends Component {
                             <h4>
                                 <PlComponentTextFieldEditable
                                     text={patient_name}
-                                    isEditionMode={this.props.card_mode === "edition" ? true : false} 
+                                    isEditionMode={mode_edit ? true : false} 
                                 />
                             </h4>
                         </div>
-                        <div className="grid-block shrink">
+                        <div className="grid-block shrink" style={{"border":"1px solid yellow"}}>
                             <PlComponentTextFieldEditable 
                                 text={patient_id} 
-                                isEditionMode={this.props.card_mode === "edition" ? true : false} 
+                                isEditionMode={mode_edit ? true : false} 
                             />
                         </div> 
                     </div>

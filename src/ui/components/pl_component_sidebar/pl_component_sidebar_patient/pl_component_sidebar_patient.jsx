@@ -99,6 +99,12 @@ export class PlComponentSidebarPatient extends Component {
         var mode_menu = this.state.mode_menu;
         var mode_edit = this.state.mode_edit;
         var widget;
+        var table_mode;
+
+        if (mode_edit) {
+
+            table_mode = "edition";
+        }
 
         if (this.state.mode_menu !== false) {
             widget = <PlComponentCardPatientWidget tittle={mode_menu} />
@@ -135,7 +141,7 @@ export class PlComponentSidebarPatient extends Component {
                     </PlComponentMenuTags>
                 </div>
                 <div className="grid-block pl_component_sidebar_patient_element">
-                    <PlComponentTable ref="sidebarTable" data={data_table} table_mode={"edition"} />
+                    <PlComponentTable ref="sidebarTable" data={data_table} table_mode={table_mode} />
                 </div>
             </div>
         );
