@@ -18,6 +18,23 @@ export class PlComponentFormItemInputTextDate extends Component {
         };
     }
 
+    resetInput() {
+
+        this.setState({
+            input: ""
+        });
+        
+    }
+
+    setErrorMessage(error_message) {
+
+        this.setState({
+            isInputInvalid: true,
+            message: error_message
+        });
+
+    }
+
     onInputChange(e) {
         var isInputInvalid = false;
         this.setState({ input: e.target.value, isInputInvalid: false, message: "" });
@@ -54,8 +71,10 @@ export class PlComponentFormItemInputTextDate extends Component {
     renderTextField() {
         var isInputInvalid = this.state.isInputInvalid;
         var message = this.state.message;
+        var classNameDiv = "grid-block pl_component_form_item_input_text_date";
+
         return (
-            <div className={isInputInvalid && message ? "grid-block pl_component_form_item_input_text_date_invalid" : "grid-block pl_component_form_item_input_text_date"}>
+            <div className={isInputInvalid && message ? classNameDiv+" invalid" : classNameDiv}>
                 <form className="grid-block">
                     <input className="grid-block"
                         type="date"

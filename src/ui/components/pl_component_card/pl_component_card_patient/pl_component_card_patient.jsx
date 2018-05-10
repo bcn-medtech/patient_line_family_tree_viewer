@@ -37,6 +37,8 @@ import {
     isObjectEmpty, isObjectAnArray, isObjectAFunction
 } from './../../../../modules/rkt_module_object';
 
+import { PlComponentTextFieldEditable } from './../../pl_component_text_field_editable/pl_component_text_field_editable';
+
 export class PlComponentCardPatient extends Component {
 
     on_edit_patient() {
@@ -185,8 +187,20 @@ export class PlComponentCardPatient extends Component {
             <div className="grid-block vertical pl-component-card-patient">
                 <div className="grid-block card-header">
                     <div className="grid-block vertical card-item">
-                        <div className="grid-block shrink"><h4>{patient_name}</h4></div>
-                        <div className="grid-block shrink">{patient_id}</div>
+                        <div className="grid-block shrink">
+                            <h4>
+                                <PlComponentTextFieldEditable
+                                    text={patient_name}
+                                    isEditionMode={this.props.card_mode === "edition" ? true : false} 
+                                />
+                            </h4>
+                        </div>
+                        <div className="grid-block shrink">
+                            <PlComponentTextFieldEditable 
+                                text={patient_id} 
+                                isEditionMode={this.props.card_mode === "edition" ? true : false} 
+                            />
+                        </div> 
                     </div>
                     <div className="grid-block shrink">
                         <PlComponentButtonCircleSelectable

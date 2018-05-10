@@ -26,6 +26,7 @@
 import {
     family_insert,
     patient_insert,
+    patient_update,
     patients_get_list,
     families_get_list,
     family_remove,
@@ -118,9 +119,9 @@ export function get_data(family_id, patient_id, callback) {
                 var root = treeBuilder(array_patients_family);
                 var siblings = siblingsBuilder(array_patients_family);
                 var patients = get_patients_processed(result.patients);
-
+                
                 get_family(family_id, function (family) {
-
+                    
                     if (isObjectAnArray(family)) {
 
                         if (family.length > 0) {
@@ -131,9 +132,9 @@ export function get_data(family_id, patient_id, callback) {
                             data["family"] = family[0];
 
                             if (!isObjectEmpty(patient_id)) {
-                               
+                                
                                 var patient = findWhere(patients,{id:patient_id});
-                               
+                                
                                 if(!isObjectEmpty(patient)){
                                     
                                     data["patient"]=patient;
@@ -214,4 +215,32 @@ export function get_data(family_id, patient_id, callback) {
 
         });
     }
+}
+
+export function perform_database_action(data,callback){
+
+    if(!isObjectEmpty(data)){
+
+        if("action" in data){
+
+            if(data.action === "edit"){
+
+                if("data" in data){
+
+                    var patient = data.data;
+
+                    patient_update(patient, function (result) {
+
+                        if(result){
+                
+                            callback(true);
+                        }
+                
+                    });
+                }
+
+            }
+        }
+    }
+
 }

@@ -13,8 +13,8 @@
         span{ // the 'react-autocomplete-input' component is contained in a <span>
             width:100%;
             input[type=text]{
-                background-color: transparent; //#ffffff;
-                color: $color_main;//$color_main_blur;
+                background-color: transparent;
+                color: $color_main;
                 font-size: 20px;
                 height:41px;
                 border: 1px solid rgba(58, 153, 216, 0.201);
@@ -28,7 +28,7 @@
                 }
         
                 &:focus{
-                    background-color: transparent; //#ffffff;
+                    background-color: transparent;
                     color: $color_main;
                     border: 1px solid $color_main;
                     overflow:hidden;
@@ -51,7 +51,7 @@
     }
 }
 
-.pl_component_form_item_input_text_suggestion_invalid {
+.pl_component_form_item_input_text_suggestion.invalid {
 
     margin-top:5px;
     margin-bottom:15px;
@@ -63,28 +63,23 @@
         span{ // the 'react-autocomplete-input' component is contained in a <span>
             width:100%;
             input[type=text]{
-                background-color: transparent; //#ffffff;
                 color: red;
-                font-size: 20px;
-                height:41px;
                 border: 1px solid red;
-                overflow:hidden;
-        
-                // &:hover{
-                //     background-color: #ffffff;
-                //     color: $color_main;
-                //     border: 1px solid rgba(58, 153, 216, 0.8);
-                //     overflow:hidden;
-                // }
-        
-                // &:focus{
-                //     background-color: rgba(255, 255, 255, 0.8); //#ffffff;
-                //     color: $color_main;
-                //     border: 1px solid rgba(58, 153, 216, 0.8);
-                //     overflow:hidden;
-                // }
             }
-        } 
+
+            ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                color: rgba(255, 0, 0, 0.6);//$color_normal;
+                opacity: 1; /* Firefox */
+            }
+                
+            :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                color:rgba(255, 0, 0, 0.6);//$color_normal;
+            }
+                
+            ::-ms-input-placeholder { /* Microsoft Edge */
+                color:rgba(255, 0, 0, 0.6);//$color_normal;
+            }
+        }
     }
 }
 
@@ -121,19 +116,20 @@ ul.react-autocomplete-input > li.active{ // active element of the autocomplete o
     align-items:center; // vertical centering of the icon
     justify-content:center; // horizontal centering of the icon
 
-    color: $color_main;//$color_main_blur;
-    font-size:30px;
-    overflow:hidden;
-}
-    
-.pl_component_form_item_input_text_suggestion_icon_highlighted{
-    margin-left:10px;
-    height:41px;
-    align-items:center; // vertical centering of the icon
-    justify-content:center; // horizontal centering of the icon
-
     color: $color_main;
     font-size:30px;
     overflow:hidden;
+
+    svg{
+        fill:$color_main;
+    }
+}
+    
+.pl_component_form_item_input_text_suggestion_icon.highlighted{
+    color: $color_main;
+
+    svg{
+        fill:$color_main;
+    }
 }
 

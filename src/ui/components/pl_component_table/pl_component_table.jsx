@@ -23,17 +23,17 @@
 */
 
 import React, { Component } from 'react';
-import { Table, TableRow, TableHeader, TableHead, TableBody, TableData } from 'carbon-components-react';
 import { isObjectAFunction } from './../../../modules/rkt_module_object';
 import { process_data_to_show_in_table } from './pl_component_table_actions';
 
+//components
+import { PlComponentFormItemInputText } from './../pl_component_form/pl_component_form_item/pl_component_form_item_input_text/pl_component_form_item_input_text';
 
 export class PlComponentTable extends Component {
 
 
     onClickRow(item) {
-
-        //console.log(item);
+        
         this.props.on_click_row(item);
 
     }
@@ -54,12 +54,15 @@ export class PlComponentTable extends Component {
 
         return (
 
+
             first_item_keys.map((key) => {
 
                 return (
-                    <TableHeader>{key}</TableHeader>
+                    <td className="grid-block"><b>{key.toUpperCase()}</b></td>
                 )
             })
+
+
 
         );
     }
@@ -80,7 +83,7 @@ export class PlComponentTable extends Component {
 
                         return (
 
-                            <TableData key={index}>
+                            <td key={index} >
                                 <div className="grid-block">
                                     <div className="grid-block">{data[key]}</div>
                                     <div className="grid-block shrink">
@@ -92,33 +95,59 @@ export class PlComponentTable extends Component {
                                         </a>
                                     </div>
                                 </div>
-                            </TableData>
+                            </td>
                         )
 
                     } else {
 
                         return (
 
-                            <TableData key={index}>{data[key]}</TableData>
+                            <td key={index}>{data[key]}</td>
                         )
 
                     }
+                } else if (table_mode === "edition") {
+
+                    if (key === "key") {
+
+                        return (
+
+                            <td key={index}>{data[key]}</td>
+                        )
+
+                    } else if (key === "value") {
+
+                        return (
+                            
+                            <td key={index}>
+                                <div className="grid-block shrink" >
+                                    <PlComponentFormItemInputText
+                                        className="pl_component_form_item_input_text"
+                                        ref={data["key"]}
+                                        key={data["key"]}
+                                        required_input={""}
+                                        value={data["value"]}
+                                        placeholder={data[key].toString()} />
+                                </div>
+                            </td>
+                        )
+                    }
+
                 } else {
 
                     if (key !== table_columns_last_column) {
                         return (
 
-                            <TableData key={index} onClick={this.onClickRow.bind(this, data)}>{data[key]}</TableData>
+                            <td key={index} onClick={this.onClickRow.bind(this, data)} >{data[key]}</td>
                         )
                     } else {
+
                         return (
 
-                            <TableData key={index}>{data[key]}</TableData>
+                            <td key={index} >{data[key]}</td>
                         )
                     }
-
                 }
-
 
             })
 
@@ -133,7 +162,11 @@ export class PlComponentTable extends Component {
             rows.map((row) => {
 
                 return (
-                    <TableRow className="pl-component-table-row">{this.render_rows_items(row)}</TableRow>
+                    
+                    <tr className="grid-block shrink pl-component-table-row">
+                        {this.render_rows_items(row)}
+                    </tr>
+
                 )
             })
         )
@@ -142,20 +175,21 @@ export class PlComponentTable extends Component {
     render_header(data) {
 
         return (
-            <TableHead>
-                <TableRow>
-                    {this.render_header_items(data)}
-                </TableRow>
-            </TableHead>
+            
+            <tr className="grid-block">
+                {this.render_header_items(data)}
+            </tr>
+
         );
     }
 
     render_body(data) {
 
         return (
-            <TableBody className="table-body">
-                {this.render_rows(data)}
-            </TableBody>
+            
+            this.render_rows(data)
+
+
         );
     }
 
@@ -165,11 +199,16 @@ export class PlComponentTable extends Component {
         data = process_data_to_show_in_table(data);
 
         return (
+            
             <div className="grid-block pl-component-table">
-                <Table>
-                    {this.render_header(data)}
-                    {this.render_body(data)}
-                </Table>
+                <table className="grid-block vertical">
+                    <thead className="grid-block shrink">
+                        {this.render_header(data)}
+                    </thead>
+                    <tbody className="grid-block vertical">
+                        {this.render_body(data)}
+                    </tbody>
+                </table>
             </div>
         );
     }

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
 //actions
-import {create_table} from './pl_component_sidebar_actions';
+import { create_table, /*create_list_vertical,*/ update_patient } from './pl_component_sidebar_actions';
 
 //components
-//import { PlComponentDatabaseHeader } from './../../components/pl_component_database/pl_component_database_header/pl_component_database_header';
 import { PlComponentSidebarHeader } from './pl_component_sidebar_header/pl_component_sidebar_header';
-import { PlComponentCardPatient } from './../pl_component_card/pl_component_card_patient/pl_component_card_patient';
-import { PlComponentCardPatientWidget } from './../pl_component_card/pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget';
-import { keys } from 'underscore';
 import { PlComponentSidebarPatient } from './pl_component_sidebar_patient/pl_component_sidebar_patient';
+
+//#TODO organizar
+import { isObjectEmpty, isObjectAFunction, isObjectAnArray } from './../../../modules/rkt_module_object';
+import { keys, without } from 'underscore';
 
 export class PlComponentSidebar extends Component {
 
@@ -18,10 +18,6 @@ export class PlComponentSidebar extends Component {
 
         this.state = {
             mode: "patient",
-            family_default_columns: ["id", "name", "description", "num_family_members"],
-            patient_default_columns: ["id", "name", "gender", "mother", "married_with", "family_id", "center", "num_relatives"],
-            family_columns_selected: ["id", "name", "description", "num_family_members"],
-            patient_columns_selected: ["id", "name", "gender", "mother", "married_with", "family_id", "center", "num_relatives"],
         }
     }
 
@@ -32,15 +28,38 @@ export class PlComponentSidebar extends Component {
         });
     }
 
-    on_select_tag() {
+    on_save_data_table() {
 
-    }
+        if (isObjectAFunction(this.props.perform_database_action)) {
 
-    on_unselect_tag() {
+            var patient = this.props.patient;
+            var data_keys = keys(patient);
 
-    }
+            var updated_table = this.refs.sidebarTable.refs;
+            var updated_table_keys = keys(updated_table);
 
-    on_save_data() {
+            var updated_patient = {};
+
+            for (var i = 0; i < data_keys.length; i++) {
+
+                if (updated_table_keys.includes(data_keys[i])) {
+                    
+                    updated_patient[data_keys[i]] = updated_table[data_keys[i]].state.input;
+
+                } else {
+
+                    updated_patient[data_keys[i]] = patient[data_keys[i]];
+
+                }
+
+            }
+
+            //console.log(updated_patient);
+            var data = { "action": "edit", "data": updated_patient };
+
+            this.props.perform_database_action(data);
+
+        }
 
     }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { isObjectAFunction } from './../../../modules/pl_modules_object';
+import { isObjectAFunction } from './../../../../modules/rkt_module_object';
 
 export class PlComponentButtonIcon extends Component {
 
@@ -43,26 +43,26 @@ export class PlComponentButtonIcon extends Component {
 
         var style = {
             "color": this.props.fontcolor,
+            "fill": this.props.fontcolor, // svg styling
             "backgroundColor": this.props.backgroundcolor,
             "border": "2px solid" + this.props.bordercolor
         };
 
         if (this.state.hover) {
-            style["color"] = this.props.fonthovercolor; 
+            style["color"] = this.props.fonthovercolor;
+            style["fill"] = this.props.fonthovercolor; // svg styling 
             style["backgroundColor"] = this.props.backgroundhovercolor;
             style["border"] = "2px solid" + this.props.borderhovercolor;
         }
 
         return (
             
-            <a className="grid-block pl_component_button_icon"
+            <a className="grid-block shrink pl_component_button_icon"
                 style={style}
                 onMouseEnter={this.onHoverButton.bind(this, "enter")} 
                 onMouseLeave={this.onHoverButton.bind(this, "leave")}
                 onClick={this.onClickButton.bind(this)}>
-                <div className="grid-block shrink button_icon_content" style={style}>
-                    {icon}
-                </div>
+                {icon}
             </a>
         );
     }

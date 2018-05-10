@@ -35,17 +35,14 @@ export class PlComponentMenuTags extends Component {
 
 
     on_unselect_tag(tag) {
-        console.log("Unselect tag");
         if (isObjectAFunction(this.props.on_un_selected_tag)) {
-            console.log(tag);
             this.props.on_un_selected_tag(tag);
         }
     }
 
     on_select_tag(tag) {
-        console.log("Select tag");
+        
         if (isObjectAFunction(this.props.on_select_tag)) {
-            console.log(tag);
             this.props.on_select_tag(tag);
         }
     }

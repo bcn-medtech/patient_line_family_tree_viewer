@@ -36,4 +36,16 @@
         width: 35px;
         height: 35px;
     }
+
+    .pl_component_text_field_editable {
+
+        .pl_component_text_plain{
+            color:unset;
+            font: unset;
+            max-height:unset;
+            overflow:hidden;
+        }
+        
+    }
+    
 }

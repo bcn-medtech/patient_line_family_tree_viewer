@@ -6,6 +6,8 @@
 @import './../pl_component_card/pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget.scss';
 @import './pl_component_sidebar_patient/pl_component_sidebar_patient.scss';
 @import './pl_component_sidebar_family/pl_component_sidebar_family.scss';
+@import './../pl_component_text_field_editable/pl_component_text_field_editable.scss';
+@import './../pl_component_widget/pl_component_widget_list_vertical/pl_component_widget_list_vertical.scss';
 
 .pl_component_sidebar{
 
@@ -24,4 +26,5 @@
         z-index: 10;
         overflow:hidden;
     }
+
 }

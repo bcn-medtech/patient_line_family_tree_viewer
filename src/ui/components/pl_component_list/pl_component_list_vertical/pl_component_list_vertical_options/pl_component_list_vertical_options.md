@@ -7,6 +7,7 @@ DOM Element:
 ```html
     <PlComponentListVerticalOptions
     items={items}
+    extra_button={{"icon":icon, "onClick":this.onClickExtraButton.bind(this)}}
     onclickelement={this.onClickElement.bind(this)} />
 ```
 
@@ -17,22 +18,22 @@ Input:
     {
         "name":"Carlos Yagüe Méndez",
         "author":"@cyague",
-        "option":"admin"
+        "value":"admin"
     },
     {
         "name":"Sergio Sánchez",
         "author":"@ssanchez",
-        "option":"admin"
+        "value":"admin"
     },
     {
         "name":"Bart Bijnens",
         "author":"@bbijnens",
-        "option":"editor"
+        "value":"editor"
     },
     {
         "name":"Oscar Cámara",
         "author":"@ocamara",
-        "option":"editor"
+        "value":"editor"
     }
 ]
 ```
@@ -44,22 +45,22 @@ Output:
     {
         "name":"Name",
         "author":"@cyague",
-        "option":"admin"
+        "value":"admin"
     },
     {
         "name":"Sergio Sánchez",
         "author":"@ssanchez",
-        "option":"admin"
+        "value":"admin"
     },
     {
         "name":"Bart Bijnens",
         "author":"@bbijnens",
-        "option":"editor"
+        "value":"editor"
     },
     {
         "name":"Oscar Cámara",
         "author":"@ocamara",
-        "option":"editor"
+        "value":"editor"
     }
 ]
 ```
