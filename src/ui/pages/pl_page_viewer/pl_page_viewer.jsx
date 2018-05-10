@@ -57,49 +57,56 @@ export default class PlPageViewer extends Component {
     };
   }
 
-  update_component_state_from_database() {
+  update_component_state_from_database(family_id, patient_id) {
+
+    var myComponent = this;
+
+    get_data(family_id, patient_id, function (result) {
+
+      if ("patient" in result) {
+
+        myComponent.setState({
+          root: result.root,
+          siblings: result.siblings,
+          family: result.family,
+          patient: result.patient,
+          mother: result.mother,
+          father: result.father,
+          children: result.children
+        });
+
+      } else {
+
+        myComponent.setState({
+          root: result.root,
+          siblings: result.siblings,
+          family: result.family,
+        });
+
+      }
+
+    });
+
+  }
+
+  componentDidMount() {
 
     var location = window.location;
-    var myComponent = this;
 
     if ("href" in location) {
 
       var location_url = location.href;
       var family_id = url_getParameterByName("family_id", location_url);
       var patient_id = url_getParameterByName("patient_id", location_url);
-
-      get_data(family_id, patient_id, function (result) {
-
-        if ("patient" in result) {
-
-          myComponent.setState({
-            root: result.root,
-            siblings: result.siblings,
-            family: result.family,
-            patient: result.patient,
-            mother: result.mother,
-            father: result.father,
-            children: result.children
-          });
-
-        } else {
-
-          myComponent.setState({
-            root: result.root,
-            siblings: result.siblings,
-            family: result.family,
-          });
-
-        }
-
-      });
+      this.update_component_state_from_database(family_id, patient_id);
 
     }
+
   }
 
-  componentDidMount() {
+  explore_new_patient(id) {
 
-    this.update_component_state_from_database();
+    this.update_component_state_from_database(this.state.family.id, id);
 
   }
 
@@ -155,7 +162,12 @@ export default class PlPageViewer extends Component {
       }
 
     if (this.state.root !== false && this.state.siblings !== false) {
-      tree_viewer = <PlComponentFamilyTreeViewer root={this.state.root} siblings={this.state.siblings} />;
+      tree_viewer = <PlComponentFamilyTreeViewer
+        root={this.state.root}
+        siblings={this.state.siblings}
+        set_patient={this.explore_new_patient.bind(this)}
+        patient_id={patient.id}
+      />;
       sidebar = <PlComponentSidebar
         patient={patient}
         family={family}

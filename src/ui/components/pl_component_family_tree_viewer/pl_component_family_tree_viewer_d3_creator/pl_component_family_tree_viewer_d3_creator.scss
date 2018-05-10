@@ -1,0 +1,219 @@
+  
+    .node_selected{
+        stroke:$color_normal;
+        stroke-width: 3px;
+        fill:transparent;
+    }
+    
+    .muerte-subita {
+      fill: #212121;
+      stroke: white;
+      stroke-width: 3px;
+
+      &:hover{
+        stroke:$color_normal;
+        stroke-width: 4px;
+      }
+
+    }
+    
+    .muerte-otras-causas {
+      fill: #FAFAFA;
+      stroke:  white;
+      stroke-width: 3px;
+
+      &:hover{
+        stroke:$color_normal;
+        stroke-width: 4px;
+      }
+
+    }
+    
+    .muerte-subita-recuperada {
+      fill: #212121;
+      stroke:  white;
+      stroke-width: 3px;
+
+      &:hover{
+        stroke:$color_normal;
+        stroke-width: 4px;
+      }
+
+    }
+    
+    .manifestacion-fenotipica {
+      fill: #D50000;
+      stroke:  #212121;
+      stroke-width: 3px;
+
+      &:hover{
+        stroke:$color_normal;
+        stroke-width: 4px;
+      }
+
+    }
+    
+    .portador-mutacion-responsable {
+      fill: #E53935;
+      stroke:  white;;
+      stroke-width: 3px;
+
+      &:hover{
+        stroke:$color_normal;
+        stroke-width: 4px;
+      }
+
+    }
+    .sin-manifestacion-fenotipica {
+      fill: #FAFAFA;
+      stroke:  black;
+      stroke-width: 3px;
+
+      &:hover{
+        stroke:$color_normal;
+        stroke-width: 4px;
+      }
+
+    }
+    
+    .no-portador-mutación {
+      background-color:  #FAFAFA;
+      border-color: black;
+      stroke-width: 3px;
+
+      &:hover{
+        stroke:$color_normal;
+        stroke-width: 4px;
+      }
+
+    }
+    .no-estudiado{
+      fill: #FAFAFA;
+      stroke:  black;
+      stroke-width: 3px;
+
+      &:hover{
+        stroke:$color_normal;
+        stroke-width: 4px;
+      }
+
+    }
+    .portador-obligado {
+      fill: #FAFAFA;
+      stroke:  black;
+      stroke-width: 3px;
+
+      &:hover{
+        stroke:$color_normal;
+        stroke-width: 4px;
+      }
+
+    }
+    .probando {
+      fill: #00B8D4;
+      stroke: white;;
+      stroke-width: 3px;
+
+      &:hover{
+        stroke:$color_normal;
+        stroke-width: 4px;
+      }
+      
+    }
+
+
+  
+  .text{
+    fill:white;
+  }
+  
+  .link {
+    fill: none;
+    stroke: white;
+  }
+  
+  .sibling {
+    fill: none;
+    stroke: white;
+  }
+  .node {
+    fill: #E53935;
+    stroke:  white;
+    stroke-width: 3px;
+    }
+    .d3-tip {
+      line-height: 1;
+      font-weight: bold;
+      padding: 24px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      border-radius: 2px;
+    }
+  
+    /* Creates a small triangle extender for the tooltip */
+    .d3-tip:after {
+      box-sizing: border-box;
+      display: inline;
+      font-size: 2px;
+      width: 100%;
+      line-height: 1;
+      color: rgba(0, 0, 0, 0.8);
+      content: "\25BC";
+      position: absolute;
+      text-align: center;
+    }
+  
+    /* Style northward tooltips differently */
+    .d3-tip.n:after {
+      margin: -1px 0 0 0;
+      top: 100%;
+      left: 0;
+  }
+  
+  /* d3-context-menu styles */
+  
+  .d3-context-menu {
+      position: absolute;
+      display: none;
+      background-color: #f2f2f2;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      min-width: 150px;
+      border: 1px solid #d4d4d4;
+      z-index:1200;
+  }
+  
+  .d3-context-menu ul {
+      list-style-type: none;
+      margin: 4px 0px;
+      padding: 0px;
+      cursor: default;
+  }
+  
+  .d3-context-menu ul li {
+      padding: 4px 16px;
+    min-width: 170px;
+  }
+  
+  .d3-context-menu ul li:hover {
+      background-color:#0879C4;
+      color: #fefefe;
+  }
+  
+  
+  .d3-context-menu ul li > ul {
+      position: absolute;
+      background-color: #f2f2f2;
+      top: 0;
+      left: 175px;
+      z-index: -1;
+      color: #000000;
+  }
+  
+  .d3-context-menu ul li > ul li:hover
+  {
+      background-color: #0879C4;
+         color: #000000;
+  }
+  

@@ -1,23 +1,19 @@
-import './pl_component_family_tree_viewer_d3_creator.css';
-import './pl_component_family_tree_viewer_d3_context_menu';
-
 import {
     filter
 } from 'underscore';
 //Using global variables
+
 const d3 = window.d3;
-console.log(d3);
+var svg;
 
 export default class TreeDisplayer {
 
-    create(el, props, root, sib, addDaughter, addSon, addWife, addHusband, addSister, addBrother, deleteMember, onClick, changeStatus) {
-        
-       
+
+    create(el, props, root, sib, patient_id, set_patient) {
+
         var w = props.width;
         var h = props.height;
 
-        //var w = 600;
-        //var h = 600;
         // Setup zoom and pan
         var zoom = d3.behavior.zoom()
             .scaleExtent([.1, 1])
@@ -28,169 +24,15 @@ export default class TreeDisplayer {
             .translate([-30, -300]);
 
         //canvas
-        var svg = d3.select(el).append('svg')
+        svg = d3.select(el).append('svg')
             .attr('class', 'd3')
             .attr("width", w)
             .attr("height", h)
-            //.attr("class", "overlay")
             .call(zoom)
             .append('g')
-            //.attr('class', 'd3-points')
             .attr("transform", "translate(-30, -300)");
 
-        // context menu
-
-        /*var menu = [
-            {
-                title: 'Add member  ...',
-                // Exceute Action
-                onMouseClick: function (elm, d, i) {
-
-                },
-                onMouseOver: function (elm, d, i) {
-
-                },
-                chidernItems: [
-                    {
-                        title: 'Daughter',
-                        // Exceute Action
-                        onMouseClick: addDaughter,
-                        onMouseOver: function (elm, d, i) {
-
-                        }
-                    },
-                    {
-                        title: 'Son ',
-                        // Exceute Action
-                        onMouseClick: addSon,
-                        onMouseOver: function (elm, d, i) {
-
-                        }
-                    },
-                    {
-                        title: 'Wife ',
-                        // Exceute Action
-                        onMouseClick: addWife,
-                        onMouseOver: function (elm, d, i) {
-
-                        }
-                    },
-                    {
-                        title: 'Husband ',
-                        // Exceute Action
-                        onMouseClick: addHusband,
-                        onMouseOver: function (elm, d, i) {
-
-                        }
-                    },
-                    {
-                        title: 'Sister ',
-                        // Exceute Action
-                        onMouseClick: addSister,
-                        onMouseOver: function (elm, d, i) {
-
-                        }
-                    },
-                    {
-                        title: 'Brother ',
-                        // Exceute Action
-                        onMouseClick: addBrother,
-                        onMouseOver: function (elm, d, i) {
-                        }
-                    }
-
-                ]
-            },
-            {
-                title: 'Change diagnostic ...',
-                onMouseClick: function (elm, d, i) {
-
-                },
-                onMouseOver: function (elm, d, i) {
-                },
-                chidernItems: [
-                    {
-                        title: 'Pending Diagnose ',
-                        // Exceute Action
-                        onMouseClick: addBrother,
-                        onMouseOver: function (elm, d, i) {
-                        }
-                    },
-                    {
-                        title: 'Diagnosed',
-                        // Exceute Action
-                        onMouseClick: addBrother,
-                        onMouseOver: function (elm, d, i) {
-                        }
-                    }
-                ]
-            },
-            {
-                title: 'Change status ...',
-                onMouseClick: function (elm, d, i) {
-
-                },
-                onMouseOver: function (elm, d, i) {
-                },
-                chidernItems: [
-                    {
-                        title: 'Portadora ',
-                        // Exceute Action
-                        onMouseClick: changeStatus,
-                        onMouseOver: function (elm, d, i) {
-                        }
-                    },
-                    {
-                        title: 'Sudden Death',
-                        // Exceute Action
-                        onMouseClick: changeStatus,
-                        onMouseOver: function (elm, d, i) {
-                        }
-                    },
-                    {
-                        title: 'Death',
-                        // Exceute Action
-                        onMouseClick: changeStatus,
-                        onMouseOver: function (elm, d, i) {
-                        }
-                    },
-                    {
-                        title: 'Portador Obligado',
-                        // Exceute Action
-                        onMouseClick: changeStatus,
-                        onMouseOver: function (elm, d, i) {
-                        }
-                    }
-                ]
-            },
-            {
-                title: 'Delete',
-                onMouseClick: deleteMember,
-                onMouseOver: function (elm, d, i) {
-                },
-                chidernItems: [
-                ]
-            }
-        ];*/
-
-        var menu = [
-            {
-                title: 'Header',
-            },
-            {
-                title: 'Normal item',
-                action: function() {}
-            },
-            {
-                divider: true
-            },
-            {
-                title: 'Last item',
-                action: function() {}
-            }
-        ];
-
-        this._drawTree(svg, root, sib, menu, onClick);
+        this._drawTree(root, sib, patient_id, set_patient);
 
     }
 
@@ -201,14 +43,14 @@ export default class TreeDisplayer {
     }
 
     destroy() {
+
         d3.select("svg").remove();
 
-        // Any clean-up would go here
-        // in this example there is nothing to do
     }
 
-    _drawTree(svg, root, sib, menu, onClick) {
+    _drawTree(root, sib, patient_id, set_patient) {
 
+        //d3.select(element).selectAll("*").remove();
         var allNodes = flatten(root);
         var width = 1000
         var height = 800;
@@ -255,9 +97,8 @@ export default class TreeDisplayer {
 
         // Create the node rectangles for males.
         nodes.append("rect")
-            .filter(function (d) { 
-                //console.log(d);
-                return d.gender === "male"; 
+            .filter(function (d) {
+                return d.gender === "male";
             })
             .attr("class", function (d) { return d.status; })
             .attr("height", 40)
@@ -274,16 +115,45 @@ export default class TreeDisplayer {
             })
             .attr("x", function (d) { return d.x - 20; })
             .attr("y", function (d) { return d.y - 20; })
-            .on('contextmenu', d3.contextMenu(menu))
-            //.on('click', onClick);
-        
+            .on('click', function (d) {
+                set_patient(d.id);
+            });
+
+        //Create the node rectangles for male selected
+        nodes.append("rect")
+            .filter(function (d) {
+                return d.gender === "male";
+            })
+            .filter(function (d) {
+                return d.id === patient_id;
+            })
+            .attr("class", function (d) { return d.status; })
+            .attr("class", "node_selected")
+            .attr("height", 40)
+            .attr("width", 40)
+            .attr("id", function (d) {
+                return d.id;
+            })
+            .attr("display", function (d) {
+                if (d.hidden) {
+                    return "none";
+                } else {
+                    return "";
+                }
+            })
+            .attr("x", function (d) { return d.x - 20; })
+            .attr("y", function (d) { return d.y - 20; })
+            .on('click', function (d) {
+                set_patient(d.id);
+            });
+
         nodes.append("text").filter(function (d) { return d.gender === "male"; })
             .text(function (d) {
                 var info;
                 info = d.name;
                 return info;
             })
-            .attr("class","text")
+            .attr("class", "text")
             .attr("dy", "0em")
             .attr("x", function (d) { return d.x - 20; })
             .attr("y", function (d) { return d.y + 40; });
@@ -294,14 +164,16 @@ export default class TreeDisplayer {
                 info = d.nhc;
                 return info;
             })
-            .attr("class","text")
+            .attr("class", "text")
             .attr("dy", "1em")
             .attr("x", function (d) { return d.x - 20; })
             .attr("y", function (d) { return d.y + 40; });
 
         // Create the node circles for females.
         nodes.append("circle").filter(function (d) { return d.gender === "female"; })
-            .attr("class", function (d) { return d.status; })
+            .attr("class", function (d) {
+                return d.status;
+            })
             .attr("r", 20)
             .attr("id", function (d) {
                 return d.id;
@@ -315,9 +187,38 @@ export default class TreeDisplayer {
             })
             .attr("cx", function (d) { return d.x - 4; })
             .attr("cy", function (d) { return d.y - 4; })
-            .on('contextmenu', d3.contextMenu(menu))
-            //.on('click', onClick);
-        //.on('mouseout', tip.hide);
+            .on('click', function (d) {
+                set_patient(d.id);
+            });
+
+        // Create the node circles for females selected
+        nodes.append("circle")
+            .filter(function (d) {
+                return d.gender === "female";
+            })
+            .filter(function (d) {
+                return d.id === patient_id;
+            })
+            .attr("class", function (d) {
+                return d.status;
+            })
+            .attr("class", "node_selected")
+            .attr("r", 20)
+            .attr("id", function (d) {
+                return d.id;
+            })
+            .attr("display", function (d) {
+                if (d.hidden) {
+                    return "none"
+                } else {
+                    return ""
+                };
+            })
+            .attr("cx", function (d) { return d.x - 4; })
+            .attr("cy", function (d) { return d.y - 4; })
+            .on('click', function (d) {
+                set_patient(d.id);
+            });
 
         // Create the node text label.
         nodes.append("text").filter(function (d) { return d.gender === "female"; })
@@ -326,22 +227,21 @@ export default class TreeDisplayer {
                 info = d.name + "  \n";
                 return info;
             })
-            .attr("class","text")
+            .attr("class", "text")
             .attr("dy", "0em")
             .attr("x", function (d) { return d.x - 20; })
             .attr("y", function (d) { return d.y + 40; });
-        
+
         nodes.append("text").filter(function (d) { return d.gender === "female"; })
             .text(function (d) {
                 var info;
                 info = d.nhc;
                 return info;
             })
-            .attr("class","text")
+            .attr("class", "text")
             .attr("dy", "1em")
             .attr("x", function (d) { return d.x - 20; })
             .attr("y", function (d) { return d.y + 40; });
-        //.on('mouseout', tip.hide);*/
 
 
         /**
@@ -349,12 +249,8 @@ export default class TreeDisplayer {
         **/
         function sblingLine(d, i) {
 
-            //console.log(allNodes);
             //start point
             var start = allNodes.filter(function (v) {
-
-                //console.log(d.source.id);
-                //console.log(v.id);
 
                 if (d.source.id == v.id) {
                     return true;
@@ -393,11 +289,9 @@ export default class TreeDisplayer {
             var n = [],
                 i = 0;
 
-            //console.log("****** flatten ******");
             function recurse(node) {
 
                 if (typeof node !== "string") {
-                    //console.log(node);
                     if (node.children) node.children.forEach(recurse);
                     if (!node.id) node.id = ++i;
                     n.push(node);
