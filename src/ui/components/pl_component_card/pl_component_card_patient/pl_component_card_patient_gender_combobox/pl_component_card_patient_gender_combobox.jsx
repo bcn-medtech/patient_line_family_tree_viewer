@@ -53,8 +53,11 @@ export class PlComponentCardPatientGenderCombobox extends Component {
 
         var gender = nextprops.gender;
 
+        console.log(gender);
+
         if(this.state.gender !== gender){
-            this.init_component(gender);
+
+            this.set_gender(gender);
         }
         
     }
@@ -156,9 +159,45 @@ export class PlComponentCardPatientGenderCombobox extends Component {
         
     }
 
+    render_element(gender,svg){
+
+        return(
+            <div className="grid-block shrink vertical card-item pl-component-card-patient-gender-combobox pl-component-card-patient-gender-combobox-tooltip ">
+                <div className="grid-block align-center">
+                    <h4>
+                        {svg}
+                    </h4>
+                </div>
+                <div className="grid-block align-center text">{gender}</div>
+            </div>
+        )
+    }
+
+    render_element_edit_mode(gender,svg){
+
+        return(
+
+            <a className="grid-block shrink vertical card-item pl-component-card-patient-gender-combobox pl-component-card-patient-gender-combobox-tooltip-selected">
+                <div className="grid-block align-center">
+                    <h4>
+                        {svg}
+                    </h4>
+                </div>
+                <div className="grid-block tooltipcontent">
+                    {this.render_combobox(gender)}
+                </div>
+                <div className="grid-block align-center text">{gender}</div>
+            </a>
+        );
+
+    }
+
     render() {
 
         var gender = this.state.gender;
+        var mode_edit = this.props.mode_edit;
+        var element;
+
         var svg;
 
         if (gender === "female") {
@@ -176,18 +215,16 @@ export class PlComponentCardPatientGenderCombobox extends Component {
             
         }
 
+        if(mode_edit){
+            element= this.render_element_edit_mode(gender,svg);
+        }else{
+            element = this.render_element(gender,svg);
+        }
+
         return (
-            <a className="grid-block shrink vertical card-item pl-component-card-patient-gender-combobox pl-component-card-patient-gender-combobox-tooltip">
-                <div className="grid-block align-center">
-                    <h4>
-                        {svg}
-                    </h4>
-                </div>
-                <div className="grid-block tooltipcontent">
-                    {this.render_combobox(gender)}
-                </div>
-                <div className="grid-block align-center text">{gender}</div>
-            </a>
+            <div className="grid-blok">
+                {element}
+            </div>
         );
 
     }

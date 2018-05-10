@@ -3,6 +3,7 @@
 .pl-component-card-patient-status-combobox{
 
     color:white;
+    padding: 10px;
 
     &:hover{
         color: white;
@@ -43,9 +44,8 @@
 }
 
 .tooltip {
-    position: relative;
-    display: inline-block;
-    padding: 10px;
+    //position: relative;
+    //display: inline-block;
     border-radius: 5px;
 }
 

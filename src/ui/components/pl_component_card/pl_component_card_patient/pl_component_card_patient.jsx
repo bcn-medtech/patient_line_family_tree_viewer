@@ -122,7 +122,7 @@ export class PlComponentCardPatient extends Component {
                     <PlComponentCardPatientGenderCombobox
                         gender={gender}
                         ref="patient_gender"
-                        mode_edit={mode_edit}/>
+                    mode_edit={mode_edit}/>
                 </div>
                 <div className="grid-block shrink card-item">
                     <PlComponentCardPatientStatusCombobox

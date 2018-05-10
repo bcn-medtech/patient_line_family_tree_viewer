@@ -35,52 +35,52 @@ import {
 
 export class PlComponentCardPatientStatusCombobox extends Component {
 
-    constructor(){
+    constructor() {
         super();
 
-        this.state={
-            status:false,
-            gender:false,
+        this.state = {
+            status: false,
+            gender: false,
         }
     }
 
-    init_component(status,gender){
+    init_component(status, gender) {
 
         this.setState({
-            status:status,
-            gender:gender
+            status: status,
+            gender: gender
         });
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
         var status = this.props.status;
         var gender = this.props.gender;
 
-        this.init_component(status,gender);
+        this.init_component(status, gender);
     }
-    
-    componentWillReceiveProps(nextprops){
+
+    componentWillReceiveProps(nextprops) {
 
         var status = nextprops.status;
         var gender = nextprops.gender;
 
-        if(this.state.gender !== gender && this.state.status !== status){
-            this.init_component(status,gender);
+        if (this.state.gender !== gender && this.state.status !== status) {
+            this.init_component(status, gender);
         }
-        
+
     }
-    
-    
-    set_item(item){
-        
+
+
+    set_item(item) {
+
         this.setState({
-            status:item.status
+            status: item.status
         })
     }
 
-    render_list_items_status(current_status,gender) {
+    render_list_items_status(current_status, gender) {
 
         var status_types = [
             {
@@ -237,9 +237,9 @@ export class PlComponentCardPatientStatusCombobox extends Component {
             },
         ]
 
-        status_types = filter(status_types,function(item){
-            
-            if(item.gender === gender){
+        status_types = filter(status_types, function (item) {
+
+            if (item.gender === gender) {
                 return true;
             }
 
@@ -252,16 +252,16 @@ export class PlComponentCardPatientStatusCombobox extends Component {
                 {
                     status_types.map((item) => {
 
-                        if(item.status === current_status){
+                        if (item.status === current_status) {
                             return (
                                 <div className="grid-block shrink list-item-selected">{item.svg}</div>
                             );
-                        }else{
+                        } else {
                             return (
-                                <div className="grid-block shrink list-item" onClick={this.set_item.bind(this,item)}>{item.svg}</div>
+                                <div className="grid-block shrink list-item" onClick={this.set_item.bind(this, item)}>{item.svg}</div>
                             );
                         }
-                       
+
                     })
                 }
             </div>
@@ -270,13 +270,39 @@ export class PlComponentCardPatientStatusCombobox extends Component {
 
     }
 
-    /*render_element(status,gender){
-        return();
+    render_element(status, gender) {
+
+        return (
+            <div>
+                <div className="grid-block vertical pl-component-card-patient-status-combobox">
+                    <div className="grid-block align-center">
+                        <PlComponentCardPatientStatus status={status} gender={gender} />
+
+                    </div>
+                    <div className="grid-block align-center text">status</div>
+                </div>
+            </div>
+        );
     }
 
-    render_element_edit_mode(status,gender){
-        return();
-    }*/
+    render_element_edit_mode(status, gender) {
+
+        return (
+            <div>
+                <a className="grid-block vertical pl-component-card-patient-status-combobox tooltip">
+                    <div className="grid-block align-center">
+                        <PlComponentCardPatientStatus status={status} gender={gender} />
+                        <div className="grid-block tooltipcontent">
+                            {
+                                this.render_list_items_status(status, gender)
+                            }
+                        </div>
+                    </div>
+                    <div className="grid-block align-center text">status</div>
+                </a>
+            </div>
+        );
+    }
 
     render() {
 
@@ -284,22 +310,19 @@ export class PlComponentCardPatientStatusCombobox extends Component {
         var gender = this.state.gender;
         var mode_edit = this.props.mode_edit;
 
+        var element;
+
+        if (mode_edit) {
+            element = this.render_element_edit_mode(status, gender);
+        } else {
+            element = this.render_element(status, gender);
+        }
 
         return (
             <div className="grid-block">
-                <a className="grid-block vertical pl-component-card-patient-status-combobox tooltip">
-                    <div className="grid-block align-center">
-                    <PlComponentCardPatientStatus status={status} gender={gender} />
-                        <div className="grid-block tooltipcontent">
-                        {
-                            this.render_list_items_status(status,gender)
-                        }
-                        </div>
-                    </div>
-                    <div className="grid-block align-center text">status</div>
-                </a>
+                {element}
             </div>
-            
+
         );
 
 

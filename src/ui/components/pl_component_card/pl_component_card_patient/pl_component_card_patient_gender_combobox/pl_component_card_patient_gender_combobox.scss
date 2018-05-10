@@ -1,11 +1,12 @@
 .pl-component-card-patient-gender-combobox{
 
     color:white;
+    
 
     &:hover{
         color:white;
     }
-    
+
     .gender{
         
         margin-top: 6px;
@@ -61,18 +62,33 @@
     
     position: relative;
     display: inline-block;
+    border-radius: 5px;
+    width: 70px;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 3px;
+    padding-bottom: 10px;
+
+}
+
+
+.pl-component-card-patient-gender-combobox-tooltip-selected {
+    
+    position: relative;
+    display: inline-block;
     border-radius: 5px;
     width: 70px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 10px;
 
     &:hover{
         background-color: $color_shadow-2;
     }
 }
 
-.pl-component-card-patient-gender-combobox-tooltip .tooltipcontent {
+.pl-component-card-patient-gender-combobox-tooltip-selected .tooltipcontent {
     
     visibility: hidden;
     background-color:$rkt_viewer_patient_line_viewer_bg_color;
@@ -89,7 +105,7 @@
 
 
 
-.pl-component-card-patient-gender-combobox-tooltip:hover .tooltipcontent {
+.pl-component-card-patient-gender-combobox-tooltip-selected:hover .tooltipcontent {
     visibility: visible;
     
 }
