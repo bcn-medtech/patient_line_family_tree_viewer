@@ -23,7 +23,6 @@
 */
 
 import React, { Component } from 'react';
-import { Table, TableRow, TableHeader, TableHead, TableBody, TableData } from 'carbon-components-react';
 import { isObjectAFunction } from './../../../modules/rkt_module_object';
 import { process_data_to_show_in_table } from './pl_component_table_actions';
 
@@ -203,16 +202,11 @@ export class PlComponentTable extends Component {
             
             <div className="grid-block pl-component-table">
                 <table className="grid-block vertical">
-
                     <thead className="grid-block shrink">
-                        <tr className="grid-block">
-                            {this.render_header(data)}
-                        </tr>
-
+                        {this.render_header(data)}
                     </thead>
                     <tbody className="grid-block vertical">
                         {this.render_body(data)}
-                        
                     </tbody>
                 </table>
             </div>

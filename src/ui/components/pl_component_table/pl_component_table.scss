@@ -3,20 +3,19 @@
     table{
 
         thead{
-            border:1px solid $color-normal;
-
+            
             tr{
                 width:100%;
+                height:100%;
                 font-size:0.875rem;
-                min-height:40px;
                 
                 align-items:center;
 
                 td{
-                    border-right: 1px solid $color-normal;
+                    border:1px solid $color-normal;
                     
                     padding: 10px;//6px;
-                    width:100%;
+                    width:100%; // important
                 }
             }
 
@@ -37,7 +36,7 @@
                 
                 td{
                     padding: 10px;//6px;
-                    width:100%;
+                    width:100%; // important
                 }
 
                 &:hover{

@@ -139,12 +139,12 @@ export class PlComponentWidgetListVertical extends Component {
                 if (Object.keys(item.refs).length > 0) { // case of an item with editable fields => possibly edited item
 
                     // in "edition" mode,
-                    var value_edited_name;  // "value" is always editable
+                    var value_edited_item;  // "value" is always editable
                     name_final_item = props_name_item; // "name" is never editable
                     
                     if (this.props.type_of_list_vertical === "info") {
 
-                        var value_edited_item = item.refs.input_value.state.input;
+                        value_edited_item = item.refs.input_value.state.input;
 
                         // //if the value field of the item is NOT empty => edited value
                         // if (value_edited_item.trim() !== "") value_final_item = value_edited_item;

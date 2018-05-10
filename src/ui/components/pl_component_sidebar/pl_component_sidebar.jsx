@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 //actions
-import { create_table, create_list_vertical, update_patient } from './pl_component_sidebar_actions';
+import { create_table, /*create_list_vertical,*/ update_patient } from './pl_component_sidebar_actions';
 
 //components
 //import { PlComponentDatabaseHeader } from './../../components/pl_component_database/pl_component_database_header/pl_component_database_header';
@@ -11,8 +11,8 @@ import { PlComponentMenuTags } from './../pl_component_menu/pl_component_menu_ta
 import { isObjectEmpty, isObjectAFunction, isObjectAnArray } from './../../../modules/rkt_module_object';
 import { PlComponentTable } from './../pl_component_table/pl_component_table';
 import { PlComponentButtonRect } from './../pl_component_button/pl_component_button_rect/pl_component_button_rect';
-import { PlComponentWidgetListVertical } from './../pl_component_widget/pl_component_widget_list_vertical/pl_component_widget_list_vertical.jsx';
-import { findWhere, keys, without } from 'underscore';
+//import { PlComponentWidgetListVertical } from './../pl_component_widget/pl_component_widget_list_vertical/pl_component_widget_list_vertical.jsx';
+import { keys, without } from 'underscore';
 
 export class PlComponentSidebar extends Component {
 
@@ -56,7 +56,7 @@ export class PlComponentSidebar extends Component {
         });
     }
 
-    on_save_data_table(updated_table, changed_items, action) {
+    on_save_data_table() {
 
         if (isObjectAFunction(this.props.perform_database_action)) {
 

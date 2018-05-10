@@ -34,8 +34,7 @@ export class PlComponentFormItemInputText extends Component {
 
     onInputChange(e) {
         var text_field_value = e.target.value;
-        var required_input = this.props.required_input;
-
+        
         var isInputInvalid;
 
         if (text_field_value.trim() === "") { // if the input is an empty string (that is, "", " ", "   "...), the input is INVALID

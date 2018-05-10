@@ -34,7 +34,6 @@ export class PlComponentButtonCircle extends Component {
 
     render() {
 
-        var text = this.props.text;
         var icon = this.props.icon;
 
         var style = {
@@ -52,16 +51,12 @@ export class PlComponentButtonCircle extends Component {
         }
 
         return (
-            <a className="grid-block pl_component_button_circle"
-                style={style}
-                onMouseEnter={this.onHoverButton.bind(this)} 
-                onMouseLeave={this.onHoverButton.bind(this)}
+            <a className="grid-block shrink pl_component_button_circle"
+                style={style} 
+                onMouseEnter={this.onHoverButton.bind(this, "enter")} 
+                onMouseLeave={this.onHoverButton.bind(this, "leave")} 
                 onClick={this.onClickButton.bind(this)}>
-                <div className="grid-block shrink button_circle_icon">
-                    {icon}
-                    {/* + */}
-                    {/* {text} */}
-                </div>
+                {icon}
             </a>
         );
     }

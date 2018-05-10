@@ -156,7 +156,7 @@ export class PlComponentFormItemInputTextSuggestion extends Component {
                         onFocus={this.onInputFocus.bind(this)}
                         onBlur={this.onInputBlur.bind(this)}
                         trigger={""}
-                        regex={"^[a-zA-Z0-9_\-\s]+$"}
+                        regex={"^[a-zA-Z0-9_\-]+$"}
                         maxOptions={0}
                         options={suggestions}
                         onClick={this.onInputClick.bind(this)} />
