@@ -28,9 +28,7 @@ export class PlComponentForm extends Component {
     }
 
     renderFormItems(items) {
-
-        var selectedFormItem = this.state.selectedFormItem;
-
+        
         return (
             <div className="grid-block vertical pl_component_form_items">
                 {items.map((item, index) => {

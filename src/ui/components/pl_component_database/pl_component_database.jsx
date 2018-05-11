@@ -412,16 +412,16 @@ export class PlComponentDatabase extends Component {
         var menu_items = [
             {
                 "name": "add",
-                "icon": <svg width='16' height='16' viewBox='0 0 24 24' fill-rule='evenodd'><path d='M14 0h-4v10H0v4h10v10h4V14h10v-4H14z'></path></svg>
+                "icon": <svg width='16' height='16' viewBox='0 0 24 24' fillRule='evenodd'><path d='M14 0h-4v10H0v4h10v10h4V14h10v-4H14z'></path></svg>
             },
             {
                 "name": "delete",
-                "icon": <svg width='10' height='21' viewBox='0 0 16 24' fill-rule='evenodd'><path d='M4 0h8v2H4zM0 3v4h1v17h14V7h1V3H0zm13 18H3V8h10v13z'></path><path d='M5 10h2v9H5zm4 0h2v9H9z'></path></svg>,
+                "icon": <svg width='10' height='21' viewBox='0 0 16 24' fillRule='evenodd'><path d='M4 0h8v2H4zM0 3v4h1v17h14V7h1V3H0zm13 18H3V8h10v13z'></path><path d='M5 10h2v9H5zm4 0h2v9H9z'></path></svg>,
                 "selected": false
             },
             {
                 "name": "export",
-                "icon": <svg width='15' height='15' viewBox='0 0 24 24' fill-rule='evenodd'><path d='M19 9.4l-1.2-1.1L13 13V0h-2v13L6.2 8.3 5 9.4l7 6.6z'></path><path d='M22 14v6H2v-6H0v10h24V14z'></path></svg>
+                "icon": <svg width='15' height='15' viewBox='0 0 24 24' fillRule='evenodd'><path d='M19 9.4l-1.2-1.1L13 13V0h-2v13L6.2 8.3 5 9.4l7 6.6z'></path><path d='M22 14v6H2v-6H0v10h24V14z'></path></svg>
             }
         ]
 

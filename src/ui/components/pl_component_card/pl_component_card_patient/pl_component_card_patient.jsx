@@ -43,20 +43,20 @@ export class PlComponentCardPatient extends Component {
 
     on_edit_patient() {
 
-        if(isObjectAFunction(this.props.on_set_mode_edit)){
+        if (isObjectAFunction(this.props.on_set_mode_edit)) {
 
             this.props.on_set_mode_edit();
 
         }
     }
 
-    on_remove_patient(){
+    on_remove_patient() {
         alert("On delete patient");
     }
 
     on_click_card_component(type) {
 
-        if (type === "father" || type === "mother" || type === "children" || type == "relatives") {
+        if (type === "father" || type === "mother" || type === "children" || type === "relatives") {
 
             if (isObjectAFunction(this.props.on_click_action)) {
 
@@ -66,7 +66,7 @@ export class PlComponentCardPatient extends Component {
         }
     }
 
-    render_menu(patient, father, mother, children, mode_menu,mode_edit) {
+    render_menu(patient, father, mother, children, mode_menu, mode_edit) {
 
         var patient_num_relatives;
         var patient_num_children;
@@ -83,7 +83,7 @@ export class PlComponentCardPatient extends Component {
         if ("gender" in patient) {
             gender = patient.gender;
         }
-        
+
         if (!isObjectEmpty(children)) {
             if (isObjectAnArray(children)) {
                 patient_num_children = children.length;
@@ -124,14 +124,14 @@ export class PlComponentCardPatient extends Component {
                     <PlComponentCardPatientGenderCombobox
                         gender={gender}
                         ref="patient_gender"
-                    mode_edit={mode_edit}/>
+                        mode_edit={mode_edit} />
                 </div>
                 <div className="grid-block shrink card-item">
                     <PlComponentCardPatientStatusCombobox
                         status={patient.status}
                         gender={patient.gender}
                         ref="patient_status"
-                        mode_edit={mode_edit}/>
+                        mode_edit={mode_edit} />
                 </div>
                 <div className="grid-block shrink card-item">
                     <PlComponentCardPatientStatusButton
@@ -165,14 +165,14 @@ export class PlComponentCardPatient extends Component {
         var button_delete =
             {
                 "name": "delete",
-                "icon": <svg width='10' height='18' viewBox='0 0 16 24' fill-rule='evenodd'><path d='M4 0h8v2H4zM0 3v4h1v17h14V7h1V3H0zm13 18H3V8h10v13z'></path><path d='M5 10h2v9H5zm4 0h2v9H9z'></path></svg>
+                "icon": <svg width='10' height='18' viewBox='0 0 16 24' fillRule='evenodd'><path d='M4 0h8v2H4zM0 3v4h1v17h14V7h1V3H0zm13 18H3V8h10v13z'></path><path d='M5 10h2v9H5zm4 0h2v9H9z'></path></svg>
             }
 
         var button_edit =
             {
                 "name": "edit",
-                "icon": <svg width='15' height='15' viewBox='0 0 16 16' fill-rule='evenodd'><path d='M2.032 10.924l7.99-7.99 2.97 2.97-7.99 7.99zm9.014-8.91l1.98-1.98 2.97 2.97-1.98 1.98zM0 16l3-1-2-2z'></path></svg>,
-                "selected":mode_edit
+                "icon": <svg width='15' height='15' viewBox='0 0 16 16' fillRule='evenodd'><path d='M2.032 10.924l7.99-7.99 2.97 2.97-7.99 7.99zm9.014-8.91l1.98-1.98 2.97 2.97-1.98 1.98zM0 16l3-1-2-2z'></path></svg>,
+                "selected": mode_edit
             }
 
         if ("id" in patient) {
@@ -191,16 +191,16 @@ export class PlComponentCardPatient extends Component {
                             <h4>
                                 <PlComponentTextFieldEditable
                                     text={patient_name}
-                                    isEditionMode={mode_edit ? true : false} 
+                                    isEditionMode={mode_edit ? true : false}
                                 />
                             </h4>
                         </div>
                         <div className="grid-block shrink">
-                            <PlComponentTextFieldEditable 
-                                text={patient_id} 
-                                isEditionMode={mode_edit ? true : false} 
+                            <PlComponentTextFieldEditable
+                                text={patient_id}
+                                isEditionMode={mode_edit ? true : false}
                             />
-                        </div> 
+                        </div>
                     </div>
                     <div className="grid-block shrink">
                         <PlComponentButtonCircleSelectable
@@ -231,7 +231,7 @@ export class PlComponentCardPatient extends Component {
                             onclickelement={this.on_remove_patient.bind(this, button_delete.name)} />
                     </div>
                 </div>
-                {this.render_menu(patient, father, mother, children, mode_menu,mode_edit)}
+                {this.render_menu(patient, father, mother, children, mode_menu, mode_edit)}
             </div>
         );
 
