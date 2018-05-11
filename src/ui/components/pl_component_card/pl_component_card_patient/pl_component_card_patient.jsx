@@ -192,6 +192,7 @@ export class PlComponentCardPatient extends Component {
                                 <PlComponentTextFieldEditable
                                     text={patient_name}
                                     isEditionMode={mode_edit ? true : false}
+                                    ref="patient_name"
                                 />
                             </h4>
                         </div>
@@ -199,7 +200,7 @@ export class PlComponentCardPatient extends Component {
                             <PlComponentTextFieldEditable
                                 text={patient_id}
                                 isEditionMode={mode_edit ? true : false}
-                            />
+                                ref="patient_id" />
                         </div>
                     </div>
                     <div className="grid-block shrink">
@@ -220,7 +221,6 @@ export class PlComponentCardPatient extends Component {
                     </div>
                     <div className="grid-block shrink">
                         <PlComponentButtonCircle
-                            text={""}
                             icon={button_delete.icon}
                             backgroundcolor={"transparent"}
                             backgroundhovercolor={"#5C4EE5"}

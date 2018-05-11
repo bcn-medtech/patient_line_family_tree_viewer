@@ -10,12 +10,14 @@
         
         .text{
             color:$color-normal;
+            overflow:hidden;
         }
     }
 
     .text{
         margin-top:3px;
         display: block;
+        overflow:hidden;
     }
 
     .list{
@@ -24,6 +26,8 @@
         .list-item{
             
             padding: 10px;
+            border-bottom: 1px solid transparent;
+            border-top: 1px solid transparent;
 
             &:hover{
                 background-color: $color_shadow-2;

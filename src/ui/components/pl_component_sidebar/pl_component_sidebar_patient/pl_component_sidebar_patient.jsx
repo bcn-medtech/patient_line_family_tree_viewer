@@ -23,13 +23,14 @@
 */
 
 import React, { Component } from 'react';
+import { isObjectAFunction } from './../../../../modules/rkt_module_object';
 import { PlComponentCardPatient } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient';
 import { PlComponentCardPatientWidget } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget';
 import { PlComponentMenuTags } from './../../pl_component_menu/pl_component_menu_tags/pl_component_menu_tags';
 import { PlComponentTable } from './../../pl_component_table/pl_component_table';
 
 //actions
-import { create_table } from './pl_component_sidebar_patient_actions';
+import { create_table, update_patient_from_table } from './pl_component_sidebar_patient_actions';
 import { keys, without } from 'underscore';
 
 export class PlComponentSidebarPatient extends Component {
@@ -90,6 +91,22 @@ export class PlComponentSidebarPatient extends Component {
         });
     }
 
+    on_save_data_table() { // TODO
+        
+        //if (isObjectAFunction(this.props.perform_database_action)) {
+
+            var patient = this.props.patient;
+            var edited_table = this.refs.patient_table.refs;
+            
+            var updated_patient = update_patient_from_table(patient, edited_table);
+            //var data = { "action": "edit", "data": updated_patient };
+
+            //this.props.perform_database_action(data);
+
+        //}
+
+    }
+
     render() {
 
         var patient = this.props.patient;
@@ -100,7 +117,8 @@ export class PlComponentSidebarPatient extends Component {
         var mode_edit = this.state.mode_edit;
         var widget;
         var table_mode;
-
+        console.log(patient);
+        console.log(mode_menu);
         if (mode_edit) {
 
             table_mode = "edition";
@@ -117,7 +135,7 @@ export class PlComponentSidebarPatient extends Component {
 
         return (
             <div className="grid-block pl-component-sidebar-patient vertical">
-                <div className="grid-block shrink pl_component_sidebar_element">
+                <div className="grid-block shrink pl_component_sidebar_patient_element">
                     <PlComponentCardPatient
                         patient={patient}
                         father={father}
@@ -137,13 +155,12 @@ export class PlComponentSidebarPatient extends Component {
                         data={data}
                         keys_selected={data_keys_selected}
                         on_select_tag={this.on_select_tag.bind(this)}
-                        on_un_selected_tag={this.on_unselect_tag.bind(this)}>
-                    </PlComponentMenuTags>
+                        on_un_selected_tag={this.on_unselect_tag.bind(this)}/>
                 </div>
                 <div className="grid-block pl_component_sidebar_patient_element">
-                    <PlComponentTable ref="sidebarTable" data={data_table} table_mode={table_mode} />
+                    <PlComponentTable ref="patient_table" data={data_table} table_mode={table_mode} />
                 </div>
-            </div>
+            </div >
         );
 
     }

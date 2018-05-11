@@ -52,9 +52,7 @@ export class PlComponentCardPatientGenderCombobox extends Component {
     componentWillReceiveProps(nextprops){
 
         var gender = nextprops.gender;
-
-        console.log(gender);
-
+        
         if(this.state.gender !== gender){
 
             this.set_gender(gender);

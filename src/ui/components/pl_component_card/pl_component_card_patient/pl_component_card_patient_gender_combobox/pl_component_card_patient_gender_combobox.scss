@@ -33,6 +33,7 @@
         .text{
             margin-top: -5px;
             display: block;
+            overflow:hidden;
         }
     }
 
@@ -54,6 +55,7 @@
         .text{
             margin-top: -5px;
             display: block;
+            overflow:hidden;
         }
     }
 }
@@ -74,6 +76,7 @@
 
         .text{
             color:$color-normal;
+            overflow:hidden;
         }
     }
 
