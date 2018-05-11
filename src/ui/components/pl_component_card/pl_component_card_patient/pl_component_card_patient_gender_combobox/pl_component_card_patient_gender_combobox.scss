@@ -69,6 +69,14 @@
     padding-top: 3px;
     padding-bottom: 10px;
 
+    &:hover{
+        background-color: $color_shadow-2;
+
+        .text{
+            color:$color-normal;
+        }
+    }
+
 }
 
 

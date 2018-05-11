@@ -83,7 +83,7 @@ export class PlComponentCardPatient extends Component {
         if ("gender" in patient) {
             gender = patient.gender;
         }
-
+        
         if (!isObjectEmpty(children)) {
             if (isObjectAnArray(children)) {
                 patient_num_children = children.length;
@@ -195,7 +195,7 @@ export class PlComponentCardPatient extends Component {
                                 />
                             </h4>
                         </div>
-                        <div className="grid-block shrink" style={{"border":"1px solid yellow"}}>
+                        <div className="grid-block shrink">
                             <PlComponentTextFieldEditable 
                                 text={patient_id} 
                                 isEditionMode={mode_edit ? true : false} 

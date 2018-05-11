@@ -66,11 +66,12 @@ export class PlComponentCardPatientGenderCombobox extends Component {
 
         if (gender === "female") {
 
-            return (<svg width="25" height="25" className="gender"><rect width="25" height="25" /></svg>);
+            return (<svg width="25" height="25" className="gender"><circle cx="11" cy="11" r="10" /></svg>);
 
         } else if (gender === "male") {
 
-            return (<svg width="25" height="25" className="gender"><circle cx="11" cy="11" r="10" /></svg>);
+            return (<svg width="25" height="25" className="gender"><rect width="25" height="25" /></svg>);
+        
         }
     }
 
@@ -222,7 +223,7 @@ export class PlComponentCardPatientGenderCombobox extends Component {
         }
 
         return (
-            <div className="grid-blok">
+            <div className="grid-block">
                 {element}
             </div>
         );

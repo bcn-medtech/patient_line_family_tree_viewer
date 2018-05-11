@@ -6,7 +6,11 @@
     padding: 10px;
 
     &:hover{
-        color: white;
+        background-color: $color_shadow-2;
+        
+        .text{
+            color:$color-normal;
+        }
     }
 
     .text{
@@ -38,8 +42,6 @@
     .pl-component-card-patient-status{
         margin-top:-4px;
     }
-
-
 
 }
 
