@@ -131,7 +131,7 @@ export default class PlPageViewer extends Component {
   }
 
   render() {
-
+    
     var tree_viewer;
     var sidebar;
     var viewer_legend;

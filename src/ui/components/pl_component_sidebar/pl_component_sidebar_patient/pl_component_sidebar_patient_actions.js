@@ -26,7 +26,7 @@ export function update_patient_from_table(patient, edited_table) {
 
     var patient_keys = keys(patient);
     var edited_table_keys = keys(edited_table);
-    
+
     var updated_patient = {};
 
     for (var i = 0; i < patient_keys.length; i++) {
@@ -40,7 +40,7 @@ export function update_patient_from_table(patient, edited_table) {
         } else {
 
             updated_patient[patient_key] = patient[patient_key];
-            
+
         }
 
     }

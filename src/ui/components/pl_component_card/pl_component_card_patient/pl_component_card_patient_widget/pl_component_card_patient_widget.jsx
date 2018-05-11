@@ -36,12 +36,13 @@ export class PlComponentCardPatientWidget extends Component {
         var tittle = this.props.tittle;
         var content = this.props.content;
 
-        console.log(tittle);
+        //console.log(tittle);
 
         return (
             <div className="grid-block vertical pl-component-card-patient-widget">
                 <div className="grid-block"><h5>{this.capitalize_first_letter(tittle)}</h5></div>
-                <div className="grid-block">{content}</div>
+                {/* <div className="grid-block">{content}</div> */}
+                {content}
             </div>
         );
 

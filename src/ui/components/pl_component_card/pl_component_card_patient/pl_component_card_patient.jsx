@@ -75,7 +75,7 @@ export class PlComponentCardPatient extends Component {
         var mode_children = false;
         var mode_father = false;
         var mode_mother = false;
-
+        
         if ("num_relatives" in patient) {
             patient_num_relatives = patient.num_relatives;
         }
@@ -88,7 +88,7 @@ export class PlComponentCardPatient extends Component {
             if (isObjectAnArray(children)) {
                 patient_num_children = children.length;
             } else {
-                patient_num_children = 0;
+                patient_num_children = 1;
             }
         } else {
             patient_num_children = 0;

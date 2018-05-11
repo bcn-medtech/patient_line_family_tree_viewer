@@ -1,0 +1,31 @@
+.pl-component-card-patient-widget-children{
+
+    h6{
+        color:$color_normal;
+    }
+
+    .pl-component-card-patient-widget-children-item{
+        padding-bottom:5px;
+        align-items: center;
+
+
+        tr, td{
+            width:100%;
+        }
+
+        .pl-component-card-patient-widget-children-element{
+
+            //padding-right:30px;
+            
+            .children-age{
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+
+    .pl-component-card-patient-widget-children-undefined-message{
+        padding-bottom:2px;
+    }
+
+}

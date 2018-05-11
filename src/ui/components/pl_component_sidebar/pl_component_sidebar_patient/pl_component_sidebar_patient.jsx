@@ -26,6 +26,9 @@ import React, { Component } from 'react';
 import { isObjectAFunction } from './../../../../modules/rkt_module_object';
 import { PlComponentCardPatient } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient';
 import { PlComponentCardPatientWidget } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget';
+import { PlComponentCardPatientWidgetChildren } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget_children/pl_component_card_patient_widget_children';
+import { PlComponentCardPatientWidgetParent } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget_parent/pl_component_card_patient_widget_parent';
+import { PlComponentCardPatientWidgetRelatives } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget_relatives/pl_component_card_patient_widget_relatives';
 import { PlComponentMenuTags } from './../../pl_component_menu/pl_component_menu_tags/pl_component_menu_tags';
 import { PlComponentTable } from './../../pl_component_table/pl_component_table';
 
@@ -117,22 +120,42 @@ export class PlComponentSidebarPatient extends Component {
         var mode_edit = this.state.mode_edit;
         var widget;
         var table_mode;
-        console.log(patient);
-        console.log(mode_menu);
+
         if (mode_edit) {
 
             table_mode = "edition";
         }
 
         if (this.state.mode_menu !== false) {
-            widget = <PlComponentCardPatientWidget tittle={mode_menu} />
+            //var card_patient_widget_content = create_card_patient_widget(mode_menu, mode_edit, patient, father, mother, children);
+
+            var widget_content;
+
+            if (mode_menu === "relatives") {
+
+                //widget_content = <PlComponentCardPatientWidgetRelatives /> // TODO
+
+            } else if (mode_menu === "children") {
+        
+                widget_content = <PlComponentCardPatientWidgetChildren children={children} mode_edit={mode_edit}/>
+                
+            } else if (mode_menu === "father") {
+        
+                widget_content = <PlComponentCardPatientWidgetParent parent={father} type_parent={mode_menu} mode_edit={mode_edit}/>
+
+            } else if (mode_menu === "mother") {
+        
+                widget_content = <PlComponentCardPatientWidgetParent parent={mother} type_parent={mode_menu} mode_edit={mode_edit}/>
+            }
+
+            widget = <PlComponentCardPatientWidget tittle={mode_menu} content={widget_content}/>
         }
 
         var data_keys_selected = this.state.patient_columns_selected;
         var data = [];
         data.push(patient);
         var data_table = create_table(patient, data_keys_selected);
-
+        
         return (
             <div className="grid-block pl-component-sidebar-patient vertical">
                 <div className="grid-block shrink pl_component_sidebar_patient_element">
@@ -140,9 +163,10 @@ export class PlComponentSidebarPatient extends Component {
                         patient={patient}
                         father={father}
                         mother={mother}
+                        children={children}
                         on_click_action={this.on_set_mode_menu.bind(this)}
                         on_set_mode_edit={this.on_set_mode_edit.bind(this)}
-                        on_set_children={children}
+                        //on_set_children={children}
                         mode_menu={mode_menu}
                         mode_edit={mode_edit}
                         ref="patient_card" />
