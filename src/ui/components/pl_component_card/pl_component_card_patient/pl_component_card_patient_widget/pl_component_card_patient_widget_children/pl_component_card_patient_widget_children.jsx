@@ -18,12 +18,12 @@
 # Carlos Yagüe Méndez
 # María del Pilar García
 # Daniele Pezzatini
-# Contributors: 
+# Contributors:
 # Sergio Sánchez Martínez
 */
 
 import React, { Component } from 'react';
-//import { isObjectAFunction } from './../../../../../modules/rkt_module_object';
+//import { isObjectAFunction } from './../../../../../../modules/rkt_module_object';
 //components
 import { PlComponentCardPatientStatus } from './../../pl_component_card_patient_status/pl_component_card_patient_status';
 //actions
@@ -42,7 +42,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
             } else {
 
                 return (
-                    <div className="grid-block vertical">
+                    <div className="grid-block shrink vertical">
                         {this.render_list_of_children(children)}
                     </div>
                 );
@@ -74,62 +74,26 @@ export class PlComponentCardPatientWidgetChildren extends Component {
                 var id = child.id;
                 var name = child.name;
 
-
                 var status = child.status;
                 var gender = child.gender;
 
-                var name = child.name;
-                var id = child.id;
-
                 var dob = child.dob;
-
 
                 return (
 
-                    // <div className="grid-block pl-component-card-patient-widget-children-item" key={index}>
-                    //     {id + ": " + name} */}
-
-                    //     <div className="grid-block pl-component-card-patient-widget-parent">
-                    //         <div className="grid-block shrink pl-component-card-patient-widget-parent-element">
-                    //             <PlComponentCardPatientStatus status={status} gender={gender} />
-                    //         </div>
-                    //         <div className="grid-block shrink vertical pl-component-card-patient-widget-parent-element">
-                    //             <h6>{name}</h6>
-                    //             <div className="grid-block shrink text">{id}</div>
-                    //         </div>
-                    //         <div className="grid-block shrink vertical pl-component-card-patient-widget-parent-element parent-age">
-                    //             {this.render_age(dob)}
-                    //             <div className="grid-block shrink text">age</div>
-                    //         </div>
-                    //     </div>
-
-                    // </div>
-
-                    <table>
-                        <tbody>
-                            <tr className="grid-block pl-component-card-patient-widget-children-item" key={index}>
-                                <td>
-                                    <div className="grid-block shrink pl-component-card-patient-widget-children-element">
-                                        <PlComponentCardPatientStatus status={status} gender={gender} />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="grid-block shrink vertical pl-component-card-patient-widget-children-element">
-                                        <h6>{name}</h6>
-                                        <div className="grid-block shrink text">{id}</div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="grid-block shrink vertical pl-component-card-patient-widget-children-element children-age">
-                                        {this.render_age(dob)}
-                                        <div className="grid-block shrink text">age</div>
-                                    </div>
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
+                    <div className="grid-block shrink pl-component-card-patient-widget-children-item" key={index}>
+                        <div className="grid-block shrink pl-component-card-patient-widget-children-element">
+                            <PlComponentCardPatientStatus status={status} gender={gender} />
+                        </div>
+                        <div className="grid-block vertical pl-component-card-patient-widget-children-element">
+                            <h6>{name}</h6>
+                            <div className="grid-block shrink text">{id}</div>
+                        </div>
+                        <div className="grid-block shrink vertical pl-component-card-patient-widget-children-element children-age">
+                            {this.render_age(dob)}
+                            <div className="grid-block shrink text">age</div>
+                        </div>
+                    </div>
                 );
 
             })

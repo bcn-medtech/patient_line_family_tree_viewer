@@ -59,12 +59,19 @@ export class PlComponentSidebar extends Component {
         var father = this.props.father;
         var mother = this.props.mother;
         var children = this.props.children;
+        var relatives = this.props.relatives;
         var mode = this.state.mode;
         var sidebar;
 
         if (mode === "patient") {
 
-            sidebar = <PlComponentSidebarPatient patient={patient} mother={mother} father={father} children={children}/>
+            sidebar = <PlComponentSidebarPatient 
+            patient={patient} 
+            mother={mother} 
+            father={father} 
+            children={children}
+            relatives = {relatives}
+            />
 
         } else if (mode === "family") {
 

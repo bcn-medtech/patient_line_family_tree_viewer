@@ -41,6 +41,7 @@ export class PlComponentTextFieldEditable extends Component {
 
             return (
                 <PlComponentTextPlain text={text} />
+                //text
             );
 
         } else {

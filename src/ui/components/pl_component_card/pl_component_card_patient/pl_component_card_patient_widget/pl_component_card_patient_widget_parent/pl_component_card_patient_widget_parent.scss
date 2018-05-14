@@ -2,25 +2,30 @@
 
 .pl-component-card-patient-widget-parent{
 
-    align-items: center;
-    padding-bottom:5px;
+        overflow-y:auto;
 
-    h6{
-        margin-top:0px;
-        color:$color-normal;
-    }
+    .pl-component-card-patient-widget-parent-item{
 
-    .text{
-        padding-bottom:2px;
-    }
-
-    .pl-component-card-patient-widget-parent-element{
-        padding-right:30px;
-    }
-
-    .parent-age{
         align-items: center;
-        justify-content: center;
+        padding-bottom:5px;
+
+        h6{
+            margin-top:0px;
+            color:$color-normal;
+        }
+
+        .text{
+            padding-bottom:2px;
+        }
+
+        .pl-component-card-patient-widget-parent-element{
+            padding-right:30px;
+        }
+
+        .parent-age{
+            align-items: center;
+        }
+
     }
 
     .pl-component-card-patient-widget-parent-undefined-message{

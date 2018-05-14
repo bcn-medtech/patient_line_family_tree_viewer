@@ -130,6 +130,7 @@ export function get_data(family_id, patient_id, callback) {
                             data["root"] = root;
                             data["siblings"] = siblings;
                             data["family"] = family[0];
+                            data["relatives"] = array_patients_family;
 
                             if (!isObjectEmpty(patient_id)) {
                                 

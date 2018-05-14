@@ -23,7 +23,7 @@
 */
 
 import React, { Component } from 'react';
-//import { isObjectAFunction } from './../../../../../modules/rkt_module_object';
+//import { isObjectAFunction } from './../../../../../../modules/rkt_module_object';
 
 //components
 import { PlComponentCardPatientStatus } from './../../pl_component_card_patient_status/pl_component_card_patient_status';
@@ -75,13 +75,26 @@ export class PlComponentCardPatientWidgetParent extends Component {
         var id = parent.id;
 
         var dob = parent.dob;
-        
+
         return (
-            <div className="grid-block pl-component-card-patient-widget-parent">
+            // <div className="grid-block pl-component-card-patient-widget-parent-item">
+            //     <div className="grid-block shrink pl-component-card-patient-widget-parent-element">
+            //         <PlComponentCardPatientStatus status={status} gender={gender} />
+            //     </div>
+            //     <div className="grid-block shrink vertical pl-component-card-patient-widget-parent-element">
+            //         <h6>{name}</h6>
+            //         <div className="grid-block shrink text">{id}</div>
+            //     </div>
+            //     <div className="grid-block shrink vertical pl-component-card-patient-widget-parent-element parent-age">
+            //         {this.render_age(dob)}
+            //         <div className="grid-block shrink text">age</div>
+            //     </div>
+            // </div>
+            <div className="grid-block shrink pl-component-card-patient-widget-parent-item">
                 <div className="grid-block shrink pl-component-card-patient-widget-parent-element">
                     <PlComponentCardPatientStatus status={status} gender={gender} />
                 </div>
-                <div className="grid-block shrink vertical pl-component-card-patient-widget-parent-element">
+                <div className="grid-block vertical pl-component-card-patient-widget-parent-element">
                     <h6>{name}</h6>
                     <div className="grid-block shrink text">{id}</div>
                 </div>
@@ -97,9 +110,9 @@ export class PlComponentCardPatientWidgetParent extends Component {
     render_age(dob) {
 
         var age = calculate_age(dob);
-        
-        if (!isNaN(age)) return(<h6>{age}</h6>);
-        else return(<h6>?</h6>);
+
+        if (!isNaN(age)) return (<h6>{age}</h6>);
+        else return (<h6>?</h6>);
 
     }
 
@@ -110,7 +123,7 @@ export class PlComponentCardPatientWidgetParent extends Component {
         var mode_edit = this.props.mode_edit;
 
         return (
-            <div className="grid-block">
+            <div className="grid-block pl-component-card-patient-widget-parent">
                 {this.render_card_patient_widget_parent(parent, type_parent, mode_edit)}
             </div>
         );
