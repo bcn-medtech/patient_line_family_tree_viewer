@@ -24,6 +24,7 @@
 
 import {isObjectEmpty} from './../../../modules/rkt_module_object';
 
+
 function get_number_of_relatives(patient,patients){
 
     var num_relatives = 0;

@@ -126,7 +126,7 @@ export class PlComponentSidebarPatient extends Component {
                 <div className="grid-block shrink">
                     {widget}
                 </div>
-                <div className="pl_component_sidebar_patient_element">
+                <div className="pl_component_sidebar_patient_element scrollable-content">
                     <PlComponentMenuTags
                         data={data}
                         keys_selected={data_keys_selected}

@@ -54,11 +54,11 @@ export class PlComponentSidebarHeader extends Component {
 
                         if (item === mode) {
                             return (
-                                <a onClick={this.set_database_component_mode.bind(this,item)}><h3 className="mode_selected">{capitalize_first_letter(item)}</h3></a>
+                                <a onClick={this.set_database_component_mode.bind(this,item)} key={index}><h3 className="mode_selected">{capitalize_first_letter(item)}</h3></a>
                             )
                         } else {
                             return(
-                                <a onClick={this.set_database_component_mode.bind(this, item)}><h3 className="mode_unselected">{capitalize_first_letter(item)}</h3></a>
+                                <a onClick={this.set_database_component_mode.bind(this, item)} key={index}><h3 className="mode_unselected">{capitalize_first_letter(item)}</h3></a>
                             )
                         }
 

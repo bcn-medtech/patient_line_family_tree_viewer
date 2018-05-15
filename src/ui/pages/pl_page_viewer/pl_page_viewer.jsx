@@ -151,13 +151,13 @@ export default class PlPageViewer extends Component {
     var bottom_button_left =
       {
         "name": "go_back",
-        "icon": <svg width='16' height='14' viewBox='0 0 16 14' fill-rule='evenodd'><path d='M3.4 8H16V6H3.3l5-4.7L7 0 0 7l7 7 1.3-1.3z'></path></svg>
+        "icon": <svg width='16' height='14' viewBox='0 0 16 14' fillRule='evenodd'><path d='M3.4 8H16V6H3.3l5-4.7L7 0 0 7l7 7 1.3-1.3z'></path></svg>
       }
 
     var bottom_button_right =
       {
         "name": "show_legend",
-        "icon": <svg width='16' height='15' viewBox='0 0 12 11' fill-rule='evenodd'><path d='M1 9V1h2.8S6 1 6 2.5v7.1S5.7 9 3.7 9H1zm6.5-9C6.4 0 6 .8 6 .8S5.6 0 3.8 0H0v10h3.7S6 10 6 11c0-1 2.2-1 2.2-1H12V0H7.5z'></path></svg>,
+        "icon": <svg width='16' height='15' viewBox='0 0 12 11' fillRule='evenodd'><path d='M1 9V1h2.8S6 1 6 2.5v7.1S5.7 9 3.7 9H1zm6.5-9C6.4 0 6 .8 6 .8S5.6 0 3.8 0H0v10h3.7S6 10 6 11c0-1 2.2-1 2.2-1H12V0H7.5z'></path></svg>,
         "selected": this.state.show_legend
       }
 

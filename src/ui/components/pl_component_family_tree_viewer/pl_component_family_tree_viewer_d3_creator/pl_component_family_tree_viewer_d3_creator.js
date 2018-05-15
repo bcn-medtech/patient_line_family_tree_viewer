@@ -18,6 +18,7 @@ export default class TreeDisplayer {
         var zoom = d3.behavior.zoom()
             .scaleExtent([.1, 1])
             .on('zoom', function () {
+                //console.log(d3.event.scale);
                 svg.attr("transform", "translate(" + d3.event.translate + ") scale(" + d3.event.scale + ")");
             })
             // Offset so that first pan and zoom does not jump back to the origin
@@ -37,9 +38,7 @@ export default class TreeDisplayer {
     }
 
     update(el, state) {
-        // Re-compute the scales, and render the data points
-        /*var scales = this._scales(el, state.domain);
-        this._drawPoints(el, scales, state.data);*/
+
     }
 
     destroy() {
@@ -48,9 +47,19 @@ export default class TreeDisplayer {
 
     }
 
-    _drawTree(root, sib, patient_id, set_patient) {
+    restart_tree_canvas(){
 
-        //d3.select(element).selectAll("*").remove();
+        svg.selectAll(".link").remove();
+        svg.selectAll("rect").remove();
+        svg.selectAll("text").remove();
+        svg.selectAll("circle").remove();
+        svg.selectAll(".sibling").remove();
+    }
+
+    _drawTree(root, sib, patient_id, set_patient) {
+        
+        this.restart_tree_canvas();
+
         var allNodes = flatten(root);
         var width = 1000
         var height = 800;
@@ -74,7 +83,6 @@ export default class TreeDisplayer {
             }
 
         });
-
 
         // Create the link lines.
         svg.selectAll(".link")
@@ -330,5 +338,8 @@ export default class TreeDisplayer {
             }).interpolate("step-after");
             return fun(linedata);
         }
+
+        
+        console.log(d3.select("svg"));
     }
 }

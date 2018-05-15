@@ -55,10 +55,10 @@ export class PlComponentTable extends Component {
         return (
 
 
-            first_item_keys.map((key) => {
+            first_item_keys.map((key,index) => {
 
                 return (
-                    <td className="grid-block"><b>{key.toUpperCase()}</b></td>
+                    <td className="grid-block" key={index}><b>{key.toUpperCase()}</b></td>
                 )
             })
 
@@ -159,11 +159,11 @@ export class PlComponentTable extends Component {
 
         return (
 
-            rows.map((row) => {
+            rows.map((row,index) => {
 
                 return (
                     
-                    <tr className="grid-block shrink pl-component-table-row">
+                    <tr className="grid-block shrink pl-component-table-row" key={index}>
                         {this.render_rows_items(row)}
                     </tr>
 

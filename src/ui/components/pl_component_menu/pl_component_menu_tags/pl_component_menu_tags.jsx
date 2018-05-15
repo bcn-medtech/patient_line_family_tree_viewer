@@ -65,13 +65,13 @@ export class PlComponentMenuTags extends Component {
                         if (keys_selected.indexOf(item) !== -1) {
                             return (
 
-                                <a onClick={this.on_unselect_tag.bind(this, item)} className="grid-block shrink"><Tag className="tag-selected" type="beta">{item}</Tag></a>
+                                <a onClick={this.on_unselect_tag.bind(this, item)} className="grid-block shrink" key={index}><Tag className="tag-selected" type="beta">{item}</Tag></a>
 
                             );
                         } else {
                             return (
 
-                                <a onClick={this.on_select_tag.bind(this, item)} className="grid-block shrink"><Tag className="tag-un-selected" type="beta">{item}</Tag></a>
+                                <a onClick={this.on_select_tag.bind(this, item)} className="grid-block shrink" key={index}><Tag className="tag-un-selected" type="beta">{item}</Tag></a>
 
                             );
                         }
