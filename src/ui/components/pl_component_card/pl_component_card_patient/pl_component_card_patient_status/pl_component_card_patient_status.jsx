@@ -193,12 +193,12 @@ export class PlComponentCardPatientStatus extends Component {
 
             } else {
 
-                item = <div className="grid-block"><h4>?</h4></div>;
+                item = <div className="grid-block pl-component-card-patient-status-undefined-status"><h4>?</h4></div>;
             }
 
         } else {
 
-            item = <div className="grid-block"><h4>?</h4></div>;
+            item = <div className="grid-block pl-component-card-patient-status-undefined-status"><h4>?</h4></div>;
         }
 
         return (

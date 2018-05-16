@@ -99,7 +99,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
                 );
 
             } else {
-                
+
                 if (!isObjectEmpty(patient.gender)) {
 
                     return (
@@ -175,8 +175,8 @@ export class PlComponentCardPatientWidgetChildren extends Component {
                         {icon_mother}
                         <div className="grid-block shrink text">{id_mother}</div>
                     </div>
+                    {this.render_edition_buttons(mode_edit, id_father, id_mother)}
                 </div>
-                {this.render_edition_buttons(mode_edit, id_father, id_mother)}
             </div>
 
         );
@@ -251,7 +251,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
                                 <h6>{name}</h6>
                                 <div className="grid-block shrink text">{id}</div>
                             </div>
-                            <div className="grid-block vertical shrink family-list-item-element child-age">
+                            <div className="grid-block vertical shrink family-list-item-element centered">
                                 {this.render_age(dob)}
                                 <div className="grid-block shrink text">age</div>
                             </div>
@@ -321,7 +321,10 @@ export class PlComponentCardPatientWidgetChildren extends Component {
                                 {father_icon}
                                 <div className="grid-block shrink text">{id_father}</div>
                             </div>
-                            <div>
+                            <div className="grid-block shrink vertical family-list-header-link">
+                                <svg height="10" width="50">
+                                    <line x1="0" y1="0" x2="50" y2="0" stroke="white" strokeWidth="4" strokeDasharray="5,5" />
+                                </svg>
                             </div>
                             <div className="grid-block shrink vertical family-list-header-parent">
                                 {mother_icon}

@@ -137,7 +137,7 @@ export class PlComponentSidebarPatient extends Component {
         if (mode_edit) {
 
             return (
-                <div className="grid-block shrink align-right pl_component_sidebar_patient_element">
+                <div style={{"position":"absolute", "bottom": "0px", "right":"0px", "margin":"20px"}}>
                     <PlComponentButtonRect
                         text={"Save"}
                         backgroundcolor={"transparent"} backgroundhovercolor={"#5C4EE5"}

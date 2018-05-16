@@ -2,13 +2,17 @@
 
 .pl-component-card-patient-widget-relatives{
 
-    max-height:100px;
+    max-height:200px;
     overflow-y:auto;
 
     .pl-component-card-patient-widget-relatives-item{
 
         align-items: center;
-        padding-bottom:5px;
+
+        margin-bottom:15px;
+        // padding-top: 5px;
+        // padding-bottom: 5px;
+        // background-color: $color_shadow_3;
 
         h6{
             margin-top:0px;
@@ -20,10 +24,12 @@
         }
 
         .pl-component-card-patient-widget-relatives-element{
-            padding-right:30px;
+            //padding-right:30px;
+            padding-left:10px;//15px;
+            padding-right:15px;
         }
 
-        .relative-age{
+        .centered{
             align-items: center;
         }
 

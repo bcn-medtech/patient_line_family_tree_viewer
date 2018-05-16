@@ -91,7 +91,7 @@ export class PlComponentCardPatientWidgetParent extends Component {
                     <h6>{name}</h6>
                     <div className="grid-block shrink text">{id}</div>
                 </div>
-                <div className="grid-block shrink vertical pl-component-card-patient-widget-parent-element parent-age">
+                <div className="grid-block shrink vertical pl-component-card-patient-widget-parent-element centered">
                     {this.render_age(dob)}
                     <div className="grid-block shrink text">age</div>
                 </div>

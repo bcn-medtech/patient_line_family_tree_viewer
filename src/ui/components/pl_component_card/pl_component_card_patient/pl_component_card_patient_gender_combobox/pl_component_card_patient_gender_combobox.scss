@@ -1,8 +1,8 @@
 .pl-component-card-patient-gender-combobox{
 
     color:white;
-    
 
+    
     &:hover{
         color:white;
     }
@@ -32,6 +32,7 @@
 
         .text{
             margin-top: -5px;
+            padding-bottom:2px;
             display: block;
             overflow:hidden;
         }
@@ -54,9 +55,19 @@
         
         .text{
             margin-top: -5px;
+            padding-bottom:2px;
             display: block;
             overflow:hidden;
         }
+    }
+
+    .pl-component-card-patient-gender-combobox-undefined-gender{
+
+        width:45px;
+        height:45px;
+
+        justify-content: center; // horizontal centering
+
     }
 }
 
@@ -71,12 +82,16 @@
     padding-top: 3px;
     padding-bottom: 10px;
 
+    .text{
+        padding-bottom:2px;
+        overflow:hidden;
+    }
+
     &:hover{
         background-color: $color_shadow-2;
 
         .text{
             color:$color-normal;
-            overflow:hidden;
         }
     }
 

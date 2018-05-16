@@ -36,7 +36,7 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
         if (!isObjectEmpty(relatives)) {
 
             return (
-                <div className="grid-block shrink vertical">
+                <div className="grid-block vertical">
                     {this.render_list_of_relatives(relatives)}
                 </div>
             );
@@ -70,6 +70,7 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
                 var gender = relative.gender;
 
                 var dob = relative.dob;
+                var relation = relative.relation;
 
                 return (
 
@@ -81,9 +82,13 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
                             <h6>{name}</h6>
                             <div className="grid-block shrink text">{id}</div>
                         </div>
-                        <div className="grid-block shrink vertical pl-component-card-patient-widget-relatives-element relative-age">
+                        <div className="grid-block shrink vertical pl-component-card-patient-widget-relatives-element centered">
                             {this.render_age(dob)}
                             <div className="grid-block shrink text">age</div>
+                        </div>
+                        <div className="grid-block shrink vertical pl-component-card-patient-widget-relatives-element centered">
+                            <h6>{relation}</h6>
+                            <div className="grid-block shrink text">relation</div>
                         </div>
                     </div>
                 );

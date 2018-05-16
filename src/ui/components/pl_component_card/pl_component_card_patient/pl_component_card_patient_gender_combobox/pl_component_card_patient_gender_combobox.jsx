@@ -64,11 +64,11 @@ export class PlComponentCardPatientGenderCombobox extends Component {
 
         if (gender === "female") {
 
-            return (<svg width="25" height="25" className="gender"><circle cx="11" cy="11" r="10" strokeWidth="1.5"/></svg>);
+            return (<h4><svg width="25" height="25" className="gender"><circle cx="11" cy="11" r="10" strokeWidth="1.5"/></svg></h4>);
 
         } else if (gender === "male") {
 
-            return (<svg width="25" height="25" className="gender"><rect width="25" height="25" strokeWidth="1.5"/></svg>);
+            return (<h4><svg width="25" height="25" className="gender"><rect width="25" height="25" strokeWidth="1.5"/></svg></h4>);
         
         }
     }
@@ -159,13 +159,11 @@ export class PlComponentCardPatientGenderCombobox extends Component {
     }
 
     render_element(gender,svg){
-
+        
         return(
             <div className="grid-block shrink vertical card-item pl-component-card-patient-gender-combobox pl-component-card-patient-gender-combobox-tooltip ">
                 <div className="grid-block align-center">
-                    <h4>
-                        {svg}
-                    </h4>
+                    {svg}
                 </div>
                 <div className="grid-block align-center text">{gender}</div>
             </div>
@@ -209,7 +207,7 @@ export class PlComponentCardPatientGenderCombobox extends Component {
 
         } else {
 
-            svg = "?";
+            svg = <div className="grid-block pl-component-card-patient-gender-combobox-undefined-gender"><h4>?</h4></div>;;
             gender = "gender";
             
         }
