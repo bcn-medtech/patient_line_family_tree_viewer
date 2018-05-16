@@ -30,7 +30,8 @@ import {
 } from 'underscore';
 
 import {
-    isObjectAFunction
+    isObjectAFunction,
+    isObjectEmpty
 } from './../../../../../modules/rkt_module_object';
 
 export class PlComponentCardPatientStatusCombobox extends Component {
@@ -235,28 +236,44 @@ export class PlComponentCardPatientStatusCombobox extends Component {
 
         });
 
-        return (
+        if (!isObjectEmpty(status_types)) {
 
-            <div className="grid-block vertical list">
+            return (
+            
+                <div className="grid-block vertical list">
+    
+                    {
+                        status_types.map((item, index) => {
+    
+                            if (item.status === current_status) {
+                                return (
+                                    <div className="grid-block shrink list-item-selected" key={index}>{item.svg}</div>
+                                );
+                            } else {
+                                return (
+                                    <div className="grid-block shrink list-item" onClick={this.set_item.bind(this, item)} key={index}>{item.svg}</div>
+                                );
+                            }
+    
+                        })
+                    }
+                </div>
+    
+            )
 
-                {
-                    status_types.map((item, index) => {
+        } else {
 
-                        if (item.status === current_status) {
-                            return (
-                                <div className="grid-block shrink list-item-selected" key={index}>{item.svg}</div>
-                            );
-                        } else {
-                            return (
-                                <div className="grid-block shrink list-item" onClick={this.set_item.bind(this, item)} key={index}>{item.svg}</div>
-                            );
-                        }
+            return (
 
-                    })
-                }
-            </div>
+                <div className="grid-block">
+                    <div style={{"padding":"10px"}}>
+                        First define the patient's gender, please
+                    </div>
+                </div>
 
-        )
+            );
+
+        }
 
     }
 

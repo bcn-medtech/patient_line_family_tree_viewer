@@ -62,7 +62,7 @@ export class PlComponentSidebar extends Component {
         var relatives = this.props.relatives;
         var mode = this.state.mode;
         var sidebar;
-        
+
         if (mode === "patient") {
 
             sidebar = <PlComponentSidebarPatient 

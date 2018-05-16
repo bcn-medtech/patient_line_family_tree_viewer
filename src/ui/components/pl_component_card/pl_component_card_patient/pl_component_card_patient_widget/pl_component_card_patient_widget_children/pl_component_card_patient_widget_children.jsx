@@ -24,7 +24,7 @@
 
 import React, { Component } from 'react';
 //modules
-import { isObjectAFunction } from './../../../../../../modules/rkt_module_object';
+import { isObjectAFunction, isObjectEmpty } from './../../../../../../modules/rkt_module_object';
 //components
 import { PlComponentButtonCircle } from './../../../../pl_component_button/pl_component_button_circle/pl_component_button_circle';
 import { PlComponentCardPatientStatus } from './../../pl_component_card_patient_status/pl_component_card_patient_status';
@@ -43,7 +43,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
 
         if (isObjectAFunction(this.props.perform_database_action)) {
 
-            var data;
+            var result, new_data;
 
             if (action === "search") {
 
@@ -54,27 +54,24 @@ export class PlComponentCardPatientWidgetChildren extends Component {
                 var patient = this.props.patient;
                 var id_father = data.id_father;
                 var id_mother = data.id_mother;
-                var result = create_child_existing_family(patient, id_father, id_mother);
+                result = create_child_existing_family(patient, id_father, id_mother);
 
-                data = { "action": "add_child_existing_family", "data": result }
-                this.props.perform_database_action(data);
+                new_data = { "action": "add_child_existing_family", "data": result }
+                this.props.perform_database_action(new_data);
 
             } else if (action === "add_child_new_family") {
 
                 var patient = data;
-                var result = create_new_family(patient);
+                result = create_new_family(patient);
 
-                data = { "action": "add_child_new_family", "data": result }
-                this.props.perform_database_action(data);
-
+                new_data = { "action": "add_child_new_family", "data": result }
+                this.props.perform_database_action(new_data);
 
             }
 
         }
 
-
     }
-
 
     render_card_patient_widget_children(children, patient, mode_edit) {
 
@@ -102,14 +99,30 @@ export class PlComponentCardPatientWidgetChildren extends Component {
                 );
 
             } else {
+                
+                if (!isObjectEmpty(patient.gender)) {
 
-                return (
+                    return (
 
-                    <div className="grid-block vertical">
-                        {this.render_extra_family_to_create(patient, mode_edit)}
-                    </div>
+                        <div className="grid-block vertical">
+                            {this.render_extra_family_to_create(patient, mode_edit)}
+                        </div>
 
-                );
+                    );
+
+                } else {
+
+                    return (
+
+                        <div className="grid-block pl-component-card-patient-widget-children-undefined-message">
+                            First define the patient's gender, please
+                        </div>
+
+                    );
+
+
+                }
+
 
             }
 
@@ -142,24 +155,24 @@ export class PlComponentCardPatientWidgetChildren extends Component {
 
     render_family_parents_icons(id_father, id_mother, mode_edit) {
 
-        var father_icon = <svg fill="#5596e6" width='32' height='32' viewBox='0 0 32 32' fillRule='evenodd'><path d='M16 6.4c3.9 0 7 3.1 7 7s-3.1 7-7 7-7-3.1-7-7 3.1-7 7-7zm0-2c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9z'></path><path d='M16 0C7.2 0 0 7.2 0 16s7.2 16 16 16 16-7.2 16-16S24.8 0 16 0zm7.3 24.3H8.7c-1.2 0-2.2.5-2.8 1.3C3.5 23.1 2 19.7 2 16 2 8.3 8.3 2 16 2s14 6.3 14 14c0 3.7-1.5 7.1-3.9 9.6-.6-.8-1.7-1.3-2.8-1.3z'></path></svg>
-        var mother_icon = <svg fill="#e6409e" width='32' height='32' viewBox='0 0 32 32' fillRule='evenodd'><path d='M16 6.4c3.9 0 7 3.1 7 7s-3.1 7-7 7-7-3.1-7-7 3.1-7 7-7zm0-2c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9z'></path><path d='M16 0C7.2 0 0 7.2 0 16s7.2 16 16 16 16-7.2 16-16S24.8 0 16 0zm7.3 24.3H8.7c-1.2 0-2.2.5-2.8 1.3C3.5 23.1 2 19.7 2 16 2 8.3 8.3 2 16 2s14 6.3 14 14c0 3.7-1.5 7.1-3.9 9.6-.6-.8-1.7-1.3-2.8-1.3z'></path></svg>
+        var icon_father = <svg fill="#5596e6" width='32' height='32' viewBox='0 0 32 32' fillRule='evenodd'><path d='M16 6.4c3.9 0 7 3.1 7 7s-3.1 7-7 7-7-3.1-7-7 3.1-7 7-7zm0-2c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9z'></path><path d='M16 0C7.2 0 0 7.2 0 16s7.2 16 16 16 16-7.2 16-16S24.8 0 16 0zm7.3 24.3H8.7c-1.2 0-2.2.5-2.8 1.3C3.5 23.1 2 19.7 2 16 2 8.3 8.3 2 16 2s14 6.3 14 14c0 3.7-1.5 7.1-3.9 9.6-.6-.8-1.7-1.3-2.8-1.3z'></path></svg>
+        var icon_mother = <svg fill="#e6409e" width='32' height='32' viewBox='0 0 32 32' fillRule='evenodd'><path d='M16 6.4c3.9 0 7 3.1 7 7s-3.1 7-7 7-7-3.1-7-7 3.1-7 7-7zm0-2c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9z'></path><path d='M16 0C7.2 0 0 7.2 0 16s7.2 16 16 16 16-7.2 16-16S24.8 0 16 0zm7.3 24.3H8.7c-1.2 0-2.2.5-2.8 1.3C3.5 23.1 2 19.7 2 16 2 8.3 8.3 2 16 2s14 6.3 14 14c0 3.7-1.5 7.1-3.9 9.6-.6-.8-1.7-1.3-2.8-1.3z'></path></svg>
 
         return (
 
             <div className="grid-block shrink family-list-header">
                 <div className="grid-block family-list-header-parents">
                     <div className="grid-block shrink vertical family-list-header-parent">
-                        {father_icon}
+                        {icon_father}
                         <div className="grid-block shrink text">{id_father}</div>
                     </div>
                     <div className="grid-block shrink vertical family-list-header-link">
                         <svg height="10" width="50">
-                            <line x1="0" y1="0" x2="50" y2="0" stroke="white" strokeWidth="4" strokeDasharray="5,5"/>
+                            <line x1="0" y1="0" x2="50" y2="0" stroke="white" strokeWidth="4" strokeDasharray="5,5" />
                         </svg>
                     </div>
                     <div className="grid-block shrink vertical family-list-header-parent">
-                        {mother_icon}
+                        {icon_mother}
                         <div className="grid-block shrink text">{id_mother}</div>
                     </div>
                 </div>
@@ -309,7 +322,6 @@ export class PlComponentCardPatientWidgetChildren extends Component {
                                 <div className="grid-block shrink text">{id_father}</div>
                             </div>
                             <div>
-
                             </div>
                             <div className="grid-block shrink vertical family-list-header-parent">
                                 {mother_icon}

@@ -220,17 +220,17 @@ export function get_data(family_id, patient_id, callback) {
 export function perform_database_action(data, callback) {
 
     if (!isObjectEmpty(data)) {
-
+        
         if ("action" in data) {
 
             if (data.action === "edit_patient") {
-
+                
                 if ("data" in data) {
-
+                    
                     var patient = data.data;
 
                     patient_update(patient, function (result) {
-
+                        
                         if (result) {
 
                             callback(true);

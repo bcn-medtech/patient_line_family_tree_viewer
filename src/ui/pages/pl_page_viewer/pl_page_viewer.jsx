@@ -110,8 +110,6 @@ export default class PlPageViewer extends Component {
 
     var myComponent = this;
     
-    console.log("LET'S PERFORM DATABASE ACTION!!!");
-    console.log(data);
     perform_database_action(data, function (result) {
 
       myComponent.update_component_state_from_database();

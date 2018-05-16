@@ -24,6 +24,7 @@
 
 import React, { Component } from 'react';
 import { isObjectAFunction } from './../../../../modules/rkt_module_object';
+import { PlComponentButtonRect } from './../../pl_component_button/pl_component_button_rect/pl_component_button_rect';
 import { PlComponentCardPatient } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient';
 import { PlComponentCardPatientWidget } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget';
 import { PlComponentCardPatientWidgetChildren } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget_children/pl_component_card_patient_widget_children';
@@ -51,6 +52,18 @@ export class PlComponentSidebarPatient extends Component {
             family_columns_selected: ["id", "name", "description", "num_family_members"],
             patient_columns_selected: ["id", "name", "gender", "mother", "married_with", "family_id", "center", "num_relatives"],
         }
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        if (this.props !== nextProps) {
+
+            this.setState({
+                mode_edit: false
+            });
+
+        }
+
     }
 
     on_set_mode_menu(mode) {
@@ -94,19 +107,48 @@ export class PlComponentSidebarPatient extends Component {
         });
     }
 
-    on_save_data_table() { // TODO
+    on_save_data_patient() { // TODO
 
-        //if (isObjectAFunction(this.props.perform_database_action)) {
+        if (isObjectAFunction(this.props.perform_database_action)) {
 
-        var patient = this.props.patient;
-        var edited_table = this.refs.patient_table.refs;
+            // the changes in "table" and "text_field_editable" are saved in "patient"
+            var patient = this.props.patient;
+            var updated_patient;
+            
+            // "table"
+            var edited_table = this.refs.patient_table.refs;
+            updated_patient = update_patient_from_table(patient, edited_table);
 
-        var updated_patient = update_patient_from_table(patient, edited_table);
-        var data = { "action": "edit_patient", "data": updated_patient };
+            // "text_field_editable"
+            var edited_name = this.refs.patient_card.refs.patient_name.refs.FormItemInputText.state.input;
+            var edited_id = this.refs.patient_card.refs.patient_id.refs.FormItemInputText.state.input;
+            updated_patient.name = edited_name;
+            updated_patient.id = edited_id;
 
-        //this.props.perform_database_action(data);
+            var data = { "action": "edit_patient", "data": updated_patient };
+            this.props.perform_database_action(data);
 
-        //}
+        }
+
+    }
+
+    render_edit_patient_button(mode_edit) {
+
+        if (mode_edit) {
+
+            return (
+                <div className="grid-block shrink align-right pl_component_sidebar_patient_element">
+                    <PlComponentButtonRect
+                        text={"Save"}
+                        backgroundcolor={"transparent"} backgroundhovercolor={"#5C4EE5"}
+                        fontcolor={"#5C4EE5"} fonthovercolor={"white"}
+                        bordercolor={"#5C4EE5"} borderhovercolor={"#5C4EE5"}
+                        onclickelement={this.on_save_data_patient.bind(this)}
+                    />
+                </div>
+            );
+
+        }
 
     }
 
@@ -121,7 +163,7 @@ export class PlComponentSidebarPatient extends Component {
         var mode_edit = this.state.mode_edit;
         var widget;
         var table_mode;
-        
+
         if (mode_edit) {
 
             table_mode = "edition";
@@ -133,22 +175,22 @@ export class PlComponentSidebarPatient extends Component {
 
             if (mode_menu === "relatives") {
 
-                widget_content = <PlComponentCardPatientWidgetRelatives relatives={relatives}/>
-    
+                widget_content = <PlComponentCardPatientWidgetRelatives relatives={relatives} />
+
             } else if (mode_menu === "children") {
-    
-                widget_content = <PlComponentCardPatientWidgetChildren patient={patient} children={children} mode_edit={mode_edit} perform_database_action={this.props.perform_database_action}/>
-    
+
+                widget_content = <PlComponentCardPatientWidgetChildren patient={patient} children={children} mode_edit={mode_edit} perform_database_action={this.props.perform_database_action} />
+
             } else if (mode_menu === "father") {
-    
-                widget_content = <PlComponentCardPatientWidgetParent parent={father} type_parent={mode_menu} mode_edit={mode_edit} perform_database_action={this.props.perform_database_action}/>
-    
+
+                widget_content = <PlComponentCardPatientWidgetParent parent={father} type_parent={mode_menu} mode_edit={mode_edit} perform_database_action={this.props.perform_database_action} />
+
             } else if (mode_menu === "mother") {
-    
-                widget_content = <PlComponentCardPatientWidgetParent parent={mother} type_parent={mode_menu} mode_edit={mode_edit} perform_database_action={this.props.perform_database_action}/>
+
+                widget_content = <PlComponentCardPatientWidgetParent parent={mother} type_parent={mode_menu} mode_edit={mode_edit} perform_database_action={this.props.perform_database_action} />
             }
 
-            widget = <PlComponentCardPatientWidget tittle={mode_menu} mode_edit={mode_edit} content={widget_content} perform_database_action={this.props.perform_database_action}/>
+            widget = <PlComponentCardPatientWidget tittle={mode_menu} mode_edit={mode_edit} content={widget_content} perform_database_action={this.props.perform_database_action} />
         }
 
         var data_keys_selected = this.state.patient_columns_selected;
@@ -182,7 +224,8 @@ export class PlComponentSidebarPatient extends Component {
                 <div className="grid-block pl_component_sidebar_patient_element">
                     <PlComponentTable ref="patient_table" data={data_table} table_mode={table_mode} />
                 </div>
-            </div >
+                {this.render_edit_patient_button(mode_edit)}
+            </div>
         );
 
     }
