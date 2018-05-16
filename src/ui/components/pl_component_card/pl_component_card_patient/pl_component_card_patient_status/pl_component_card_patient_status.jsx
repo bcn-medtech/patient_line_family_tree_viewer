@@ -36,7 +36,7 @@ export class PlComponentCardPatientStatus extends Component {
         var status = this.props.status;
         var gender = this.props.gender;
         var item;
-
+        
         var status_types = [
             {
                 "status": "muerte-por-otras-causas",

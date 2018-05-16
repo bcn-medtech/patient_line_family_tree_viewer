@@ -95,7 +95,7 @@ function initialize_patient(patient, father, mother, children, relatives) {
     patient.dob = "";
     patient.mutations = "";
     patient.symptoms = "";
-    patient.status = "paciente-a-editar";
+    patient.status = "nuevo-miembro-familia";
     patient.diagnostic = "";
     patient.diagnostic_status = "";
     patient.probando = "";

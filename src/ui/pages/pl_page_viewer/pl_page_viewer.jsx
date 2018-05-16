@@ -54,7 +54,7 @@ export default class PlPageViewer extends Component {
       father: false,
       mother: false,
       children: false,
-      relatives:false
+      relatives: false
     };
   }
 
@@ -63,7 +63,7 @@ export default class PlPageViewer extends Component {
     var myComponent = this;
 
     get_data(family_id, patient_id, function (result) {
-
+      
       if ("patient" in result) {
 
         myComponent.setState({
@@ -115,10 +115,18 @@ export default class PlPageViewer extends Component {
   perform_database_action(data) {
 
     var myComponent = this;
-    
+
     perform_database_action(data, function (result) {
 
-      myComponent.update_component_state_from_database();
+      var location = window.location;
+
+      if ("href" in location) {
+        var location_url = location.href;
+        var family_id = url_getParameterByName("family_id", location_url);
+        var patient_id = url_getParameterByName("patient_id", location_url);
+        myComponent.update_component_state_from_database(family_id, patient_id);
+      }
+
     });
 
   }
@@ -140,7 +148,7 @@ export default class PlPageViewer extends Component {
   }
 
   render() {
-    
+
     var tree_viewer;
     var sidebar;
     var viewer_legend;
