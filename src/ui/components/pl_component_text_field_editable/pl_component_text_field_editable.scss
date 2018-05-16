@@ -3,22 +3,32 @@
 
 .pl_component_text_field_editable{
 
+    // width:100%;
+    // height:100%;
+
     .pl_component_form_item_input_text{
 
         margin:0px;
+        width:100%;
+        height:100%;
 
         form{
             input[type=text]{
+                margin-bottom:0px; 
                 padding:0px;
-                margin:0px;
-                border: unset;
+
+                border:0px;
+                width:100%;
+                height:100%;
+                color:#8c83ea;
+                font-size:unset;
 
                 &:hover{
-                    border: unset;
+                    border: 0px;
                 }
     
                 &:focus{
-                    border: unset;
+                    border: 0px;
                 }
 
             }

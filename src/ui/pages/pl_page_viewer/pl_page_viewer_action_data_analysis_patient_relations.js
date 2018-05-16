@@ -354,7 +354,7 @@ export function label_patient_relatives(patient, relatives) {
 
         } else if (is_patient_brothers(patient, current_relative, relatives)) {
 
-            current_relative["relation"] = "brother";
+            current_relative["relation"] = "sibling";
 
         } else if (is_patient_grand_parents(patient, current_relative, relatives)) {
 
@@ -375,12 +375,10 @@ export function label_patient_relatives(patient, relatives) {
         } else if(is_patient_uncle(patient,current_relative,relatives)){
 
             current_relative["relation"] = "uncle";
-            
+
         }else {
 
             current_relative["relation"] = "other";
         }
     }
-
-    console.log(relatives);
 }

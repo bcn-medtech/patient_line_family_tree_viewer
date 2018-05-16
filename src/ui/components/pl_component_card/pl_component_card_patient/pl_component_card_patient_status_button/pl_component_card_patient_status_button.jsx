@@ -58,7 +58,7 @@ export class PlComponentCardPatientStatusButton extends Component {
         return (
             <a className={component_style} onClick={this.on_click_component.bind(this, type)}>
                 <div className="grid-block align-center"><PlComponentCardPatientStatus status={status} gender={gender} /></div>
-                <div className="grid-block align-center">{type}</div>
+                <div className="grid-block align-center text">{type}</div>
             </a>
         );
 

@@ -25,6 +25,9 @@
 import React, { Component } from 'react';
 import { isObjectAFunction } from './../../../../../modules/rkt_module_object';
 
+//components
+import { PlComponentButtonCircle } from './../../../pl_component_button/pl_component_button_circle/pl_component_button_circle';
+
 export class PlComponentCardPatientWidget extends Component {
 
     capitalize_first_letter(s) {
@@ -34,12 +37,13 @@ export class PlComponentCardPatientWidget extends Component {
     render() {
 
         var tittle = this.props.tittle;
+        var mode_edit = this.props.mode_edit;
         var content = this.props.content;
 
         return (
             <div className="grid-block vertical pl-component-card-patient-widget">
-                <div className="grid-block"><h5>{this.capitalize_first_letter(tittle)}</h5></div>
-                <div className="grid-block">{content}</div>
+                <h5>{this.capitalize_first_letter(tittle)}</h5>
+                {content}
             </div>
         );
 

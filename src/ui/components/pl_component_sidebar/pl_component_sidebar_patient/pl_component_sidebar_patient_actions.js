@@ -21,3 +21,30 @@ export function create_table(patient, data_keys_selected) {
     return table;
 
 }
+
+export function update_patient_from_table(patient, edited_table) {
+
+    var patient_keys = keys(patient);
+    var edited_table_keys = keys(edited_table);
+
+    var updated_patient = {};
+
+    for (var i = 0; i < patient_keys.length; i++) {
+
+        var patient_key = patient_keys[i];
+
+        if (edited_table_keys.includes(patient_key)) {
+
+            updated_patient[patient_key] = edited_table[patient_key].state.input;
+
+        } else {
+
+            updated_patient[patient_key] = patient[patient_key];
+
+        }
+
+    }
+
+    return updated_patient;
+
+}

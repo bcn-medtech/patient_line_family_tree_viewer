@@ -25,6 +25,7 @@
 //database_methods
 import {
     patient_update,
+    patient_insert,
     patients_get_list,
     families_get_list,
     patient_get,
@@ -124,6 +125,7 @@ export function get_data(family_id, patient_id, callback) {
 
                             var data = {};
                             data["family"] = family[0];
+                            
 
                             if (!isObjectEmpty(patient_id)) {
 
@@ -186,6 +188,7 @@ export function get_data(family_id, patient_id, callback) {
                                     label_patient_relatives(patient,array_patients_family);
                                     //create_virtual_patient(data);
                                     data["root"] = treeBuilder(array_patients_family);
+                                    data["relatives"] = array_patients_family;
 
                                     //console.log(data["root"]);
                                     data["siblings"] = siblingsBuilder(array_patients_family);
@@ -223,17 +226,17 @@ export function get_data(family_id, patient_id, callback) {
 export function perform_database_action(data, callback) {
 
     if (!isObjectEmpty(data)) {
-
+        
         if ("action" in data) {
 
-            if (data.action === "edit") {
-
+            if (data.action === "edit_patient") {
+                
                 if ("data" in data) {
-
+                    
                     var patient = data.data;
 
                     patient_update(patient, function (result) {
-
+                        
                         if (result) {
 
                             callback(true);
@@ -242,8 +245,134 @@ export function perform_database_action(data, callback) {
                     });
                 }
 
+            } else if (data.action === "add_child_existing_family") {
+
+                if ("data" in data) {
+                    
+                    if ("to_update" in data.data) {
+                        var patients_to_update = data.data.to_update;
+
+                        patients_update(patients_to_update, function (result) {
+
+                            if (result) {
+
+                                if ("to_insert" in data.data) {
+                                    var patients_to_insert = data.data.to_insert;
+
+                                    patients_insert(patients_to_insert, function (result) {
+
+                                        if (result) {
+
+                                            callback(true);
+
+                                        } else {
+
+                                            console.log("error inserting new patients");
+                                        }
+                                    });
+                                }
+
+                            } else {
+
+                                console.log("error updating patients");
+                            }
+
+                        });
+                    }
+
+                }
+
+            } else if (data.action === "add_child_new_family") {
+
+                if ("data" in data) {
+                    if ("to_update" in data.data) {
+                        var patients_to_update = data.data.to_update;
+
+                        patients_update(patients_to_update, function (result) {
+
+                            if (result) {
+
+                                if ("to_insert" in data.data) {
+                                    var patients_to_insert = data.data.to_insert;
+
+                                    patients_insert(patients_to_insert, function (result) {
+
+                                        if (result) {
+
+                                            callback(true);
+
+                                        } else {
+
+                                            console.log("error inserting new patients");
+                                        }
+                                    });
+                                }
+
+                            } else {
+
+                                console.log("error updating patients");
+                            }
+
+                        });
+                    }
+                }
+
             }
+
         }
+    }
+}
+
+function patients_update(patients, callback) {
+    
+    var updated_patients_counter = 0;
+
+    for (var i = 0; i < patients.length; i++) {
+
+        var patient = patients[i];
+
+        patient_update(patient, function (result) {
+
+            if (result) {
+
+                updated_patients_counter++;
+
+                if (updated_patients_counter === patients.length) {
+
+                    callback(true);
+
+                }
+
+            }
+
+        });
+    }
+
+}
+
+function patients_insert(patients, callback) {
+
+    var inserted_patients_counter = 0;
+
+    for (var i = 0; i < patients.length; i++) {
+
+        var patient = patients[i];
+
+        patient_insert(patient, function (result) {
+
+            if (result) {
+
+                inserted_patients_counter++;
+
+                if (inserted_patients_counter === patients.length) {
+
+                    callback(true);
+
+                }
+
+            }
+
+        });
     }
 
 }

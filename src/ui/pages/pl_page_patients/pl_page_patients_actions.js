@@ -143,7 +143,7 @@ export function create_database_structure_from_form_json(form_json){
 
 export function perform_database_action(data,browserHistory,callback){
 
-    console.log(data);
+    //console.log(data);
 
     if(!isObjectEmpty(data)){
 
@@ -230,7 +230,7 @@ export function perform_database_action(data,browserHistory,callback){
             }else if(data.action === "explore_patient"){                
 
                 if(!isObjectEmpty(data.data)){
-
+                    //console.log(data.data);
                     var family_id = data.data.family_id;
                     var patient_id = data.data.id;
 

@@ -1,0 +1,36 @@
+@import './../../pl_component_card_patient_status/pl_component_card_patient_status.scss';
+
+.pl-component-card-patient-widget-relatives{
+
+    max-height:100px;
+    overflow-y:auto;
+
+    .pl-component-card-patient-widget-relatives-item{
+
+        align-items: center;
+        padding-bottom:5px;
+
+        h6{
+            margin-top:0px;
+            color:$color-normal;
+        }
+
+        .text{
+            padding-bottom:2px;
+        }
+
+        .pl-component-card-patient-widget-relatives-element{
+            padding-right:30px;
+        }
+
+        .relative-age{
+            align-items: center;
+        }
+
+    }
+
+    .pl-component-card-patient-widget-relatives-undefined-message{
+        padding-bottom:2px;
+    }
+
+}

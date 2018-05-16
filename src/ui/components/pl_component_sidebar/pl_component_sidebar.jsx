@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 
-//actions
-import { create_table, /*create_list_vertical,*/ update_patient } from './pl_component_sidebar_actions';
-
 //components
 import { PlComponentSidebarHeader } from './pl_component_sidebar_header/pl_component_sidebar_header';
 import { PlComponentSidebarPatient } from './pl_component_sidebar_patient/pl_component_sidebar_patient';
 
 //#TODO organizar
 import { isObjectEmpty, isObjectAFunction, isObjectAnArray } from './../../../modules/rkt_module_object';
-import { keys, without } from 'underscore';
+import { keys } from 'underscore';
 
 export class PlComponentSidebar extends Component {
 
@@ -26,41 +23,6 @@ export class PlComponentSidebar extends Component {
         this.setState({
             mode: mode
         });
-    }
-
-    on_save_data_table() {
-
-        if (isObjectAFunction(this.props.perform_database_action)) {
-
-            var patient = this.props.patient;
-            var data_keys = keys(patient);
-
-            var updated_table = this.refs.sidebarTable.refs;
-            var updated_table_keys = keys(updated_table);
-
-            var updated_patient = {};
-
-            for (var i = 0; i < data_keys.length; i++) {
-
-                if (updated_table_keys.includes(data_keys[i])) {
-                    
-                    updated_patient[data_keys[i]] = updated_table[data_keys[i]].state.input;
-
-                } else {
-
-                    updated_patient[data_keys[i]] = patient[data_keys[i]];
-
-                }
-
-            }
-
-            //console.log(updated_patient);
-            var data = { "action": "edit", "data": updated_patient };
-
-            this.props.perform_database_action(data);
-
-        }
-
     }
 
     /*render_menu_patient(patient,father,mother,children) {
@@ -97,12 +59,20 @@ export class PlComponentSidebar extends Component {
         var father = this.props.father;
         var mother = this.props.mother;
         var children = this.props.children;
+        var relatives = this.props.relatives;
         var mode = this.state.mode;
         var sidebar;
 
         if (mode === "patient") {
 
-            sidebar = <PlComponentSidebarPatient patient={patient} mother={mother} father={father} children={children}/>
+            sidebar = <PlComponentSidebarPatient 
+            patient={patient} 
+            mother={mother} 
+            father={father} 
+            children={children}
+            relatives = {relatives}
+            perform_database_action={this.props.perform_database_action}
+            />
 
         } else if (mode === "family") {
 

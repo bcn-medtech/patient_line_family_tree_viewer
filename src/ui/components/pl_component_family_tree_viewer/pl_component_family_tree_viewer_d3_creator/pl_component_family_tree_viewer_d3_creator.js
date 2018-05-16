@@ -338,8 +338,5 @@ export default class TreeDisplayer {
             }).interpolate("step-after");
             return fun(linedata);
         }
-
-        
-        console.log(d3.select("svg"));
     }
 }

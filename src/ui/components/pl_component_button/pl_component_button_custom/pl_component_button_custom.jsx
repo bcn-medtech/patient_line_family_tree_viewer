@@ -50,7 +50,7 @@ export class PlComponentButtonCustom extends Component {
 
         return (
 
-            <a className="grid-block pl_component_button_custom"
+            <a className="grid-block shrink pl_component_button_custom"
                 style={style}
                 onMouseEnter={this.onHoverButton.bind(this)} 
                 onMouseLeave={this.onHoverButton.bind(this)}

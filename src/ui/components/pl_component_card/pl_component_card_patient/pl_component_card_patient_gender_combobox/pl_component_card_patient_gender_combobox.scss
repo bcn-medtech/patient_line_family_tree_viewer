@@ -33,6 +33,7 @@
         .text{
             margin-top: -5px;
             display: block;
+            overflow:hidden;
         }
     }
 
@@ -54,6 +55,7 @@
         .text{
             margin-top: -5px;
             display: block;
+            overflow:hidden;
         }
     }
 }
@@ -68,6 +70,15 @@
     padding-right: 10px;
     padding-top: 3px;
     padding-bottom: 10px;
+
+    &:hover{
+        background-color: $color_shadow-2;
+
+        .text{
+            color:$color-normal;
+            overflow:hidden;
+        }
+    }
 
 }
 

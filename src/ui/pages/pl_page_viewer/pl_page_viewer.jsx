@@ -53,7 +53,8 @@ export default class PlPageViewer extends Component {
       patient: false,
       father: false,
       mother: false,
-      children: false
+      children: false,
+      relatives:false
     };
   }
 
@@ -72,7 +73,8 @@ export default class PlPageViewer extends Component {
           patient: result.patient,
           mother: result.mother,
           father: result.father,
-          children: result.children
+          children: result.children,
+          relatives: result.relatives
         });
 
       } else {
@@ -113,7 +115,7 @@ export default class PlPageViewer extends Component {
   perform_database_action(data) {
 
     var myComponent = this;
-
+    
     perform_database_action(data, function (result) {
 
       myComponent.update_component_state_from_database();
@@ -138,7 +140,7 @@ export default class PlPageViewer extends Component {
   }
 
   render() {
-
+    
     var tree_viewer;
     var sidebar;
     var viewer_legend;
@@ -146,6 +148,7 @@ export default class PlPageViewer extends Component {
     var family = this.state.family;
     var father = this.state.father;
     var mother = this.state.mother;
+    var relatives = this.state.relatives;
     var children = this.state.children;
 
     var bottom_button_left =
@@ -174,6 +177,8 @@ export default class PlPageViewer extends Component {
         father={father}
         mother={mother}
         children={children}
+        relatives={relatives}
+        perform_database_action={this.perform_database_action.bind(this)}
       />
     }
 

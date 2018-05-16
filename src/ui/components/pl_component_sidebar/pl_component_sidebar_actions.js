@@ -5,7 +5,6 @@ import {
 } from 'underscore';
 
 export function create_table(patient, data_keys_selected) {
-    console.log(patient);
 
     var data_keys = keys(patient);
     var table = [];
@@ -26,7 +25,6 @@ export function create_table(patient, data_keys_selected) {
 }
 
 export function create_list_vertical(patient, data_keys_selected) {
-    console.log(patient);
 
     var data_keys = keys(patient);
     var table = [];

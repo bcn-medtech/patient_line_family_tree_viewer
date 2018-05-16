@@ -1,3 +1,7 @@
+@import './pl_component_card_patient_widget_children/pl_component_card_patient_widget_children.scss';
+@import './pl_component_card_patient_widget_parent/pl_component_card_patient_widget_parent.scss';
+@import './pl_component_card_patient_widget_relatives/pl_component_card_patient_widget_relatives.scss';
+
 .pl-component-card-patient-widget{
     
     background-color: $color_shadow-3;
@@ -7,4 +11,5 @@
     h5{
         color:$color-normal;
     }
+    
 }
