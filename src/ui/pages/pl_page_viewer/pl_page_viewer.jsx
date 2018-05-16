@@ -71,6 +71,7 @@ export default class PlPageViewer extends Component {
 
       get_data(family_id, patient_id, function (result) {
 
+        //console.log(result);
         if ("patient" in result) {
 
           myComponent.setState({
@@ -108,7 +109,9 @@ export default class PlPageViewer extends Component {
   perform_database_action(data) {
 
     var myComponent = this;
-
+    
+    console.log("LET'S PERFORM DATABASE ACTION!!!");
+    console.log(data);
     perform_database_action(data, function (result) {
 
       myComponent.update_component_state_from_database();
@@ -166,6 +169,7 @@ export default class PlPageViewer extends Component {
         mother={mother}
         children={children}
         relatives={relatives}
+        perform_database_action={this.perform_database_action.bind(this)}
       />
     }
 

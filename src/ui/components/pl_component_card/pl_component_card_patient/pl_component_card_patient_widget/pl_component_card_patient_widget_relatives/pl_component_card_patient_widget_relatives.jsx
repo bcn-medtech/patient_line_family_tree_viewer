@@ -35,19 +35,11 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
 
         if (!isObjectEmpty(relatives)) {
 
-            if (mode_edit) {
-
-                // TODO
-
-            } else {
-
-                return (
-                    <div className="grid-block shrink vertical">
-                        {this.render_list_of_relatives(relatives)}
-                    </div>
-                );
-
-            }
+            return (
+                <div className="grid-block shrink vertical">
+                    {this.render_list_of_relatives(relatives)}
+                </div>
+            );
 
         } else {
 

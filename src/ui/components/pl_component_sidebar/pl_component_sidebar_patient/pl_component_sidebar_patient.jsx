@@ -102,7 +102,7 @@ export class PlComponentSidebarPatient extends Component {
         var edited_table = this.refs.patient_table.refs;
 
         var updated_patient = update_patient_from_table(patient, edited_table);
-        //var data = { "action": "edit", "data": updated_patient };
+        var data = { "action": "edit_patient", "data": updated_patient };
 
         //this.props.perform_database_action(data);
 
@@ -121,7 +121,7 @@ export class PlComponentSidebarPatient extends Component {
         var mode_edit = this.state.mode_edit;
         var widget;
         var table_mode;
-
+        
         if (mode_edit) {
 
             table_mode = "edition";
@@ -132,23 +132,23 @@ export class PlComponentSidebarPatient extends Component {
             var widget_content;
 
             if (mode_menu === "relatives") {
-                
+
                 widget_content = <PlComponentCardPatientWidgetRelatives relatives={relatives}/>
-
+    
             } else if (mode_menu === "children") {
-
-                widget_content = <PlComponentCardPatientWidgetChildren children={children} mode_edit={mode_edit} />
-
+    
+                widget_content = <PlComponentCardPatientWidgetChildren patient={patient} children={children} mode_edit={mode_edit} perform_database_action={this.props.perform_database_action}/>
+    
             } else if (mode_menu === "father") {
-
-                widget_content = <PlComponentCardPatientWidgetParent parent={father} type_parent={mode_menu} mode_edit={mode_edit} />
-
+    
+                widget_content = <PlComponentCardPatientWidgetParent parent={father} type_parent={mode_menu} mode_edit={mode_edit} perform_database_action={this.props.perform_database_action}/>
+    
             } else if (mode_menu === "mother") {
-
-                widget_content = <PlComponentCardPatientWidgetParent parent={mother} type_parent={mode_menu} mode_edit={mode_edit} />
+    
+                widget_content = <PlComponentCardPatientWidgetParent parent={mother} type_parent={mode_menu} mode_edit={mode_edit} perform_database_action={this.props.perform_database_action}/>
             }
 
-            widget = <PlComponentCardPatientWidget tittle={mode_menu} content={widget_content} />
+            widget = <PlComponentCardPatientWidget tittle={mode_menu} mode_edit={mode_edit} content={widget_content} perform_database_action={this.props.perform_database_action}/>
         }
 
         var data_keys_selected = this.state.patient_columns_selected;
@@ -171,9 +171,7 @@ export class PlComponentSidebarPatient extends Component {
                         mode_edit={mode_edit}
                         ref="patient_card" />
                 </div>
-                <div className="grid-block shrink">
-                    {widget}
-                </div>
+                {widget}
                 <div className="pl_component_sidebar_patient_element">
                     <PlComponentMenuTags
                         data={data}

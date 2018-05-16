@@ -2,29 +2,76 @@
 
 .pl-component-card-patient-widget-children{
 
-    max-height:100px;
+    max-height:200px;
     overflow-y:auto;
 
-    .pl-component-card-patient-widget-children-item{
+    .family-list{
 
-        align-items: center;
-        padding-bottom:5px;
+        padding-left:10px;
+        padding-right:20px;
+        padding-bottom:25px;
 
-        h6{
-            margin-top:0px;
-            color:$color-normal;
+        .family-list-header {
+
+            .family-list-header-parents {
+                align-items: center; // vertical centering
+                justify-content: center; // horizontal centering
+                padding-bottom:15px;
+
+                .family-list-header-parent {
+                    align-items: center; // vertical centering
+                    justify-content: center; // horizontal centering
+                    padding-left:5px;
+                    padding-right:5px;
+
+                    .text{
+                        padding-top:5px;
+                        padding-bottom:2px;
+                    }
+
+                }
+
+                .family-list-header-link{
+                    
+                }
+            }
+            .family-list-header-edition-buttons{
+                align-items: center; // vertical centering
+                //justify-content: right; // horizontal centering
+                position:absolute;
+                right:0px;
+            }
+
         }
 
-        .text{
-            padding-bottom:2px;
-        }
+        .family-list-children {
+            // max-height:100px;
+            // overflow-y:auto;
 
-        .pl-component-card-patient-widget-children-element{
-            padding-right:30px;
-        }
+            .family-list-item{
 
-        .children-age{
-            align-items: center;
+                h6{
+                    margin-top:0px;
+                    color:$color-normal;
+                }
+
+                .text{
+                    padding-bottom:2px;
+                }
+
+                //align-items: left;
+                padding-bottom:5px;
+
+                .family-list-item-element{
+                    padding-right:30px;
+                }
+        
+                .child-age{
+                    
+                    align-items: center;
+                }
+
+            }
         }
 
     }

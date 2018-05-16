@@ -36,19 +36,25 @@ export class PlComponentCardPatientWidgetParent extends Component {
 
         if (parent) {
 
-            if (mode_edit) {
+            // if (mode_edit) {
 
-                // TODO
+            //     // TODO
 
-            } else {
+            // } else {
 
-                return (
+            //     return (
 
-                    this.render_parent(parent)
+            //         this.render_parent(parent)
 
-                );
+            //     );
 
-            }
+            // }
+
+            return (
+
+                this.render_parent(parent)
+
+            );
 
         } else {
 
@@ -77,19 +83,6 @@ export class PlComponentCardPatientWidgetParent extends Component {
         var dob = parent.dob;
 
         return (
-            // <div className="grid-block pl-component-card-patient-widget-parent-item">
-            //     <div className="grid-block shrink pl-component-card-patient-widget-parent-element">
-            //         <PlComponentCardPatientStatus status={status} gender={gender} />
-            //     </div>
-            //     <div className="grid-block shrink vertical pl-component-card-patient-widget-parent-element">
-            //         <h6>{name}</h6>
-            //         <div className="grid-block shrink text">{id}</div>
-            //     </div>
-            //     <div className="grid-block shrink vertical pl-component-card-patient-widget-parent-element parent-age">
-            //         {this.render_age(dob)}
-            //         <div className="grid-block shrink text">age</div>
-            //     </div>
-            // </div>
             <div className="grid-block shrink pl-component-card-patient-widget-parent-item">
                 <div className="grid-block shrink pl-component-card-patient-widget-parent-element">
                     <PlComponentCardPatientStatus status={status} gender={gender} />

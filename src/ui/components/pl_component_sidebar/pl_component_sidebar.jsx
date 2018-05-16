@@ -62,7 +62,7 @@ export class PlComponentSidebar extends Component {
         var relatives = this.props.relatives;
         var mode = this.state.mode;
         var sidebar;
-
+        
         if (mode === "patient") {
 
             sidebar = <PlComponentSidebarPatient 
@@ -71,6 +71,7 @@ export class PlComponentSidebar extends Component {
             father={father} 
             children={children}
             relatives = {relatives}
+            perform_database_action={this.props.perform_database_action}
             />
 
         } else if (mode === "family") {
