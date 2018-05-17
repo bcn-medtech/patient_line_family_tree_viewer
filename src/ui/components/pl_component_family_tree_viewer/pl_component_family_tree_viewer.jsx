@@ -31,7 +31,7 @@ export class PlComponentFamilyTreeViewer extends Component {
         var root = this.props.root;
         var patient_id = this.props.patient_id;
         var siblings = this.props.siblings;
-
+        
         this.drawTree(root,patient_id,siblings);
         
     }

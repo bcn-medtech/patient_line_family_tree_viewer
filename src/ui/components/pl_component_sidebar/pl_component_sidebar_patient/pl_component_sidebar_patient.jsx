@@ -208,10 +208,10 @@ export class PlComponentSidebarPatient extends Component {
                         children={children}
                         on_click_action={this.on_set_mode_menu.bind(this)}
                         on_set_mode_edit={this.on_set_mode_edit.bind(this)}
-                        //on_set_children={children}
                         mode_menu={mode_menu}
                         mode_edit={mode_edit}
-                        ref="patient_card" />
+                        ref="patient_card" 
+                        perform_database_action={this.props.perform_database_action}/>
                 </div>
                 <div className="grid-block shrink">
                     {widget}

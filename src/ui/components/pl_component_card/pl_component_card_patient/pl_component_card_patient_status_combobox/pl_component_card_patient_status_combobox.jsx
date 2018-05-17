@@ -29,10 +29,7 @@ import {
     filter
 } from 'underscore';
 
-import {
-    isObjectAFunction,
-    isObjectEmpty
-} from './../../../../../modules/rkt_module_object';
+import { isObjectAFunction, isObjectEmpty } from './../../../../../modules/rkt_module_object';
 
 export class PlComponentCardPatientStatusCombobox extends Component {
 
@@ -66,19 +63,20 @@ export class PlComponentCardPatientStatusCombobox extends Component {
 
         var status = nextprops.status;
         var gender = nextprops.gender;
-
-        if (this.state.gender !== gender && this.state.status !== status) {
-            this.init_component(status, gender);
-        }
+        
+        this.init_component(status, gender);
 
     }
 
+    edit_item(item) {
 
-    set_item(item) {
+        if (isObjectAFunction(this.props.perform_database_action)) {
 
-        this.setState({
-            status: item.status
-        })
+            var data_to_update = {"key": "status", "value": item.status};
+            this.props.perform_database_action(data_to_update);
+
+        }
+
     }
 
     render_list_items_status(current_status, gender) {
@@ -251,7 +249,7 @@ export class PlComponentCardPatientStatusCombobox extends Component {
                                 );
                             } else {
                                 return (
-                                    <div className="grid-block shrink list-item" onClick={this.set_item.bind(this, item)} key={index}>{item.svg}</div>
+                                    <div className="grid-block shrink list-item" onClick={this.edit_item.bind(this, item)} key={index}>{item.svg}</div>
                                 );
                             }
     

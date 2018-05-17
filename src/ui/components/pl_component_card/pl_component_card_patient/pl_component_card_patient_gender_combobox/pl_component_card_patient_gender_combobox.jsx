@@ -24,6 +24,9 @@
 
 import React, { Component } from 'react';
 
+//modules
+import { isObjectAFunction } from './../../../../../modules/rkt_module_object'
+
 export class PlComponentCardPatientGenderCombobox extends Component {
 
     constructor() {
@@ -40,6 +43,7 @@ export class PlComponentCardPatientGenderCombobox extends Component {
         this.setState({
             gender: gender
         })
+
     }
 
     componentDidMount() {
@@ -56,6 +60,17 @@ export class PlComponentCardPatientGenderCombobox extends Component {
         if (this.state.gender !== gender) {
 
             this.set_gender(gender);
+        }
+
+    }
+
+    edit_gender(gender) {
+
+        if (isObjectAFunction(this.props.perform_database_action)) {
+
+            var data_to_update = {"key": "gender", "value": gender};
+            this.props.perform_database_action(data_to_update);
+
         }
 
     }
@@ -87,7 +102,7 @@ export class PlComponentCardPatientGenderCombobox extends Component {
                             female
                         </div>
                     </div>
-                    <div className="grid-block shrink vertical list-item" onClick={this.set_gender.bind(this, "male")}>
+                    <div className="grid-block shrink vertical list-item" onClick={this.edit_gender.bind(this, "male")}>
                         <div className="grid-block align-center">
                             <h4>
                                 {this.render_gender("male")}
@@ -104,7 +119,7 @@ export class PlComponentCardPatientGenderCombobox extends Component {
 
             return (
                 <div className="grid-block vertical">
-                    <div className="grid-block shrink vertical list-item" onClick={this.set_gender.bind(this, "female")}>
+                    <div className="grid-block shrink vertical list-item" onClick={this.edit_gender.bind(this, "female")}>
                         <div className="grid-block align-center">
                             {this.render_gender("female")}
                         </div>
@@ -126,7 +141,7 @@ export class PlComponentCardPatientGenderCombobox extends Component {
         } else {
             return (
                 <div className="grid-block vertical">
-                    <div className="grid-block shrink vertical list-item" onClick={this.set_gender.bind(this, "female")}>
+                    <div className="grid-block shrink vertical list-item" onClick={this.edit_gender.bind(this, "female")}>
                         <div className="grid-block align-center">
                             {this.render_gender("female")}
                         </div>
@@ -134,7 +149,7 @@ export class PlComponentCardPatientGenderCombobox extends Component {
                             female
                         </div>
                     </div>
-                    <div className="grid-block shrink vertical list-item" onClick={this.set_gender.bind(this, "male")}>
+                    <div className="grid-block shrink vertical list-item" onClick={this.edit_gender.bind(this, "male")}>
                         <div className="grid-block align-center">
                             {this.render_gender("male")}
                         </div>
