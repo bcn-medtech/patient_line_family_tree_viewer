@@ -114,7 +114,7 @@ export class PlComponentSidebarPatient extends Component {
             // the changes in "table" and "text_field_editable" are saved in "patient"
             var patient = this.props.patient;
             var updated_patient;
-            
+
             // "table"
             var edited_table = this.refs.patient_table.refs;
             updated_patient = update_patient_from_table(patient, edited_table);
@@ -123,10 +123,20 @@ export class PlComponentSidebarPatient extends Component {
             var edited_name = this.refs.patient_card.refs.patient_name.refs.FormItemInputText.state.input;
             var edited_id = this.refs.patient_card.refs.patient_id.refs.FormItemInputText.state.input;
             updated_patient.name = edited_name;
-            updated_patient.id = edited_id;
+
+            if (patient.id === edited_id) {
+
+                updated_patient.id = patient.id;
+                
+            } else if (patient.id !== edited_id) {
+
+                updated_patient.id = edited_id;
+                updated_patient.id_old = patient.id;
+
+            }
 
             var data = { "action": "edit_patient", "data": updated_patient };
-            this.props.perform_database_action(data);
+            this.props.perform_database_action(data, updated_patient.id);
 
         }
 
@@ -137,7 +147,7 @@ export class PlComponentSidebarPatient extends Component {
         if (mode_edit) {
 
             return (
-                <div style={{"position":"absolute", "bottom": "0px", "right":"0px", "margin":"20px"}}>
+                <div style={{ "position": "absolute", "bottom": "0px", "right": "0px", "margin": "20px" }}>
                     <PlComponentButtonRect
                         text={"Save"}
                         backgroundcolor={"transparent"} backgroundhovercolor={"#5C4EE5"}
@@ -210,8 +220,8 @@ export class PlComponentSidebarPatient extends Component {
                         on_set_mode_edit={this.on_set_mode_edit.bind(this)}
                         mode_menu={mode_menu}
                         mode_edit={mode_edit}
-                        ref="patient_card" 
-                        perform_database_action={this.props.perform_database_action}/>
+                        ref="patient_card"
+                        perform_database_action={this.props.perform_database_action} />
                 </div>
                 <div className="grid-block shrink">
                     {widget}

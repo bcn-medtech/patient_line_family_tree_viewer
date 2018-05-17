@@ -63,7 +63,7 @@ export default class PlPageViewer extends Component {
     var myComponent = this;
 
     get_data(family_id, patient_id, function (result) {
-      
+
       if ("patient" in result) {
 
         myComponent.setState({
@@ -107,8 +107,7 @@ export default class PlPageViewer extends Component {
   }
 
   explore_new_patient(id) {
-
-    console.log("explore_new_patient");
+    
     this.update_component_state_from_database(this.state.family.id, id);
 
   }
@@ -117,7 +116,6 @@ export default class PlPageViewer extends Component {
 
     var myComponent = this;
     
-    console.log(data);
     perform_database_action(data, function (result) {
 
       var location = window.location;
@@ -125,7 +123,7 @@ export default class PlPageViewer extends Component {
       if ("href" in location) {
         var location_url = location.href;
         var family_id = url_getParameterByName("family_id", location_url);
-        //var patient_id = url_getParameterByName("patient_id", location_url);
+        
         myComponent.update_component_state_from_database(family_id, patient_id);
       }
 

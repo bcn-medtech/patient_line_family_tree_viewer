@@ -26,13 +26,14 @@
 import {
     patient_update,
     patient_insert,
+    patient_remove,
     patients_get_list,
     families_get_list,
     patient_get,
     family_get
 } from './../../../database/database';
 
-import {label_patient_relatives} from './pl_page_viewer_action_data_analysis_patient_relations';
+import { label_patient_relatives } from './pl_page_viewer_action_data_analysis_patient_relations';
 
 import patients from './test_patients.json';
 
@@ -49,7 +50,7 @@ import {
     get_patients_processed
 } from './pl_page_viewer_actions_data_analysis';
 
-import { findWhere } from 'underscore';
+import { findWhere, mapObject, omit } from 'underscore';
 
 
 export function get_data_from_database(callback) {
@@ -125,7 +126,7 @@ export function get_data(family_id, patient_id, callback) {
 
                             var data = {};
                             data["family"] = family[0];
-                            
+
 
                             if (!isObjectEmpty(patient_id)) {
 
@@ -135,8 +136,8 @@ export function get_data(family_id, patient_id, callback) {
 
                                     data["patient"] = patient;
 
-                                    
-                                   
+
+
                                     if ("father" in patient) {
 
                                         var father = false;
@@ -185,7 +186,7 @@ export function get_data(family_id, patient_id, callback) {
                                     }
 
                                     var array_patients_family = get_all_patients_from_family(family_id, result.patients);
-                                    label_patient_relatives(patient,array_patients_family);
+                                    label_patient_relatives(patient, array_patients_family);
                                     //create_virtual_patient(data);
                                     data["root"] = treeBuilder(array_patients_family);
                                     data["relatives"] = array_patients_family;
@@ -226,29 +227,57 @@ export function get_data(family_id, patient_id, callback) {
 export function perform_database_action(data, callback) {
 
     if (!isObjectEmpty(data)) {
-        
+
         if ("action" in data) {
 
             if (data.action === "edit_patient") {
-                
+
                 if ("data" in data) {
-                    
+
                     var patient = data.data;
 
-                    patient_update(patient, function (result) {
-                        
-                        if (result) {
+                    if (!patient.id_old) {
 
-                            callback(true);
-                        }
+                        patient_update(patient, function (result) {
 
-                    });
+                            if (result) {
+    
+                                callback(true);
+                            }
+    
+                        });
+
+                    } else {
+
+                        var id_patient_to_remove = patient.id_old;
+                        var patient_to_insert = omit(patient, "id_old");
+
+                        patient_remove(id_patient_to_remove, function(result) {
+                            
+                            if (result) {
+
+                                patient_insert(patient_to_insert, function(result) {
+
+                                    if (result){
+
+                                        callback(true);
+
+                                    }
+
+                                })
+
+                            }
+                        });
+
+                    }
+                    
                 }
 
             } else if (data.action === "add_child_existing_family") {
 
+                console.log("HEY");
                 if ("data" in data) {
-                    
+
                     if ("to_update" in data.data) {
                         var patients_to_update = data.data.to_update;
 
@@ -324,7 +353,7 @@ export function perform_database_action(data, callback) {
 }
 
 function patients_update(patients, callback) {
-    
+
     var updated_patients_counter = 0;
 
     for (var i = 0; i < patients.length; i++) {
