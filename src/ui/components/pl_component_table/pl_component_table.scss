@@ -54,8 +54,11 @@
         z-index: 10;
         overflow:hidden;
         display: none;
+        background-color: $rkt-viewer-background-color;
 
         .pl-component-right-menu-button{
+            background-color: $rkt-viewer-background-color;
+            overflow:hidden;
             fill:$color-normal;
             &:hover{
                 fill:$color-normal-2;

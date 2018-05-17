@@ -51,7 +51,19 @@ export class PlComponentCardPatient extends Component {
     }
 
     on_remove_patient() {
-        alert("On delete patient");
+        
+        if (isObjectAFunction(this.props.on_ask_to_remove_patient)) {
+            
+            var patient = this.props.patient;
+
+            if (isObjectEmpty(patient.children)) {
+
+                this.props.on_ask_to_remove_patient();
+
+            } else alert ("You cannot delete a patient with children");
+
+        }
+
     }
 
     on_click_card_component(type) {

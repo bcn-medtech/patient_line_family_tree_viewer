@@ -335,7 +335,7 @@ export class PlComponentDatabase extends Component {
 
             }
 
-        }
+        } 
 
         this.setState({
             delete_row: false
