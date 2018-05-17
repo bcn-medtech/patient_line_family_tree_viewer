@@ -9,7 +9,7 @@
 
     .gender{
         
-        margin-top: 6px;
+       //margin-top: 6px;
         stroke: transparent;
 
         circle{
@@ -31,9 +31,8 @@
         }
 
         .text{
-            margin-top: -5px;
+            margin-top:3px;
             padding-bottom:2px;
-            display: block;
             overflow:hidden;
         }
     }
@@ -54,9 +53,8 @@
         }
         
         .text{
-            margin-top: -5px;
+            margin-top:3px;
             padding-bottom:2px;
-            display: block;
             overflow:hidden;
         }
     }
@@ -83,6 +81,7 @@
     padding-bottom: 10px;
 
     .text{
+        margin-top:3px;
         padding-bottom:2px;
         overflow:hidden;
     }
@@ -109,6 +108,12 @@
     padding-top: 3px;
     padding-bottom: 10px;
 
+    .text{
+        margin-top:3px;
+        padding-bottom:2px;
+        overflow:hidden;
+    }
+
     &:hover{
         background-color: $color_shadow-2;
     }
@@ -121,6 +126,12 @@
     color: #fff;
     text-align: center;
     border: 1px solid $color-normal;
+
+    .text{
+        margin-top:3px;
+        padding-bottom:2px;
+        overflow:hidden;
+    }
 
     /* Position the tooltip */
     position: fixed;

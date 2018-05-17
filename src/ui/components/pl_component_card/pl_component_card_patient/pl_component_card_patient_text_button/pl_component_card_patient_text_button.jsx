@@ -44,7 +44,7 @@ export class PlComponentCardPatientTextButton extends Component {
 
         if(selected){
 
-            component_style = "grid-block vertical pl-component-card-patient-text-button pl-component-card-patient-text-button-selected";
+            component_style = "grid-block vertical pl-component-card-patient-text-button selected";
 
         }else{
 

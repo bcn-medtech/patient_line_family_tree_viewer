@@ -105,7 +105,7 @@ export class PlComponentCardPatient extends Component {
         }
 
         return (
-            <div className="grid-block card-row">
+            <div className="grid-block align-spaced card-row">
                 <div className="grid-block shrink card-item">
                     <PlComponentCardPatientTextButton
                         text={patient_num_relatives}

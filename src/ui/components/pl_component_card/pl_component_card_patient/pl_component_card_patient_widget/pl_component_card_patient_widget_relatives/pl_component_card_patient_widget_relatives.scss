@@ -5,6 +5,10 @@
     max-height:200px;
     overflow-y:auto;
 
+    tr, td{
+        width:100%;
+    }
+    
     .pl-component-card-patient-widget-relatives-item{
 
         align-items: center;

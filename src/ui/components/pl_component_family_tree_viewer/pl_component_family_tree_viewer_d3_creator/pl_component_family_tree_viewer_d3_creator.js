@@ -47,7 +47,7 @@ export default class TreeDisplayer {
 
     }
 
-    restart_tree_canvas(){
+    restart_tree_canvas() {
 
         svg.selectAll(".link").remove();
         svg.selectAll("rect").remove();
@@ -57,7 +57,7 @@ export default class TreeDisplayer {
     }
 
     _drawTree(root, sib, patient_id, set_patient) {
-        
+
         this.restart_tree_canvas();
 
         var allNodes = flatten(root);
@@ -176,6 +176,51 @@ export default class TreeDisplayer {
             .attr("dy", "1em")
             .attr("x", function (d) { return d.x - 20; })
             .attr("y", function (d) { return d.y + 40; });
+
+
+        //nuevo miembro
+        nodes.append("circle").filter(function (d) { return d.status === "nuevo-miembro-familia"; })
+            .attr("class","nuevo-miembro-familia")
+            .attr("r", 20)
+            .attr("id", function (d) {
+                return d.id;
+            })
+            .attr("display", function (d) {
+                if (d.hidden) {
+                    return "none"
+                } else {
+                    return ""
+                };
+            })
+            .attr("cx", function (d) { return d.x - 4; })
+            .attr("cy", function (d) { return d.y - 4; })
+            .on('click', function (d) {
+                set_patient(d.id);
+            });
+
+        //nuevo miembro selected
+        nodes.append("circle").filter(function (d) { return d.status === "nuevo-miembro-familia"; })
+            .attr("class","nuevo-miembro-familia")
+            .filter(function (d) {
+                return d.id === patient_id;
+            })
+            .attr("r", 20)
+            .attr("id", function (d) {
+                return d.id;
+            })
+            .attr("class", "node_selected")            
+            .attr("display", function (d) {
+                if (d.hidden) {
+                    return "none"
+                } else {
+                    return ""
+                };
+            })
+            .attr("cx", function (d) { return d.x - 4; })
+            .attr("cy", function (d) { return d.y - 4; })
+            .on('click', function (d) {
+                set_patient(d.id);
+            });
 
         // Create the node circles for females.
         nodes.append("circle").filter(function (d) { return d.gender === "female"; })

@@ -38,14 +38,11 @@ export class PlComponentFamilyTreeViewer extends Component {
 
     componentWillReceiveProps(nextProps){
         
-        if(this.props.patient_id !== nextProps.patient_id){
-
             var root = nextProps.root;
             var patient_id = nextProps.patient_id;
             var siblings = nextProps.siblings;
     
             this.d3TreeCreator._drawTree(root,siblings,patient_id,this.set_patient.bind(this));
-        }
     }
 
     //Events

@@ -61,6 +61,10 @@
             // max-height:100px;
             // overflow-y:auto;
 
+            tr, td{
+                width:100%;
+            }
+            
             .family-list-item{
                 
                 align-items: center;

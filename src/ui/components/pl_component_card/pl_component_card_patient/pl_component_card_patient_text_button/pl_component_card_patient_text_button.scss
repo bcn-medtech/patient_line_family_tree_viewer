@@ -2,6 +2,11 @@
 
     padding:5px;
     color:white;
+    overflow:hidden;
+
+    .text{
+        overflow:hidden;
+    }
 
     &:hover{
 
@@ -10,11 +15,11 @@
 
         .text{
             color:$color-normal;
-            overflow:hidden;
         }
     }
+    
 }
 
-.pl-component-card-patient-text-button-selected{
+.pl-component-card-patient-text-button.selected{
     background-color: $color_shadow-2;
 }

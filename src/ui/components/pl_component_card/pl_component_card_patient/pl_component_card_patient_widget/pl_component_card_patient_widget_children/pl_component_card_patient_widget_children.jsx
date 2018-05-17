@@ -230,7 +230,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
 
 
         return (
-            <div className="grid-block shrink vertical family-list-children">
+            <table className="grid-block shrink vertical family-list-children">
                 {sorted_children.map((child, index) => {
 
                     var id = child.id;
@@ -243,23 +243,23 @@ export class PlComponentCardPatientWidgetChildren extends Component {
 
                     return (
 
-                        <div className="grid-block shrink family-list-item" key={index}>
-                            <div className="grid-block shrink family-list-item-element">
+                        <tr className="grid-block shrink family-list-item" key={index}>
+                            <td className="grid-block family-list-item-element">
                                 <PlComponentCardPatientStatus status={status} gender={gender} />
-                            </div>
-                            <div className="grid-block vertical family-list-item-element">
+                            </td>
+                            <td className="grid-block vertical family-list-item-element">
                                 <h6>{name}</h6>
                                 <div className="grid-block shrink text">{id}</div>
-                            </div>
-                            <div className="grid-block vertical shrink family-list-item-element centered">
+                            </td>
+                            <td className="grid-block vertical family-list-item-element centered">
                                 {this.render_age(dob)}
                                 <div className="grid-block shrink text">age</div>
-                            </div>
-                        </div>
+                            </td>
+                        </tr>
                     );
 
                 })}
-            </div>
+            </table>
         );
 
 

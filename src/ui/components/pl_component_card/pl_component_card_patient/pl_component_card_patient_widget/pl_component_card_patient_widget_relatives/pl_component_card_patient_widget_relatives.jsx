@@ -36,9 +36,11 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
         if (!isObjectEmpty(relatives)) {
 
             return (
-                <div className="grid-block vertical">
-                    {this.render_list_of_relatives(relatives)}
-                </div>
+                <table className="grid-block vertical">
+                    <tbody>
+                        {this.render_list_of_relatives(relatives)}
+                    </tbody>
+                </table>
             );
 
         } else {
@@ -74,23 +76,23 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
 
                 return (
 
-                    <div className="grid-block shrink pl-component-card-patient-widget-relatives-item" key={index}>
-                        <div className="grid-block shrink pl-component-card-patient-widget-relatives-element">
+                    <tr className="grid-block shrink pl-component-card-patient-widget-relatives-item" key={index}>
+                        <td className="grid-block pl-component-card-patient-widget-relatives-element">
                             <PlComponentCardPatientStatus status={status} gender={gender} />
-                        </div>
-                        <div className="grid-block vertical pl-component-card-patient-widget-relatives-element">
+                        </td>
+                        <td className="grid-block vertical pl-component-card-patient-widget-relatives-element">
                             <h6>{name}</h6>
                             <div className="grid-block shrink text">{id}</div>
-                        </div>
-                        <div className="grid-block shrink vertical pl-component-card-patient-widget-relatives-element centered">
+                        </td>
+                        <td className="grid-block vertical pl-component-card-patient-widget-relatives-element centered">
                             {this.render_age(dob)}
                             <div className="grid-block shrink text">age</div>
-                        </div>
-                        <div className="grid-block shrink vertical pl-component-card-patient-widget-relatives-element centered">
+                        </td>
+                        <td className="grid-block vertical pl-component-card-patient-widget-relatives-element centered">
                             <h6>{relation}</h6>
                             <div className="grid-block shrink text">relation</div>
-                        </div>
-                    </div>
+                        </td>
+                    </tr>
                 );
 
             })
@@ -112,8 +114,6 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
 
         var relatives = this.props.relatives;
         var mode_edit = this.props.mode_edit;
-
-        console.log(relatives);
 
         return (
             <div className="grid-block pl-component-card-patient-widget-relatives">
