@@ -37,7 +37,7 @@ import { PlComponentTable } from './../../pl_component_table/pl_component_table'
 
 //actions
 import { create_table, update_patient_from_table } from './pl_component_sidebar_patient_actions';
-import { keys, without, map } from 'underscore';
+import { without } from 'underscore';
 
 export class PlComponentSidebarPatient extends Component {
 
@@ -279,7 +279,7 @@ export class PlComponentSidebarPatient extends Component {
                 widget_content = <PlComponentCardPatientWidgetParent parent={mother} type_parent={mode_menu} mode_edit={mode_edit} perform_database_action={this.props.perform_database_action} />
             }
 
-            widget = <PlComponentCardPatientWidget tittle={mode_menu} mode_edit={mode_edit} content={widget_content} perform_database_action={this.props.perform_database_action} />
+            widget = <PlComponentCardPatientWidget tittle={mode_menu} content={widget_content} perform_database_action={this.props.perform_database_action} />
         }
 
         var data_keys_selected = this.state.patient_columns_selected;

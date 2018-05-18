@@ -1,5 +1,5 @@
 import { isObjectAnArray } from './../../../../../../modules/rkt_module_object';
-import { findIndex, findWhere, map, sortBy } from 'underscore';
+import { findIndex, findWhere, sortBy } from 'underscore';
 
 
 export function create_child_existing_family(patient, id_father, id_mother) {
@@ -63,7 +63,6 @@ function create_random_string(string_length) {
 
     // based on https://www.mediacollege.com/internet/javascript/number/random.html
     var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-    var string_length = string_length;
     var randomstring = "";
 
     for (var i = 0; i < string_length; i++) {
@@ -74,7 +73,7 @@ function create_random_string(string_length) {
     return randomstring;
 }
 
-function initialize_patient(patient, father, mother, children, relatives) {
+function initialize_patient() {
 
     var patient = {};
 
@@ -182,7 +181,7 @@ function format_date(stringDate, desiredDateFormat) {
 
     if (date !== undefined) {
 
-        var today = new Date;
+        var today = new Date();
         var formatted_date, y, m, d;
 
         y = date.getFullYear(); // to avoid the 'year 2000 problem', 'y' has always 4 numbers

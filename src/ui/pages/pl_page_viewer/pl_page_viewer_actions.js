@@ -50,7 +50,7 @@ import {
     get_patients_processed
 } from './pl_page_viewer_actions_data_analysis';
 
-import { findWhere, mapObject, omit } from 'underscore';
+import { findWhere, omit } from 'underscore';
 
 
 export function get_data_from_database(callback) {
@@ -325,7 +325,7 @@ export function perform_database_action(data, callback) {
                         var id_mother = data.data.id_mother;
                         var new_child = data.data.new_child;
 
-                        // we update the children info of the parents
+                        // we update the "children" info of the parents
                         patient_get(id_father, function (father_array) {
 
                             if (!isObjectEmpty(father_array)) {
@@ -385,13 +385,14 @@ export function perform_database_action(data, callback) {
                         var new_child = data.data.new_child;
                         var new_parent = data.data.new_parent;
 
-                        // we update the children info of the known parent
+                        // we update the "married_with" and "children" info of the known parent
                         patient_get(id_known_parent, function (parent_array) {
 
                             if (!isObjectEmpty(parent_array)) {
 
                                 var parent = parent_array[0];
 
+                                parent.married_with = new_parent.id;
                                 if (parent.children !== undefined) parent.children.push(new_child.id);
                                 else parent.children = [new_child.id];
 

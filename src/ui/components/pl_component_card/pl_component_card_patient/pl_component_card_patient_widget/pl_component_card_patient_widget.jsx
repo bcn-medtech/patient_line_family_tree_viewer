@@ -23,10 +23,6 @@
 */
 
 import React, { Component } from 'react';
-import { isObjectAFunction } from './../../../../../modules/rkt_module_object';
-
-//components
-import { PlComponentButtonCircle } from './../../../pl_component_button/pl_component_button_circle/pl_component_button_circle';
 
 export class PlComponentCardPatientWidget extends Component {
 
@@ -37,7 +33,6 @@ export class PlComponentCardPatientWidget extends Component {
     render() {
 
         var tittle = this.props.tittle;
-        var mode_edit = this.props.mode_edit;
         var content = this.props.content;
 
         return (
