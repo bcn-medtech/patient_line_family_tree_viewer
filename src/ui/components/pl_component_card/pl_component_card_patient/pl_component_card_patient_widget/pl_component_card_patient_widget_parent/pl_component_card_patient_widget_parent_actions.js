@@ -22,7 +22,7 @@ function format_date(stringDate, desiredDateFormat) {
 
     if (date !== undefined) {
 
-        var today = new Date;
+        var today = new Date();
         var formatted_date, y, m, d;
 
         y = date.getFullYear(); // to avoid the 'year 2000 problem', 'y' has always 4 numbers
