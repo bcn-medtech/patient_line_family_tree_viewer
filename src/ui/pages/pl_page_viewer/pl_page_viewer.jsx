@@ -63,7 +63,8 @@ export default class PlPageViewer extends Component {
     var myComponent = this;
 
     get_data(family_id, patient_id, function (result) {
-      
+      console.log("***** result of get_data() *****");
+      console.log(result);
       if ("patient" in result) {
 
         myComponent.setState({
