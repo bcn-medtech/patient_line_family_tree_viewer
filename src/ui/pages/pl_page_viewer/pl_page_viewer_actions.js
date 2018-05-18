@@ -226,6 +226,7 @@ export function get_data(family_id, patient_id, callback) {
 
 export function perform_database_action(data, callback) {
 
+    console.log(data);
     if (!isObjectEmpty(data)) {
 
         if ("action" in data) {
@@ -277,33 +278,58 @@ export function perform_database_action(data, callback) {
 
                 if ("data" in data) {
 
-                    var id_patient_to_remove = data.data;
+                    if ("to_remove" in data.data) {
 
-                    patient_remove(id_patient_to_remove, function (result) {
+                        var id_patient_to_remove = data.data.to_remove;
 
-                        if (result) {
+                        patient_remove(id_patient_to_remove, function (result) {
 
-                            callback(true);
+                            if (result) {
 
-                        }
+                                if ("to_update" in data.data) {
 
-                    });
+                                    var patients_to_update = data.data.to_update;
+                                    patients_update(patients_to_update, function(result) {
+
+                                        if (result) {
+
+                                            callback(true);
+
+                                        } else {
+
+                                            console.log("error updating patients");
+
+                                        }
+
+                                    });
+
+                                }
+
+                            } else {
+
+                                console.log("error deleting the patient");
+                            }
+
+                        });
+
+                    }
+
                 }
 
             } else if (data.action === "add_child_existing_family") {
-
+                console.log(data.action);
                 if ("data" in data) {
 
                     if ("to_update" in data.data) {
                         var patients_to_update = data.data.to_update;
-
+                        console.log(patients_to_update);
                         patients_update(patients_to_update, function (result) {
 
                             if (result) {
 
                                 if ("to_insert" in data.data) {
                                     var patients_to_insert = data.data.to_insert;
-
+                                    console.log(patients_to_insert);
                                     patients_insert(patients_to_insert, function (result) {
 
                                         if (result) {

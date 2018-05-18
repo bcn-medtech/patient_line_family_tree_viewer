@@ -160,7 +160,18 @@ export class PlComponentSidebarPatient extends Component {
             if (isObjectAFunction(this.props.perform_database_action)) {
 
                 var patient = this.props.patient;
-                var data = { "action": "remove_patient", "data": patient.id };
+                var father = this.props.father;
+                var mother = this.props.mother;
+
+                // we remove this patient from the "children" array of their parents
+                without(father.children, patient.id);
+                without(mother.children, patient.id);
+
+                var data = { 
+                    "action": "remove_patient",
+                    "data": { "to_remove": patient.id, "to_update": [father, mother] } 
+                };
+                
                 this.refs.ModalRemovePatient.closeModal();
                 this.props.perform_database_action(data);
 

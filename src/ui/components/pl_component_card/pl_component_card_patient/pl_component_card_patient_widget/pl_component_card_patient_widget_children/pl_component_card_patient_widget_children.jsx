@@ -43,7 +43,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
 
         if (isObjectAFunction(this.props.perform_database_action)) {
 
-            var result, new_data;
+            var patient, result, new_data;
 
             if (action === "search") {
 
@@ -51,7 +51,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
 
             } else if (action === "add_child_existing_family") {
 
-                var patient = this.props.patient;
+                patient = this.props.patient;
                 var id_father = data.id_father;
                 var id_mother = data.id_mother;
                 result = create_child_existing_family(patient, id_father, id_mother);
@@ -61,7 +61,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
 
             } else if (action === "add_child_new_family") {
 
-                var patient = data;
+                patient = data;
                 result = create_new_family(patient);
 
                 new_data = { "action": "add_child_new_family", "data": result }
@@ -75,7 +75,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
 
     render_card_patient_widget_children(children, patient, mode_edit) {
 
-        if (children !== undefined) {
+        if (!isObjectEmpty(children)) {
 
             var families = process_children_by_parents(children); // family: (partner 1 + partner 2) with common children 
 
@@ -228,40 +228,40 @@ export class PlComponentCardPatientWidgetChildren extends Component {
 
         var sorted_children = sort_children_by_dob(children);
 
-
         return (
             <table className="grid-block shrink vertical family-list-children">
-                {sorted_children.map((child, index) => {
+                <tbody>
+                    {sorted_children.map((child, index) => {
 
-                    var id = child.id;
-                    var name = child.name;
+                        var id = child.id;
+                        var name = child.name;
 
-                    var status = child.status;
-                    var gender = child.gender;
+                        var status = child.status;
+                        var gender = child.gender;
 
-                    var dob = child.dob;
+                        var dob = child.dob;
 
-                    return (
+                        return (
 
-                        <tr className="grid-block shrink family-list-item" key={index}>
-                            <td className="grid-block family-list-item-element">
-                                <PlComponentCardPatientStatus status={status} gender={gender} />
-                            </td>
-                            <td className="grid-block vertical family-list-item-element">
-                                <h6>{name}</h6>
-                                <div className="grid-block shrink text">{id}</div>
-                            </td>
-                            <td className="grid-block vertical family-list-item-element centered">
-                                {this.render_age(dob)}
-                                <div className="grid-block shrink text">age</div>
-                            </td>
-                        </tr>
-                    );
+                            <tr className="grid-block shrink family-list-item" key={index}>
+                                <td className="grid-block family-list-item-element">
+                                    <PlComponentCardPatientStatus status={status} gender={gender} />
+                                </td>
+                                <td className="grid-block vertical family-list-item-element">
+                                    <h6>{name}</h6>
+                                    <div className="grid-block shrink text">{id}</div>
+                                </td>
+                                <td className="grid-block vertical family-list-item-element centered">
+                                    {this.render_age(dob)}
+                                    <div className="grid-block shrink text">age</div>
+                                </td>
+                            </tr>
+                        );
 
-                })}
+                    })}
+                </tbody>
             </table>
         );
-
 
     }
 

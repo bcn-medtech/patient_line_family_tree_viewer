@@ -88,8 +88,8 @@ export class PlComponentMenuTags extends Component {
         var data = this.props.data;
 
         var divStyle = {
-            overflow:'scroll'
-          };
+            overflowX:'auto'
+        };
 
         return (
             <div className="grid-block shrink pl-component-menu-tags" style={divStyle}>
