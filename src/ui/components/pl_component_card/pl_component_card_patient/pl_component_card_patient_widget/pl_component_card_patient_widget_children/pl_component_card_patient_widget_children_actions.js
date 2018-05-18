@@ -12,11 +12,8 @@ export function create_child_existing_family(patient, id_father, id_mother) {
     new_child.family_id = patient.family_id;
     new_child.father = id_father;
     new_child.mother = id_mother;
-
-    if (patient.children !== undefined) patient.children.push(new_child.id);
-    else patient.children = [new_child.id];
-
-    return { "to_insert": [new_child], "to_update": [patient] };
+    
+    return { "id_father": id_father, "id_mother": id_mother, "new_child": new_child };
     
 }
 
@@ -57,10 +54,8 @@ export function create_new_family(patient) {
 
     }
 
-    if (patient.children !== undefined) patient.children.push(new_child.id);
-    else patient.children = [new_child.id];
+    return { "id_known_parent": patient.id, "new_child": new_child, "new_parent": new_parent };
 
-    return { "to_insert": [new_child, new_parent], "to_update": [patient] }
 
 }
 

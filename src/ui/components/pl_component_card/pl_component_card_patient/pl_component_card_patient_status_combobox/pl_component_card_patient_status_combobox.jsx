@@ -85,7 +85,7 @@ export class PlComponentCardPatientStatusCombobox extends Component {
             {
                 "status": "muerte-por-otras-causas",
                 "gender": "male",
-                "svg": <svg width="45" height="45"><rect id="svg_2" height="30" width="30" y="7.5" x="7.5" fillOpacity="null" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#fff" /><line stroke="#000" strokeWidth="2" strokeLinecap="null" strokeLinejoin="null" id="svg_13" y2="7.5" x2="43" y1="44.5" x1="5" fillOpacity="null" strokeOpacity="null" fill="none" /></svg>
+                "svg": <svg width="45" height="45"><rect id="svg_2" height="30" width="30" y="7.5" x="7.5" fillOpacity="null" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#fff" /><line stroke="#000" strokeWidth="2" strokeLinecap="null" strokeLinejoin="null" id="svg_13" x1="0" x2="45" y1="45" y2="0" fillOpacity="null" strokeOpacity="null" fill="none" /></svg>
             },
             {
                 "status": "muerte-por-otras-causas",
@@ -95,7 +95,7 @@ export class PlComponentCardPatientStatusCombobox extends Component {
             {
                 "status": "muerte-subita",
                 "gender": "male",
-                "svg": <svg width="45" height="45"><rect id="svg_5" height="30" width="30" y="7.5" x="7.5" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#000000" /><line strokeWidth="2" strokeLinecap="null" strokeLinejoin="null" id="svg_17" y2="4.624963" x2="41" y1="41.624963" x1="3" fillOpacity="null" strokeOpacity="null" stroke="#000" fill="none" /></svg>
+                "svg": <svg width="45" height="45"><rect id="svg_5" height="30" width="30" y="7.5" x="7.5" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#000000" /><line strokeWidth="2" strokeLinecap="null" strokeLinejoin="null" id="svg_17" x1="0" x2="45" y1="45" y2="0" fillOpacity="null" strokeOpacity="null" stroke="#000" fill="none" /></svg>
             },
             {
                 "status": "muerte-subita",

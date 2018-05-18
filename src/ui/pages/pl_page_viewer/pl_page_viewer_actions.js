@@ -225,8 +225,7 @@ export function get_data(family_id, patient_id, callback) {
 }
 
 export function perform_database_action(data, callback) {
-
-    console.log(data);
+    
     if (!isObjectEmpty(data)) {
 
         if ("action" in data) {
@@ -289,7 +288,7 @@ export function perform_database_action(data, callback) {
                                 if ("to_update" in data.data) {
 
                                     var patients_to_update = data.data.to_update;
-                                    patients_update(patients_to_update, function(result) {
+                                    patients_update(patients_to_update, function (result) {
 
                                         if (result) {
 
@@ -317,38 +316,61 @@ export function perform_database_action(data, callback) {
                 }
 
             } else if (data.action === "add_child_existing_family") {
-                console.log(data.action);
+                
                 if ("data" in data) {
 
-                    if ("to_update" in data.data) {
-                        var patients_to_update = data.data.to_update;
-                        console.log(patients_to_update);
-                        patients_update(patients_to_update, function (result) {
+                    if ("id_father" && "id_mother" && "new_child" in data.data) {
 
-                            if (result) {
+                        var id_father = data.data.id_father;
+                        var id_mother = data.data.id_mother;
+                        var new_child = data.data.new_child;
 
-                                if ("to_insert" in data.data) {
-                                    var patients_to_insert = data.data.to_insert;
-                                    console.log(patients_to_insert);
-                                    patients_insert(patients_to_insert, function (result) {
+                        // we update the children info of the parents
+                        patient_get(id_father, function (father_array) {
 
-                                        if (result) {
+                            if (!isObjectEmpty(father_array)) {
 
-                                            callback(true);
+                                var father = father_array[0];
 
-                                        } else {
+                                if (father.children !== undefined) father.children.push(new_child.id);
+                                else father.children = [new_child.id];
 
-                                            console.log("error inserting new patients");
-                                        }
-                                    });
-                                }
+                                patient_get(id_mother, function (mother_array) {
 
-                            } else {
+                                    if (!isObjectEmpty(mother_array)) {
 
-                                console.log("error updating patients");
-                            }
+                                        var mother = mother_array[0];
 
-                        });
+                                        if (mother.children !== undefined) mother.children.push(new_child.id);
+                                        else mother.children = [new_child.id];
+
+                                        // we update the parents in the database
+                                        patients_update([father, mother], function (result) {
+
+                                            if (result) {
+
+                                                // and we insert the new child in the database
+                                                patient_insert(new_child, function (result) {
+
+                                                    if (result) {
+
+                                                        callback(true);
+
+                                                    } else console.log("error inserting the new child");
+
+                                                })
+
+                                            } else console.log("error updating the parents");
+
+                                        });
+
+                                    } else console.log("error retrieving the information of the mother");
+
+                                });
+
+                            } else console.log("error retrieving the information of the father");
+                        })
+
                     }
 
                 }
@@ -356,46 +378,58 @@ export function perform_database_action(data, callback) {
             } else if (data.action === "add_child_new_family") {
 
                 if ("data" in data) {
-                    if ("to_update" in data.data) {
-                        var patients_to_update = data.data.to_update;
+                    
+                    if ("id_known_parent" && "new_child" && "new_parent" in data.data) {
 
-                        patients_update(patients_to_update, function (result) {
+                        var id_known_parent = data.data.id_known_parent;
+                        var new_child = data.data.new_child;
+                        var new_parent = data.data.new_parent;
 
-                            if (result) {
+                        // we update the children info of the known parent
+                        patient_get(id_known_parent, function (parent_array) {
 
-                                if ("to_insert" in data.data) {
-                                    var patients_to_insert = data.data.to_insert;
+                            if (!isObjectEmpty(parent_array)) {
 
-                                    patients_insert(patients_to_insert, function (result) {
+                                var parent = parent_array[0];
 
-                                        if (result) {
+                                if (parent.children !== undefined) parent.children.push(new_child.id);
+                                else parent.children = [new_child.id];
 
-                                            callback(true);
+                                // we update this parent in the database
+                                patient_update(parent, function (result) {
 
-                                        } else {
+                                    if (result) {
 
-                                            console.log("error inserting new patients");
-                                        }
-                                    });
-                                }
+                                        // and we insert the new child and the new parent in the database
+                                        patients_insert([new_parent, new_child], function (result) {
 
-                            } else {
+                                            if (result) {
 
-                                console.log("error updating patients");
-                            }
+                                                callback(true);
+
+                                            } else console.log("error inserting the new child and the new parent");
+
+                                        })
+
+                                    } else console.log("error updating the parent");
+
+                                });
+
+                            } else console.log("error retrieving the information of the parent");
 
                         });
                     }
-                }
 
+                }
             }
 
         }
+
     }
 }
 
 function patients_update(patients, callback) {
-
+    
     var updated_patients_counter = 0;
 
     for (var i = 0; i < patients.length; i++) {

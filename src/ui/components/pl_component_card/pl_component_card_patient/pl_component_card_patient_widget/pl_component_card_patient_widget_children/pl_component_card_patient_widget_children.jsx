@@ -78,7 +78,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
         if (!isObjectEmpty(children)) {
 
             var families = process_children_by_parents(children); // family: (partner 1 + partner 2) with common children 
-
+            
             return (
                 <div className="grid-block vertical">
                     {this.render_families(families, mode_edit)}
