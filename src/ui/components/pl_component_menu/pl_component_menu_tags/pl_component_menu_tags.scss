@@ -26,5 +26,46 @@
         background-color: $color-normal-3;
         color: white;
     }
+
+    .settings-icon{
+        fill:$color-normal;
+        &:hover{
+            fill:$color-normal-2;
+        }
+    }
+
+    .right-bar{
+        //bottom:55px;
+        //right:0px;
+        vertical-align: top;
+        padding: 5px;
+        //align-items:center;
+        //z-index: 10;
+        overflow:hidden;
+        //background-color: $rkt_viewer_patient_line_viewer_bg_color;
+        /*padding: 10px;*/
+        padding-right:10px; 
+        padding-left: 10px;
+        overflow: hidden;
+    }
+
+    .item{
+        color:$color-normal;
+        padding-right:5px; 
+        overflow: hidden;
+    }
+
+    .grid{
+        
+        //display: grid;
+        //grid-template-columns: auto auto auto auto;
+        //grid-gap: 5px;
+    }
+
+    .grid-item{
+        display: block;
+        float: left;
+        padding-bottom: 8px;
+    }
     
 }
