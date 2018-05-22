@@ -24,13 +24,16 @@
 
 //database_methods
 import {
-    patient_update,
+    family_get,
+    families_get_list,
+    family_insert,
+    family_update,
+    family_remove,
+    patient_get,
+    patients_get_list,
     patient_insert,
     patient_remove,
-    patients_get_list,
-    families_get_list,
-    patient_get,
-    family_get
+    patient_update
 } from './../../../database/database';
 
 import { label_patient_relatives } from './pl_page_viewer_action_data_analysis_patient_relations';
@@ -47,7 +50,7 @@ import {
 } from './pl_page_viewer_actions_d3_tree_parser';
 
 import {
-    get_patients_processed
+    get_patients_processed, get_family_processed
 } from './pl_page_viewer_actions_data_analysis';
 
 import { findWhere, omit } from 'underscore';
@@ -117,15 +120,16 @@ export function get_data(family_id, patient_id, callback) {
 
 
                 var patients = get_patients_processed(result.patients);
-
+                
                 get_family(family_id, function (family) {
-
+                    
                     if (isObjectAnArray(family)) {
 
                         if (family.length > 0) {
 
                             var data = {};
-                            data["family"] = family[0];
+                            //data["family"] = family[0];
+                            data["family"] = get_family_processed(patients, family[0]);
 
 
                             if (!isObjectEmpty(patient_id)) {
@@ -184,7 +188,7 @@ export function get_data(family_id, patient_id, callback) {
 
                                         }
                                     }
-
+                                    
                                     var array_patients_family = get_all_patients_from_family(family_id, result.patients);
                                     label_patient_relatives(patient, array_patients_family);
                                     //create_virtual_patient(data);
@@ -234,23 +238,48 @@ export function perform_database_action(data, callback) {
 
                 if ("data" in data) {
 
-                    var patient = data.data;
+                    //var patient = data.data;
 
-                    if (!patient.id_old) {
+                    // if (!patient.id_old) {
 
-                        patient_update(patient, function (result) {
+                    //     patient_update(patient, function (result) {
 
-                            if (result) {
+                    //         if (result) {
 
-                                callback(true);
-                            }
+                    //             callback(true);
+                    //         }
 
-                        });
+                    //     });
 
-                    } else {
+                    // } else {
 
-                        var id_patient_to_remove = patient.id_old;
-                        var patient_to_insert = omit(patient, "id_old");
+                    //     var id_patient_to_remove = patient.id_old;
+                    //     var patient_to_insert = omit(patient, "id_old");
+
+                    //     patient_remove(id_patient_to_remove, function (result) {
+
+                    //         if (result) {
+
+                    //             patient_insert(patient_to_insert, function (result) {
+
+                    //                 if (result) {
+
+                    //                     callback(true);
+
+                    //                 }
+
+                    //             })
+
+                    //         }
+                    //     });
+
+                    // }
+
+                    if ("id_patient_to_remove" && "patient_to_update" && "relatives_to_update" in data.data) {
+
+                        var id_patient_to_remove = data.data.id_patient_to_remove;
+                        var patient_to_insert = data.data.patient_to_update;
+                        var relatives_to_update = data.data.relatives_to_update;
 
                         patient_remove(id_patient_to_remove, function (result) {
 
@@ -260,13 +289,35 @@ export function perform_database_action(data, callback) {
 
                                     if (result) {
 
-                                        callback(true);
+                                        patients_update(relatives_to_update, function(result) {
+
+                                            if (result) {
+
+                                                callback(true);
+
+                                            }
+
+                                        });
+                                        
 
                                     }
 
                                 })
 
                             }
+                        });
+
+                    } else {
+
+                        var patient = data.data;
+
+                        patient_update(patient, function (result) {
+
+                            if (result) {
+                                
+                                callback(true);
+                            }
+
                         });
 
                     }
@@ -422,6 +473,50 @@ export function perform_database_action(data, callback) {
                     }
 
                 }
+
+            } else if (data.action === "edit_family") {
+
+                if ("data" in data) {
+
+                    var family = data.data;
+                    
+                    if (!family.id_old) {
+
+                        family_update(family, function (result) {
+
+                            if (result) {
+
+                                callback(true);
+                            }
+
+                        });
+
+                    } else {
+
+                        var id_family_to_remove = family.id_old;
+                        var family_to_insert = omit(family, "id_old");
+                        
+                        family_remove(id_family_to_remove, function (result) {
+
+                            if (result) {
+
+                                family_insert(family_to_insert, function (result) {
+
+                                    if (result) {
+                                        
+                                        callback(true);
+
+                                    }
+
+                                })
+
+                            }
+                        });
+
+                    }
+
+                }
+
             }
 
         }

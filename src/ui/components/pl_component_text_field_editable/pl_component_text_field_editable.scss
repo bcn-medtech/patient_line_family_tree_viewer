@@ -16,6 +16,7 @@
             input[type=text]{
                 margin-bottom:0px; 
                 padding:0px;
+                padding-bottom:2px;
 
                 border:0px;
                 width:100%;
@@ -35,8 +36,8 @@
         }
     }
 
-    // .pl_component_text_plain{
-        
-    // }
+    .pl_component_text_plain{
+        padding-bottom:2px;
+    }
 
 }

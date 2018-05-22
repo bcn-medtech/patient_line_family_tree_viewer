@@ -24,6 +24,36 @@
 
 import {isObjectEmpty} from './../../../modules/rkt_module_object';
 
+function get_number_of_family_members(family,patients){
+    
+    var num_family_members = 0;
+
+    if("id" in family){
+
+        if(!isObjectEmpty(family.id)){
+            
+            for(var i=0;i<patients.length;i++){
+
+                var patient_to_compare = patients[i];
+
+                if("family_id" in patient_to_compare){
+
+                    if(!isObjectEmpty(patient_to_compare.family_id)){
+
+                        if(family.id === patient_to_compare.family_id){
+
+                            num_family_members++;
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return num_family_members;
+
+}
 
 function get_number_of_relatives(patient,patients){
 
@@ -64,4 +94,11 @@ export function get_patients_processed(patients){
     }
 
     return patients;
+}
+
+export function get_family_processed(patients, family){
+    
+    family["num_family_members"] = get_number_of_family_members(family,patients);
+
+    return family;
 }

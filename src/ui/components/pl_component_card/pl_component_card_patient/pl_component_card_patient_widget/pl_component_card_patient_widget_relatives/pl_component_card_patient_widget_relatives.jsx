@@ -29,16 +29,22 @@ import { PlComponentCardPatientStatus } from './../../pl_component_card_patient_
 //actions
 import { sort_relatives_by_dob, calculate_age } from './pl_component_card_patient_widget_relatives_actions';
 
+import { filter } from "underscore";
+
 export class PlComponentCardPatientWidgetRelatives extends Component {
 
     render_card_patient_widget_relatives(relatives, mode_edit) {
 
         if (!isObjectEmpty(relatives)) {
 
+            var relatives_to_display = filter(relatives, function(relative) {
+                return relative.relation !== "current patient";
+            });
+
             return (
                 <table className="grid-block vertical">
                     <tbody>
-                        {this.render_list_of_relatives(relatives)}
+                        {this.render_list_of_relatives(relatives_to_display)}
                     </tbody>
                 </table>
             );

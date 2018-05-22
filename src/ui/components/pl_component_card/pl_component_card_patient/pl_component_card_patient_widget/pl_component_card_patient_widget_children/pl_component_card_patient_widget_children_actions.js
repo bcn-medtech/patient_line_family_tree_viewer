@@ -86,7 +86,7 @@ function initialize_patient() {
     patient.family_id = "";
     patient.center = "";
     patient.nhc = "";
-    patient.dob = "";
+    patient.dob = " ";
     patient.mutations = "";
     patient.symptoms = "";
     patient.status = "nuevo-miembro-familia";

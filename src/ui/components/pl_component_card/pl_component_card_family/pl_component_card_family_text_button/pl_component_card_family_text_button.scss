@@ -1,0 +1,25 @@
+.pl-component-card-family-text-button{
+
+    padding:5px;
+    color:white;
+    overflow:hidden;
+
+    .text{
+        overflow:hidden;
+    }
+
+    &:hover{
+
+        background-color: $color_shadow-2;
+        border-radius: 5px;
+
+        .text{
+            color:$color-normal;
+        }
+    }
+    
+}
+
+.pl-component-card-family-text-button.selected{
+    background-color: $color_shadow-2;
+}

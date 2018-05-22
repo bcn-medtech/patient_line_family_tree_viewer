@@ -56,16 +56,16 @@ export class PlComponentCardPatientWidgetChildren extends Component {
                 var id_mother = data.id_mother;
                 result = create_child_existing_family(patient, id_father, id_mother);
 
-                new_data = { "action": "add_child_existing_family", "data": result }
-                this.props.perform_database_action(new_data, patient.id);
+                new_data = { "action": "add_child_existing_family", "data": result };
+                this.props.perform_database_action(new_data);
 
             } else if (action === "add_child_new_family") {
 
                 patient = data;
                 result = create_new_family(patient);
 
-                new_data = { "action": "add_child_new_family", "data": result }
-                this.props.perform_database_action(new_data, patient.id);
+                new_data = { "action": "add_child_new_family", "data": result };
+                this.props.perform_database_action(new_data);
 
             }
 

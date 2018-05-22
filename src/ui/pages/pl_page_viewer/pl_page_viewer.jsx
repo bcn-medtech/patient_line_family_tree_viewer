@@ -59,12 +59,11 @@ export default class PlPageViewer extends Component {
   }
 
   update_component_state_from_database(family_id, patient_id) {
-    
+
     var myComponent = this;
 
     get_data(family_id, patient_id, function (result) {
-      console.log("***** result of get_data() *****");
-      console.log(result);
+      
       if ("patient" in result) {
 
         myComponent.setState({
@@ -113,23 +112,26 @@ export default class PlPageViewer extends Component {
 
   }
 
-  perform_database_action(data, patient_id) {
+  perform_database_action(data) {
 
     var myComponent = this;
-    
+
     perform_database_action(data, function (result) {
 
       var location = window.location;
 
       if ("href" in location) {
         var location_url = location.href;
+        var patient_id = url_getParameterByName("patient_id", location_url);
         var family_id = url_getParameterByName("family_id", location_url);
-        
-        if (patient_id === undefined) patient_id = url_getParameterByName("patient_id", location_url);
-        
+
+        if ("updated_patient_id" in data) patient_id = data.updated_patient_id;
+        else if ("updated_family_id" in data) family_id = data.updated_family_id;
+
+        console.log(patient_id);
+        console.log(family_id);
         myComponent.update_component_state_from_database(family_id, patient_id);
       }
-
     });
 
   }
