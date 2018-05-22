@@ -110,7 +110,7 @@ export class PlComponentSidebarFamily extends Component {
             
             var data = { "action": "edit_family",
                 "data": new_data,
-                "updated_family_id": updated_family.id
+                "family_id": updated_family.id
             };
             
             this.props.perform_database_action(data);
@@ -137,8 +137,7 @@ export class PlComponentSidebarFamily extends Component {
                 var data = { 
                     "action": "remove_family",
                     "data": family.id,
-                    "updated_family_id": undefined,
-                    "updated_patient_id": undefined
+                    "family_id": undefined
                 };
 
                 this.refs.ModalRemoveFamily.closeModal();

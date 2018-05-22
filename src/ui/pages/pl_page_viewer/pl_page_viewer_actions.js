@@ -195,7 +195,6 @@ export function get_data(family_id, patient_id, callback) {
                                     data["root"] = treeBuilder(array_patients_family);
                                     data["relatives"] = array_patients_family;
 
-                                    //console.log(data["root"]);
                                     data["siblings"] = siblingsBuilder(array_patients_family);
 
                                     callback(data);
@@ -237,7 +236,7 @@ export function perform_database_action(data, callback) {
             if (data.action === "edit_patient") {
 
                 if ("data" in data) {
-
+                    
                     if ("id_patient_to_remove" && "patient_to_update" && "relatives_to_update" in data.data) {
 
                         // case in which the patient's id has been edited
@@ -291,12 +290,11 @@ export function perform_database_action(data, callback) {
             } else if (data.action === "remove_patient") {
 
                 if ("data" in data) {
-
+                    
                     if ("to_remove" in data.data) {
 
-                        var id_patient_to_remove = data.data.to_remove;
-
-                        patient_remove(id_patient_to_remove, function (result) {
+                        var ids_patients_to_remove = data.data.to_remove;
+                        patients_remove(ids_patients_to_remove, function (result) {
 
                             if (result) {
 
@@ -544,7 +542,7 @@ export function perform_database_action(data, callback) {
                         if (patients) {
 
                             var family_members = get_all_patients_from_family(id_family_to_remove, patients);
-
+                            
                             if (!isObjectEmpty(family_members)) {
 
                                 // first, the patients of this family are removed

@@ -133,7 +133,7 @@ export class PlComponentSidebarPatient extends Component {
             var mother = this.props.mother;
 
             var new_data = update_patient_from_text_field_editable(edited_name, edited_id, patient.id, updated_patient, couple_patient, children, father, mother);
-
+            
             // the changes in "table" and "text_field_editable" are saved
             if ("patient_to_update" in new_data) updated_patient = new_data.patient_to_update;
             else updated_patient = new_data;
@@ -141,7 +141,8 @@ export class PlComponentSidebarPatient extends Component {
             var data = {
                 "action": "edit_patient",
                 "data": new_data,
-                "updated_patient_id": updated_patient.id
+                "patient_id": updated_patient.id,
+                "family_id": updated_patient.family_id
             };
             this.props.perform_database_action(data);
 
@@ -162,18 +163,32 @@ export class PlComponentSidebarPatient extends Component {
         if (answer === "Yes") {
 
             if (isObjectAFunction(this.props.perform_database_action)) {
-
+                
+                var to_remove = [];
+                
                 var patient = this.props.patient;
+                to_remove.push(patient.id);
+
                 var father = this.props.father;
                 var mother = this.props.mother;
-
+                
                 // we remove this patient from the "children" array of their parents
-                without(father.children, patient.id);
-                without(mother.children, patient.id);
+                var father_children = without(father.children, patient.id);
+                var mother_children = without(mother.children, patient.id);
+                father.children = father_children;
+                mother.children = mother_children;
 
+                // in case this patient has a couple, this couple has to be removed to
+                if (!isObjectEmpty(patient.married_with)) to_remove.push(patient.married_with);
+                
                 var data = { 
                     "action": "remove_patient",
-                    "data": { "to_remove": patient.id, "to_update": [father, mother] } 
+                    "data": { 
+                        "to_remove": to_remove, 
+                        "to_update": [ father, mother ] 
+                    },
+                    "patient_id": undefined,
+                    "family_id": patient.family_id 
                 };
                 
                 this.refs.ModalRemovePatient.closeModal();

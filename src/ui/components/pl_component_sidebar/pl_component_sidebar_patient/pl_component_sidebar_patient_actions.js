@@ -65,30 +65,33 @@ export function update_patient_from_text_field_editable(edited_name, edited_id, 
 
         // if we change the patient's id, we have to take into account their parents, children and couple info:
         var relatives_to_update = [];
-
+        
         // parents
         if (!isObjectEmpty(father)) {
 
-            map(father.children, function(child_id){
+            var father_children = map(father.children, function(child_id){
                
                 if (child_id === original_id) return edited_id;
                 else return child_id;
                 
             });
 
+            
+            father.children = father_children;
             relatives_to_update.push(father);
 
         }
 
         if (!isObjectEmpty(mother)) {
 
-            map(mother.children, function(child_id){
+            var mother_children = map(mother.children, function(child_id){
                
                 if (child_id === original_id) return edited_id;
                 else return child_id;
                 
             });
             
+            mother.children = mother_children;
             relatives_to_update.push(mother);
 
         }
@@ -111,7 +114,6 @@ export function update_patient_from_text_field_editable(edited_name, edited_id, 
             relatives_to_update.push(couple);
 
         }
-
 
         var new_data = { "id_patient_to_remove": original_id, "patient_to_update": patient, "relatives_to_update": relatives_to_update };
 

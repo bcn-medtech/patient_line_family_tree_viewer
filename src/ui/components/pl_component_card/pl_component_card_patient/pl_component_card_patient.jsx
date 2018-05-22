@@ -55,7 +55,7 @@ export class PlComponentCardPatient extends Component {
         if (isObjectAFunction(this.props.on_ask_to_remove_patient)) {
             
             var patient = this.props.patient;
-
+            
             if (isObjectEmpty(patient.children)) {
 
                 this.props.on_ask_to_remove_patient();
@@ -92,7 +92,12 @@ export class PlComponentCardPatient extends Component {
             
             updated_patient[key_to_update] = updated_value;
 
-            var data = { "action": "edit_patient", "data": updated_patient };
+            var data = {
+                "action": "edit_patient",
+                "data": updated_patient,
+                "patient_id": updated_patient.id,
+                "family_id": updated_patient.family_id
+            };
             this.props.perform_database_action(data);
 
 

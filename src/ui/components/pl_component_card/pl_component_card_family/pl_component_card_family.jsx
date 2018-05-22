@@ -69,26 +69,30 @@ export class PlComponentCardFamily extends Component {
         }
     }
 
-    perform_database_action(data_to_update) {
+    // perform_database_action(data_to_update) { // TODO
         
-        if (isObjectAFunction(this.props.perform_database_action)) {
+    //     if (isObjectAFunction(this.props.perform_database_action)) {
 
-            var key_to_update = data_to_update.key;
-            var updated_value = data_to_update.value;
+    //         var key_to_update = data_to_update.key;
+    //         var updated_value = data_to_update.value;
 
-            var patient = this.props.patient;
-            var updated_patient = mapObject(patient, function(value, key){
-                return value;
-            });
+    //         var patient = this.props.patient;
+    //         var updated_family = mapObject(patient, function(value, key){
+    //             return value;
+    //         });
             
-            updated_patient[key_to_update] = updated_value;
+    //         updated_family[key_to_update] = updated_value;
 
-            var data = { "action": "edit_patient", "data": updated_patient };
-            this.props.perform_database_action(data);
+    //         var data = {
+    //             "action": "edit_family",
+    //             "data": updated_family,
+    //             "family_id": updated_family.id
+    //         };
+    //          this.props.perform_database_action(data);
 
 
-        }
-    }
+    //     }
+    // }
 
     render_menu(family, mode_menu) {
 
