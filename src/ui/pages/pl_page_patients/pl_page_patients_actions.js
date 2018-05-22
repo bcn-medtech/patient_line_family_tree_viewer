@@ -197,7 +197,7 @@ export function perform_database_action(data,browserHistory,callback){
             }else if(data.action === "explore_patient"){                
 
                 if(!isObjectEmpty(data.data)){
-                    //console.log(data.data);
+                    
                     var family_id = data.data.family_id;
                     var patient_id = data.data.id;
 

@@ -53,7 +53,7 @@ import {
     get_patients_processed, get_family_processed
 } from './pl_page_viewer_actions_data_analysis';
 
-import { findWhere, omit } from 'underscore';
+import { findWhere, map, omit } from 'underscore';
 
 
 export function get_data_from_database(callback) {
@@ -240,6 +240,7 @@ export function perform_database_action(data, callback) {
 
                     if ("id_patient_to_remove" && "patient_to_update" && "relatives_to_update" in data.data) {
 
+                        // case in which the patient's id has been edited
                         var id_patient_to_remove = data.data.id_patient_to_remove;
                         var patient_to_insert = data.data.patient_to_update;
                         var relatives_to_update = data.data.relatives_to_update;
@@ -441,39 +442,65 @@ export function perform_database_action(data, callback) {
 
                 if ("data" in data) {
 
-                    var family = data.data;
+                    if ("id_family_to_remove" && "family_to_update" in data.data) {
 
-                    if (!family.id_old) {
+                        // case in which the family's id has been edited
+                        var id_family_to_remove = data.data.id_family_to_remove;
+                        var family_to_insert = data.data.family_to_update;
+
+                        // the patients of this family have to be updated with the new id of the family:
+                        patients_get_list(function (patients) {
+
+                            if (patients) {
+
+                                var family_members = get_all_patients_from_family(id_family_to_remove, patients);
+                                map(family_members, function (family_member) {
+                                    family_member.family_id = family_to_insert.id;
+                                    return family_member;
+                                });
+
+                                patients_update(family_members, function (result) {
+
+                                    if (result) {
+
+                                        // then, the family can be updated
+                                        family_remove(id_family_to_remove, function (result) {
+
+                                            if (result) {
+
+                                                family_insert(family_to_insert, function (result) {
+
+                                                    if (result) {
+
+                                                        callback(true);
+
+                                                    } else console.log("error updating the family");
+
+                                                })
+
+                                            } else console.log("error remove the family");
+
+                                        });
+
+                                    } else console.log("error obtaining the family members");
+                                });
+
+                            } else console.log("error updating the family members");
+
+                        });
+
+                    } else {
+
+                        var family = data.data;
 
                         family_update(family, function (result) {
 
                             if (result) {
 
                                 callback(true);
-                            }
 
-                        });
+                            } else console.log("error updating the family");
 
-                    } else {
-
-                        var id_family_to_remove = family.id_old;
-                        var family_to_insert = omit(family, "id_old");
-
-                        family_remove(id_family_to_remove, function (result) {
-
-                            if (result) {
-
-                                family_insert(family_to_insert, function (result) {
-
-                                    if (result) {
-
-                                        callback(true);
-
-                                    }
-
-                                })
-
-                            }
                         });
 
                     }

@@ -30,6 +30,8 @@ import { PlComponentButtonRect } from "./../../pl_component_button/pl_component_
 import { PlComponentCardFamily } from "./../../pl_component_card/pl_component_card_family/pl_component_card_family";
 import { PlComponentConfirmMessage } from "./../../pl_component_comfirm_message/pl_component_confirm_message";
 import { PlComponentModal } from "./../../pl_component_modal/pl_component_modal";
+//actions
+import { update_family_from_text_field_editable } from './pl_component_sidebar_family_actions';
 
 import { keys } from "underscore";
 
@@ -99,20 +101,15 @@ export class PlComponentSidebarFamily extends Component {
             // "text_field_editable"
             var edited_name = this.refs.family_card.refs.family_name.refs.FormItemInputText.state.input;
             var edited_id = this.refs.family_card.refs.family_id.refs.FormItemInputText.state.input;
-            updated_family.name = edited_name;
 
-            if (family.id === edited_id) {
+            var new_data = update_family_from_text_field_editable(edited_name, edited_id, family.id, updated_family);
 
-                updated_family.id = family.id;
-
-            } else if (family.id !== edited_id) {
-
-                updated_family.id = edited_id;
-                updated_family.id_old = family.id;
-
-            }
-
-            var data = { "action": "edit_family", "data": updated_family, "updated_family_id": updated_family.id };
+            // the changes in "table" and "text_field_editable" are saved
+            if ("family_to_update" in new_data) updated_family = new_data.family_to_update;
+            else updated_family = new_data;
+            
+            var data = { "action": "edit_family", "data": new_data, "updated_family_id": updated_family.id };
+            
             this.props.perform_database_action(data);
 
         }

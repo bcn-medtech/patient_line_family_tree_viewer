@@ -61,7 +61,6 @@ export function update_patient_from_text_field_editable(edited_name, edited_id, 
     } else if (original_id !== edited_id) {
 
         patient.id = edited_id;
-        //patient.id_old = original_id;
         new_data = { "patient_to_update": patient };
 
         // if we change the patient's id, we have to take into account their parents, children and couple info:
