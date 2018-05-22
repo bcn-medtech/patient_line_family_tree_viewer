@@ -108,7 +108,10 @@ export class PlComponentSidebarFamily extends Component {
             if ("family_to_update" in new_data) updated_family = new_data.family_to_update;
             else updated_family = new_data;
             
-            var data = { "action": "edit_family", "data": new_data, "updated_family_id": updated_family.id };
+            var data = { "action": "edit_family",
+                "data": new_data,
+                "updated_family_id": updated_family.id
+            };
             
             this.props.perform_database_action(data);
 
@@ -117,32 +120,29 @@ export class PlComponentSidebarFamily extends Component {
     }
 
     on_ask_to_remove_family() {
-
+        
         this.setState({
             to_remove_family: true
         });
 
     }
 
-    on_remove_family(answer) { // TODO
+    on_remove_family(answer) {
 
         if (answer === "Yes") {
 
             if (isObjectAFunction(this.props.perform_database_action)) {
 
                 var family = this.props.family;
+                var data = { 
+                    "action": "remove_family",
+                    "data": family.id,
+                    "updated_family_id": undefined,
+                    "updated_patient_id": undefined
+                };
 
-                // we remove this patient from the "children" array of their parents
-                // without(father.children, patient.id);
-                // without(mother.children, patient.id);
-
-                // var data = { 
-                //     "action": "remove_patient",
-                //     "data": { "to_remove": family.id, "to_update": [father, mother] } 
-                // }; // TODO
-                
                 this.refs.ModalRemoveFamily.closeModal();
-                //this.props.perform_database_action(data);
+                this.props.perform_database_action(data);
 
             }
 
@@ -227,7 +227,7 @@ export class PlComponentSidebarFamily extends Component {
                         mode_edit={mode_edit}
                         ref="family_card"
                         perform_database_action={this.props.perform_database_action}
-                        on_ask_to_remove_patient={this.on_ask_to_remove_family.bind(this)} />
+                        on_ask_to_remove_family={this.on_ask_to_remove_family.bind(this)} />
                 </div>
                 {this.render_edit_family_button(mode_edit)}
                 {this.render_modal()}

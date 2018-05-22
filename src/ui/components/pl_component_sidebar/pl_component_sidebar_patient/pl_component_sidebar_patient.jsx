@@ -138,7 +138,11 @@ export class PlComponentSidebarPatient extends Component {
             if ("patient_to_update" in new_data) updated_patient = new_data.patient_to_update;
             else updated_patient = new_data;
             
-            var data = { "action": "edit_patient", "data": new_data, "updated_patient_id": updated_patient.id};
+            var data = {
+                "action": "edit_patient",
+                "data": new_data,
+                "updated_patient_id": updated_patient.id
+            };
             this.props.perform_database_action(data);
 
         }

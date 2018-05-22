@@ -53,7 +53,7 @@ import {
     get_patients_processed, get_family_processed
 } from './pl_page_viewer_actions_data_analysis';
 
-import { findWhere, map, omit } from 'underscore';
+import { findWhere, map, omit, pluck } from 'underscore';
 
 
 export function get_data_from_database(callback) {
@@ -448,44 +448,70 @@ export function perform_database_action(data, callback) {
                         var id_family_to_remove = data.data.id_family_to_remove;
                         var family_to_insert = data.data.family_to_update;
 
-                        // the patients of this family have to be updated with the new id of the family:
                         patients_get_list(function (patients) {
 
                             if (patients) {
 
                                 var family_members = get_all_patients_from_family(id_family_to_remove, patients);
-                                map(family_members, function (family_member) {
-                                    family_member.family_id = family_to_insert.id;
-                                    return family_member;
-                                });
 
-                                patients_update(family_members, function (result) {
+                                if (!isObjectEmpty(family_members)) {
 
-                                    if (result) {
+                                    // the patients of this family have to be updated with the new id of the family:
+                                    map(family_members, function (family_member) {
+                                        family_member.family_id = family_to_insert.id;
+                                        return family_member;
+                                    });
 
-                                        // then, the family can be updated
-                                        family_remove(id_family_to_remove, function (result) {
+                                    patients_update(family_members, function (result) {
 
-                                            if (result) {
+                                        if (result) {
 
-                                                family_insert(family_to_insert, function (result) {
+                                            // then, the family can be updated
+                                            family_remove(id_family_to_remove, function (result) {
 
-                                                    if (result) {
+                                                if (result) {
 
-                                                        callback(true);
+                                                    family_insert(family_to_insert, function (result) {
 
-                                                    } else console.log("error updating the family");
+                                                        if (result) {
 
-                                                })
+                                                            callback(true);
 
-                                            } else console.log("error remove the family");
+                                                        } else console.log("error updating the family");
 
-                                        });
+                                                    })
 
-                                    } else console.log("error obtaining the family members");
-                                });
+                                                } else console.log("error remove the family");
 
-                            } else console.log("error updating the family members");
+                                            });
+
+                                        } else console.log("error obtaining the family members");
+                                    });
+
+                                } else {
+
+                                    // if the family has not patients, the family is directly updated
+                                    family_remove(id_family_to_remove, function (result) {
+
+                                        if (result) {
+
+                                            family_insert(family_to_insert, function (result) {
+
+                                                if (result) {
+
+                                                    callback(true);
+
+                                                } else console.log("error updating the family");
+
+                                            });
+
+                                        } else console.log("error removing the family");
+
+                                    });
+
+                                }
+
+                            } else console.log("error obtaining the patients");
 
                         });
 
@@ -507,11 +533,66 @@ export function perform_database_action(data, callback) {
 
                 }
 
+            } else if (data.action === "remove_family") {
+
+                if ("data" in data) {
+
+                    var id_family_to_remove = data.data;
+
+                    patients_get_list(function (patients) {
+
+                        if (patients) {
+
+                            var family_members = get_all_patients_from_family(id_family_to_remove, patients);
+
+                            if (!isObjectEmpty(family_members)) {
+
+                                // first, the patients of this family are removed
+                                var ids_family_members = pluck(family_members, "id");
+
+                                patients_remove(ids_family_members, function (result) {
+
+                                    if (result) {
+
+                                        // then, the family is removed
+                                        family_remove(id_family_to_remove, function (result) {
+
+                                            if (result) {
+
+                                                callback(true);
+
+                                            } else console.log("error removing the family");
+
+                                        });
+
+                                    } else console.log("error removing the family members");
+
+                                });
+
+                            } else {
+
+                                // if the family has not patients, the family is directly removed
+                                family_remove(id_family_to_remove, function (result) {
+
+                                    if (result) {
+
+                                        callback(true);
+
+                                    } else console.log("error removing the family");
+
+                                });
+
+                            }
+
+                        } else console.log("error obtaining the patients");
+
+                    });
+                }
+
             }
-
         }
-
     }
+
 }
 
 function patients_update(patients, callback) {
@@ -556,6 +637,33 @@ function patients_insert(patients, callback) {
                 inserted_patients_counter++;
 
                 if (inserted_patients_counter === patients.length) {
+
+                    callback(true);
+
+                }
+
+            }
+
+        });
+    }
+
+}
+
+function patients_remove(patients, callback) {
+
+    var removed_patients_counter = 0;
+
+    for (var i = 0; i < patients.length; i++) {
+
+        var patient = patients[i];
+
+        patient_remove(patient, function (result) {
+
+            if (result) {
+
+                removed_patients_counter++;
+
+                if (removed_patients_counter === patients.length) {
 
                     callback(true);
 

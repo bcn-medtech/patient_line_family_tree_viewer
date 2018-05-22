@@ -47,13 +47,11 @@ export class PlComponentCardFamily extends Component {
         }
     }
 
-    on_remove_family() { // TODO
+    on_remove_family() {
         
         if (isObjectAFunction(this.props.on_ask_to_remove_family)) {
             
-            //var family = this.props.family;
-            //this.props.on_ask_to_remove_family();
-
+            this.props.on_ask_to_remove_family();
 
         }
 
