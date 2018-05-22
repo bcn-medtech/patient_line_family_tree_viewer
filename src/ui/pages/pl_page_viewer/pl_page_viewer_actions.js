@@ -120,9 +120,9 @@ export function get_data(family_id, patient_id, callback) {
 
 
                 var patients = get_patients_processed(result.patients);
-                
+
                 get_family(family_id, function (family) {
-                    
+
                     if (isObjectAnArray(family)) {
 
                         if (family.length > 0) {
@@ -188,7 +188,7 @@ export function get_data(family_id, patient_id, callback) {
 
                                         }
                                     }
-                                    
+
                                     var array_patients_family = get_all_patients_from_family(family_id, result.patients);
                                     label_patient_relatives(patient, array_patients_family);
                                     //create_virtual_patient(data);
@@ -229,7 +229,7 @@ export function get_data(family_id, patient_id, callback) {
 }
 
 export function perform_database_action(data, callback) {
-    
+
     if (!isObjectEmpty(data)) {
 
         if ("action" in data) {
@@ -237,43 +237,6 @@ export function perform_database_action(data, callback) {
             if (data.action === "edit_patient") {
 
                 if ("data" in data) {
-
-                    //var patient = data.data;
-
-                    // if (!patient.id_old) {
-
-                    //     patient_update(patient, function (result) {
-
-                    //         if (result) {
-
-                    //             callback(true);
-                    //         }
-
-                    //     });
-
-                    // } else {
-
-                    //     var id_patient_to_remove = patient.id_old;
-                    //     var patient_to_insert = omit(patient, "id_old");
-
-                    //     patient_remove(id_patient_to_remove, function (result) {
-
-                    //         if (result) {
-
-                    //             patient_insert(patient_to_insert, function (result) {
-
-                    //                 if (result) {
-
-                    //                     callback(true);
-
-                    //                 }
-
-                    //             })
-
-                    //         }
-                    //     });
-
-                    // }
 
                     if ("id_patient_to_remove" && "patient_to_update" && "relatives_to_update" in data.data) {
 
@@ -289,7 +252,7 @@ export function perform_database_action(data, callback) {
 
                                     if (result) {
 
-                                        patients_update(relatives_to_update, function(result) {
+                                        patients_update(relatives_to_update, function (result) {
 
                                             if (result) {
 
@@ -298,7 +261,7 @@ export function perform_database_action(data, callback) {
                                             }
 
                                         });
-                                        
+
 
                                     }
 
@@ -314,7 +277,7 @@ export function perform_database_action(data, callback) {
                         patient_update(patient, function (result) {
 
                             if (result) {
-                                
+
                                 callback(true);
                             }
 
@@ -367,7 +330,7 @@ export function perform_database_action(data, callback) {
                 }
 
             } else if (data.action === "add_child_existing_family") {
-                
+
                 if ("data" in data) {
 
                     if ("id_father" && "id_mother" && "new_child" in data.data) {
@@ -429,7 +392,7 @@ export function perform_database_action(data, callback) {
             } else if (data.action === "add_child_new_family") {
 
                 if ("data" in data) {
-                    
+
                     if ("id_known_parent" && "new_child" && "new_parent" in data.data) {
 
                         var id_known_parent = data.data.id_known_parent;
@@ -479,7 +442,7 @@ export function perform_database_action(data, callback) {
                 if ("data" in data) {
 
                     var family = data.data;
-                    
+
                     if (!family.id_old) {
 
                         family_update(family, function (result) {
@@ -495,7 +458,7 @@ export function perform_database_action(data, callback) {
 
                         var id_family_to_remove = family.id_old;
                         var family_to_insert = omit(family, "id_old");
-                        
+
                         family_remove(id_family_to_remove, function (result) {
 
                             if (result) {
@@ -503,7 +466,7 @@ export function perform_database_action(data, callback) {
                                 family_insert(family_to_insert, function (result) {
 
                                     if (result) {
-                                        
+
                                         callback(true);
 
                                     }
@@ -525,7 +488,7 @@ export function perform_database_action(data, callback) {
 }
 
 function patients_update(patients, callback) {
-    
+
     var updated_patients_counter = 0;
 
     for (var i = 0; i < patients.length; i++) {

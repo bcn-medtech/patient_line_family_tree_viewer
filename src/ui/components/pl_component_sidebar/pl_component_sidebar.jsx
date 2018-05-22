@@ -51,8 +51,7 @@ export class PlComponentSidebar extends Component {
                 />
 
         } else if (mode === "family") {
-
-            //sidebar = this.render_menu_family(family);
+            
             sidebar =
                 <PlComponentSidebarFamily
                     family={family}
