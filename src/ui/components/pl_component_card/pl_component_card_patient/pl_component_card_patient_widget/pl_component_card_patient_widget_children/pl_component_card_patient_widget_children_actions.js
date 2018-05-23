@@ -1,5 +1,5 @@
 import { isObjectAnArray } from './../../../../../../modules/rkt_module_object';
-import { findIndex, findWhere, map, sortBy } from 'underscore';
+import { findIndex, findWhere, sortBy } from 'underscore';
 
 
 export function create_child_existing_family(patient, id_father, id_mother) {
@@ -12,11 +12,8 @@ export function create_child_existing_family(patient, id_father, id_mother) {
     new_child.family_id = patient.family_id;
     new_child.father = id_father;
     new_child.mother = id_mother;
-
-    if (patient.children !== undefined) patient.children.push(new_child.id);
-    else patient.children = [new_child.id];
-
-    return { "to_insert": [new_child], "to_update": [patient] };
+    
+    return { "id_father": id_father, "id_mother": id_mother, "new_child": new_child };
     
 }
 
@@ -57,10 +54,8 @@ export function create_new_family(patient) {
 
     }
 
-    if (patient.children !== undefined) patient.children.push(new_child.id);
-    else patient.children = [new_child.id];
+    return { "id_known_parent": patient.id, "new_child": new_child, "new_parent": new_parent };
 
-    return { "to_insert": [new_child, new_parent], "to_update": [patient] }
 
 }
 
@@ -68,7 +63,6 @@ function create_random_string(string_length) {
 
     // based on https://www.mediacollege.com/internet/javascript/number/random.html
     var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-    var string_length = string_length;
     var randomstring = "";
 
     for (var i = 0; i < string_length; i++) {
@@ -79,7 +73,7 @@ function create_random_string(string_length) {
     return randomstring;
 }
 
-function initialize_patient(patient, father, mother, children, relatives) {
+function initialize_patient() {
 
     var patient = {};
 
@@ -92,10 +86,10 @@ function initialize_patient(patient, father, mother, children, relatives) {
     patient.family_id = "";
     patient.center = "";
     patient.nhc = "";
-    patient.dob = "";
+    patient.dob = " ";
     patient.mutations = "";
     patient.symptoms = "";
-    patient.status = "paciente-a-editar";
+    patient.status = "nuevo-miembro-familia";
     patient.diagnostic = "";
     patient.diagnostic_status = "";
     patient.probando = "";
@@ -187,7 +181,7 @@ function format_date(stringDate, desiredDateFormat) {
 
     if (date !== undefined) {
 
-        var today = new Date;
+        var today = new Date();
         var formatted_date, y, m, d;
 
         y = date.getFullYear(); // to avoid the 'year 2000 problem', 'y' has always 4 numbers

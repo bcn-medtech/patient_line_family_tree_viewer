@@ -1,15 +1,15 @@
 .pl-component-card-patient-gender-combobox{
 
     color:white;
-    
 
+    
     &:hover{
         color:white;
     }
 
     .gender{
         
-        margin-top: 6px;
+       //margin-top: 6px;
         stroke: transparent;
 
         circle{
@@ -31,8 +31,8 @@
         }
 
         .text{
-            margin-top: -5px;
-            display: block;
+            margin-top:3px;
+            padding-bottom:2px;
             overflow:hidden;
         }
     }
@@ -53,10 +53,19 @@
         }
         
         .text{
-            margin-top: -5px;
-            display: block;
+            margin-top:3px;
+            padding-bottom:2px;
             overflow:hidden;
         }
+    }
+
+    .pl-component-card-patient-gender-combobox-undefined-gender{
+
+        width:45px;
+        height:45px;
+
+        justify-content: center; // horizontal centering
+
     }
 }
 
@@ -71,12 +80,17 @@
     padding-top: 3px;
     padding-bottom: 10px;
 
+    .text{
+        margin-top:3px;
+        padding-bottom:2px;
+        overflow:hidden;
+    }
+
     &:hover{
         background-color: $color_shadow-2;
 
         .text{
             color:$color-normal;
-            overflow:hidden;
         }
     }
 
@@ -94,6 +108,12 @@
     padding-top: 3px;
     padding-bottom: 10px;
 
+    .text{
+        margin-top:3px;
+        padding-bottom:2px;
+        overflow:hidden;
+    }
+
     &:hover{
         background-color: $color_shadow-2;
     }
@@ -106,6 +126,12 @@
     color: #fff;
     text-align: center;
     border: 1px solid $color-normal;
+
+    .text{
+        margin-top:3px;
+        padding-bottom:2px;
+        overflow:hidden;
+    }
 
     /* Position the tooltip */
     position: fixed;

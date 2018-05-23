@@ -27,17 +27,17 @@ import React, { Component } from 'react';
 //components
 import { PlComponentButtonCircle } from './../../pl_component_button/pl_component_button_circle/pl_component_button_circle';
 import { PlComponentButtonCircleSelectable } from './../../pl_component_button/pl_component_button_circle_selectable/pl_component_button_circle_selectable';
+import { PlComponentCardPatientGenderCombobox } from './pl_component_card_patient_gender_combobox/pl_component_card_patient_gender_combobox';
 import { PlComponentCardPatientStatusCombobox } from './pl_component_card_patient_status_combobox/pl_component_card_patient_status_combobox';
 import { PlComponentCardPatientStatusButton } from './pl_component_card_patient_status_button/pl_component_card_patient_status_button';
-import { PlComponentCardPatientGenderCombobox } from './pl_component_card_patient_gender_combobox/pl_component_card_patient_gender_combobox';
 import { PlComponentCardPatientTextButton } from './pl_component_card_patient_text_button/pl_component_card_patient_text_button';
+import { PlComponentTextFieldEditable } from './../../pl_component_text_field_editable/pl_component_text_field_editable';
 
 //modules
 import {
     isObjectEmpty, isObjectAnArray, isObjectAFunction
 } from './../../../../modules/rkt_module_object';
-
-import { PlComponentTextFieldEditable } from './../../pl_component_text_field_editable/pl_component_text_field_editable';
+import { mapObject } from 'underscore';
 
 export class PlComponentCardPatient extends Component {
 
@@ -51,7 +51,19 @@ export class PlComponentCardPatient extends Component {
     }
 
     on_remove_patient() {
-        alert("On delete patient");
+        
+        if (isObjectAFunction(this.props.on_ask_to_remove_patient)) {
+            
+            var patient = this.props.patient;
+            
+            if (isObjectEmpty(patient.children)) {
+
+                this.props.on_ask_to_remove_patient();
+
+            } else alert ("You cannot delete a patient with children");
+
+        }
+
     }
 
     on_click_card_component(type) {
@@ -63,6 +75,32 @@ export class PlComponentCardPatient extends Component {
                 this.props.on_click_action(type);
 
             }
+        }
+    }
+
+    perform_database_action(data_to_update) {
+        
+        if (isObjectAFunction(this.props.perform_database_action)) {
+
+            var key_to_update = data_to_update.key;
+            var updated_value = data_to_update.value;
+
+            var patient = this.props.patient;
+            var updated_patient = mapObject(patient, function(value, key){
+                return value;
+            });
+            
+            updated_patient[key_to_update] = updated_value;
+
+            var data = {
+                "action": "edit_patient",
+                "data": updated_patient,
+                "patient_id": updated_patient.id,
+                "family_id": updated_patient.family_id
+            };
+            this.props.perform_database_action(data);
+
+
         }
     }
 
@@ -105,7 +143,7 @@ export class PlComponentCardPatient extends Component {
         }
 
         return (
-            <div className="grid-block card-row">
+            <div className="grid-block align-spaced card-row">
                 <div className="grid-block shrink card-item">
                     <PlComponentCardPatientTextButton
                         text={patient_num_relatives}
@@ -124,14 +162,16 @@ export class PlComponentCardPatient extends Component {
                     <PlComponentCardPatientGenderCombobox
                         gender={gender}
                         ref="patient_gender"
-                        mode_edit={mode_edit} />
+                        mode_edit={mode_edit} 
+                        perform_database_action={this.perform_database_action.bind(this)} />
                 </div>
                 <div className="grid-block shrink card-item">
                     <PlComponentCardPatientStatusCombobox
                         status={patient.status}
                         gender={patient.gender}
                         ref="patient_status"
-                        mode_edit={mode_edit} />
+                        mode_edit={mode_edit} 
+                        perform_database_action={this.perform_database_action.bind(this)} />
                 </div>
                 <div className="grid-block shrink card-item">
                     <PlComponentCardPatientStatusButton

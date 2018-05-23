@@ -28,8 +28,6 @@ export function families_get_list(callback) {
 }
 
 export function family_insert(family, callback) {
-
-    console.log(family);
     
     db.families
         .where("id").equalsIgnoreCase(family.id)
@@ -76,7 +74,7 @@ export function family_remove(id, callback) {
         .where("id").equalsIgnoreCase(id)
         .delete()
         .then(function (deleteCount) {
-            console.log(deleteCount);
+            
             callback(true);
         })
 }

@@ -29,16 +29,24 @@ import { PlComponentCardPatientStatus } from './../../pl_component_card_patient_
 //actions
 import { sort_relatives_by_dob, calculate_age } from './pl_component_card_patient_widget_relatives_actions';
 
+import { filter } from "underscore";
+
 export class PlComponentCardPatientWidgetRelatives extends Component {
 
     render_card_patient_widget_relatives(relatives, mode_edit) {
 
         if (!isObjectEmpty(relatives)) {
 
+            var relatives_to_display = filter(relatives, function(relative) {
+                return relative.relation !== "current patient";
+            });
+
             return (
-                <div className="grid-block shrink vertical">
-                    {this.render_list_of_relatives(relatives)}
-                </div>
+                <table className="grid-block vertical">
+                    <tbody>
+                        {this.render_list_of_relatives(relatives_to_display)}
+                    </tbody>
+                </table>
             );
 
         } else {
@@ -70,22 +78,27 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
                 var gender = relative.gender;
 
                 var dob = relative.dob;
+                var relation = relative.relation;
 
                 return (
 
-                    <div className="grid-block shrink pl-component-card-patient-widget-relatives-item" key={index}>
-                        <div className="grid-block shrink pl-component-card-patient-widget-relatives-element">
+                    <tr className="grid-block shrink pl-component-card-patient-widget-relatives-item" key={index}>
+                        <td className="grid-block pl-component-card-patient-widget-relatives-element">
                             <PlComponentCardPatientStatus status={status} gender={gender} />
-                        </div>
-                        <div className="grid-block vertical pl-component-card-patient-widget-relatives-element">
+                        </td>
+                        <td className="grid-block vertical pl-component-card-patient-widget-relatives-element">
                             <h6>{name}</h6>
                             <div className="grid-block shrink text">{id}</div>
-                        </div>
-                        <div className="grid-block shrink vertical pl-component-card-patient-widget-relatives-element relative-age">
+                        </td>
+                        <td className="grid-block vertical pl-component-card-patient-widget-relatives-element centered">
                             {this.render_age(dob)}
                             <div className="grid-block shrink text">age</div>
-                        </div>
-                    </div>
+                        </td>
+                        <td className="grid-block vertical pl-component-card-patient-widget-relatives-element centered">
+                            <h6>{relation}</h6>
+                            <div className="grid-block shrink text">relation</div>
+                        </td>
+                    </tr>
                 );
 
             })
@@ -107,8 +120,6 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
 
         var relatives = this.props.relatives;
         var mode_edit = this.props.mode_edit;
-
-        console.log(relatives);
 
         return (
             <div className="grid-block pl-component-card-patient-widget-relatives">

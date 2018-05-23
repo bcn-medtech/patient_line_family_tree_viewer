@@ -4,10 +4,22 @@
         stroke-width: 5px;
         fill:transparent;
     }
+
+    .muerte-por-otras-causas {
+      fill:#fff;
+      stroke:#000;
+      stroke-width: 3px;
+
+      &:hover{
+        stroke:$color_normal;
+        stroke-width: 4px;
+      }
+
+    }
     
     .muerte-subita {
-      fill: #212121;
-      stroke: white;
+      fill:#000000;
+      stroke:#000;
       stroke-width: 3px;
 
       &:hover{
@@ -17,9 +29,9 @@
 
     }
     
-    .muerte-otras-causas {
-      fill: #FAFAFA;
-      stroke:  white;
+    .ms-o-fv-recuperada {
+      fill:#000000;
+      stroke:#000;
       stroke-width: 3px;
 
       &:hover{
@@ -29,9 +41,9 @@
 
     }
     
-    .muerte-subita-recuperada {
-      fill: #212121;
-      stroke:  white;
+    .manifestacion-responsable {
+      fill: #ff0000;
+      stroke:  #000;
       stroke-width: 3px;
 
       &:hover{
@@ -40,22 +52,10 @@
       }
 
     }
-    
-    .manifestacion-fenotipica {
-      fill: #D50000;
-      stroke:  #212121;
-      stroke-width: 3px;
 
-      &:hover{
-        stroke:$color_normal;
-        stroke-width: 4px;
-      }
-
-    }
-    
     .portador-mutacion-responsable {
-      fill: #E53935;
-      stroke:  white;;
+      fill:#fff;
+      stroke:#000;
       stroke-width: 3px;
 
       &:hover{
@@ -65,8 +65,8 @@
 
     }
     .sin-manifestacion-fenotipica {
-      fill: #FAFAFA;
-      stroke:  black;
+      fill:#fcfcfc;
+      stroke:#000; 
       stroke-width: 3px;
 
       &:hover{
@@ -76,9 +76,9 @@
 
     }
     
-    .no-portador-mutación {
-      background-color:  #FAFAFA;
-      border-color: black;
+    .no-portador-de-mutacion-responsable {
+      fill:#fff;
+      stroke:#000;
       stroke-width: 3px;
 
       &:hover{
@@ -87,9 +87,10 @@
       }
 
     }
+
     .no-estudiado{
-      fill: #FAFAFA;
-      stroke:  black;
+      fill:#fff;
+      stroke:#000;
       stroke-width: 3px;
 
       &:hover{
@@ -99,8 +100,8 @@
 
     }
     .portador-obligado {
-      fill: #FAFAFA;
-      stroke:  black;
+      fill:#b2b2b2;
+      stroke:#000;
       stroke-width: 3px;
 
       &:hover{
@@ -110,8 +111,8 @@
 
     }
     .probando {
-      fill: #00B8D4;
-      stroke: white;;
+      fill:#ffffff;
+      stroke:#56aaff;
       stroke-width: 3px;
 
       &:hover{
@@ -121,8 +122,18 @@
       
     }
 
+    .nuevo-miembro-familia{
+      fill: #ffaa56;
+      stroke: #000;
+      stroke-width: 3px;
 
-  
+      &:hover{
+        stroke:$color_normal;
+        stroke-width: 4px;
+      }
+      
+    }
+    
   .text{
     fill:white;
   }

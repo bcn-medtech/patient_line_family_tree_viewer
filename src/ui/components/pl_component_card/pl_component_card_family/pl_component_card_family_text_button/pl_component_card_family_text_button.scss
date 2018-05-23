@@ -1,4 +1,4 @@
-.pl-component-card-patient-text-button{
+.pl-component-card-family-text-button{
 
     padding:5px;
     color:white;
@@ -6,7 +6,7 @@
 
     .text{
         padding-bottom:2px;
-        overflow:hidden;
+        overflow:hidden;    
     }
 
     &:hover{
@@ -21,6 +21,6 @@
     
 }
 
-.pl-component-card-patient-text-button.selected{
+.pl-component-card-family-text-button.selected{
     background-color: $color_shadow-2;
 }

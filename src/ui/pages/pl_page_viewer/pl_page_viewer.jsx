@@ -54,7 +54,7 @@ export default class PlPageViewer extends Component {
       father: false,
       mother: false,
       children: false,
-      relatives:false
+      relatives: false
     };
   }
 
@@ -92,7 +92,7 @@ export default class PlPageViewer extends Component {
   }
 
   componentDidMount() {
-
+    
     var location = window.location;
 
     if ("href" in location) {
@@ -115,10 +115,36 @@ export default class PlPageViewer extends Component {
   perform_database_action(data) {
 
     var myComponent = this;
-    
+
     perform_database_action(data, function (result) {
 
-      myComponent.update_component_state_from_database();
+      var location = window.location;
+
+      if ("href" in location) {
+
+        var location_url = location.href;
+
+        var patient_id = url_getParameterByName("patient_id", location_url);
+        var family_id = url_getParameterByName("family_id", location_url);
+        
+        if ("family_id" in data) family_id = data.family_id;
+
+        if (family_id === undefined) {
+          
+          myComponent.on_click_button("go_back");
+
+        } else {
+
+          if ("patient_id" in data) patient_id = data.patient_id;
+
+          if (patient_id === undefined) patient_id = myComponent.state.root.children[2].id; // family's root
+          console.log(patient_id);
+          myComponent.update_component_state_from_database(family_id, patient_id);
+
+        }
+
+      }
+
     });
 
   }
@@ -140,7 +166,7 @@ export default class PlPageViewer extends Component {
   }
 
   render() {
-    
+
     var tree_viewer;
     var sidebar;
     var viewer_legend;

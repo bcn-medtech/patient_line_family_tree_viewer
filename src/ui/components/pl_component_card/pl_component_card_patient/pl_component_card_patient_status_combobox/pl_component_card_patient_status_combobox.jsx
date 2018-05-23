@@ -29,10 +29,7 @@ import {
     filter
 } from 'underscore';
 
-import {
-    isObjectAFunction,
-    isObjectEmpty
-} from './../../../../../modules/rkt_module_object';
+import { isObjectAFunction, isObjectEmpty } from './../../../../../modules/rkt_module_object';
 
 export class PlComponentCardPatientStatusCombobox extends Component {
 
@@ -66,19 +63,20 @@ export class PlComponentCardPatientStatusCombobox extends Component {
 
         var status = nextprops.status;
         var gender = nextprops.gender;
-
-        if (this.state.gender !== gender && this.state.status !== status) {
-            this.init_component(status, gender);
-        }
+        
+        this.init_component(status, gender);
 
     }
 
+    edit_item(item) {
 
-    set_item(item) {
+        if (isObjectAFunction(this.props.perform_database_action)) {
 
-        this.setState({
-            status: item.status
-        })
+            var data_to_update = {"key": "status", "value": item.status};
+            this.props.perform_database_action(data_to_update);
+
+        }
+
     }
 
     render_list_items_status(current_status, gender) {
@@ -87,27 +85,27 @@ export class PlComponentCardPatientStatusCombobox extends Component {
             {
                 "status": "muerte-por-otras-causas",
                 "gender": "male",
-                "svg": <svg width="45" height="45"><rect id="svg_2" height="30" width="30" y="12.5" x="9" fillOpacity="null" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#fff" /><line stroke="#000" strokeWidth="2" strokeLinecap="null" strokeLinejoin="null" id="svg_13" y2="7.5" x2="43" y1="44.5" x1="5" fillOpacity="null" strokeOpacity="null" fill="none" /></svg>
+                "svg": <svg width="45" height="45"><rect id="svg_2" height="30" width="30" y="7.5" x="7.5" fillOpacity="null" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#fff" /><line stroke="#000" strokeWidth="2" strokeLinecap="null" strokeLinejoin="null" id="svg_13" x1="0" x2="45" y1="45" y2="0" fillOpacity="null" strokeOpacity="null" fill="none" /></svg>
             },
             {
                 "status": "muerte-por-otras-causas",
                 "gender": "female",
-                "svg": <svg width="45" height="45"><ellipse ry="17" rx="17" id="svg_1" cy="26" cx="28" strokeWidth="1.5" stroke="#000" fill="#fff" /><line strokeWidth="2" strokeLinecap="null" strokeLinejoin="null" id="svg_15" y2="7.5" x2="45.538451" y1="44.5" x1="7.538451" fillOpacity="null" strokeOpacity="null" stroke="#000" fill="none" /></svg>
+                "svg": <svg width="45" height="45"><ellipse ry="17" rx="17" id="svg_1" cy="22.5" cx="22.5" strokeWidth="1.5" stroke="#000" fill="#fff" /><line strokeWidth="2" strokeLinecap="null" strokeLinejoin="null" id="svg_15" x1="0" y1="45" x2="45" y2="0" fillOpacity="null" strokeOpacity="null" stroke="#000" fill="none" /></svg>
             },
             {
                 "status": "muerte-subita",
                 "gender": "male",
-                "svg": <svg width="45" height="45"><rect id="svg_5" height="30" width="30" y="8.5" x="8" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#000000" /><line strokeWidth="2" strokeLinecap="null" strokeLinejoin="null" id="svg_17" y2="4.624963" x2="41" y1="41.624963" x1="3" fillOpacity="null" strokeOpacity="null" stroke="#000" fill="none" /></svg>
+                "svg": <svg width="45" height="45"><rect id="svg_5" height="30" width="30" y="7.5" x="7.5" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#000000" /><line strokeWidth="2" strokeLinecap="null" strokeLinejoin="null" id="svg_17" x1="0" x2="45" y1="45" y2="0" fillOpacity="null" strokeOpacity="null" stroke="#000" fill="none" /></svg>
             },
             {
                 "status": "muerte-subita",
                 "gender": "female",
-                "svg": <svg width="45" height="45"><ellipse ry="17" rx="17" id="svg_4" cy="23" cx="24" strokeWidth="1.5" stroke="#000" fill="#000000" /><line strokeWidth="2" strokeLinecap="null" strokeLinejoin="null" id="svg_16" y2="3.374964" x2="40.538451" y1="40.374964" x1="2.538451" fillOpacity="null" strokeOpacity="null" stroke="#000" fill="none" /></svg>
+                "svg": <svg width="45" height="45"><ellipse ry="17" rx="17" id="svg_4" cy="22.5" cx="22.5" strokeWidth="1.5" stroke="#000" fill="#000000" /><line strokeWidth="2" strokeLinecap="null" strokeLinejoin="null" id="svg_16" x1="0" y1="45" x2="45" y2="0" fillOpacity="null" strokeOpacity="null" stroke="#000" fill="none" /></svg>
             },
             {
                 "status": "ms-o-fv-recuperada",
                 "gender": "male",
-                "svg": <svg width="45" height="45"><rect id="svg_5" height="30" width="30" y="8.5" x="8" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#000000" /></svg>
+                "svg": <svg width="45" height="45"><rect id="svg_5" height="30" width="30" y="7.5" x="7.5" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#000000" /></svg>
             },
             {
                 "status": "ms-o-fv-recuperada",
@@ -117,7 +115,7 @@ export class PlComponentCardPatientStatusCombobox extends Component {
             {
                 "status": "manifestacion-responsable",
                 "gender": "male",
-                "svg": <svg width="45" height="45"><rect id="svg_5" height="30" width="30" y="8.5" x="8" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#ff0000" /></svg>
+                "svg": <svg width="45" height="45"><rect id="svg_5" height="30" width="30" y="7.5" x="7.5" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#ff0000" /></svg>
             },
             {
                 "status": "manifestacion-responsable",
@@ -128,7 +126,7 @@ export class PlComponentCardPatientStatusCombobox extends Component {
                 "status": "portador-mutacion-responsable",
                 "gender": "male",
                 "svg": <svg width="45" height="45">
-                    <rect id="svg_11" height="30" width="30" y="7.5" x="8" fillOpacity="null" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#fff" />
+                    <rect id="svg_11" height="30" width="30" y="7.5" x="7.5" fillOpacity="null" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#fff" />
                     <line strokeWidth="2" strokeLinecap="null" strokeLinejoin="null" id="svg_32" y2="7.707798" x2="20.590397" y1="17.954545" x1="8.044944" fillOpacity="null" fill="none" stroke="#ff0000" />
                     <line strokeWidth="2" strokeLinecap="null" strokeLinejoin="null" id="svg_33" y2="7.694806" x2="32.083904" y1="28.590909" x1="8.10988" fillOpacity="null" fill="none" stroke="#ff0000" />
                     <line strokeWidth="2" strokeLinecap="null" strokeLinejoin="null" id="svg_34" y2="13.876625" x2="37.941049" y1="37.37013" x1="10.850139" fillOpacity="null" fill="none" stroke="#ff0000" />
@@ -151,18 +149,18 @@ export class PlComponentCardPatientStatusCombobox extends Component {
             {
                 "status": "sin-manifestacion-fenotipica",
                 "gender": "male",
-                "svg": <svg width="45" height="45"><rect id="svg_5" height="30" width="30" y="8.5" x="8" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#fcfcfc" /></svg>
+                "svg": <svg width="45" height="45"><rect id="svg_5" height="30" width="30" y="7.5" x="7.5" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#fcfcfc" /></svg>
             },
             {
                 "status": "sin-manifestacion-fenotipica",
                 "gender": "female",
-                "svg": <svg width="45" height="45"><ellipse ry="17" rx="17" id="svg_4" cy="23" cx="24" strokeWidth="1.5" stroke="#000" fill="#fcfcfc" /></svg>
+                "svg": <svg width="45" height="45"><ellipse ry="17" rx="17" id="svg_4" cy="22.5" cx="22.5" strokeWidth="1.5" stroke="#000" fill="#fcfcfc" /></svg>
             },
             {
                 "status": "no-portador-de-mutacion-responsable",
                 "gender": "male",
                 "svg": <svg width="45" height="45">
-                    <rect id="svg_21" height="30" width="30" y="7.999925" x="7" fillOpacity="null" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#fff" />
+                    <rect id="svg_21" height="30" width="30" y="7.5" x="7.5" fillOpacity="null" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#fff" />
                     <line strokeLinecap="null" strokeLinejoin="null" id="svg_22" y2="23.249907" x2="26.812691" y1="23.249907" x1="16.1877" fillOpacity="null" strokeOpacity="null" strokeWidth="2" stroke="#000" fill="none" />
                 </svg>
             },
@@ -178,7 +176,7 @@ export class PlComponentCardPatientStatusCombobox extends Component {
                 "status": "no-estudiado",
                 "gender": "male",
                 "svg": <svg width="45" height="45">
-                    <rect id="svg_26" height="30" width="30" y="7.499888" x="7" fillOpacity="null" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#fff" />
+                    <rect id="svg_26" height="30" width="30" y="7.5" x="7.5" fillOpacity="null" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#fff" />
                     <text textAnchor="start" fontFamily="Helvetica, Arial, sans-serif" fontSize="24" id="svg_27" y="31.499866" x="14.9377" fillOpacity="null" strokeOpacity="null" strokeWidth="0" stroke="#000" fill="#000000">?</text>
                 </svg>
             },
@@ -193,7 +191,7 @@ export class PlComponentCardPatientStatusCombobox extends Component {
             {
                 "status": "portador-obligado",
                 "gender": "male",
-                "svg": <svg width="45" height="45"><rect id="svg_5" height="30" width="30" y="8.5" x="8" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#b2b2b2" /></svg>
+                "svg": <svg width="45" height="45"><rect id="svg_5" height="30" width="30" y="7.5" x="7.5" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#b2b2b2" /></svg>
             },
             {
                 "status": "portador-obligado",
@@ -203,18 +201,18 @@ export class PlComponentCardPatientStatusCombobox extends Component {
             {
                 "status": "probando",
                 "gender": "male",
-                "svg": <svg width="45" height="45"><rect id="svg_5" height="30" width="30" y="8.5" x="8" strokeOpacity="null" strokeWidth="1.5" stroke="#56aaff" fill="#fcfcfc" /></svg>
+                "svg": <svg width="45" height="45"><rect id="svg_5" height="30" width="30" y="7.5" x="7.5" strokeOpacity="null" strokeWidth="1.5" stroke="#56aaff" fill="#fcfcfc" /></svg>
             },
             {
                 "status": "probando",
                 "gender": "female",
-                "svg": <svg width="45" height="45"><ellipse ry="17" rx="17" id="svg_4" cy="23" cx="24" strokeWidth="1.5" stroke="#56aaff" fill="#fcfcfc" /></svg>
+                "svg": <svg width="45" height="45"><ellipse ry="17" rx="17" id="svg_4" cy="22.5" cx="22.5" strokeWidth="1.5" stroke="#56aaff" fill="#fcfcfc" /></svg>
             },
             {
                 "status": "nuevo-miembro-familia",
                 "gender": "male",
                 "svg": <svg width="45" height="45">
-                    <rect id="svg_60" height="30" width="30" y="7.785602" x="7" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#ffaa56" />
+                    <rect id="svg_60" height="30" width="30" y="7.5" x="7.5" strokeOpacity="null" strokeWidth="1.5" stroke="#000" fill="#ffaa56" />
                     <text textAnchor="start" fontFamily="Helvetica, Arial, sans-serif" fontSize="24" id="svg_61" y="28.928437" x="14.9377" fillOpacity="null" strokeOpacity="null" strokeWidth="0" stroke="#000" fill="#000000">+</text>
                 </svg>
             },
@@ -251,7 +249,7 @@ export class PlComponentCardPatientStatusCombobox extends Component {
                                 );
                             } else {
                                 return (
-                                    <div className="grid-block shrink list-item" onClick={this.set_item.bind(this, item)} key={index}>{item.svg}</div>
+                                    <div className="grid-block shrink list-item" onClick={this.edit_item.bind(this, item)} key={index}>{item.svg}</div>
                                 );
                             }
     

@@ -25,7 +25,7 @@
 import React, { Component } from 'react';
 import { isObjectAFunction } from './../../../../../modules/rkt_module_object';
 
-export class PlComponentCardPatientTextButton extends Component {
+export class PlComponentCardFamilyTextButton extends Component {
 
 
     on_click_component(type) {
@@ -44,11 +44,11 @@ export class PlComponentCardPatientTextButton extends Component {
 
         if(selected){
 
-            component_style = "grid-block vertical pl-component-card-patient-text-button selected";
+            component_style = "grid-block vertical pl-component-card-family-text-button selected";
 
         }else{
 
-            component_style = "grid-block vertical pl-component-card-patient-text-button";
+            component_style = "grid-block vertical pl-component-card-family-text-button";
 
         }
 

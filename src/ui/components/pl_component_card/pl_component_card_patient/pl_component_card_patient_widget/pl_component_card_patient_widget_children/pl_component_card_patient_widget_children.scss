@@ -8,16 +8,22 @@
     .family-list{
 
         padding-left:10px;
-        padding-right:20px;
+        padding-right:10px;
         padding-bottom:25px;
 
         .family-list-header {
 
+            //align-items: center; // vertical centering
+            background-color: black;
+
+            padding-top:10px;
+            padding-bottom:10px;
+            margin-bottom:10px;
+
             .family-list-header-parents {
                 align-items: center; // vertical centering
                 justify-content: center; // horizontal centering
-                padding-bottom:15px;
-
+                
                 .family-list-header-parent {
                     align-items: center; // vertical centering
                     justify-content: center; // horizontal centering
@@ -34,12 +40,19 @@
                 .family-list-header-link{
                     
                 }
-            }
-            .family-list-header-edition-buttons{
-                align-items: center; // vertical centering
-                //justify-content: right; // horizontal centering
-                position:absolute;
-                right:0px;
+
+
+                .family-list-header-edition-buttons{
+                    align-items: center; // vertical centering
+                    position:absolute;
+                    right:0px;
+                    padding-right:10px;
+    
+                    .pl_component_button_circle{
+                        height:35px;
+                        width:35px;
+                    }
+                }
             }
 
         }
@@ -48,7 +61,18 @@
             // max-height:100px;
             // overflow-y:auto;
 
+            tr, td{
+                width:100%;
+            }
+            
             .family-list-item{
+                
+                align-items: center;
+                margin-bottom:15px;
+                // padding-top: 5px;
+                // padding-bottom: 5px;
+                // background-color: $color_shadow_3;
+                
 
                 h6{
                     margin-top:0px;
@@ -59,15 +83,13 @@
                     padding-bottom:2px;
                 }
 
-                //align-items: left;
-                padding-bottom:5px;
-
                 .family-list-item-element{
-                    padding-right:30px;
+                    //padding-right:30px;
+                    padding-left:10px;//15px;
+                    padding-right:15px;
                 }
         
-                .child-age{
-                    
+                .centered{
                     align-items: center;
                 }
 

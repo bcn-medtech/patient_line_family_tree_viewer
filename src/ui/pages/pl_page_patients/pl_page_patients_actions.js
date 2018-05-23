@@ -14,9 +14,7 @@ import {
     family_insert,
     patient_insert,
     patients_get_list,
-    families_get_list,
-    family_remove,
-    patient_remove
+    families_get_list
 } from './../../../database/database';
 import { isObjectEmpty } from '../../../modules/rkt_module_object';
 
@@ -192,37 +190,6 @@ export function perform_database_action(data,browserHistory,callback){
                     }
                 }
 
-            }else if (data.action === "remove_patient"){
-
-                console.log("remove_patient");
-
-                if("data" in data){
-
-                    if("id" in data.data){
-
-                        patient_remove(data.data.id,function(result){
-
-                            callback(true);
-                        })
-                    }
-                }
-
-
-
-            }else if (data.action === "remove_family"){
-
-
-                if("data" in data){
-
-                    if("id" in data.data){
-
-                        family_remove(data.data.id,function(result){
-
-                            callback(true);
-                        })
-                    }
-                }
-
             }else if(data.action === "export"){
 
                 export_data();
@@ -230,7 +197,7 @@ export function perform_database_action(data,browserHistory,callback){
             }else if(data.action === "explore_patient"){                
 
                 if(!isObjectEmpty(data.data)){
-                    //console.log(data.data);
+                    
                     var family_id = data.data.family_id;
                     var patient_id = data.data.id;
 
@@ -243,8 +210,11 @@ export function perform_database_action(data,browserHistory,callback){
                 if(!isObjectEmpty(data.data)){
 
                     var family_id = data.data.id;
+                    var patient_id;
+                    if (data.data.root_patient !== undefined) patient_id = data.data.root_patient.id;
+                    else patient_id = undefined;
 
-                    var url_to_navigate = '/viewer?family_id='+family_id;
+                    var url_to_navigate = '/viewer?family_id='+family_id+'&patient_id='+patient_id;
                     browserHistory.push(url_to_navigate)
                 }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 //components
 import { PlComponentSidebarHeader } from './pl_component_sidebar_header/pl_component_sidebar_header';
+import { PlComponentSidebarFamily } from './pl_component_sidebar_family/pl_component_sidebar_family';
 import { PlComponentSidebarPatient } from './pl_component_sidebar_patient/pl_component_sidebar_patient';
 
 //#TODO organizar
@@ -25,32 +26,6 @@ export class PlComponentSidebar extends Component {
         });
     }
 
-    /*render_menu_patient(patient,father,mother,children) {
-
-        return (
-            <div className="grid-block vertical">
-                <div className="grid-block shrink pl_component_sidebar_element">
-                    <PlComponentCardPatient patient={patient} father={father} mother={mother} children={children} ref="patient_card"/>
-                </div>
-                <div className="grid-block shrink">
-                    <PlComponentCardPatientWidget tittle="relatives"/>
-                </div>
-                
-            </div>
-        )
-    }*/
-
-    render_menu_family(family) {
-
-        console.log(family);
-
-        return (
-            <div className="grid-block vertical">
-
-            </div>
-        )
-    }
-
     render() {
 
         var sidebar_header_items = ["patient", "family"];
@@ -65,18 +40,23 @@ export class PlComponentSidebar extends Component {
 
         if (mode === "patient") {
 
-            sidebar = <PlComponentSidebarPatient 
-            patient={patient} 
-            mother={mother} 
-            father={father} 
-            children={children}
-            relatives = {relatives}
-            perform_database_action={this.props.perform_database_action}
-            />
+            sidebar =
+                <PlComponentSidebarPatient
+                    patient={patient}
+                    mother={mother}
+                    father={father}
+                    children={children}
+                    relatives={relatives}
+                    perform_database_action={this.props.perform_database_action}
+                />
 
         } else if (mode === "family") {
-
-            sidebar = this.render_menu_family(family);
+            
+            sidebar =
+                <PlComponentSidebarFamily
+                    family={family}
+                    perform_database_action={this.props.perform_database_action}
+                />
 
         }
 
