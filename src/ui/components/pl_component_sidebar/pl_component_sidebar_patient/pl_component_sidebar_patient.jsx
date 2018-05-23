@@ -39,7 +39,7 @@ import { PlComponentTable } from './../../pl_component_table/pl_component_table'
 
 //actions
 import { create_table, update_patient_from_table, update_patient_from_text_field_editable } from './pl_component_sidebar_patient_actions';
-import { findWhere, without } from 'underscore';
+import { findWhere, omit, without } from 'underscore';
 
 export class PlComponentSidebarPatient extends Component {
 
@@ -158,6 +158,24 @@ export class PlComponentSidebarPatient extends Component {
 
     }
 
+    on_ask_to_export_patient() {
+
+        if (isObjectAFunction(this.props.perform_database_action)) {
+
+            var patient_to_export = this.props.patient;
+            patient_to_export = omit(patient_to_export, "depth", "parent", "no_parent", "num_relatives", "relation", "x", "y");
+            var id_patient = patient_to_export.id;
+
+            var data = {};
+            data["action"] = "export_patient";
+            data["data"] = {};
+            data["data"][id_patient] = [patient_to_export];
+            this.props.perform_database_action(data);
+
+        }
+
+    }
+
     on_remove_patient(answer) {
 
         if (answer === "Yes") {
@@ -199,7 +217,6 @@ export class PlComponentSidebarPatient extends Component {
 
                     } else {
 
-                        
                         couple_patient.married_with = "";
                         to_update.push(couple_patient);
 
@@ -346,7 +363,8 @@ export class PlComponentSidebarPatient extends Component {
                         mode_edit={mode_edit}
                         ref="patient_card"
                         perform_database_action={this.props.perform_database_action}
-                        on_ask_to_remove_patient={this.on_ask_to_remove_patient.bind(this)} />
+                        on_ask_to_remove_patient={this.on_ask_to_remove_patient.bind(this)} 
+                        on_ask_to_export_patient={this.on_ask_to_export_patient.bind(this)}/>
                 </div>
                 <div className="grid-block shrink">
                     {widget}

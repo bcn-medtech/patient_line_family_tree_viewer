@@ -36,6 +36,13 @@ import {
     patient_update
 } from './../../../database/database';
 
+import {
+    // readXlsxWorkbook,
+    // convertWorkbookToCSVMap,
+    // convertCSVMapInJSONMap,
+    writeXlsxWoorkbook
+} from './../../../modules/rkt_pl_module_file_formats_xlsx';
+
 import { label_patient_relatives } from './pl_page_viewer_action_data_analysis_patient_relations';
 
 import patients from './test_patients.json';
@@ -53,7 +60,7 @@ import {
     get_patients_processed, get_family_processed
 } from './pl_page_viewer_actions_data_analysis';
 
-import { findWhere, map, omit, pluck } from 'underscore';
+import { findWhere, keys, map, omit, pluck } from 'underscore';
 
 
 export function get_data_from_database(callback) {
@@ -594,6 +601,16 @@ export function perform_database_action(data, callback) {
                         } else console.log("error obtaining the patients");
 
                     });
+                }
+
+            } else if (data.action === "export_patient") {
+                
+                if ("data" in data) {
+
+                    var id_patient = keys(data.data)[0];
+                    //writeXlsxWoorkbook(data.data);
+                    writeXlsxWoorkbook(data.data, {"name":id_patient});
+
                 }
 
             }

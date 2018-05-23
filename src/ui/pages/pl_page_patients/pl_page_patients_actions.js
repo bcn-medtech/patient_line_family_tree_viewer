@@ -116,7 +116,7 @@ export function import_data_to_app(file, callback) {
 export function export_data(){
 
     get_data_from_database(function(data){
-    
+        
         writeXlsxWoorkbook(data);
         
     })

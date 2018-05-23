@@ -51,17 +51,26 @@ export class PlComponentCardPatient extends Component {
     }
 
     on_remove_patient() {
-        
+
         if (isObjectAFunction(this.props.on_ask_to_remove_patient)) {
-            
+
             var patient = this.props.patient;
-            
+
             if (isObjectEmpty(patient.children)) {
 
                 this.props.on_ask_to_remove_patient();
 
-            } else alert ("You cannot delete a patient with children");
+            } else alert("You cannot delete a patient with children");
 
+        }
+
+    }
+
+    on_export_patient() {
+
+        if (isObjectAFunction(this.props.on_ask_to_export_patient)) {
+
+            this.props.on_ask_to_export_patient();
         }
 
     }
@@ -79,17 +88,17 @@ export class PlComponentCardPatient extends Component {
     }
 
     perform_database_action(data_to_update) {
-        
+
         if (isObjectAFunction(this.props.perform_database_action)) {
 
             var key_to_update = data_to_update.key;
             var updated_value = data_to_update.value;
 
             var patient = this.props.patient;
-            var updated_patient = mapObject(patient, function(value, key){
+            var updated_patient = mapObject(patient, function (value, key) {
                 return value;
             });
-            
+
             updated_patient[key_to_update] = updated_value;
 
             var data = {
@@ -113,7 +122,7 @@ export class PlComponentCardPatient extends Component {
         var mode_children = false;
         var mode_father = false;
         var mode_mother = false;
-        
+
         if ("num_relatives" in patient) {
             patient_num_relatives = patient.num_relatives;
         }
@@ -162,7 +171,7 @@ export class PlComponentCardPatient extends Component {
                     <PlComponentCardPatientGenderCombobox
                         gender={gender}
                         ref="patient_gender"
-                        mode_edit={mode_edit} 
+                        mode_edit={mode_edit}
                         perform_database_action={this.perform_database_action.bind(this)} />
                 </div>
                 <div className="grid-block shrink card-item">
@@ -170,7 +179,7 @@ export class PlComponentCardPatient extends Component {
                         status={patient.status}
                         gender={patient.gender}
                         ref="patient_status"
-                        mode_edit={mode_edit} 
+                        mode_edit={mode_edit}
                         perform_database_action={this.perform_database_action.bind(this)} />
                 </div>
                 <div className="grid-block shrink card-item">
@@ -213,6 +222,12 @@ export class PlComponentCardPatient extends Component {
                 "name": "edit",
                 "icon": <svg width='15' height='15' viewBox='0 0 16 16' fillRule='evenodd'><path d='M2.032 10.924l7.99-7.99 2.97 2.97-7.99 7.99zm9.014-8.91l1.98-1.98 2.97 2.97-1.98 1.98zM0 16l3-1-2-2z'></path></svg>,
                 "selected": mode_edit
+            }
+
+        var button_export =
+            {
+                "name": "export",
+                "icon": <svg width='15' height='15' viewBox='0 0 24 24' fillRule='evenodd'><path d='M19 9.4l-1.2-1.1L13 13V0h-2v13L6.2 8.3 5 9.4l7 6.6z'></path><path d='M22 14v6H2v-6H0v10h24V14z'></path></svg>
             }
 
         if ("id" in patient) {
@@ -269,6 +284,17 @@ export class PlComponentCardPatient extends Component {
                             bordercolor={"#5C4EE5"}
                             borderhovercolor={"#5C4EE5"}
                             onclickelement={this.on_remove_patient.bind(this, button_delete.name)} />
+                    </div>
+                    <div className="grid-block shrink">
+                        <PlComponentButtonCircle
+                            icon={button_export.icon}
+                            backgroundcolor={"transparent"}
+                            backgroundhovercolor={"#5C4EE5"}
+                            fontcolor={"#5C4EE5"}
+                            fonthovercolor={"white"}
+                            bordercolor={"#5C4EE5"}
+                            borderhovercolor={"#5C4EE5"}
+                            onclickelement={this.on_export_patient.bind(this, button_export.name)} />
                     </div>
                 </div>
                 {this.render_menu(patient, father, mother, children, mode_menu, mode_edit)}

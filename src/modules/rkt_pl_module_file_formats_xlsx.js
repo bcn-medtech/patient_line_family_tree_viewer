@@ -155,7 +155,8 @@ export function writeXlsxWoorkbook(data, opts) {
         XLSX.utils.book_append_sheet(wb,sheet, sheet_name);
     }
 
-    XLSX.writeFile(wb, "database.xlsx")
+    if (opts && opts.name) XLSX.writeFile(wb, opts.name+".xlsx");
+    else XLSX.writeFile(wb, "database.xlsx")
 
 }
 
