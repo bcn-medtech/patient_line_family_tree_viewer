@@ -138,7 +138,7 @@ export default class PlPageViewer extends Component {
           if ("patient_id" in data) patient_id = data.patient_id;
 
           if (patient_id === undefined) patient_id = myComponent.state.root.children[2].id; // family's root
-          console.log(patient_id);
+          
           myComponent.update_component_state_from_database(family_id, patient_id);
 
         }

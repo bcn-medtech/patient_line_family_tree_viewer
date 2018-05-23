@@ -118,7 +118,7 @@ export class PlComponentSidebarPatient extends Component {
 
             var patient = this.props.patient;
             var updated_patient;
-            
+
             // "table"
             var edited_table = this.refs.patient_table.refs;
             updated_patient = update_patient_from_table(patient, edited_table);
@@ -127,17 +127,17 @@ export class PlComponentSidebarPatient extends Component {
             var edited_name = this.refs.patient_card.refs.patient_name.refs.FormItemInputText.state.input;
             var edited_id = this.refs.patient_card.refs.patient_id.refs.FormItemInputText.state.input;
             var couple_patient;
-            if (!isObjectEmpty(patient.married_with)) couple_patient = findWhere(this.props.relatives, {"id":patient.married_with});
+            if (!isObjectEmpty(patient.married_with)) couple_patient = findWhere(this.props.relatives, { "id": patient.married_with });
             var children = this.props.children;
             var father = this.props.father;
             var mother = this.props.mother;
 
             var new_data = update_patient_from_text_field_editable(edited_name, edited_id, patient.id, updated_patient, couple_patient, children, father, mother);
-            
+
             // the changes in "table" and "text_field_editable" are saved
             if ("patient_to_update" in new_data) updated_patient = new_data.patient_to_update;
             else updated_patient = new_data;
-            
+
             var data = {
                 "action": "edit_patient",
                 "data": new_data,
@@ -163,11 +163,11 @@ export class PlComponentSidebarPatient extends Component {
         if (answer === "Yes") {
 
             if (isObjectAFunction(this.props.perform_database_action)) {
-                
+
                 var new_data = {};
                 var to_remove = [];
                 var to_update = [];
-                
+
                 var patient = this.props.patient;
                 to_remove.push(patient.id);
 
@@ -188,42 +188,36 @@ export class PlComponentSidebarPatient extends Component {
                     new_data["to_update"] = to_update;
 
                 }
-                
+
                 // in case this patient has a couple, should this couple be removed too?
                 if (!isObjectEmpty(patient.married_with)) {
 
-                    to_remove.push(patient.married_with);
-                    
-                    // TRY:
-                    // var couple_patient = findWhere(this.props.relatives, {"id":patient.married_with});
+                    var couple_patient = findWhere(this.props.relatives, { "id": patient.married_with });
+                    if ((!couple_patient.father) && (!couple_patient.mother)) {
 
-                    // if ((!couple_patient.father) && (!couple_patient.mother)) {
+                        to_remove.push(patient.married_with);
 
-                    //     to_remove.push(patient.married_with);
+                    } else {
 
-                    // }
-                    
+                        
+                        couple_patient.married_with = "";
+                        to_update.push(couple_patient);
+
+                        new_data["to_update"] = to_update;
+
+                    }
+
                 }
 
                 new_data["to_remove"] = to_remove;
-
-                // var data = { 
-                //     "action": "remove_patient",
-                //     "data": { 
-                //         "to_remove": to_remove, 
-                //         "to_update": [ father, mother ] 
-                //     },
-                //     "patient_id": undefined,
-                //     "family_id": patient.family_id 
-                // };
-
-                var data = { 
+                
+                var data = {
                     "action": "remove_patient",
                     "data": new_data,
                     "patient_id": undefined,
-                    "family_id": patient.family_id 
+                    "family_id": patient.family_id
                 };
-                
+
                 this.refs.ModalRemovePatient.closeModal();
                 this.props.perform_database_action(data);
 
@@ -266,9 +260,9 @@ export class PlComponentSidebarPatient extends Component {
     }
 
     render_modal() {
-        
+
         if (this.state.to_remove_patient) {
-            
+
             var patient = this.props.patient;
             var message_to_show = "Are you sure you want to remove the patient " + patient.id + "?";
 
@@ -293,7 +287,7 @@ export class PlComponentSidebarPatient extends Component {
     }
 
     render() {
-        
+
         var patient = this.props.patient;
         var father = this.props.father;
         var mother = this.props.mother;
