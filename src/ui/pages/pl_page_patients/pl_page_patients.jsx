@@ -150,6 +150,7 @@ export default class PlPagePatients extends Component {
     var body;
 
     var families = this.state.families;
+    
     var patients = this.state.patients;
 
     if (isObjectEmpty(families)) {
@@ -158,7 +159,7 @@ export default class PlPagePatients extends Component {
 
       patients = get_patients(patients);
       families = get_families(patients,families);
-
+      
       body = <PlComponentDatabase families={families} patients={patients} perform_database_action={this.perform_database_action.bind(this)}/>
     }
 

@@ -48,9 +48,9 @@ export class PlComponentCardFamily extends Component {
     }
 
     on_remove_family() {
-        
+
         if (isObjectAFunction(this.props.on_ask_to_remove_family)) {
-            
+
             this.props.on_ask_to_remove_family();
 
         }
@@ -70,7 +70,7 @@ export class PlComponentCardFamily extends Component {
     }
 
     // perform_database_action(data_to_update) { // TODO
-        
+
     //     if (isObjectAFunction(this.props.perform_database_action)) {
 
     //         var key_to_update = data_to_update.key;
@@ -80,7 +80,7 @@ export class PlComponentCardFamily extends Component {
     //         var updated_family = mapObject(patient, function(value, key){
     //             return value;
     //         });
-            
+
     //         updated_family[key_to_update] = updated_value;
 
     //         var data = {
@@ -99,9 +99,9 @@ export class PlComponentCardFamily extends Component {
         var family_num_members;
 
         if ("num_family_members" in family) family_num_members = family.num_family_members;
-        
+
         var mode_family_members = false;
-        
+
         // if (!isObjectEmpty(children)) {
         //     if (isObjectAnArray(children)) {
         //         patient_num_children = children.length;
@@ -113,7 +113,7 @@ export class PlComponentCardFamily extends Component {
         // }
 
         if (mode_menu === "family members") mode_family_members = true;
-        
+
         return (
             <div className="grid-block align-spaced card-row">
                 <div className="grid-block shrink card-item">

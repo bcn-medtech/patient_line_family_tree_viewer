@@ -7,6 +7,11 @@ import {
     keys
 } from 'underscore';
 
+//actions
+import {
+    treeBuilder
+} from './../../pages/pl_page_viewer/pl_page_viewer_actions_d3_tree_parser';
+
 import {
     isVariableNumeric
 } from './../../../modules/rkt_module_variable';
@@ -56,7 +61,7 @@ export function query_data(data, query_input) {
                         item = String(item);
                     }
 
-                    
+
                     return item.indexOf(query_value) === 0;
 
                 });
@@ -71,12 +76,12 @@ export function query_data(data, query_input) {
     }
 
 
-    if(!isObjectEmpty(query_result)){
+    if (!isObjectEmpty(query_result)) {
 
         query_result = query_result.map(a => a.id);
 
     }
-    
+
 
     return query_result;
 }
@@ -86,10 +91,10 @@ export function filter_data_by_ids(data, ids) {
     var data_filtered = data;
 
     if (!isObjectEmpty(ids)) {
-       
+
         data_filtered = map(ids, function (id) {
 
-            var item = findWhere(data,{"id":id});
+            var item = findWhere(data, { "id": id });
 
             return item;
         });
@@ -99,27 +104,57 @@ export function filter_data_by_ids(data, ids) {
 
 }
 
-export function create_search_bar_place_holder_from_data(data){
+export function create_search_bar_place_holder_from_data(data) {
 
     var text;
 
-    if(!isObjectEmpty(data)){
+    if (!isObjectEmpty(data)) {
 
         var data_key;
         var data_keys = keys(data[0]);
 
-        if(data_keys.length > 1){
+        if (data_keys.length > 1) {
             data_key = data_keys[1];
-        }else{
+        } else {
             data_key = data_keys[0];
         }
-        
-        text = "filter data just typing ... Ex1:'"+data[0].id+"' Ex2:'#"+data_key+":"+data[0][data_key];
 
-    }else{
-        text= "No data to query :(, import or add data";
+        text = "filter data just typing ... Ex1:'" + data[0].id + "' Ex2:'#" + data_key + ":" + data[0][data_key];
+
+    } else {
+        text = "No data to query :(, import or add data";
     }
-    
+
     return text;
+}
+
+export function get_root_patient_of_family(family_id, patients) {
+    
+    var patients_family = get_all_patients_from_family(family_id, patients);
+    var root = treeBuilder(patients_family);
+    var root_patient = root.children[2];
+    
+    return root_patient;
+    
+}
+
+export function get_all_patients_from_family(family_id, patients) {
+
+    var array_patients_family = [];
+
+    for (var i = 0; i < patients.length; i++) {
+
+        var patient = patients[i];
+
+        if ("family_id" in patient) {
+
+            if (patient.family_id === family_id) {
+
+                array_patients_family.push(patient);
+            }
+        }
+    }
+
+    return array_patients_family;
 }
 

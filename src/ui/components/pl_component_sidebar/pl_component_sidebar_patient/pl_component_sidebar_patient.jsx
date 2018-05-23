@@ -164,29 +164,62 @@ export class PlComponentSidebarPatient extends Component {
 
             if (isObjectAFunction(this.props.perform_database_action)) {
                 
+                var new_data = {};
                 var to_remove = [];
+                var to_update = [];
                 
                 var patient = this.props.patient;
                 to_remove.push(patient.id);
 
                 var father = this.props.father;
                 var mother = this.props.mother;
-                
-                // we remove this patient from the "children" array of their parents
-                var father_children = without(father.children, patient.id);
-                var mother_children = without(mother.children, patient.id);
-                father.children = father_children;
-                mother.children = mother_children;
 
-                // in case this patient has a couple, this couple has to be removed to
-                if (!isObjectEmpty(patient.married_with)) to_remove.push(patient.married_with);
+                if (father && mother) {
+
+                    // we remove this patient from the "children" array of their parents
+                    var father_children = without(father.children, patient.id);
+                    var mother_children = without(mother.children, patient.id);
+                    father.children = father_children;
+                    mother.children = mother_children;
+
+                    to_update.push(father);
+                    to_update.push(mother);
+
+                    new_data["to_update"] = to_update;
+
+                }
                 
+                // in case this patient has a couple, should this couple be removed too?
+                if (!isObjectEmpty(patient.married_with)) {
+
+                    to_remove.push(patient.married_with);
+                    
+                    // TRY:
+                    // var couple_patient = findWhere(this.props.relatives, {"id":patient.married_with});
+
+                    // if ((!couple_patient.father) && (!couple_patient.mother)) {
+
+                    //     to_remove.push(patient.married_with);
+
+                    // }
+                    
+                }
+
+                new_data["to_remove"] = to_remove;
+
+                // var data = { 
+                //     "action": "remove_patient",
+                //     "data": { 
+                //         "to_remove": to_remove, 
+                //         "to_update": [ father, mother ] 
+                //     },
+                //     "patient_id": undefined,
+                //     "family_id": patient.family_id 
+                // };
+
                 var data = { 
                     "action": "remove_patient",
-                    "data": { 
-                        "to_remove": to_remove, 
-                        "to_update": [ father, mother ] 
-                    },
+                    "data": new_data,
                     "patient_id": undefined,
                     "family_id": patient.family_id 
                 };

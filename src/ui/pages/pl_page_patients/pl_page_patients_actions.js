@@ -210,8 +210,11 @@ export function perform_database_action(data,browserHistory,callback){
                 if(!isObjectEmpty(data.data)){
 
                     var family_id = data.data.id;
+                    var patient_id;
+                    if (data.data.root_patient !== undefined) patient_id = data.data.root_patient.id;
+                    else patient_id = undefined;
 
-                    var url_to_navigate = '/viewer?family_id='+family_id;
+                    var url_to_navigate = '/viewer?family_id='+family_id+'&patient_id='+patient_id;
                     browserHistory.push(url_to_navigate)
                 }
 

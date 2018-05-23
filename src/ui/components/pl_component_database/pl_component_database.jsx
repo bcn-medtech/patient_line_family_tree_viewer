@@ -45,7 +45,8 @@ import {
     clean_data_table,
     query_data,
     filter_data_by_ids,
-    create_search_bar_place_holder_from_data
+    create_search_bar_place_holder_from_data,
+    get_root_patient_of_family
 } from './pl_component_database_actions';
 
 export class PlComponentDatabase extends Component {
@@ -106,7 +107,12 @@ export class PlComponentDatabase extends Component {
 
                 var action = {};
                 action["action"] = "explore_family";
+                
+                var family_id = element_selected.id;
+                var patients = this.props.patients;
+                element_selected.root_patient = get_root_patient_of_family(family_id, patients);
                 action["data"] = element_selected;
+                
                 this.props.perform_database_action(action);
 
             } else if (this.state.mode === "patients") {
@@ -114,6 +120,7 @@ export class PlComponentDatabase extends Component {
                 var action = {};
                 action["action"] = "explore_patient";
                 action["data"] = element_selected;
+                
                 this.props.perform_database_action(action);
             }
 
