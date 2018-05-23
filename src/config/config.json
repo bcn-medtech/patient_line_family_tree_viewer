@@ -3,5 +3,6 @@
     "_comment_url_api":"https://api-physense.upf.edu",
     "url_api":"http://localhost:4000",
     "url_app":"http://localhost:3000",
-    "_comment_url_app":"http://patientlineimageviewer.surge.sh"
+    "_comment_url_app":"http://patientlineimageviewer.surge.sh",
+    "url_template_xlsx_workbook": "https://www.dl.dropboxusercontent.com/s/86g61c5pnxz5yeq/patient_line_family_tree_database_template.xlsx?dl=0"
 }

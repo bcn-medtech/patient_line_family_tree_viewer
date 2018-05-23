@@ -18,6 +18,7 @@ import {
 } from './../../../database/database';
 import { isObjectEmpty } from '../../../modules/rkt_module_object';
 
+import config from './../../../config/config.json';
 
 function import_families_in_database(worbook_json_map, callback) {
 
@@ -221,5 +222,13 @@ export function perform_database_action(data,browserHistory,callback){
             }
         }
     }
+
+}
+
+export function import_template_xlsx_workbook() {
+
+    // TODO
+    var url_template_xlsx_workbook = config.url_template_xlsx_workbook;
+
 
 }
