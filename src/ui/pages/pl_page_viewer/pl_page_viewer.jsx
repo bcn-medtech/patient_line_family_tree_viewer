@@ -26,8 +26,6 @@ import React, { Component } from 'react';
 //actions
 import {
   get_data,
-  get_family,
-  get_patient,
   perform_database_action
 } from './pl_page_viewer_actions';
 //components
@@ -38,7 +36,6 @@ import { PlComponentButtonCircleSelectable } from './../../components/pl_compone
 import { PlComponentLegend } from './../../components/pl_component_legend/pl_component_legend';
 //modules
 import { url_getParameterByName } from './../../../modules/rkt_module_url';
-import { isObjectEmpty } from './../../../modules/rkt_module_object';
 
 export default class PlPageViewer extends Component {
 

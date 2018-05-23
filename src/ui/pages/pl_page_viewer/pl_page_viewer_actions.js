@@ -36,7 +36,10 @@ import {
     patient_update
 } from './../../../database/database';
 
-import { label_patient_relatives } from './pl_page_viewer_action_data_analysis_patient_relations';
+import { 
+    label_patient_relatives,
+    get_all_patients_from_a_family_given_specific_patient
+} from './pl_page_viewer_action_data_analysis_patient_relations';
 
 import patients from './test_patients.json';
 
@@ -50,7 +53,8 @@ import {
 } from './pl_page_viewer_actions_d3_tree_parser';
 
 import {
-    get_patients_processed, get_family_processed
+    get_patients_processed, 
+    get_family_processed,
 } from './pl_page_viewer_actions_data_analysis';
 
 import { findWhere, map, omit, pluck } from 'underscore';
@@ -120,6 +124,8 @@ export function get_data(family_id, patient_id, callback) {
 
 
                 var patients = get_patients_processed(result.patients);
+                var patient = findWhere(patients,{id:patient_id})
+
 
                 get_family(family_id, function (family) {
 
@@ -191,11 +197,15 @@ export function get_data(family_id, patient_id, callback) {
                                         }
 
                                         var array_patients_family = get_all_patients_from_family(family_id, result.patients);
+                                        var array_patients_to_explore = [];
+                                        var array_family = [];
+                                        var array_patients_family_custom = get_all_patients_from_a_family_given_specific_patient(patient,result.patients,array_patients_to_explore,array_family);
+
                                         label_patient_relatives(patient, array_patients_family);
+                                        
                                         //create_virtual_patient(data);
                                         data["root"] = treeBuilder(array_patients_family);
                                         data["relatives"] = array_patients_family;
-
                                         data["siblings"] = siblingsBuilder(array_patients_family);
 
                                         callback(data);
@@ -225,8 +235,6 @@ export function get_data(family_id, patient_id, callback) {
                     }
 
                 });
-
-
 
             }
 
