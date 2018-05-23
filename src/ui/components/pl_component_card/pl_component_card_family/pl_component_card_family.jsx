@@ -28,6 +28,7 @@ import React, { Component } from 'react';
 import { PlComponentButtonCircle } from './../../pl_component_button/pl_component_button_circle/pl_component_button_circle';
 import { PlComponentButtonCircleSelectable } from './../../pl_component_button/pl_component_button_circle_selectable/pl_component_button_circle_selectable';
 import { PlComponentCardFamilyTextButton } from './pl_component_card_family_text_button/pl_component_card_family_text_button';
+import { PlComponentTextPlain } from './../../pl_component_text/pl_component_text_plain/pl_component_text_plain';
 import { PlComponentTextFieldEditable } from './../../pl_component_text_field_editable/pl_component_text_field_editable';
 
 //modules
@@ -174,6 +175,9 @@ export class PlComponentCardFamily extends Component {
                                 text={family_id}
                                 isEditionMode={mode_edit ? true : false}
                                 ref="family_id" />
+                        </div>
+                        <div className="grid-block shrink" style={{"paddingTop":"20px", "paddingBottom":"8px"}}>
+                            <PlComponentTextPlain text={family.description} />
                         </div>
                     </div>
                     <div className="grid-block shrink">

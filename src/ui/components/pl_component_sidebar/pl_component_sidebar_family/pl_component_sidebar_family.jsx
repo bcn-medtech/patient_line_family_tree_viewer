@@ -228,9 +228,6 @@ export class PlComponentSidebarFamily extends Component {
                         perform_database_action={this.props.perform_database_action}
                         on_ask_to_remove_family={this.on_ask_to_remove_family.bind(this)} />
                 </div>
-                <div className="grid-block pl_component_sidebar_family_element">
-                    {family.description}
-                </div>
                 {this.render_edit_family_button(mode_edit)}
                 {this.render_modal()}
             </div>
