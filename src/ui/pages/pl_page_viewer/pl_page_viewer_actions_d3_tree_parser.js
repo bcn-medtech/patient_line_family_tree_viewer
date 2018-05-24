@@ -1,3 +1,7 @@
+import { isObject } from "util";
+import { isObjectEmpty } from "../../../modules/rkt_module_object";
+import {findWhere} from "underscore";
+
 export function exploreChildrenTree(couplesArray, dataJson) {
     
     var children;
@@ -83,24 +87,44 @@ export function treeBuilder(dataJson) {
     var children = exploreChildrenTree(couplesArray, dataJson);
     familyTree = addVoidNode("1");
     familyTree.children = children;
-    //var counter = bloodRelatedCounter(couplesArray, dataJson, "00103");
     return familyTree;
 }
 
-export function siblingsBuilder(dataJson) {
-    
-    var couplesArray = getRootCouple(dataJson);
-    var siblingsTree = [];
-    siblingsTree.push(addSiblingObject(couplesArray));
-    var siblings = exploreSiblingsTree(couplesArray, dataJson);
-    if (typeof siblings != 'undefined') {
-        for (var i in siblings) {
-            siblingsTree = siblingsTree.concat(siblings[i]);
-            //console.log("siblingsTree: ", siblingsTree);
+export function siblingsBuilder(family_patients) {
+
+    var couples = [];
+
+    for(var i=0;i<family_patients.length;i++){
+
+        var patient = family_patients[i];
+
+        if(!isObjectEmpty(patient.father) && !isObjectEmpty(patient.mother)){
+
+            var couple = [];
+            couple.push(patient.father);
+            couple.push(patient.mother);
+            var siblings_object = addSiblingObject(couple);
+            var is_duplicated_couple= false;
+
+            for(var j=0;j<couples.length;j++){
+
+                var temp_couple = couples[j];
+
+                if(temp_couple.source.id === siblings_object.source.id && temp_couple.target.id === siblings_object.target.id){
+                    is_duplicated_couple=true;
+                }
+
+            }
+
+            if(!is_duplicated_couple){
+                couples.push(siblings_object);
+            }   
+            
+
         }
     }
-    //console.log("siblingsTree: ", siblingsTree);
-    return siblingsTree;
+
+    return couples;
 }
 
 export function addChildrenToTree(children, dataJson, familyTree) {

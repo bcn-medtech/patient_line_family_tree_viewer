@@ -43,11 +43,24 @@
 
     .pl_component_text_field_editable {
 
+        //margin-left: -5px;
+
         .pl_component_text_plain{
             color:unset;
             font: unset;
             max-height:unset;
             overflow:hidden;
+            padding-left: 5px;
+            //margin-left: -5px;
+        }
+
+        .pl_component_form_item_input_text{
+            background-color: $color_shadow-2;
+            padding-left: 5px;
+            border: 1px solid $color-normal-5;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            
         }
         
     }

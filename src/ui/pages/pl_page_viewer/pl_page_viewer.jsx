@@ -161,6 +161,13 @@ export default class PlPageViewer extends Component {
     var mother = this.state.mother;
     var relatives = this.state.relatives;
     var children = this.state.children;
+    var root = this.state.root;
+    var siblings = this.state.siblings;
+
+
+    console.log(relatives);
+    console.log(siblings);
+    
 
     var bottom_button_left =
       {
@@ -177,8 +184,8 @@ export default class PlPageViewer extends Component {
 
     if (this.state.root !== false && this.state.siblings !== false) {
       tree_viewer = <PlComponentFamilyTreeViewer
-        root={this.state.root}
-        siblings={this.state.siblings}
+        root={root}
+        siblings={siblings}
         set_patient={this.explore_new_patient.bind(this)}
         patient_id={patient.id}
       />;

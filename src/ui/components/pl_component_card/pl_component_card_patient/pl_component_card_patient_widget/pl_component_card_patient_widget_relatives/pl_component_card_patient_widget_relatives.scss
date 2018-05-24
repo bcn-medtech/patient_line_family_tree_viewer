@@ -8,12 +8,24 @@
     tr, td{
         width:100%;
     }
+
+    tr{
+        margin-top: 0px;
+        margin-bottom: 0px;
+        padding-bottom: 7px;
+        padding-top: 7px;
+        border-bottom: 1px solid $color-normal;
+
+        &:hover{
+            background-color: $color_shadow-2;
+        }
+    }
     
     .pl-component-card-patient-widget-relatives-item{
 
         align-items: center;
 
-        margin-bottom:15px;
+        //margin-bottom:15px;
         // padding-top: 5px;
         // padding-bottom: 5px;
         // background-color: $color_shadow_3;
@@ -31,6 +43,7 @@
             //padding-right:30px;
             padding-left:10px;//15px;
             padding-right:15px;
+            
         }
 
         .centered{

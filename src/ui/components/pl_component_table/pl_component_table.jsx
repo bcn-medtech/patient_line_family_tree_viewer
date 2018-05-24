@@ -119,7 +119,7 @@ export class PlComponentTable extends Component {
 
                         return (
                             
-                            <td key={index}>
+                            <td key={index} className="value-editable">
                                 <div className="grid-block shrink" >
                                     <PlComponentFormItemInputText
                                         className="pl_component_form_item_input_text"
