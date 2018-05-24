@@ -28,6 +28,7 @@ import {
   get_data,
   get_family,
   get_patient,
+  format_patient_to_export,
   perform_database_action
 } from './pl_page_viewer_actions';
 //components
@@ -92,7 +93,7 @@ export default class PlPageViewer extends Component {
   }
 
   componentDidMount() {
-    
+
     var location = window.location;
 
     if ("href" in location) {
@@ -112,6 +113,27 @@ export default class PlPageViewer extends Component {
 
   }
 
+  export_patient(patient) {
+
+    // "patient.xlsx" + "family_tree.png" will be exported in a zip
+    // patient
+    var patient_to_export = format_patient_to_export(patient);
+    var id_patient = patient_to_export.id;
+
+    // family tree
+    var family_tree_svg = this.refs.FamilyTreeViewer.get_family_tree_svg();
+
+    var data = {};
+    data["action"] = "export_patient";
+    data["data"] = {"patient":{}, "family_tree_svg": undefined};
+    // data["data"][id_patient] = [patient_to_export];
+    data["data"]["patient"][id_patient] = [patient_to_export];
+    data["data"]["family_tree_svg"] = family_tree_svg;
+
+    this.perform_database_action(data);
+
+  }
+
   perform_database_action(data) {
 
     var myComponent = this;
@@ -126,11 +148,11 @@ export default class PlPageViewer extends Component {
 
         var patient_id = url_getParameterByName("patient_id", location_url);
         var family_id = url_getParameterByName("family_id", location_url);
-        
+
         if ("family_id" in data) family_id = data.family_id;
 
         if (family_id === undefined) {
-          
+
           myComponent.on_click_button("go_back");
 
         } else {
@@ -138,7 +160,7 @@ export default class PlPageViewer extends Component {
           if ("patient_id" in data) patient_id = data.patient_id;
 
           if (patient_id === undefined) patient_id = myComponent.state.root.children[2].id; // family's root
-          
+
           myComponent.update_component_state_from_database(family_id, patient_id);
 
         }
@@ -192,6 +214,7 @@ export default class PlPageViewer extends Component {
 
     if (this.state.root !== false && this.state.siblings !== false) {
       tree_viewer = <PlComponentFamilyTreeViewer
+        ref={"FamilyTreeViewer"}
         root={this.state.root}
         siblings={this.state.siblings}
         set_patient={this.explore_new_patient.bind(this)}
@@ -205,6 +228,7 @@ export default class PlPageViewer extends Component {
         children={children}
         relatives={relatives}
         perform_database_action={this.perform_database_action.bind(this)}
+        export_patient={this.export_patient.bind(this)}
       />
     }
 

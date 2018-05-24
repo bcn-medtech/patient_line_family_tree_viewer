@@ -37,9 +37,8 @@ import {
 } from './../../../database/database';
 
 import {
-    // readXlsxWorkbook,
-    // convertWorkbookToCSVMap,
-    // convertCSVMapInJSONMap,
+    convertWorkbookToCSVMap,
+    writeAndExportXlsxWoorkbook,
     writeXlsxWoorkbook
 } from './../../../modules/rkt_pl_module_file_formats_xlsx';
 
@@ -62,6 +61,8 @@ import {
 
 import { findWhere, keys, map, omit, pluck } from 'underscore';
 
+var JSZip = require("jszip");
+var FileSaver = require('file-saver');
 
 export function get_data_from_database(callback) {
 
@@ -304,21 +305,21 @@ export function perform_database_action(data, callback) {
             } else if (data.action === "remove_patient") {
 
                 if ("data" in data) {
-                    
+
                     if ("to_remove" in data.data) {
 
                         var ids_patients_to_remove = data.data.to_remove;
-                        
+
                         patients_remove(ids_patients_to_remove, function (result) {
 
                             if (result) {
 
                                 if ("to_update" in data.data) {
-                                    
+
                                     var patients_to_update = data.data.to_update;
-                                    
+
                                     patients_update(patients_to_update, function (result) {
-                                        
+
                                         if (result) {
 
                                             callback(true);
@@ -604,12 +605,24 @@ export function perform_database_action(data, callback) {
                 }
 
             } else if (data.action === "export_patient") {
-                
+
                 if ("data" in data) {
 
-                    var id_patient = keys(data.data)[0];
-                    //writeXlsxWoorkbook(data.data);
-                    writeXlsxWoorkbook(data.data, {"name":id_patient});
+                    console.log(data.data);
+
+                    if ("patient" && "family_tree_svg" in data.data) {
+
+                        var patient = data.data["patient"];
+                        var family_tree_svg = data.data["family_tree_svg"];
+
+                        //var id_patient = keys(data.data.patient)[0];
+                        var id_patient = patient.id;
+                        var id_family = patient.family_id;
+                        
+                        load_zip_with_patient_and_family_tree(id_patient, id_family, patient, family_tree_svg);
+
+                    }
+
 
                 }
 
@@ -676,7 +689,7 @@ function patients_insert(patients, callback) {
 function patients_remove(patients, callback) {
 
     var removed_patients_counter = 0;
-    
+
     for (var i = 0; i < patients.length; i++) {
 
         var patient = patients[i];
@@ -700,3 +713,31 @@ function patients_remove(patients, callback) {
 
 }
 
+export function format_patient_to_export(patient) {
+
+    var patient_to_export = omit(patient, "depth", "parent", "no_parent", "num_relatives", "relation", "x", "y");
+    return patient_to_export;
+
+}
+
+function load_zip_with_patient_and_family_tree(workbook_filename, png_filename, patient, family_tree_svg) {
+    var zip = new JSZip();
+
+    // patient workbook
+    var patient_workbook = writeXlsxWoorkbook(patient);
+    zip.file(workbook_filename + ".xlsx", patient_workbook, { binary: true }); // ERROR
+    
+    // // family tree png
+    // // var canvas = pngs_data[i].canvas;
+    // // var dataURL = canvas.toDataURL();
+    // // var imgData = dataURL.replace("data:image/png;base64", "");
+
+    // // zip.file(imgName + ".png", imgData, { base64: true }); // <------------------------
+
+
+    zip.generateAsync({ type: "blob" })
+        .then(function (content) {
+            FileSaver.saveAs(content, workbook_filename + ".zip");
+        });
+
+}

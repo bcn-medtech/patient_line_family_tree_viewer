@@ -2,7 +2,7 @@ import {
     readXlsxWorkbook,
     convertWorkbookToCSVMap,
     convertCSVMapInJSONMap,
-    writeXlsxWoorkbook
+    writeAndExportXlsxWoorkbook
 } from './../../../modules/rkt_pl_module_file_formats_xlsx';
 
 import {
@@ -118,7 +118,7 @@ export function export_data(){
 
     get_data_from_database(function(data){
         
-        writeXlsxWoorkbook(data);
+        writeAndExportXlsxWoorkbook(data);
         
     })
 

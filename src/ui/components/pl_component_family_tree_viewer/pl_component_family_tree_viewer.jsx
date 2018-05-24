@@ -23,6 +23,7 @@ export class PlComponentFamilyTreeViewer extends Component {
             var size = { width: width, height: height };
             
             this.d3TreeCreator.create(el,size,root,siblings,patient_id,this.set_patient.bind(this));
+
         }
     }
 
@@ -51,6 +52,12 @@ export class PlComponentFamilyTreeViewer extends Component {
         if(isObjectAFunction(this.props.set_patient)){
             this.props.set_patient(id);
         }
+    }
+
+    get_family_tree_svg() {
+        
+        return document.getElementsByClassName("pl_component_family_tree_viewer")[0].children[0];
+
     }
 
     render() {

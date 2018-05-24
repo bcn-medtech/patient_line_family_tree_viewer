@@ -8,7 +8,6 @@ import { PlComponentSidebarHeader } from './pl_component_sidebar_header/pl_compo
 import { PlComponentSidebarFamily } from './pl_component_sidebar_family/pl_component_sidebar_family';
 import { PlComponentSidebarPatient } from './pl_component_sidebar_patient/pl_component_sidebar_patient';
 
-
 export class PlComponentSidebar extends Component {
 
     constructor() {
@@ -48,10 +47,11 @@ export class PlComponentSidebar extends Component {
                     children={children}
                     relatives={relatives}
                     perform_database_action={this.props.perform_database_action}
+                    export_patient={this.props.export_patient}
                 />
 
         } else if (mode === "family") {
-            
+
             sidebar =
                 <PlComponentSidebarFamily
                     family={family}

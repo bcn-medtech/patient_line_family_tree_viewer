@@ -138,7 +138,30 @@ export function readXlsxWorkbook(file, callback) {
 
 }
 
-export function writeXlsxWoorkbook(data, opts) {
+export function writeXlsxWoorkbook(data) {
+    
+    var workbook_names = keys(data);
+    const wb = XLSX.utils.book_new();
+    
+    for (var i = 0; i < workbook_names.length; i++) {
+
+        var workbook_array_json = data[workbook_names[i]];
+        var workbook_none_required_fields = get_none_required_fields(workbook_array_json);
+        var workbook_header = get_keys_from_data(workbook_array_json, workbook_none_required_fields);
+        var workbook_array_of_arrays = convert_json_to_array_of_arrays(workbook_header, workbook_array_json);
+        var workbook_header_plus_array_of_arrays = create_workbook_from_header_and_rows(workbook_header, workbook_array_of_arrays);
+        var sheet = XLSX.utils.aoa_to_sheet(workbook_header_plus_array_of_arrays);
+        var sheet_name = workbook_names[i];
+        XLSX.utils.book_append_sheet(wb,sheet, sheet_name);
+    }
+    
+    //return wb;
+    var wopts = { bookType:'xlsx', bookSST:false, type:'binary' };
+    return XLSX.write(wb, wopts);
+
+}
+
+export function writeAndExportXlsxWoorkbook(data, opts) {
 
     var workbook_names = keys(data);
     const wb = XLSX.utils.book_new();
