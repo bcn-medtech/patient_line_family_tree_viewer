@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import D3TreeCreator from './pl_component_family_tree_viewer_d3_creator/pl_component_family_tree_viewer_d3_creator';
-import {isObjectEmpty,isObjectAFunction} from './../../../modules/rkt_module_object';
+import { isObjectEmpty, isObjectAFunction } from './../../../modules/rkt_module_object';
+
+import { svg_to_png } from './pl_component_family_tree_viewer_actions.js';
 
 export class PlComponentFamilyTreeViewer extends Component {
 
@@ -11,18 +13,18 @@ export class PlComponentFamilyTreeViewer extends Component {
         this.d3TreeCreator = false;
     }
 
-    drawTree(root,patient_id,siblings){
+    drawTree(root, patient_id, siblings) {
 
-        if(!isObjectEmpty(root) && !isObjectEmpty(siblings)){
+        if (!isObjectEmpty(root) && !isObjectEmpty(siblings)) {
 
             this.d3TreeCreator = new D3TreeCreator();
-            
+
             var el = ReactDOM.findDOMNode(this);
             var height = el.clientHeight;
             var width = el.clientWidth;
             var size = { width: width, height: height };
-            
-            this.d3TreeCreator.create(el,size,root,siblings,patient_id,this.set_patient.bind(this));
+
+            this.d3TreeCreator.create(el, size, root, siblings, patient_id, this.set_patient.bind(this));
 
         }
     }
@@ -32,31 +34,49 @@ export class PlComponentFamilyTreeViewer extends Component {
         var root = this.props.root;
         var patient_id = this.props.patient_id;
         var siblings = this.props.siblings;
-        
-        this.drawTree(root,patient_id,siblings);
-        
+
+        this.drawTree(root, patient_id, siblings);
+
     }
 
-    componentWillReceiveProps(nextProps){
-        
-            var root = nextProps.root;
-            var patient_id = nextProps.patient_id;
-            var siblings = nextProps.siblings;
-    
-            this.d3TreeCreator._drawTree(root,siblings,patient_id,this.set_patient.bind(this));
+    componentWillReceiveProps(nextProps) {
+
+        var root = nextProps.root;
+        var patient_id = nextProps.patient_id;
+        var siblings = nextProps.siblings;
+
+        this.d3TreeCreator._drawTree(root, siblings, patient_id, this.set_patient.bind(this));
     }
 
     //Events
-    set_patient(id){
+    set_patient(id) {
 
-        if(isObjectAFunction(this.props.set_patient)){
+        if (isObjectAFunction(this.props.set_patient)) {
             this.props.set_patient(id);
         }
     }
 
     get_family_tree_svg() {
-        
+
+        var el = document.getElementsByClassName("pl_component_family_tree_viewer")[0];
+        var width = el.offsetWidth;
+        var height = el.offsetHeight;
+        var svg = el.children[0];
+
         return document.getElementsByClassName("pl_component_family_tree_viewer")[0].children[0];
+
+    }
+
+    get_family_tree_png(callback) {
+
+        var el = document.getElementsByClassName("pl_component_family_tree_viewer")[0];
+        var width = el.offsetWidth;
+        var height = el.offsetHeight;
+        var svg = el.children[0];
+        
+        svg_to_png(svg, width, height, function (png) {
+            callback(png)
+        });
 
     }
 

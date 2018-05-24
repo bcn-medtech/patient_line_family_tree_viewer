@@ -115,22 +115,25 @@ export default class PlPageViewer extends Component {
 
   export_patient(patient) {
 
+    var myComponent = this;
+
     // "patient.xlsx" + "family_tree.png" will be exported in a zip
     // patient
     var patient_to_export = format_patient_to_export(patient);
     var id_patient = patient_to_export.id;
 
     // family tree
-    var family_tree_svg = this.refs.FamilyTreeViewer.get_family_tree_svg();
+    this.refs.FamilyTreeViewer.get_family_tree_png(function (family_tree_png) {
 
-    var data = {};
-    data["action"] = "export_patient";
-    data["data"] = {"patient":{}, "family_tree_svg": undefined};
-    // data["data"][id_patient] = [patient_to_export];
-    data["data"]["patient"][id_patient] = [patient_to_export];
-    data["data"]["family_tree_svg"] = family_tree_svg;
+      var data = {};
+      data["action"] = "export_patient";
+      data["data"] = { "patient": {}, "family_tree_png": undefined };
+      data["data"]["patient"][id_patient] = [patient_to_export];
+      data["data"]["family_tree_png"] = family_tree_png;
 
-    this.perform_database_action(data);
+      myComponent.perform_database_action(data);
+
+    });
 
   }
 

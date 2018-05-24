@@ -162,17 +162,6 @@ export class PlComponentSidebarPatient extends Component {
 
         if (isObjectAFunction(this.props.export_patient)) {
 
-            // var patient_to_export = this.props.patient;
-            // patient_to_export = omit(patient_to_export, "depth", "parent", "no_parent", "num_relatives", "relation", "x", "y");
-            // var id_patient = patient_to_export.id;
-
-            // var data = {};
-            // data["action"] = "export_patient";
-            // data["data"] = {};
-            // data["data"][id_patient] = [patient_to_export];
-            
-            // this.props.on_ask_to_export_patient(data);
-
             var patient = this.props.patient;
             this.props.export_patient(patient);
 

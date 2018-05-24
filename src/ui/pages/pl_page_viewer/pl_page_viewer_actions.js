@@ -607,19 +607,16 @@ export function perform_database_action(data, callback) {
             } else if (data.action === "export_patient") {
 
                 if ("data" in data) {
-
-                    console.log(data.data);
-
-                    if ("patient" && "family_tree_svg" in data.data) {
+                    
+                    if ("patient" && "family_tree_png" in data.data) {
 
                         var patient = data.data["patient"];
-                        var family_tree_svg = data.data["family_tree_svg"];
-
-                        //var id_patient = keys(data.data.patient)[0];
-                        var id_patient = patient.id;
-                        var id_family = patient.family_id;
+                        var family_tree_png = data.data["family_tree_png"];
                         
-                        load_zip_with_patient_and_family_tree(id_patient, id_family, patient, family_tree_svg);
+                        var id_patient = keys(data.data.patient)[0];
+                        var id_family = patient[id_patient][0].family_id;
+                        
+                        load_zip_with_patient_and_family_tree(id_patient, id_family, patient, family_tree_png);
 
                     }
 
@@ -721,19 +718,21 @@ export function format_patient_to_export(patient) {
 }
 
 function load_zip_with_patient_and_family_tree(workbook_filename, png_filename, patient, family_tree_svg) {
+    
     var zip = new JSZip();
-
+    
     // patient workbook
     var patient_workbook = writeXlsxWoorkbook(patient);
-    zip.file(workbook_filename + ".xlsx", patient_workbook, { binary: true }); // ERROR
+    zip.file(workbook_filename + ".xlsx", patient_workbook, { binary: true });
     
-    // // family tree png
-    // // var canvas = pngs_data[i].canvas;
-    // // var dataURL = canvas.toDataURL();
-    // // var imgData = dataURL.replace("data:image/png;base64", "");
+    // family tree png
+    // var canvas = family_tree_svg.canvas;
+    // var dataURL = canvas.toDataURL();
+    // var imgData = dataURL.replace("data:image/png;base64", "");
 
-    // // zip.file(imgName + ".png", imgData, { base64: true }); // <------------------------
-
+    // zip.file(png_filename + ".png", imgData, { base64: true }); // <------------------------
+    // console.log(family_tree_svg);
+    zip.file(png_filename + ".png", family_tree_svg, { base64: true });
 
     zip.generateAsync({ type: "blob" })
         .then(function (content) {
