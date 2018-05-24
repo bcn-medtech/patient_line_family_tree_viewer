@@ -279,21 +279,6 @@ export class PlComponentCardPatientStatusCombobox extends Component {
 
         return (
             <div>
-                <div className="grid-block vertical pl-component-card-patient-status-combobox">
-                    <div className="grid-block align-center">
-                        <PlComponentCardPatientStatus status={status} gender={gender} />
-
-                    </div>
-                    <div className="grid-block align-center text">status</div>
-                </div>
-            </div>
-        );
-    }
-
-    render_element_edit_mode(status, gender) {
-
-        return (
-            <div>
                 <a className="grid-block vertical pl-component-card-patient-status-combobox tooltip">
                     <div className="grid-block align-center">
                         <PlComponentCardPatientStatus status={status} gender={gender} />
@@ -309,23 +294,16 @@ export class PlComponentCardPatientStatusCombobox extends Component {
         );
     }
 
+    
+
     render() {
 
         var status = this.state.status;
         var gender = this.state.gender;
-        var mode_edit = this.props.mode_edit;
-
-        var element;
-
-        if (mode_edit) {
-            element = this.render_element_edit_mode(status, gender);
-        } else {
-            element = this.render_element(status, gender);
-        }
 
         return (
             <div className="grid-block">
-                {element}
+                {this.render_element(status, gender)}
             </div>
 
         );

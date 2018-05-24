@@ -55,11 +55,12 @@ export default class PlPageViewer extends Component {
     };
   }
 
-  update_component_state_from_database(family_id, patient_id) {
+  update_component_state_from_database(patient_id) {
 
     var myComponent = this;
+    var relatives = this.state.relatives;
 
-    get_data(family_id, patient_id, function (result) {
+    get_data(patient_id,relatives, function (result) {
 
       if ("patient" in result) {
 
@@ -95,9 +96,8 @@ export default class PlPageViewer extends Component {
     if ("href" in location) {
 
       var location_url = location.href;
-      var family_id = url_getParameterByName("family_id", location_url);
       var patient_id = url_getParameterByName("patient_id", location_url);
-      this.update_component_state_from_database(family_id, patient_id);
+      this.update_component_state_from_database(patient_id);
 
     }
 
@@ -105,7 +105,7 @@ export default class PlPageViewer extends Component {
 
   explore_new_patient(id) {
 
-    this.update_component_state_from_database(this.state.family.id, id);
+    this.update_component_state_from_database(id);
 
   }
 
@@ -120,26 +120,14 @@ export default class PlPageViewer extends Component {
       if ("href" in location) {
 
         var location_url = location.href;
-
         var patient_id = url_getParameterByName("patient_id", location_url);
-        var family_id = url_getParameterByName("family_id", location_url);
-        
-        if ("family_id" in data) family_id = data.family_id;
 
-        if (family_id === undefined) {
-          
-          myComponent.on_click_button("go_back");
+      
+        if ("patient_id" in data) patient_id = data.patient_id;
+        if (patient_id === undefined) patient_id = myComponent.state.root.children[2].id; // family's root
+        myComponent.update_component_state_from_database(patient_id);
 
-        } else {
-
-          if ("patient_id" in data) patient_id = data.patient_id;
-
-          if (patient_id === undefined) patient_id = myComponent.state.root.children[2].id; // family's root
-          console.log(patient_id);
-          myComponent.update_component_state_from_database(family_id, patient_id);
-
-        }
-
+        //#TODO do something when family is removed
       }
 
     });

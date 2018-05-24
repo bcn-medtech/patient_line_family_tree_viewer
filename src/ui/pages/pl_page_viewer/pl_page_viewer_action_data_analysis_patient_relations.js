@@ -396,16 +396,13 @@ export function label_patient_relatives(patient, relatives) {
     }
 }
 
-export function get_all_patients_from_a_family_given_specific_patient(patient,patients,array_patients_to_explore,family){
-    
-    console.log(patient);
+function get_all_patients_from_a_family_given_specific_patient(patient,patients,array_patients_to_explore,family){
 
     if(isObjectEmpty(family) && isObjectEmpty(array_patients_to_explore)){
 
         family.push(patient);
         array_patients_to_explore = get_patient_relatives(patient,patients);
 
-        console.log(array_patients_to_explore);
         get_all_patients_from_a_family_given_specific_patient(array_patients_to_explore[0],patients,array_patients_to_explore,family);
         
     }else{
@@ -415,30 +412,17 @@ export function get_all_patients_from_a_family_given_specific_patient(patient,pa
             family.push(patient);
             array_patients_to_explore.push(get_patient_relatives(patient,patients));
             array_patients_to_explore = flatten(array_patients_to_explore);
-            //console.log(array_patients_to_explore);
-            array_patients_to_explore = difference(family,array_patients_to_explore);
-            console.log(array_patients_to_explore);
+            array_patients_to_explore = difference(array_patients_to_explore,family);
+            get_all_patients_from_a_family_given_specific_patient(array_patients_to_explore[0],patients,array_patients_to_explore,family);
 
-
-
-            //console.log(array_patients_to_explore);
-            //array_patients_to_explore = difference(family,array_patients_to_explore);
-
-            //console.log(array_patients_to_explore);
-            
-            //console.log(array_patients_to_explore);
-            //array_patients_to_explore = whithout(array_patients_to_explore,family);
-            //console.log(array_patients_to_explore);
-
-
-            //console.log("hola");
-            /*array_patients_to_explore.shift();
-            array_patients_to_explore = get_patient_relatives(patient,patients);
-            get_all_patients_from_a_family_given_specific_patient(array_patients_to_explore[0],patients,array_patients_to_explore,family);*/
-        }else{
-
-            console.log(family);
         }
     }
+}
 
+export function get_family_by_patient(patient,database){
+
+    var array_patients_to_explore = [];
+    var array_family = [];
+    get_all_patients_from_a_family_given_specific_patient(patient,database,array_patients_to_explore,array_family);
+    return array_family;
 }

@@ -36,9 +36,9 @@ import {
     patient_update
 } from './../../../database/database';
 
-import { 
+import {
     label_patient_relatives,
-    get_all_patients_from_a_family_given_specific_patient
+    get_family_by_patient
 } from './pl_page_viewer_action_data_analysis_patient_relations';
 
 import patients from './test_patients.json';
@@ -53,8 +53,9 @@ import {
 } from './pl_page_viewer_actions_d3_tree_parser';
 
 import {
-    get_patients_processed, 
+    get_patients_processed,
     get_family_processed,
+    order_family_by_ids
 } from './pl_page_viewer_actions_data_analysis';
 
 import { findWhere, map, omit, pluck } from 'underscore';
@@ -114,132 +115,143 @@ export function get_patient(patient_id, callback) {
     })
 }
 
-export function get_data(family_id, patient_id, callback) {
+export function get_data(patient_id,relatives, callback) {
 
-    if (!isObjectEmpty(family_id)) {
+    get_data_from_database(function (result) {
 
-        get_data_from_database(function (result) {
-
-            if ("patients" in result) {
+        if ("patients" in result) {
 
 
-                var patients = get_patients_processed(result.patients);
-                var patient = findWhere(patients,{id:patient_id})
+            var patients = get_patients_processed(result.patients);
+            var patient = findWhere(patients, { id: patient_id });
 
+            get_family(patient.family_id, function (family) {
 
-                get_family(family_id, function (family) {
+                if (isObjectAnArray(family)) {
 
-                    if (isObjectAnArray(family)) {
+                    if (family.length > 0) {
 
-                        if (family.length > 0) {
+                        var data = {};
+                        //data["family"] = family[0];
+                        data["family"] = get_family_processed(patients, family[0]);
 
-                            var data = {};
-                            //data["family"] = family[0];
-                            data["family"] = get_family_processed(patients, family[0]);
+                        if (data["family"].num_family_members > 0) {
 
-                            if (data["family"].num_family_members > 0) {
+                            if (!isObjectEmpty(patient_id)) {
 
-                                if (!isObjectEmpty(patient_id)) {
+                                var patient = findWhere(patients, { id: patient_id });
 
-                                    var patient = findWhere(patients, { id: patient_id });
+                                if (!isObjectEmpty(patient)) {
 
-                                    if (!isObjectEmpty(patient)) {
+                                    data["patient"] = patient;
 
-                                        data["patient"] = patient;
+                                    if ("father" in patient) {
 
+                                        var father = false;
 
+                                        if (!isObjectEmpty(patient.father)) {
 
-                                        if ("father" in patient) {
-
-                                            var father = false;
-
-                                            if (!isObjectEmpty(patient.father)) {
-
-                                                father = findWhere(patients, { id: patient.father });
-                                            }
-
-                                            data["father"] = father;
-
+                                            father = findWhere(patients, { id: patient.father });
                                         }
 
-                                        if ("mother" in patient) {
+                                        data["father"] = father;
 
-                                            var mother = false;
-
-                                            if (!isObjectEmpty(patient.mother)) {
-
-                                                mother = findWhere(patients, { id: patient.mother });
-
-                                            }
-
-                                            data["mother"] = mother;
-                                        }
-
-                                        if ("children" in patient) {
-
-                                            var children = [];
-
-                                            if (!isObjectEmpty(patient.children)) {
-
-                                                for (var i = 0; i < patient.children.length; i++) {
-
-                                                    var child = findWhere(patients, { id: patient.children[i] });
-
-                                                    if (!isObjectEmpty(child)) {
-                                                        children.push(child);
-                                                    }
-
-                                                }
-
-                                                data["children"] = children;
-
-                                            }
-                                        }
-
-                                        var array_patients_family = get_all_patients_from_family(family_id, result.patients);
-                                        var array_patients_to_explore = [];
-                                        var array_family = [];
-                                        var array_patients_family_custom = get_all_patients_from_a_family_given_specific_patient(patient,result.patients,array_patients_to_explore,array_family);
-
-                                        label_patient_relatives(patient, array_patients_family);
-                                        
-                                        //create_virtual_patient(data);
-                                        data["root"] = treeBuilder(array_patients_family);
-                                        data["relatives"] = array_patients_family;
-                                        data["siblings"] = siblingsBuilder(array_patients_family);
-
-                                        callback(data);
-
-                                    } else {
-                                        console.log("error");
                                     }
 
-                                } else {
+                                    if ("mother" in patient) {
+
+                                        var mother = false;
+
+                                        if (!isObjectEmpty(patient.mother)) {
+
+                                            mother = findWhere(patients, { id: patient.mother });
+
+                                        }
+
+                                        data["mother"] = mother;
+                                    }
+
+                                    if ("children" in patient) {
+
+                                        var children = [];
+
+                                        if (!isObjectEmpty(patient.children)) {
+
+                                            for (var i = 0; i < patient.children.length; i++) {
+
+                                                var child = findWhere(patients, { id: patient.children[i] });
+
+                                                if (!isObjectEmpty(child)) {
+                                                    children.push(child);
+                                                }
+
+                                            }
+
+                                            data["children"] = children;
+
+                                        }
+                                    }
+
+                                    var array_patients_family;
+
+                                    if(!isObjectEmpty(relatives)){
+
+                                        var temp_family  = get_family_by_patient(patient, result.patients);
+
+                                        if(relatives.length === temp_family.length){
+                                            
+                                            //Get family ids
+                                            var relatives_ids = pluck(relatives,"id");
+                                            temp_family = order_family_by_ids(temp_family,relatives_ids);
+                                            array_patients_family = temp_family;
+
+                                        }else{
+                                            
+                                            array_patients_family = temp_family;
+                                        }
+
+                                    }else{
+                                        
+                                        array_patients_family = get_family_by_patient(patient, result.patients);
+                                    }
+                                    
+                                    label_patient_relatives(patient, array_patients_family);
+
+                                    data["root"] = treeBuilder(array_patients_family);
+                                    data["relatives"] = array_patients_family;
+                                    data["siblings"] = siblingsBuilder(array_patients_family);
 
                                     callback(data);
+
+                                } else {
+                                    console.log("error");
                                 }
 
                             } else {
 
-                                console.log("error");
-
+                                callback(data);
                             }
 
                         } else {
 
                             console.log("error");
+
                         }
 
                     } else {
+
                         console.log("error");
                     }
 
-                });
+                } else {
+                    console.log("error");
+                }
 
-            }
+            });
 
-        });
-    }
+        }
+
+    });
 }
 
 export function perform_database_action(data, callback) {
@@ -305,21 +317,21 @@ export function perform_database_action(data, callback) {
             } else if (data.action === "remove_patient") {
 
                 if ("data" in data) {
-                    
+
                     if ("to_remove" in data.data) {
 
                         var ids_patients_to_remove = data.data.to_remove;
-                        
+
                         patients_remove(ids_patients_to_remove, function (result) {
 
                             if (result) {
 
                                 if ("to_update" in data.data) {
-                                    
+
                                     var patients_to_update = data.data.to_update;
-                                    
+
                                     patients_update(patients_to_update, function (result) {
-                                        
+
                                         if (result) {
 
                                             callback(true);
@@ -667,7 +679,7 @@ function patients_insert(patients, callback) {
 function patients_remove(patients, callback) {
 
     var removed_patients_counter = 0;
-    
+
     for (var i = 0; i < patients.length; i++) {
 
         var patient = patients[i];

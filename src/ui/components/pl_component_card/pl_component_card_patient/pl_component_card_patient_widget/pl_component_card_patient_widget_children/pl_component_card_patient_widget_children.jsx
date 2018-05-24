@@ -197,13 +197,13 @@ export class PlComponentCardPatientWidgetChildren extends Component {
         if (mode_edit) {
 
             var edition_buttons_data = [
-                {
+                /*{
                     "name": "search",
                     "icon": <svg width='15' height='15' viewBox='0 0 16 16' fillRule='evenodd'><path d='M6 2c2.2 0 4 1.8 4 4s-1.8 4-4 4-4-1.8-4-4 1.8-4 4-4zm0-2C2.7 0 0 2.7 0 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm10 13.8L13.8 16l-3.6-3.6 2.2-2.2z'></path><path d='M16 13.8L13.8 16l-3.6-3.6 2.2-2.2z'></path></svg>
-                },
+                },*/
                 {
                     "name": "add_child_existing_family",
-                    "icon": <svg width='15' height='15' viewBox='0 0 24 24' fillRule='evenodd'><path d='M14 0h-4v10H0v4h10v10h4V14h10v-4H14z'></path></svg>
+                    "icon": <svg width='10' height='10' viewBox='0 0 24 24' fillRule='evenodd'><path d='M14 0h-4v10H0v4h10v10h4V14h10v-4H14z'></path></svg>
                 }
             ];
 
