@@ -119,7 +119,7 @@ function create_workbook_from_header_and_rows(header, rows) {
 }
 
 export function readXlsxWorkbook(file, callback) {
-
+    
     var reader = new FileReader();
 
     if (file.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || file.name.indexOf("xlsx") != -1) {
@@ -156,7 +156,7 @@ export function writeXlsxWoorkbook(data, opts) {
     }
 
     if (opts && opts.name) XLSX.writeFile(wb, opts.name+".xlsx");
-    else XLSX.writeFile(wb, "database.xlsx")
+    else XLSX.writeFile(wb, "database.xlsx");
 
 }
 

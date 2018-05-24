@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
+//modules
+import { isObjectEmpty, isObjectAFunction, isObjectAnArray } from './../../../modules/rkt_module_object';
+
 //components
 import { PlComponentSidebarHeader } from './pl_component_sidebar_header/pl_component_sidebar_header';
 import { PlComponentSidebarFamily } from './pl_component_sidebar_family/pl_component_sidebar_family';
 import { PlComponentSidebarPatient } from './pl_component_sidebar_patient/pl_component_sidebar_patient';
 
-//#TODO organizar
-import { isObjectEmpty, isObjectAFunction, isObjectAnArray } from './../../../modules/rkt_module_object';
-import { keys } from 'underscore';
 
 export class PlComponentSidebar extends Component {
 

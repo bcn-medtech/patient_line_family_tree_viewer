@@ -24,11 +24,11 @@
 
 import React, { Component } from 'react';
 import {isObjectEmpty} from './../../../modules/rkt_module_object';
-
 import {
     blob_getNumberOfFiles,
 } from './../../../modules/rkt_module_blob';
 
+import config from './../../../config/config.json';
 
 export class PlComponentDragAndDrop extends Component {
 
@@ -106,6 +106,15 @@ export class PlComponentDragAndDrop extends Component {
         }
     }
 
+    load_template_xlsx_workbook() {
+
+        var load_button = document.getElementById("load-template-button");
+        var url_template_xlsx_workbook = config.url_template_xlsx_workbook;
+
+        load_button.href = url_template_xlsx_workbook;
+
+    }
+
     render() {
 
         return (
@@ -114,7 +123,7 @@ export class PlComponentDragAndDrop extends Component {
                 <div className="grid-block"><svg className="grid-block align-center pl-upload-icon" width="200" height="200" viewBox="0 0 24 18" fillRule="evenodd">
                     <path d="M6 9h1V8H6v1zM4 9h1V8H4v1zm-1-.5a1.5 1.5 0 1 1-2.999.001A1.5 1.5 0 0 1 3 8.5zM13 12a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm9.5-5c-.652 0-1.2.42-1.408 1h-4.234a3.968 3.968 0 0 0-.85-1.61l2.274-3.41c.072.008.144.02.218.02A1.5 1.5 0 1 0 17 1.5c0 .39.152.74.395 1.007l-2.132 3.198A3.978 3.978 0 0 0 13 5a3.988 3.988 0 0 0-3.858 3H8v1h1a3.999 3.999 0 0 0 6.263 3.295l2.132 3.198A1.49 1.49 0 0 0 17 16.5a1.5 1.5 0 1 0 1.5-1.5c-.074 0-.146.012-.218.02l-2.274-3.41c.61-.702.992-1.607.992-2.61h4.092c.207.58.756 1 1.408 1a1.5 1.5 0 0 0 0-3z" />
                 </svg></div>
-                <div className="grid-block align-center text-center pl-upload-message"><p>Drag and drop database<br/>or click <a>here</a> to import a file</p></div>
+                <div className="grid-block align-center text-center pl-upload-message"><p>Drag and drop your database<br/>or click <a id="load-template-button" onClick={this.load_template_xlsx_workbook.bind(this)}>here</a> to download a template database</p></div>
             </div>
         );
     }

@@ -17,6 +17,7 @@ $rkt-main-color:$color-normal;
 
 .pl-upload-icon{
     fill:$rkt-main-color;
+    padding-top:45px;
     -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
     -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
     -webkit-animation-iteration-count: 30;
@@ -26,8 +27,10 @@ $rkt-main-color:$color-normal;
 }
 
 .pl-upload-message{
-    padding-top: 10px;
+    padding-top: 30px;
     a{
+        width: fit-content;
+        height: fit-content;
         color:$rkt_viewer_patient_line_header_bg_color;
         &:hover{
             color:$color-normal-2
