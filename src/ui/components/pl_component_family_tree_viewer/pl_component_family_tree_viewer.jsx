@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import D3TreeCreator from './pl_component_family_tree_viewer_d3_creator/pl_component_family_tree_viewer_d3_creator';
 import { isObjectEmpty, isObjectAFunction } from './../../../modules/rkt_module_object';
 
-import { svg_to_png } from './pl_component_family_tree_viewer_actions.js';
-
 export class PlComponentFamilyTreeViewer extends Component {
 
     constructor() {
@@ -56,27 +54,10 @@ export class PlComponentFamilyTreeViewer extends Component {
         }
     }
 
-    get_family_tree_svg() {
+    get_family_tree() {
 
-        var el = document.getElementsByClassName("pl_component_family_tree_viewer")[0];
-        var width = el.offsetWidth;
-        var height = el.offsetHeight;
-        var svg = el.children[0];
-
-        return document.getElementsByClassName("pl_component_family_tree_viewer")[0].children[0];
-
-    }
-
-    get_family_tree_png(callback) {
-
-        var el = document.getElementsByClassName("pl_component_family_tree_viewer")[0];
-        var width = el.offsetWidth;
-        var height = el.offsetHeight;
-        var svg = el.children[0];
-        
-        svg_to_png(svg, width, height, function (png) {
-            callback(png)
-        });
+        return document.getElementsByClassName("pl_component_family_tree_viewer")[0];
+        // return document.getElementsByClassName("pl_component_family_tree_viewer")[0].children[0]; // svg element
 
     }
 

@@ -61,9 +61,6 @@ import {
 
 import { findWhere, keys, map, omit, pluck } from 'underscore';
 
-var JSZip = require("jszip");
-var FileSaver = require('file-saver');
-
 export function get_data_from_database(callback) {
 
     var data = {}
@@ -607,19 +604,19 @@ export function perform_database_action(data, callback) {
             } else if (data.action === "export_patient") {
 
                 if ("data" in data) {
-                    
-                    if ("patient" && "family_tree_png" in data.data) {
+
+                    if ("patient" && "family_tree" in data.data) {
 
                         var patient = data.data["patient"];
-                        var family_tree_png = data.data["family_tree_png"];
-                        
+                        //var family_tree = data.data["family_tree"];
+
                         var id_patient = keys(data.data.patient)[0];
-                        var id_family = patient[id_patient][0].family_id;
-                        
-                        load_zip_with_patient_and_family_tree(id_patient, id_family, patient, family_tree_png);
+                        writeAndExportXlsxWoorkbook(patient, { "name": id_patient }); // for the moment, only a xlsx of the patient is exported
+                        // var id_family = patient[id_patient][0].family_id;
+
+                        // load_zip_with_patient_and_family_tree(id_patient, id_family, patient, family_tree);
 
                     }
-
 
                 }
 
@@ -717,26 +714,40 @@ export function format_patient_to_export(patient) {
 
 }
 
-function load_zip_with_patient_and_family_tree(workbook_filename, png_filename, patient, family_tree_svg) {
+/*function load_zip_with_patient_and_family_tree(workbook_filename, pdf_filename, patient, family_tree) {
+
+    // INSTALL JSZip: npm install jszip;
+    // install jsPDF: npm install jspdf --save
+    // install html2pdf: npm install --save html2pdf.js
+    // INSTALL FileSaver: npm install file-saver --save
+
+
+    // import JSZip from "jszip";
+    // import jsPDF from "jspdf";
+    // import html2pdf from "html2pdf.js";
+    // import FileSaver from "file-saver";
+
     
     var zip = new JSZip();
-    
+
     // patient workbook
     var patient_workbook = writeXlsxWoorkbook(patient);
     zip.file(workbook_filename + ".xlsx", patient_workbook, { binary: true });
-    
-    // family tree png
-    // var canvas = family_tree_svg.canvas;
-    // var dataURL = canvas.toDataURL();
-    // var imgData = dataURL.replace("data:image/png;base64", "");
 
-    // zip.file(png_filename + ".png", imgData, { base64: true }); // <------------------------
-    // console.log(family_tree_svg);
-    zip.file(png_filename + ".png", family_tree_svg, { base64: true });
+    // family tree pdf
+    // basic example of jsPDF
+    //var family_tree_pdf = new jsPDF();
+    //family_tree_pdf.text("Hello world!", 10, 10);
+    //zip.file(pdf_filename + ".pdf", family_tree_pdf.output());
+
+    // test with html2pdf (not really working)
+    // var width = family_tree.offsetWidth;
+    // var height = family_tree.offsetHeight;
+    // zip.file(pdf_filename + ".pdf", html2pdf(family_tree).output());
 
     zip.generateAsync({ type: "blob" })
         .then(function (content) {
             FileSaver.saveAs(content, workbook_filename + ".zip");
         });
 
-}
+}*/
