@@ -1,6 +1,7 @@
 import {
     filter
 } from 'underscore';
+//mport { isObjectEmpty } from '../../../../modules/rkt_module_object';
 //Using global variables
 
 const d3 = window.d3;
@@ -69,10 +70,12 @@ export default class TreeDisplayer {
         // Compute the layout.
         var tree = d3.layout.tree()
             .size([width, height]).separation(function () {
-                return 0.1;
+                return 0.5;
             }),
             nodes = tree.nodes(root),
             links = tree.links(nodes);
+
+        console.log(root);
 
         var nodes = filter(nodes, function (item) {
 
@@ -90,7 +93,6 @@ export default class TreeDisplayer {
             .enter().append("path")
             .attr("class", "link")
             .attr("d", elbow);
-
 
         var nodes = svg.selectAll(".node")
             .data(nodes)
@@ -180,7 +182,7 @@ export default class TreeDisplayer {
 
         //nuevo miembro
         nodes.append("circle").filter(function (d) { return d.status === "nuevo-miembro-familia"; })
-            .attr("class","nuevo-miembro-familia")
+            .attr("class", "nuevo-miembro-familia")
             .attr("r", 20)
             .attr("id", function (d) {
                 return d.id;
@@ -200,7 +202,7 @@ export default class TreeDisplayer {
 
         //nuevo miembro selected
         nodes.append("circle").filter(function (d) { return d.status === "nuevo-miembro-familia"; })
-            .attr("class","nuevo-miembro-familia")
+            .attr("class", "nuevo-miembro-familia")
             .filter(function (d) {
                 return d.id === patient_id;
             })
@@ -208,7 +210,7 @@ export default class TreeDisplayer {
             .attr("id", function (d) {
                 return d.id;
             })
-            .attr("class", "node_selected")            
+            .attr("class", "node_selected")
             .attr("display", function (d) {
                 if (d.hidden) {
                     return "none"
@@ -302,6 +304,7 @@ export default class TreeDisplayer {
         **/
         function sblingLine(d, i) {
 
+            console.log("sblingLine");
             //start point
             var start = allNodes.filter(function (v) {
 
@@ -345,6 +348,7 @@ export default class TreeDisplayer {
             function recurse(node) {
 
                 if (typeof node !== "string") {
+
                     if (node.children) node.children.forEach(recurse);
                     if (!node.id) node.id = ++i;
                     n.push(node);

@@ -41,7 +41,7 @@ import {
     get_family_by_patient
 } from './pl_page_viewer_action_data_analysis_patient_relations';
 
-import patients from './test_patients.json';
+//import patients from './test_patients.json';
 
 //modules
 import { isObjectEmpty, isObjectAnArray } from '../../../modules/rkt_module_object';
