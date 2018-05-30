@@ -34,7 +34,7 @@ export default class TreeDisplayer {
             .attr("transform", "translate(-30, -300)");
 
         this._drawTree(root, sib, patient_id, set_patient);
-
+        
     }
 
     update(el, state) {
@@ -54,6 +54,7 @@ export default class TreeDisplayer {
         svg.selectAll("text").remove();
         svg.selectAll("circle").remove();
         svg.selectAll(".sibling").remove();
+        svg.selectAll("g").remove();
     }
 
     _drawTree(root, sib, patient_id, set_patient) {
@@ -91,11 +92,6 @@ export default class TreeDisplayer {
             .attr("class", "link")
             .attr("d", elbow);
 
-
-        var nodes = svg.selectAll(".node")
-            .data(nodes)
-            .enter();
-
         //First draw sibling line with blue line
         svg.selectAll(".sibling")
             .data(siblings)
@@ -103,202 +99,95 @@ export default class TreeDisplayer {
             .attr("class", "sibling")
             .attr("d", sblingLine);
 
-        // Create the node rectangles for males.
-        nodes.append("rect")
-            .filter(function (d) {
-                return d.gender === "male";
+        // Nodes
+        var node_containers = svg.selectAll(".node")
+            .data(nodes.filter(function (d) {
+                return !d.hidden;
+            }))
+            .enter()
+            .append("g")
+            .attr("transform", function (d) {
+                return "translate(" + d.x + "," + d.y + ")"
             })
-            .attr("class", function (d) { return d.status; })
-            .attr("height", 40)
-            .attr("width", 40)
-            .attr("id", function (d) {
-                return d.id;
-            })
-            .attr("display", function (d) {
-                if (d.hidden) {
-                    return "none";
-                } else {
-                    return "";
-                }
-            })
-            .attr("x", function (d) { return d.x - 20; })
-            .attr("y", function (d) { return d.y - 20; })
-            .on('click', function (d) {
-                set_patient(d.id);
-            });
+            
+        // add the svg shapes of the nodes
+        var node_shapes = node_containers.append("use")
+            .attr("xlink:href", function(d) { return "#tree-" + d.status + "-" + d.gender })
+            .attr("id", function (d) { return d.id; })
+        
+        // and add a border to the node that reacts when hovering/selecting the nodes
+        var node_borders = node_containers.each(function(d) {
 
-        //Create the node rectangles for male selected
-        nodes.append("rect")
-            .filter(function (d) {
-                return d.gender === "male";
-            })
-            .filter(function (d) {
-                return d.id === patient_id;
-            })
-            .attr("class", function (d) { return d.status; })
-            .attr("class", "node_selected")
-            .attr("height", 40)
-            .attr("width", 40)
-            .attr("id", function (d) {
-                return d.id;
-            })
-            .attr("display", function (d) {
-                if (d.hidden) {
-                    return "none";
-                } else {
-                    return "";
-                }
-            })
-            .attr("x", function (d) { return d.x - 20; })
-            .attr("y", function (d) { return d.y - 20; })
-            .on('click', function (d) {
-                set_patient(d.id);
-            });
+            var node = d3.select(this);
 
-        nodes.append("text").filter(function (d) { return d.gender === "male"; })
-            .text(function (d) {
-                var info;
-                info = d.name;
-                return info;
-            })
+            // male: rect
+            if (d.gender === "male") {
+
+                node.append("rect")
+                    .attr("width", "40")
+                    .attr("height", "40")
+                    .attr("x", -20)
+                    .attr("y", -20)
+                    .attr("class", function (d) {
+                        if (d.id === patient_id) return "node-border selected";
+                        else return "node-border";
+                    })
+                    .on('click', function (d) { set_patient(d.id); })
+
+            // female: circle
+            } else if (d.gender === "female") {
+
+                node.append("circle")
+                    .attr("r", "20")
+                    .attr("class", function (d) {
+                        if (d.id === patient_id) return "node-border selected";
+                        else return "node-border";
+                    })
+                    .on('click', function (d) { set_patient(d.id); })
+
+            // undefined gender: diamond
+            } else if (d.gender === "") {
+
+                node.append("rect")
+                    .attr("width", "40")
+                    .attr("height", "40")
+                    .attr("x", -28)
+                    .attr("transform", "rotate(45, 20, 20)")
+                    .attr("class", function (d) {
+                        if (d.id === patient_id) return "node-border selected";
+                        else return "node-border";
+                    })
+                    .on('click', function (d) { set_patient(d.id); })
+
+            }
+
+        })
+
+        // Text labels of the nodes
+        var nodes_text = node_containers.append("text")
             .attr("class", "text")
             .attr("dy", "0em")
-            .attr("x", function (d) { return d.x - 20; })
-            .attr("y", function (d) { return d.y + 40; });
-
-        nodes.append("text").filter(function (d) { return d.gender === "male"; })
-            .text(function (d) {
-                var info;
-                info = d.nhc;
-                return info;
-            })
-            .attr("class", "text")
-            .attr("dy", "1em")
-            .attr("x", function (d) { return d.x - 20; })
-            .attr("y", function (d) { return d.y + 40; });
-
-
-        //nuevo miembro
-        nodes.append("circle").filter(function (d) { return d.status === "nuevo-miembro-familia"; })
-            .attr("class","nuevo-miembro-familia")
-            .attr("r", 20)
-            .attr("id", function (d) {
-                return d.id;
-            })
-            .attr("display", function (d) {
-                if (d.hidden) {
-                    return "none"
-                } else {
-                    return ""
-                };
-            })
-            .attr("cx", function (d) { return d.x - 4; })
-            .attr("cy", function (d) { return d.y - 4; })
-            .on('click', function (d) {
-                set_patient(d.id);
+            .attr("x", -20)
+            .attr("y", 50)
+            // .attr("y", function(d) {
+            //     if (d.gender !== "") return 40
+            //     else return 50
+            // })
+            .html(function (d) {
+                var x = -20;
+                // var y;
+                // if (d.gender !== "") y = 60
+                // else y = 70
+                var y = 70
+                
+                var name = d.name;
+                var nhc = "<tspan x=" + x + " y=" + y + ">" + d.nhc + "</tspan>";
+                return name + nhc;
             });
 
-        //nuevo miembro selected
-        nodes.append("circle").filter(function (d) { return d.status === "nuevo-miembro-familia"; })
-            .attr("class","nuevo-miembro-familia")
-            .filter(function (d) {
-                return d.id === patient_id;
-            })
-            .attr("r", 20)
-            .attr("id", function (d) {
-                return d.id;
-            })
-            .attr("class", "node_selected")            
-            .attr("display", function (d) {
-                if (d.hidden) {
-                    return "none"
-                } else {
-                    return ""
-                };
-            })
-            .attr("cx", function (d) { return d.x - 4; })
-            .attr("cy", function (d) { return d.y - 4; })
-            .on('click', function (d) {
-                set_patient(d.id);
-            });
-
-        // Create the node circles for females.
-        nodes.append("circle").filter(function (d) { return d.gender === "female"; })
-            .attr("class", function (d) {
-                return d.status;
-            })
-            .attr("r", 20)
-            .attr("id", function (d) {
-                return d.id;
-            })
-            .attr("display", function (d) {
-                if (d.hidden) {
-                    return "none"
-                } else {
-                    return ""
-                };
-            })
-            .attr("cx", function (d) { return d.x - 4; })
-            .attr("cy", function (d) { return d.y - 4; })
-            .on('click', function (d) {
-                set_patient(d.id);
-            });
-
-        // Create the node circles for females selected
-        nodes.append("circle")
-            .filter(function (d) {
-                return d.gender === "female";
-            })
-            .filter(function (d) {
-                return d.id === patient_id;
-            })
-            .attr("class", function (d) {
-                return d.status;
-            })
-            .attr("class", "node_selected")
-            .attr("r", 20)
-            .attr("id", function (d) {
-                return d.id;
-            })
-            .attr("display", function (d) {
-                if (d.hidden) {
-                    return "none"
-                } else {
-                    return ""
-                };
-            })
-            .attr("cx", function (d) { return d.x - 4; })
-            .attr("cy", function (d) { return d.y - 4; })
-            .on('click', function (d) {
-                set_patient(d.id);
-            });
-
-        // Create the node text label.
-        nodes.append("text").filter(function (d) { return d.gender === "female"; })
-            .text(function (d) {
-                var info;
-                info = d.name + "  \n";
-                return info;
-            })
-            .attr("class", "text")
-            .attr("dy", "0em")
-            .attr("x", function (d) { return d.x - 20; })
-            .attr("y", function (d) { return d.y + 40; });
-
-        nodes.append("text").filter(function (d) { return d.gender === "female"; })
-            .text(function (d) {
-                var info;
-                info = d.nhc;
-                return info;
-            })
-            .attr("class", "text")
-            .attr("dy", "1em")
-            .attr("x", function (d) { return d.x - 20; })
-            .attr("y", function (d) { return d.y + 40; });
-
-
+        
         /**
-        This defines teh line between siblings.
+        This defines the line between siblings.
         **/
         function sblingLine(d, i) {
 
@@ -354,6 +243,7 @@ export default class TreeDisplayer {
             recurse(root);
             return n;
         }
+
         /**
         This draws the lines between nodes.
         **/
