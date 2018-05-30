@@ -107,12 +107,12 @@ export class PlComponentDatabase extends Component {
 
                 var action = {};
                 action["action"] = "explore_family";
-                
+
                 var family_id = element_selected.id;
                 var patients = this.props.patients;
                 element_selected.root_patient = get_root_patient_of_family(family_id, patients);
                 action["data"] = element_selected;
-                
+
                 this.props.perform_database_action(action);
 
             } else if (this.state.mode === "patients") {
@@ -120,7 +120,7 @@ export class PlComponentDatabase extends Component {
                 var action = {};
                 action["action"] = "explore_patient";
                 action["data"] = element_selected;
-                
+
                 this.props.perform_database_action(action);
             }
 
@@ -240,6 +240,12 @@ export class PlComponentDatabase extends Component {
                 this.props.perform_database_action(action);
             }
 
+        } else if (action === "delete_database") {
+
+            this.setState({
+                menu_action: "delete_database"
+            });
+
         } else if (action === "close") {
 
             this.setState({
@@ -253,27 +259,42 @@ export class PlComponentDatabase extends Component {
 
         if (isObjectAFunction(this.props.perform_database_action)) {
 
-            var action = {}
-
             if (this.state.mode === "families") {
 
+                var action = {}
                 action["action"] = "add_family";
                 action["data"] = data;
 
-            } else if (this.state.mode === "patients") {
-
-                action["action"] = "add_patient";
-                action["data"] = data;
+                this.props.perform_database_action(action);
 
             }
-
-            this.props.perform_database_action(action);
 
         }
 
         this.setState({
             menu_action: false
         });
+
+    }
+
+    on_delete_database(answer) {
+
+        if (answer === "Yes") {
+        
+            if (isObjectAFunction(this.props.perform_database_action)) {
+
+                var action = {};
+                action["action"] = "delete_database";
+                action["data"] = {};
+                this.props.perform_database_action(action);
+            }
+
+        } else if (answer === "Cancel") {
+
+            this.refs.Modal.closeModal();
+
+        }
+        
 
     }
 
@@ -287,37 +308,49 @@ export class PlComponentDatabase extends Component {
 
     render_modal() {
 
-        var form;
         var mode = this.state.mode;
         var menu_action = this.state.menu_action;
 
-        if (menu_action === "add") {
+        if (!isObjectEmpty(menu_action)) {
+            
+            if (mode === "families") {
 
-            if (!isObjectEmpty(mode)) {
+                var modal_title, modal_content;
 
-                if (mode === "families") {
-
-                    form = <PlComponentForm form={plComponentDatabaseModalAddSchemeFamily} onclicksave={this.on_save_add_modal.bind(this)} />;
-
-                } else if (mode === "patients") {
-
-                    form = <PlComponentForm form={plComponentDatabaseModalAddSchemePatients} onclicksave={this.on_save_add_modal.bind(this)} />;
-
+                if (menu_action === "add") {
+    
+                    modal_title = "Add Family";
+                    modal_content = <PlComponentForm form={plComponentDatabaseModalAddSchemeFamily} onclicksave={this.on_save_add_modal.bind(this)} />;
+                    
+    
+                } else if (menu_action === "delete_database") {
+    
+                    modal_title = "Delete Database";
+                    var message_to_show = "Are you sure you want to delete the database?";
+                    var modal_content =
+                        <PlComponentConfirmMessage
+                            message={message_to_show}
+                            extra_message={"You will not be able to undo it"}
+                            onclickanswerbutton={this.on_delete_database.bind(this)}
+                        />
+    
                 }
-
+    
+                return (
+                    <PlComponentModal
+                        ref="Modal"
+                        title={modal_title}
+                        Modal_content={modal_content}
+                        onclickesc={this.on_close_add_modal.bind(this)} />
+                );
+    
             }
 
-            return (
-                <PlComponentModal
-                    ref="ModalForm"
-                    title={"Add Patient"}
-                    Modal_content={form}
-                    onclickesc={this.on_close_add_modal.bind(this)} />
-            );
-
         }
+        
 
     }
+
 
     render() {
 
@@ -327,26 +360,37 @@ export class PlComponentDatabase extends Component {
         var data_keys_selected;
         var data_filtered;
         var search_bar_place_holder;
-        var table_mode;
-
-        var menu_items = [
-            {
-                "name": "add",
-                "icon": <svg width='16' height='16' viewBox='0 0 24 24' fillRule='evenodd'><path d='M14 0h-4v10H0v4h10v10h4V14h10v-4H14z'></path></svg>
-            },
-            {
-                "name": "export",
-                "icon": <svg width='15' height='15' viewBox='0 0 24 24' fillRule='evenodd'><path d='M19 9.4l-1.2-1.1L13 13V0h-2v13L6.2 8.3 5 9.4l7 6.6z'></path><path d='M22 14v6H2v-6H0v10h24V14z'></path></svg>
-            }
-        ]
+        var menu_items;
 
         if (this.state.mode === "families") {
             data = families;
             data_keys_selected = this.state.family_columns_selected;
 
+            menu_items = [
+                {
+                    "name": "add",
+                    "icon": <svg width='16' height='16' viewBox='0 0 24 24' fillRule='evenodd'><path d='M14 0h-4v10H0v4h10v10h4V14h10v-4H14z'></path></svg>
+                },
+                {
+                    "name": "export",
+                    "icon": <svg width='15' height='15' viewBox='0 0 24 24' fillRule='evenodd'><path d='M19 9.4l-1.2-1.1L13 13V0h-2v13L6.2 8.3 5 9.4l7 6.6z'></path><path d='M22 14v6H2v-6H0v10h24V14z'></path></svg>
+                },
+                {
+                    "name": "delete_database",
+                    "icon": <svg width='10' height='18' viewBox='0 0 16 24' fillRule='evenodd'><path d='M4 0h8v2H4zM0 3v4h1v17h14V7h1V3H0zm13 18H3V8h10v13z'></path><path d='M5 10h2v9H5zm4 0h2v9H9z'></path></svg>
+                }
+            ]
+
         } else {
             data = patients;
             data_keys_selected = this.state.patient_columns_selected;
+
+            menu_items = [
+                {
+                    "name": "export",
+                    "icon": <svg width='15' height='15' viewBox='0 0 24 24' fillRule='evenodd'><path d='M19 9.4l-1.2-1.1L13 13V0h-2v13L6.2 8.3 5 9.4l7 6.6z'></path><path d='M22 14v6H2v-6H0v10h24V14z'></path></svg>
+                }
+            ]
 
         }
 
@@ -369,8 +413,7 @@ export class PlComponentDatabase extends Component {
                 <PlComponentMenuTags data={data} keys_selected={data_keys_selected} on_select_tag={this.database_show_column.bind(this)} on_un_selected_tag={this.database_hide_column.bind(this)}></PlComponentMenuTags>
                 <div className="grid-block table">
                     <PlComponentTable data={data_filtered}
-                        on_click_row={this.onClickRow.bind(this)}
-                        table_mode={table_mode} />
+                        on_click_row={this.onClickRow.bind(this)} />
                 </div>
                 <div className="grid-block shrink">
                     <Pagination

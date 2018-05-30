@@ -14,7 +14,8 @@ import {
     family_insert,
     patient_insert,
     patients_get_list,
-    families_get_list
+    families_get_list,
+    clear_database
 } from './../../../database/database';
 import { isObjectEmpty } from '../../../modules/rkt_module_object';
 
@@ -124,7 +125,7 @@ export function export_data(){
 
 }
 
-//This method creates the structure needed to import data in the databa
+//This method creates the structure needed to import data in the database
 export function create_database_structure_from_form_json(form_json){
 
     var database_json={};
@@ -148,29 +149,7 @@ export function perform_database_action(data,browserHistory,callback){
 
         if("action" in data){
 
-            if(data.action === "add_patient"){
-
-                if("data" in data){
-
-                    var form = data.data;
-
-                    if("form" in form){
-
-                        var patient = create_database_structure_from_form_json(form.form);
-
-                        patient_insert(patient, function (result) {
-
-                            if(result){
-
-                                callback(true);
-                            }
-
-                        });
-                    }
-                }
-
-
-            }else if(data.action === "add_family"){
+            if(data.action === "add_family"){
 
                 if("data" in data){
 
@@ -194,6 +173,18 @@ export function perform_database_action(data,browserHistory,callback){
             }else if(data.action === "export"){
 
                 export_data();
+
+            }else if(data.action === "delete_database"){
+
+                clear_database(function(result){
+
+                    if (result){
+
+                        callback(true);
+
+                    }
+
+                });
 
             }else if(data.action === "explore_patient"){                
 

@@ -150,7 +150,6 @@ export default class PlPagePatients extends Component {
     var body;
 
     var families = this.state.families;
-    
     var patients = this.state.patients;
 
     if (isObjectEmpty(families)) {

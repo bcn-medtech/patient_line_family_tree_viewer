@@ -65,28 +65,37 @@ export default class PlPageViewer extends Component {
 
     get_data(family_id, patient_id, function (result) {
 
-      if ("patient" in result) {
+      if (result) {
 
-        myComponent.setState({
-          root: result.root,
-          siblings: result.siblings,
-          family: result.family,
-          patient: result.patient,
-          mother: result.mother,
-          father: result.father,
-          children: result.children,
-          relatives: result.relatives
-        });
+        if ("patient" in result) {
+
+          myComponent.setState({
+            root: result.root,
+            siblings: result.siblings,
+            family: result.family,
+            patient: result.patient,
+            mother: result.mother,
+            father: result.father,
+            children: result.children,
+            relatives: result.relatives
+          });
+  
+        } else {
+  
+          myComponent.setState({
+            root: result.root,
+            siblings: result.siblings,
+            family: result.family,
+          });
+  
+        }
 
       } else {
 
-        myComponent.setState({
-          root: result.root,
-          siblings: result.siblings,
-          family: result.family,
-        });
+        myComponent.on_click_button("go_back");
 
       }
+      
 
     });
 

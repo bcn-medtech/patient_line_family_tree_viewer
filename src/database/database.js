@@ -144,3 +144,16 @@ export function patient_remove(id, callback) {
             callback(true);
         })
 }
+
+export function clear_database(callback) {
+
+    db.patients
+        .clear()
+        .then(function (deleteCount) {
+            db.families
+                .clear()
+                .then(function (deleteCount) {
+                    callback(true);
+                })
+        })
+}

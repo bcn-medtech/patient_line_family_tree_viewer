@@ -67,13 +67,20 @@ export function get_data_from_database(callback) {
 
     patients_get_list(function (result) {
 
-        data["patients"] = result;
+        if (!isObjectEmpty(result)) {
+            data["patients"] = result;
+        }
+        //data["patients"] = result;
 
         families_get_list(function (result) {
 
-            data["families"] = result;
-
-            callback(data);
+            if (!isObjectEmpty(result)) {
+                data["families"] = result;
+            }
+            //data["families"] = result;
+            console.log(isObjectEmpty(data))
+            if (isObjectEmpty(data)) callback(false)
+            else callback(data);
 
         });
 
@@ -121,117 +128,124 @@ export function get_data(family_id, patient_id, callback) {
 
         get_data_from_database(function (result) {
 
-            if ("patients" in result) {
+            if (!result) {
+
+                callback(false)
+
+            } else {
+
+                if ("patients" in result) {
+
+                    var patients = get_patients_processed(result.patients);
+
+                    get_family(family_id, function (family) {
+
+                        if (isObjectAnArray(family)) {
+
+                            if (family.length > 0) {
+
+                                var data = {};
+                                //data["family"] = family[0];
+                                data["family"] = get_family_processed(patients, family[0]);
+
+                                if (data["family"].num_family_members > 0) {
+
+                                    if (!isObjectEmpty(patient_id)) {
+
+                                        var patient = findWhere(patients, { id: patient_id });
+
+                                        if (!isObjectEmpty(patient)) {
+
+                                            data["patient"] = patient;
 
 
-                var patients = get_patients_processed(result.patients);
 
-                get_family(family_id, function (family) {
+                                            if ("father" in patient) {
 
-                    if (isObjectAnArray(family)) {
+                                                var father = false;
 
-                        if (family.length > 0) {
+                                                if (!isObjectEmpty(patient.father)) {
 
-                            var data = {};
-                            //data["family"] = family[0];
-                            data["family"] = get_family_processed(patients, family[0]);
+                                                    father = findWhere(patients, { id: patient.father });
+                                                }
 
-                            if (data["family"].num_family_members > 0) {
-
-                                if (!isObjectEmpty(patient_id)) {
-
-                                    var patient = findWhere(patients, { id: patient_id });
-
-                                    if (!isObjectEmpty(patient)) {
-
-                                        data["patient"] = patient;
-
-
-
-                                        if ("father" in patient) {
-
-                                            var father = false;
-
-                                            if (!isObjectEmpty(patient.father)) {
-
-                                                father = findWhere(patients, { id: patient.father });
-                                            }
-
-                                            data["father"] = father;
-
-                                        }
-
-                                        if ("mother" in patient) {
-
-                                            var mother = false;
-
-                                            if (!isObjectEmpty(patient.mother)) {
-
-                                                mother = findWhere(patients, { id: patient.mother });
+                                                data["father"] = father;
 
                                             }
 
-                                            data["mother"] = mother;
-                                        }
+                                            if ("mother" in patient) {
 
-                                        if ("children" in patient) {
+                                                var mother = false;
 
-                                            var children = [];
+                                                if (!isObjectEmpty(patient.mother)) {
 
-                                            if (!isObjectEmpty(patient.children)) {
-
-                                                for (var i = 0; i < patient.children.length; i++) {
-
-                                                    var child = findWhere(patients, { id: patient.children[i] });
-
-                                                    if (!isObjectEmpty(child)) {
-                                                        children.push(child);
-                                                    }
+                                                    mother = findWhere(patients, { id: patient.mother });
 
                                                 }
 
-                                                data["children"] = children;
-
+                                                data["mother"] = mother;
                                             }
+
+                                            if ("children" in patient) {
+
+                                                var children = [];
+
+                                                if (!isObjectEmpty(patient.children)) {
+
+                                                    for (var i = 0; i < patient.children.length; i++) {
+
+                                                        var child = findWhere(patients, { id: patient.children[i] });
+
+                                                        if (!isObjectEmpty(child)) {
+                                                            children.push(child);
+                                                        }
+
+                                                    }
+
+                                                    data["children"] = children;
+
+                                                }
+                                            }
+
+                                            var array_patients_family = get_all_patients_from_family(family_id, result.patients);
+                                            label_patient_relatives(patient, array_patients_family);
+                                            //create_virtual_patient(data);
+                                            data["root"] = treeBuilder(array_patients_family);
+                                            data["relatives"] = array_patients_family;
+
+                                            data["siblings"] = siblingsBuilder(array_patients_family);
+
+                                            callback(data);
+
+                                        } else {
+                                            console.log("error");
                                         }
 
-                                        var array_patients_family = get_all_patients_from_family(family_id, result.patients);
-                                        label_patient_relatives(patient, array_patients_family);
-                                        //create_virtual_patient(data);
-                                        data["root"] = treeBuilder(array_patients_family);
-                                        data["relatives"] = array_patients_family;
-
-                                        data["siblings"] = siblingsBuilder(array_patients_family);
+                                    } else {
 
                                         callback(data);
-
-                                    } else {
-                                        console.log("error");
                                     }
 
                                 } else {
 
-                                    callback(data);
+                                    console.log("error");
+
                                 }
 
                             } else {
 
                                 console.log("error");
-
                             }
 
                         } else {
-
                             console.log("error");
                         }
 
-                    } else {
-                        console.log("error");
-                    }
-
-                });
+                    });
 
 
+
+                }
 
             }
 
