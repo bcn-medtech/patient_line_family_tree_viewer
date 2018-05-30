@@ -75,8 +75,6 @@ export default class TreeDisplayer {
             nodes = tree.nodes(root),
             links = tree.links(nodes);
 
-        console.log(root);
-
         var nodes = filter(nodes, function (item) {
 
             if (typeof item !== "string") {
@@ -275,7 +273,10 @@ export default class TreeDisplayer {
                 set_patient(d.id);
             });
 
-        // Create the node text label.
+
+     
+
+        // Create the node text labe
         nodes.append("text").filter(function (d) { return d.gender === "female"; })
             .text(function (d) {
                 var info;

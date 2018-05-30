@@ -115,7 +115,7 @@ export function get_patient(patient_id, callback) {
     })
 }
 
-export function get_data(patient_id,relatives, callback) {
+export function get_data(patient_id, relatives, callback) {
 
     get_data_from_database(function (result) {
 
@@ -194,34 +194,33 @@ export function get_data(patient_id,relatives, callback) {
 
                                     var array_patients_family;
 
-                                    if(!isObjectEmpty(relatives)){
+                                    if (!isObjectEmpty(relatives)) {
 
-                                        var temp_family  = get_family_by_patient(patient, result.patients);
+                                        var temp_family = get_family_by_patient(patient, result.patients);
 
-                                        if(relatives.length === temp_family.length){
-                                            
+                                        if (relatives.length === temp_family.length) {
+
                                             //Get family ids
-                                            var relatives_ids = pluck(relatives,"id");
-                                            temp_family = order_family_by_ids(temp_family,relatives_ids);
+                                            var relatives_ids = pluck(relatives, "id");
+                                            temp_family = order_family_by_ids(temp_family, relatives_ids);
                                             array_patients_family = temp_family;
 
-                                        }else{
-                                            
+                                        } else {
+
                                             array_patients_family = temp_family;
                                         }
 
-                                    }else{
-                                        
+                                    } else {
+
                                         array_patients_family = get_family_by_patient(patient, result.patients);
                                     }
-                                    
+
                                     label_patient_relatives(patient, array_patients_family);
-
-                                    data["root"] = treeBuilder(array_patients_family);
-                                    data["relatives"] = array_patients_family;
-                                    data["siblings"] = siblingsBuilder(array_patients_family);
-
-                                    callback(data);
+                                   
+                                        data["root"] = treeBuilder(array_patients_family);
+                                        data["relatives"] = array_patients_family;
+                                        data["siblings"] = siblingsBuilder(array_patients_family);
+                                        callback(data);
 
                                 } else {
                                     console.log("error");

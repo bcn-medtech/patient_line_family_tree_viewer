@@ -1,12 +1,17 @@
 import { isObjectEmpty } from "../../../modules/rkt_module_object";
-import { 
+import {
     findWhere,
-    flatten
+    flatten,
 } from "underscore";
 
-import {
+/*import {
     deleteDuplicatedElementsFromArray
-} from './../../../modules/rkt_module_object';
+} from './../../../modules/rkt_module_object';*/
+
+import {
+    order_patients_by_couple
+} from './pl_page_viewer_actions/pl_page_viewer_actions_d3_tree_model/pl_page_viewer_action_d3_tree_model_organizer';
+
 
 export function exploreChildrenTree(couplesArray, dataJson) {
 
@@ -51,23 +56,26 @@ export function treeBuilder(dataJson) {
             var root_couple = couplesArray[i];
 
             children.push(exploreChildrenTree(root_couple, dataJson));
-            
+
         }
 
 
     } else {
+
         children.push(dataJson[0]);
+
     }
 
     children = flatten(children);
 
-    children = deleteDuplicatedElementsFromArray(children,"id","-2");
-    console.log(children);
+    var futureArray = order_patients_by_couple(children);
 
     familyTree = addVoidNode("1");
-    familyTree.children = children;
+    familyTree.children = futureArray;
 
     return familyTree;
+
+
 }
 
 export function siblingsBuilder(family_patients) {
@@ -207,8 +215,8 @@ function getChildren(parentsArray, dataJson) {
             }
         }
     }
-    for (var i in dataJson) {
-        for (var j in childrenArray) {
+    for (i in dataJson) {
+        for (j in childrenArray) {
             if (dataJson[i].married_with === childrenArray[j].id) {
                 childrenArray.push(dataJson[i]);
             }
