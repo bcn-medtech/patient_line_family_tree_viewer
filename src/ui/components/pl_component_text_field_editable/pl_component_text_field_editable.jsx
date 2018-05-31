@@ -41,7 +41,6 @@ export class PlComponentTextFieldEditable extends Component {
 
             return (
                 <PlComponentTextPlain text={text} />
-                //text
             );
 
         } else {
@@ -66,7 +65,7 @@ export class PlComponentTextFieldEditable extends Component {
 
         return (
 
-            <div className="grid-block shrink pl_component_text_field_editable">
+             <div className="grid-block shrink pl_component_text_field_editable">
                 {this.renderTextField(text)}
             </div>
 

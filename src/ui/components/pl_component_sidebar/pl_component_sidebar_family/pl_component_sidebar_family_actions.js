@@ -1,8 +1,10 @@
 
-export function update_family_from_text_field_editable(edited_name, edited_id, original_id, family) {
+export function update_family_from_text_field_editable(edited_name, edited_id, original_id, edited_description, edited_symptoms, family) {
 
     var new_data;
     family.name = edited_name;
+    family.description = edited_description;
+    family.symptoms = edited_symptoms;
 
     if (original_id === edited_id) {
 

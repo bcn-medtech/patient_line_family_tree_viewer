@@ -70,31 +70,6 @@ export class PlComponentCardFamily extends Component {
         }
     }
 
-    // perform_database_action(data_to_update) { // TODO
-
-    //     if (isObjectAFunction(this.props.perform_database_action)) {
-
-    //         var key_to_update = data_to_update.key;
-    //         var updated_value = data_to_update.value;
-
-    //         var patient = this.props.patient;
-    //         var updated_family = mapObject(patient, function(value, key){
-    //             return value;
-    //         });
-
-    //         updated_family[key_to_update] = updated_value;
-
-    //         var data = {
-    //             "action": "edit_family",
-    //             "data": updated_family,
-    //             "family_id": updated_family.id
-    //         };
-    //          this.props.perform_database_action(data);
-
-
-    //     }
-    // }
-
     render_menu(family, mode_menu) {
 
         var family_num_members;
@@ -102,16 +77,6 @@ export class PlComponentCardFamily extends Component {
         if ("num_family_members" in family) family_num_members = family.num_family_members;
 
         var mode_family_members = false;
-
-        // if (!isObjectEmpty(children)) {
-        //     if (isObjectAnArray(children)) {
-        //         patient_num_children = children.length;
-        //     } else {
-        //         patient_num_children = 1;
-        //     }
-        // } else {
-        //     patient_num_children = 0;
-        // }
 
         if (mode_menu === "family members") mode_family_members = true;
 
@@ -149,13 +114,12 @@ export class PlComponentCardFamily extends Component {
                 "selected": mode_edit
             }
 
-        if ("id" in family) {
-            family_id = family.id;
-        }
-
-        if ("name" in family) {
-            family_name = family.name;
-        }
+        var family_id = family.id;
+        var family_name = family.name;
+        var family_description = family.description;
+        if (isObjectEmpty(family_description)) family_description = "Description";
+        var family_symptoms = family.symptoms;
+        if (isObjectEmpty(family_symptoms)) family_symptoms = "Symptoms";
 
         return (
             <div className="grid-block vertical pl-component-card-family">
@@ -176,11 +140,22 @@ export class PlComponentCardFamily extends Component {
                                 isEditionMode={mode_edit ? true : false}
                                 ref="family_id" />
                         </div>
-                        <div className="grid-block shrink" style={{"paddingTop":"20px", "paddingBottom":"8px"}}>
-                            <PlComponentTextPlain text={family.description} />
+                        <div className="grid-block shrink" style={{ "paddingTop": "20px"}}>
+                            <h4>
+                                <PlComponentTextFieldEditable
+                                    text={family_description}
+                                    isEditionMode={mode_edit ? true : false}
+                                    ref="family_description" />
+                            </h4>
+                        </div>
+                        <div className="grid-block shrink" style={{"paddingBottom": "8px" }}>
+                            <PlComponentTextFieldEditable
+                                text={family_symptoms}
+                                isEditionMode={mode_edit ? true : false}
+                                ref="family_symptoms" />
                         </div>
                     </div>
-                    <div className="grid-block shrink">
+                    <div className="grid-block pl-component-card-family-edition-buttons shrink">
                         <PlComponentButtonCircleSelectable
                             text={""}
                             icon={button_edit.icon}
@@ -195,8 +170,7 @@ export class PlComponentCardFamily extends Component {
                             borderselectedcolor={"#5C4EE5"}
                             selected={button_edit.selected}
                             onclickelement={this.on_edit_family.bind(this, button_edit.name)} />
-                    </div>
-                    <div className="grid-block shrink">
+
                         <PlComponentButtonCircle
                             icon={button_delete.icon}
                             backgroundcolor={"transparent"}

@@ -11,10 +11,14 @@
     .card-header{
         margin-left: 10px;
         margin-right: 10px;
+
+        h4{
+            width: 100%;
+        }
     }
 
     .card-item{
-        padding-right: 5px;
+        padding-right: 5px;  
     }
 
     .card-row{
@@ -23,20 +27,11 @@
         margin-top: 15px;
         align-items:center;
     }
-
-    .pl_component_button_circle{
-        margin-top: 10px;
-        width: 35px;
-        height: 35px;
-    }
-
-    .pl_component_button_circle_selectable{
-        margin-top: 10px;
-        width: 35px;
-        height: 35px;
-    }
-
+    
     .pl_component_text_field_editable {
+
+        width: 100%;
+        text-align:justify;
 
         .pl_component_text_plain{
             color:unset;
@@ -45,6 +40,27 @@
             overflow:hidden;
         }
         
+    }
+
+    .pl-component-card-family-edition-buttons{
+        
+        align-items: center; // vertical centering
+        position:absolute;
+        right:0px;
+        padding-right:10px;
+
+        .pl_component_button_circle{
+            margin-top: 10px;
+            width: 35px;
+            height: 35px;
+        }
+    
+        .pl_component_button_circle_selectable{
+            margin-top: 10px;
+            width: 35px;
+            height: 35px;
+        }
+
     }
     
 }

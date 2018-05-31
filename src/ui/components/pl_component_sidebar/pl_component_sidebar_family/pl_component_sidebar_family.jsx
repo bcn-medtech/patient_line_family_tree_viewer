@@ -90,7 +90,6 @@ export class PlComponentSidebarFamily extends Component {
             var updated_family = {};
             var data_keys = keys(family);
             
-            
             for (var i = 0; i<data_keys.length; i++) {
 
                 var key = data_keys[i];
@@ -101,8 +100,10 @@ export class PlComponentSidebarFamily extends Component {
             // "text_field_editable"
             var edited_name = this.refs.family_card.refs.family_name.refs.FormItemInputText.state.input;
             var edited_id = this.refs.family_card.refs.family_id.refs.FormItemInputText.state.input;
+            var edited_description = this.refs.family_card.refs.family_description.refs.FormItemInputText.state.input;
+            var edited_symptoms = this.refs.family_card.refs.family_symptoms.refs.FormItemInputText.state.input;
 
-            var new_data = update_family_from_text_field_editable(edited_name, edited_id, family.id, updated_family);
+            var new_data = update_family_from_text_field_editable(edited_name, edited_id, family.id, edited_description, edited_symptoms, updated_family);
 
             // the changes in "table" and "text_field_editable" are saved
             if ("family_to_update" in new_data) updated_family = new_data.family_to_update;

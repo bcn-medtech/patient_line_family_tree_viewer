@@ -37,6 +37,8 @@ import { PlComponentSidebar } from './../../components/pl_component_sidebar/pl_c
 import { PlComponentButtonCircle } from './../../components/pl_component_button/pl_component_button_circle/pl_component_button_circle';
 import { PlComponentButtonCircleSelectable } from './../../components/pl_component_button/pl_component_button_circle_selectable/pl_component_button_circle_selectable';
 import { PlComponentLegend } from './../../components/pl_component_legend/pl_component_legend';
+import { PlComponentTextPlain } from './../../components/pl_component_text/pl_component_text_plain/pl_component_text_plain';
+
 //modules
 import { url_getParameterByName } from './../../../modules/rkt_module_url';
 import { isObjectEmpty } from './../../../modules/rkt_module_object';
@@ -79,15 +81,15 @@ export default class PlPageViewer extends Component {
             children: result.children,
             relatives: result.relatives
           });
-  
+
         } else {
-  
+
           myComponent.setState({
             root: result.root,
             siblings: result.siblings,
             family: result.family,
           });
-  
+
         }
 
       } else {
@@ -95,7 +97,7 @@ export default class PlPageViewer extends Component {
         myComponent.on_click_button("go_back");
 
       }
-      
+
 
     });
 
@@ -250,6 +252,10 @@ export default class PlPageViewer extends Component {
     return (
       <div className="grid-frame pl-page-viewer">
         <div className="grid-block medium-8">
+          <div className="grid-block vertical top_bar_left">
+            <h4><PlComponentTextPlain text={family.name} /></h4>
+            <PlComponentTextPlain text={family.symptoms} />
+          </div>
           {tree_viewer}
           <div className="grid-block bottom_bar_left">
             <PlComponentButtonCircle

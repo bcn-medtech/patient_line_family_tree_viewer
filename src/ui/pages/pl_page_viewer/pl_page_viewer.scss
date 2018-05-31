@@ -8,6 +8,29 @@
     background-color:$rkt-viewer-background-color;
     color:white;
 
+    .top_bar_left{
+        position: absolute;
+        top:15px;
+        left:12px;
+        z-index: 15;
+        overflow:hidden;
+
+        .pl_component_text_plain{
+            font:unset;
+            color:unset;
+            padding-bottom:2px;
+        }
+
+        h4{
+            margin:0px;
+            padding:0px;
+            color:$color_normal;
+        }
+
+        color:white;
+        
+    }
+
     .bottom_bar_left{
         position: absolute;
         bottom:15px;
