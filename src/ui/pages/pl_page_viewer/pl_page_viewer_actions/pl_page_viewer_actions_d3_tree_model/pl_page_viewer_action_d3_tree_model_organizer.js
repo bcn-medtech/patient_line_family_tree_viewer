@@ -182,7 +182,18 @@ export function order_patients_by_couple(patients) {
     var patients_duplicated = find_patients_duplicated_in_array(patients);
     var patients_no_duplicated = find_patients_no_duplicated_in_array(patients_duplicated,patients);
     var patients_relations = find_patients_relations_in_array(patients);
+    /*var organized_array;
+
+    if(isObjectEmpty(patients_relations)){
+        organized_array = patients;
+    }else{
+        organized_array = create_array_organized_by_couples(patients_no_duplicated,patients_relations);
+    }*/
+
     var organized_array = create_array_organized_by_couples(patients_no_duplicated,patients_relations);
+    //console.log(organized_array);
+    //console.log(patients);
+
     return organized_array;
     
 }

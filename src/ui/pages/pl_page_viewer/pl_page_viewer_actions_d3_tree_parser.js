@@ -2,43 +2,155 @@ import { isObjectEmpty } from "../../../modules/rkt_module_object";
 import {
     findWhere,
     flatten,
+    findIndex
 } from "underscore";
-
-/*import {
-    deleteDuplicatedElementsFromArray
-} from './../../../modules/rkt_module_object';*/
 
 import {
     order_patients_by_couple
 } from './pl_page_viewer_actions/pl_page_viewer_actions_d3_tree_model/pl_page_viewer_action_d3_tree_model_organizer';
 
 
+function get_children_couple(patient_children, full_database) {
+
+    var couples = [];
+
+    for (var i = 0; i < patient_children.length; i++) {
+
+        var element = patient_children[i];
+
+        if (!isObjectEmpty(element.children)) {
+
+            for (var j = 0; j < element.children.length; j++) {
+
+                var child = findWhere(full_database, { id: element.children[j] });
+
+                var is_couple_duplicated = false;
+
+                for (var m = 0; m < couples.length; m++) {
+
+                    if (couples[m][0] === child.mother && couples[m][1] === child.father) {
+                        is_couple_duplicated = true;
+                    }
+                }
+
+                if (is_couple_duplicated === false) {
+
+                    var couple = [];
+                    couple.push(child.mother);
+                    couple.push(child.father);
+                    couples.push(couple);
+                }
+            }
+
+        } else {
+
+            var couple = [];
+            couple.push(element.id);
+            couple.push("");
+            couples.push(couple);
+        }
+    }
+
+
+
+    return couples;
+
+}
+function getRootCouple(database) {
+
+    var rootCouples = [];
+    var couples = siblingsBuilder(database);
+
+    for (var i = 0; i < couples.length; i++) {
+
+        var member_1 = findWhere(database, { id: couples[i].source.id });
+        var member_2 = findWhere(database, { id: couples[i].target.id });
+
+        if (!isObjectEmpty(member_1) && !isObjectEmpty(member_2)) {
+
+            if (isObjectEmpty(member_1.father) && isObjectEmpty(member_1.mother) && isObjectEmpty(member_2.father) && isObjectEmpty(member_2.mother)) {
+
+                var couple = [];
+                couple.push(member_1.id);
+                couple.push(member_2.id);
+                rootCouples.push(couple);
+            }
+        }
+    }
+
+    return rootCouples;
+
+}
+
 export function exploreChildrenTree(couplesArray, dataJson) {
 
     var children;
     var childrenArray = getChildren(couplesArray, dataJson);
+    
+
     if (childrenArray.length === 0) {
+
+        //console.log(couplesArray);
         if (isCouple(couplesArray)) {
+            //console.log("hola")
             children = addCouple(couplesArray, dataJson, "-2");
         } else {
+            //console.log("hola2");
             children = addChildren(couplesArray, dataJson);
         }
+
     } else {
+
         var couple = addCouple(couplesArray, dataJson, "-2");
-        couplesArray = getCouplesArray(childrenArray, dataJson);
-        for (var i in couplesArray) {
-            children = exploreChildrenTree(couplesArray[i], dataJson);
+
+        //couplesArray = getCouplesArray(childrenArray, dataJson);
+
+        //console.log(childrenArray);
+        var couple_temp_array = get_children_couple(childrenArray, dataJson);
+        //console.log(couple_temp_array);
+
+        for (var i in couple_temp_array) {
+
+            children = exploreChildrenTree(couple_temp_array[i], dataJson);
+            
             if (children.length === 3) {
+
                 for (var j in children) {
                     var coupleMember = children[j];
                     couple[1].children.push(coupleMember);
                 }
+
             } else {
+
                 couple[1].children.push(children);
             }
         }
+
+        if (couple[1].children.length > 1) {
+
+
+            //Order data by patients couple
+            var patients_ordered_by_couple = order_patients_by_couple(couple[1].children);
+
+            //Push patients that are not present in patients_ordered_by_couple
+            for(i=0;i<couple[1].children.length;i++){
+
+                var patient_selected = couple[1].children[i];
+                
+                if(findIndex(patients_ordered_by_couple,{id:patient_selected.id})===-1){
+                    patients_ordered_by_couple.push(patient_selected);
+                }
+
+            }
+
+            couple[1].children = patients_ordered_by_couple;
+         
+        }
+
         children = couple;
     }
+
+    //console.log(children);
 
     return children;
 }
@@ -67,15 +179,10 @@ export function treeBuilder(dataJson) {
     }
 
     children = flatten(children);
-
-    var futureArray = order_patients_by_couple(children);
-
+    children = order_patients_by_couple(children);
     familyTree = addVoidNode("1");
-    familyTree.children = futureArray;
-
+    familyTree.children = children;
     return familyTree;
-
-
 }
 
 export function siblingsBuilder(family_patients) {
@@ -179,31 +286,7 @@ function addChildVoidNode(id) {
 }
 
 
-function getRootCouple(database) {
 
-    var rootCouples = [];
-    var couples = siblingsBuilder(database);
-
-    for (var i = 0; i < couples.length; i++) {
-
-        var member_1 = findWhere(database, { id: couples[i].source.id });
-        var member_2 = findWhere(database, { id: couples[i].target.id });
-
-        if (!isObjectEmpty(member_1) && !isObjectEmpty(member_2)) {
-
-            if (isObjectEmpty(member_1.father) && isObjectEmpty(member_1.mother) && isObjectEmpty(member_2.father) && isObjectEmpty(member_2.mother)) {
-
-                var couple = [];
-                couple.push(member_1.id);
-                couple.push(member_2.id);
-                rootCouples.push(couple);
-            }
-        }
-    }
-
-    return rootCouples;
-
-}
 
 function getChildren(parentsArray, dataJson) {
 
