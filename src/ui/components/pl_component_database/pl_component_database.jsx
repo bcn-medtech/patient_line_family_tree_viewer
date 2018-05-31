@@ -34,9 +34,6 @@ import { PlComponentMenuTags } from './../pl_component_menu/pl_component_menu_ta
 import { PlComponentForm } from './../pl_component_form/pl_component_form';
 import { PlComponentConfirmMessage } from './../pl_component_comfirm_message/pl_component_confirm_message';
 import { PlComponentModal } from './../../components/pl_component_modal/pl_component_modal';
-//schemes
-import plComponentDatabaseModalAddSchemeFamily from './pl_component_database_modal_add_scheme/pl_component_database_modal_add_scheme_family.json';
-import plComponentDatabaseModalAddSchemePatients from './pl_component_database_modal_add_scheme/pl_component_database_modal_add_scheme_patients.json';
 //modules
 import { isObjectEmpty, isObjectAFunction } from './../../../modules/rkt_module_object';
 
@@ -110,7 +107,7 @@ export class PlComponentDatabase extends Component {
 
                 var family_id = element_selected.id;
                 var patients = this.props.patients;
-                element_selected.root_patient = get_root_patient_of_family(family_id, patients);
+                element_selected.root_patient = get_root_patient_of_family(family_id, patients);       
                 action["data"] = element_selected;
 
                 this.props.perform_database_action(action);
@@ -220,11 +217,29 @@ export class PlComponentDatabase extends Component {
 
     on_click_database_menu_button(action) {
 
-        if (action === "add") {
+        if ((action === "add") && (this.state.mode === "families")) {
 
             this.setState({
-                menu_action: "add"
+                menu_action: false
             });
+
+            if (isObjectAFunction(this.props.perform_database_action)) {
+
+                // var new_data = create_random_family();
+                
+                // var action = {}
+                // action["action"] = "add_family";
+                // action["data"] = {
+                //     "family_to_insert": new_data.family_to_insert,
+                //     "patients_to_insert": new_data.patients_to_insert
+                // };
+
+                var action = {}
+                action["action"] = "add_family";
+                action["data"] = {};
+
+                this.props.perform_database_action(action);
+            }
 
         } else if (action === "export") {
 
@@ -237,6 +252,7 @@ export class PlComponentDatabase extends Component {
                 var action = {};
                 action["action"] = "export";
                 action["data"] = {};
+
                 this.props.perform_database_action(action);
             }
 
@@ -255,38 +271,19 @@ export class PlComponentDatabase extends Component {
 
     }
 
-    on_save_add_modal(data) {
-
-        if (isObjectAFunction(this.props.perform_database_action)) {
-
-            if (this.state.mode === "families") {
-
-                var action = {}
-                action["action"] = "add_family";
-                action["data"] = data;
-
-                this.props.perform_database_action(action);
-
-            }
-
-        }
-
-        this.setState({
-            menu_action: false
-        });
-
-    }
-
     on_delete_database(answer) {
 
         if (answer === "Yes") {
-        
+
             if (isObjectAFunction(this.props.perform_database_action)) {
 
                 var action = {};
                 action["action"] = "delete_database";
                 action["data"] = {};
+
+                this.refs.Modal.closeModal();
                 this.props.perform_database_action(action);
+
             }
 
         } else if (answer === "Cancel") {
@@ -294,7 +291,7 @@ export class PlComponentDatabase extends Component {
             this.refs.Modal.closeModal();
 
         }
-        
+
 
     }
 
@@ -312,44 +309,34 @@ export class PlComponentDatabase extends Component {
         var menu_action = this.state.menu_action;
 
         if (!isObjectEmpty(menu_action)) {
-            
-            if (mode === "families") {
+
+            if ((mode === "families") && (menu_action === "delete_database")) {
 
                 var modal_title, modal_content;
 
-                if (menu_action === "add") {
-    
-                    modal_title = "Add Family";
-                    modal_content = <PlComponentForm form={plComponentDatabaseModalAddSchemeFamily} onclicksave={this.on_save_add_modal.bind(this)} />;
-                    
-    
-                } else if (menu_action === "delete_database") {
-    
-                    modal_title = "Delete Database";
-                    var message_to_show = "Are you sure you want to delete the database?";
-                    var modal_content =
-                        <PlComponentConfirmMessage
-                            message={message_to_show}
-                            extra_message={"You will not be able to undo it"}
-                            onclickanswerbutton={this.on_delete_database.bind(this)}
-                        />
-    
-                }
-    
-                return (
-                    <PlComponentModal
-                        ref="Modal"
-                        title={modal_title}
-                        Modal_content={modal_content}
-                        onclickesc={this.on_close_add_modal.bind(this)} />
-                );
-    
+                modal_title = "Delete Database";
+                var message_to_show = "Are you sure you want to delete the database?";
+                var modal_content =
+                    <PlComponentConfirmMessage
+                        message={message_to_show}
+                        extra_message={"You will not be able to undo it"}
+                        onclickanswerbutton={this.on_delete_database.bind(this)}
+                    />
+
             }
 
+            return (
+                <PlComponentModal
+                    ref="Modal"
+                    title={modal_title}
+                    Modal_content={modal_content}
+                    onclickesc={this.on_close_add_modal.bind(this)} />
+            );
+
         }
-        
 
     }
+
 
 
     render() {

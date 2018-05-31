@@ -70,15 +70,11 @@ export function get_data_from_database(callback) {
         if (!isObjectEmpty(result)) {
             data["patients"] = result;
         }
-        //data["patients"] = result;
-
         families_get_list(function (result) {
 
             if (!isObjectEmpty(result)) {
                 data["families"] = result;
             }
-            //data["families"] = result;
-            console.log(isObjectEmpty(data))
             if (isObjectEmpty(data)) callback(false)
             else callback(data);
 
@@ -157,8 +153,6 @@ export function get_data(family_id, patient_id, callback) {
                                         if (!isObjectEmpty(patient)) {
 
                                             data["patient"] = patient;
-
-
 
                                             if ("father" in patient) {
 

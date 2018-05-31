@@ -1,21 +1,21 @@
 
 export function calculate_age(dob) {
     // Input: 'dob' ('date of birth') --> yyyy-dd-mm ('ISO Date')
-    
+
     var today = new Date();
     var birthDate = new Date(format_date(dob));
-    
+
     var age = today.getFullYear() - birthDate.getFullYear();
     var month_difference = today.getMonth() - birthDate.getMonth();
 
     if (month_difference < 0 || (month_difference === 0 && today.getDate() < birthDate.getDate())) {
         age = age - 1;
     }
-    
+
     return age;
 }
 
-function format_date(stringDate, desiredDateFormat) {
+export function format_date(stringDate, desiredDateFormat) {
     // Input: stringDate (dd/mm/yy)
     var date = new Date(stringDate);
 

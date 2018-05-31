@@ -129,13 +129,13 @@ export function create_search_bar_place_holder_from_data(data) {
 }
 
 export function get_root_patient_of_family(family_id, patients) {
-    
+
     var patients_family = get_all_patients_from_family(family_id, patients);
     var root = treeBuilder(patients_family);
     var root_patient = root.children[2];
     
     return root_patient;
-    
+
 }
 
 export function get_all_patients_from_family(family_id, patients) {

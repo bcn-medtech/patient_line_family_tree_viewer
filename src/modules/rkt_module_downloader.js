@@ -41,7 +41,6 @@ function createTask(blob, name_task, name_resource) {
 
 export function download_resource(url, name, name_task, user_token, callback) {
 
-    console.log(url);
     var myHeaders = new Headers();
     myHeaders.append("authorization", "Bearer " + user_token);
 
@@ -66,7 +65,7 @@ export function download_resource(url, name, name_task, user_token, callback) {
         })
 }
 
-export function download_resource_as_a_json(url, name, name_task,user_token, callback) {
+export function download_resource_as_a_json(url, name, name_task, user_token, callback) {
 
     var myHeaders = new Headers();
     myHeaders.append("authorization", "Bearer " + user_token);
@@ -75,7 +74,7 @@ export function download_resource_as_a_json(url, name, name_task,user_token, cal
         method: 'GET',
         mode: 'cors',
         cache: 'default',
-        headers:myHeaders,
+        headers: myHeaders,
     };
 
     fetch(url, options)
@@ -88,7 +87,7 @@ export function download_resource_as_a_json(url, name, name_task,user_token, cal
         })
 }
 
-export function download_resource_and_export(url,name,user_token){
+export function download_resource_and_export(url, name, user_token) {
 
     var myHeaders = new Headers();
     myHeaders.append("authorization", "Bearer " + user_token);
@@ -97,12 +96,12 @@ export function download_resource_and_export(url,name,user_token){
         method: 'GET',
         mode: 'cors',
         cache: 'default',
-        headers:myHeaders,
+        headers: myHeaders,
     };
 
     fetch(url, options)
-    .then(readResponseAsBlob)
-    .then(function (blob) {
-        FileSaver.saveAs(blob,name);
-    });
+        .then(readResponseAsBlob)
+        .then(function (blob) {
+            FileSaver.saveAs(blob, name);
+        });
 }

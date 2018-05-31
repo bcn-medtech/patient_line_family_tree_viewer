@@ -23,11 +23,12 @@
 */
 
 import React, { Component } from 'react';
+import { calculate_age } from './../../../../../../modules/rkt_module_date';
 import { isObjectEmpty } from './../../../../../../modules/rkt_module_object';
 //components
 import { PlComponentCardPatientStatus } from './../../pl_component_card_patient_status/pl_component_card_patient_status';
 //actions
-import { sort_relatives_by_dob, calculate_age } from './pl_component_card_patient_widget_relatives_actions';
+import { sort_relatives_by_dob } from './pl_component_card_patient_widget_relatives_actions';
 
 import { filter } from "underscore";
 

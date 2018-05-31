@@ -24,31 +24,18 @@
 
 import React, { Component } from 'react';
 //import { isObjectAFunction } from './../../../../../../modules/rkt_module_object';
+import { calculate_age } from './../../../../../../modules/rkt_module_date';
 
 //components
 import { PlComponentCardPatientStatus } from './../../pl_component_card_patient_status/pl_component_card_patient_status';
-//actions
-import { calculate_age } from './pl_component_card_patient_widget_parent_actions';
+
+
 
 export class PlComponentCardPatientWidgetParent extends Component {
 
     render_card_patient_widget_parent(parent, type_parent, mode_edit) {
 
         if (parent) {
-
-            // if (mode_edit) {
-
-            //     // TODO
-
-            // } else {
-
-            //     return (
-
-            //         this.render_parent(parent)
-
-            //     );
-
-            // }
 
             return (
 

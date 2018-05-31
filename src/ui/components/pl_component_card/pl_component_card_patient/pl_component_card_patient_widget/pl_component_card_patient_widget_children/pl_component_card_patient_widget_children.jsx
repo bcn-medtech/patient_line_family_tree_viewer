@@ -24,13 +24,13 @@
 
 import React, { Component } from 'react';
 //modules
+import { calculate_age } from './../../../../../../modules/rkt_module_date';
 import { isObjectAFunction, isObjectEmpty } from './../../../../../../modules/rkt_module_object';
 //components
 import { PlComponentButtonCircle } from './../../../../pl_component_button/pl_component_button_circle/pl_component_button_circle';
 import { PlComponentCardPatientStatus } from './../../pl_component_card_patient_status/pl_component_card_patient_status';
 //actions
 import {
-    calculate_age,
     create_child_existing_family,
     create_new_family,
     process_children_by_parents,

@@ -155,7 +155,6 @@ export function writeXlsxWoorkbook(data) {
         XLSX.utils.book_append_sheet(wb,sheet, sheet_name);
     }
     
-    //return wb;
     var wopts = { bookType:'xlsx', bookSST:false, type:'binary' };
     return XLSX.write(wb, wopts);
 
