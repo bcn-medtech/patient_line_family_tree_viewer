@@ -9,8 +9,11 @@ import {
     order_patients_by_couple
 } from './pl_page_viewer_actions/pl_page_viewer_actions_d3_tree_model/pl_page_viewer_action_d3_tree_model_organizer';
 
+import {
+    get_all_siblings_from_tree
+} from './pl_page_viewer_actions/pl_page_viewer_actions_d3_tree_model/pl_page_viewer_action_d3_tree_model_organizer_siblings';
 
-function get_children_couple(patient_children, full_database) {
+function get_children(patient_children, full_database) {
 
     var couples = [];
 
@@ -51,15 +54,15 @@ function get_children_couple(patient_children, full_database) {
         }
     }
 
-
-
     return couples;
 
 }
+
 function getRootCouple(database) {
 
     var rootCouples = [];
-    var couples = siblingsBuilder(database);
+    var couples = get_all_siblings_from_tree(database);
+    //console.log(couples);
 
     for (var i = 0; i < couples.length; i++) {
 
@@ -90,24 +93,21 @@ export function exploreChildrenTree(couplesArray, dataJson) {
 
     if (childrenArray.length === 0) {
 
-        //console.log(couplesArray);
         if (isCouple(couplesArray)) {
-            //console.log("hola")
+
             children = addCouple(couplesArray, dataJson, "-2");
+
         } else {
-            //console.log("hola2");
+
             children = addChildren(couplesArray, dataJson);
+            
         }
 
     } else {
 
         var couple = addCouple(couplesArray, dataJson, "-2");
 
-        //couplesArray = getCouplesArray(childrenArray, dataJson);
-
-        //console.log(childrenArray);
-        var couple_temp_array = get_children_couple(childrenArray, dataJson);
-        //console.log(couple_temp_array);
+        var couple_temp_array = get_children(childrenArray, dataJson);
 
         for (var i in couple_temp_array) {
 
@@ -128,7 +128,6 @@ export function exploreChildrenTree(couplesArray, dataJson) {
 
         if (couple[1].children.length > 1) {
 
-
             //Order data by patients couple
             var patients_ordered_by_couple = order_patients_by_couple(couple[1].children);
 
@@ -147,8 +146,13 @@ export function exploreChildrenTree(couplesArray, dataJson) {
          
         }
 
+               
         children = couple;
+
+        //console.log(children);
     }
+
+   
 
     //console.log(children);
 
