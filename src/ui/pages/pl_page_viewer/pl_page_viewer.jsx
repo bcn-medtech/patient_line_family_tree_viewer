@@ -200,7 +200,7 @@ export default class PlPageViewer extends Component {
     var siblings = this.state.siblings;
 
     //console.log(relatives);
-    //console.log(root);
+    console.log(root);
 
     var bottom_button_left =
       {
