@@ -49,11 +49,11 @@ export function update_patient_from_table(patient, edited_table) {
 
 }
 
-export function update_patient_from_text_field_editable(edited_name, edited_id, /*edited_comments,*/ original_id, patient, couple, children, father, mother) {
+export function update_patient_from_text_field_editable(edited_name, edited_id, edited_comments, original_id, patient, couple, children, father, mother) {
 
     var new_data;
     patient.name = edited_name;
-    //patient.comments = edited_comments;
+    if (edited_comments !== "There are not comments defined yet") patient.comments = edited_comments;
 
     if (original_id === edited_id) {
 

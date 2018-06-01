@@ -225,15 +225,6 @@ export class PlComponentDatabase extends Component {
 
             if (isObjectAFunction(this.props.perform_database_action)) {
 
-                // var new_data = create_random_family();
-                
-                // var action = {}
-                // action["action"] = "add_family";
-                // action["data"] = {
-                //     "family_to_insert": new_data.family_to_insert,
-                //     "patients_to_insert": new_data.patients_to_insert
-                // };
-
                 var action = {}
                 action["action"] = "add_family";
                 action["data"] = {};
