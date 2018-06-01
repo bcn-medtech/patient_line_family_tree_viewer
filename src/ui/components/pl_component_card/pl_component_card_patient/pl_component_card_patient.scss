@@ -17,6 +17,8 @@
         margin-left: 10px;
         margin-right: 10px;
 
+        align-items: center;
+
         h4{
             width:100%;
             margin:0px;
@@ -36,8 +38,8 @@
     }
 
     .card-row-gender-status{
-        background-color: $color_shadow_3;
-        margin-top: 15px;
+        //background-color: $color_shadow_3;
+        margin-right: 15px;
         align-items:center;
     }
 
@@ -46,27 +48,13 @@
         align-items: center; // vertical centering
         position:absolute;
         right:0px;
-
-        //margin-left: -5px;
-
-        .pl_component_text_plain{
-            color:unset;
-            font: unset;
-            max-height:unset;
-            overflow:hidden;
-            padding-left: 5px;
-            //margin-left: -5px;
-        }
-
-        .pl_component_form_item_input_text{
-            background-color: $color_shadow-2;
-            padding-left: 5px;
-            border: 1px solid $color-normal-5;
-            padding-top: 3px;
-            padding-bottom: 3px;
-            
-        }
     
+        .pl_component_button_circle{
+            margin-top: 10px;
+            width: 35px;
+            height: 35px;
+        }
+
         .pl_component_button_circle_selectable{
             margin-top: 10px;
             width: 35px;

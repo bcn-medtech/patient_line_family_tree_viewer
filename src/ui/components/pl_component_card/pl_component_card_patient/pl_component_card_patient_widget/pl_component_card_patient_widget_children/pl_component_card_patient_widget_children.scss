@@ -2,7 +2,7 @@
 
 .pl-component-card-patient-widget-children{
 
-    //max-height:200px;
+    max-height:200px;
     overflow-y:auto;
 
     .family-list{
@@ -13,12 +13,10 @@
 
         .family-list-header {
 
-            //align-items: center; // vertical centering
             background-color: $color_shadow_2;
 
             padding-top:10px;
             padding-bottom:10px;
-            //margin-bottom:10px;
 
             .family-list-header-parents {
 
@@ -65,10 +63,8 @@
             .family-list-item{
                 
                 align-items: center;
-                //margin-bottom:15px;
                 padding-bottom: 8px;
                 padding-top: 5px;
-                //margin-top:-5px;
                 border-bottom: 1px solid $color-normal;
                 &:hover{
                     background-color: $color_shadow_3;
@@ -85,7 +81,6 @@
                 }
 
                 .family-list-item-element{
-                    //padding-right:30px;
                     padding-left:10px;//15px;
                     padding-right:15px;
                 }

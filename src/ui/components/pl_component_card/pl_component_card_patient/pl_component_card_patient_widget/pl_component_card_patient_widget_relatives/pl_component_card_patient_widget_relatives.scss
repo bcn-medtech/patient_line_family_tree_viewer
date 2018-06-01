@@ -24,12 +24,7 @@
     .pl-component-card-patient-widget-relatives-item{
 
         align-items: center;
-
-        //margin-bottom:15px;
-        // padding-top: 5px;
-        // padding-bottom: 5px;
-        // background-color: $color_shadow_3;
-
+        
         h6{
             margin-top:0px;
             color:$color-normal;
@@ -40,10 +35,8 @@
         }
 
         .pl-component-card-patient-widget-relatives-element{
-            //padding-right:30px;
             padding-left:10px;//15px;
             padding-right:15px;
-            
         }
 
         .centered{
