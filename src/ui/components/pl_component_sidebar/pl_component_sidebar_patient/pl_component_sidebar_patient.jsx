@@ -426,12 +426,15 @@ export class PlComponentSidebarPatient extends Component {
                         on_ask_to_remove_patient={this.on_ask_to_remove_patient.bind(this)}
                         on_ask_to_export_patient={this.on_ask_to_export_patient.bind(this)} />
                 </div>
-                <div className="grid-block shrink">
-                    {widget}
-                    {/* {this.render_widget_patient_data(patient, mode_menu, data_tags, data_tags_selected, table_mode)}
+                <div className="grid-block vertical">
+                    <div className="grid-block shrink">
+                        {widget}
+                        {/* {this.render_widget_patient_data(patient, mode_menu, data_tags, data_tags_selected, table_mode)}
                     {this.render_widget_patient_comments(mode_menu, mode_edit)} */}
+                    </div>
                 </div>
-                <div className="pl_component_sidebar_patient_element scrollable-content">
+
+                {/*<div className="pl_component_sidebar_patient_element scrollable-content">
                     <PlComponentMenuTags
                         data={data_tags}
                         keys_selected={data_tags_selected}
@@ -440,7 +443,7 @@ export class PlComponentSidebarPatient extends Component {
                 </div>
                 <div className="grid-block pl_component_sidebar_patient_element">
                     <PlComponentTable ref="patient_table" data={data_table} table_mode={table_mode} />
-                </div>
+                </div>*/}
                 {this.render_edit_patient_button(mode_edit)}
                 {this.render_modal()}
             </div>

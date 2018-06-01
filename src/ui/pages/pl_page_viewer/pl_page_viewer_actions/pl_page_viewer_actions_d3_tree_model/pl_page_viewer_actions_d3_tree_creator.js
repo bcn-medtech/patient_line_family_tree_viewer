@@ -1,4 +1,4 @@
-import { isObjectEmpty } from "../../../modules/rkt_module_object";
+import { isObjectEmpty } from "./../../../../../modules/rkt_module_object";
 import {
     findWhere,
     flatten,
@@ -7,11 +7,11 @@ import {
 
 import {
     order_patients_by_couple
-} from './pl_page_viewer_actions/pl_page_viewer_actions_d3_tree_model/pl_page_viewer_action_d3_tree_model_organizer';
+} from './pl_page_viewer_action_d3_tree_model_organizer';
 
 import {
-    get_all_siblings_from_tree
-} from './pl_page_viewer_actions/pl_page_viewer_actions_d3_tree_model/pl_page_viewer_action_d3_tree_model_organizer_siblings';
+    get_all_couples_from_array
+} from './pl_page_viewer_action_d3_tree_model_organizer_siblings';
 
 function get_children(patient_children, full_database) {
 
@@ -61,7 +61,7 @@ function get_children(patient_children, full_database) {
 function getRootCouple(database) {
 
     var rootCouples = [];
-    var couples = get_all_siblings_from_tree(database);
+    var couples = get_all_couples_from_array(database);
     //console.log(couples);
 
     for (var i = 0; i < couples.length; i++) {

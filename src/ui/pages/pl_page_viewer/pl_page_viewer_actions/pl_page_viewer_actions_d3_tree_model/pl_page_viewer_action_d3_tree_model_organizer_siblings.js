@@ -7,7 +7,7 @@ import {isObjectEmpty} from './../../../../../modules/rkt_module_object';
  * 
 */
 
-function create_sibling(couplesArray){
+function create_couple(couplesArray){
     
     var siblingsItem = {};
     var sourceItem = {};
@@ -22,7 +22,7 @@ function create_sibling(couplesArray){
 }
 
 
-export function get_all_siblings_from_tree(database){
+export function get_all_couples_from_array(database){
 
     var siblings_array = [];
 
@@ -36,7 +36,7 @@ export function get_all_siblings_from_tree(database){
             couple.push(patient.father);
             couple.push(patient.mother);
             
-            var siblings_object = create_sibling(couple);
+            var siblings_object = create_couple(couple);
             var is_duplicated_couple = false;
 
             for (var j = 0; j < siblings_array.length; j++) {

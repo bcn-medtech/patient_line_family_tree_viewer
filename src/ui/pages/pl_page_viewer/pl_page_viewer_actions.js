@@ -24,8 +24,6 @@
 
 //database_methods
 import {
-    family_get,
-    families_get_list,
     family_insert,
     family_update,
     family_remove,
@@ -37,17 +35,25 @@ import {
 } from './../../../database/database';
 
 import {
-    //convertWorkbookToCSVMap,
     writeAndExportXlsxWoorkbook,
-    //writeXlsxWoorkbook
 } from './../../../modules/rkt_pl_module_file_formats_xlsx';
 
-import {
+
+import{
+    get_family_by_id,
+    get_all_patients_and_all_families,
+    get_all_patients_from_family,
+    get_patients_processed,
+    get_family_processed,
+    order_family_by_ids,
     label_patient_relatives,
     get_family_by_patient
-} from './pl_page_viewer_action_data_analysis_patient_relations';
+} from './pl_page_viewer_actions_database_get';
 
-//import patients from './test_patients.json';
+import{
+    edit_patient,
+    remove_patient
+} from './pl_page_viewer_actions_database_update';
 
 //modules
 import { isObjectEmpty, isObjectAnArray } from '../../../modules/rkt_module_object';
@@ -56,76 +62,14 @@ import { isObjectEmpty, isObjectAnArray } from '../../../modules/rkt_module_obje
 import {
     treeBuilder,
     siblingsBuilder
-} from './pl_page_viewer_actions_d3_tree_parser';
-
-import {
-    get_patients_processed,
-    get_family_processed,
-    order_family_by_ids
-} from './pl_page_viewer_actions_data_analysis';
+} from './pl_page_viewer_actions/pl_page_viewer_actions_d3_tree_model/pl_page_viewer_actions_d3_tree_creator';
 
 import { findWhere, keys, map, omit, pluck } from 'underscore';
 
-export function get_data_from_database(callback) {
-
-    var data = {}
-
-    patients_get_list(function (result) {
-
-        if (!isObjectEmpty(result)) {
-            data["patients"] = result;
-        }
-        families_get_list(function (result) {
-
-            if (!isObjectEmpty(result)) {
-                data["families"] = result;
-            }
-            if (isObjectEmpty(data)) callback(false)
-            else callback(data);
-
-        });
-
-    });
-
-}
-
-export function get_all_patients_from_family(family_id, patients) {
-
-    var array_patients_family = [];
-
-    for (var i = 0; i < patients.length; i++) {
-
-        var patient = patients[i];
-
-        if ("family_id" in patient) {
-
-            if (patient.family_id === family_id) {
-
-                array_patients_family.push(patient);
-            }
-        }
-    }
-
-    return array_patients_family;
-}
-
-export function get_family(family_id, callback) {
-
-    family_get(family_id, function (result) {
-        callback(result);
-    });
-
-}
-
-export function get_patient(patient_id, callback) {
-    patient_get(patient_id, function (result) {
-        callback(result);
-    })
-}
 
 export function get_data(patient_id, relatives, callback) {
 
-    get_data_from_database(function (result) {
+    get_all_patients_and_all_families(function (result) {
 
         if ("patients" in result) {
 
@@ -133,7 +77,7 @@ export function get_data(patient_id, relatives, callback) {
             var patients = get_patients_processed(result.patients);
             var patient = findWhere(patients, { id: patient_id });
 
-            get_family(patient.family_id, function (family) {
+            get_family_by_id(patient.family_id, function (family) {
 
                 if (isObjectAnArray(family)) {
 
@@ -269,160 +213,20 @@ export function perform_database_action(data, callback) {
 
             if (data.action === "edit_patient") {
 
-                if ("data" in data) {
-
-                    if ("id_patient_to_remove" && "patient_to_update" && "relatives_to_update" in data.data) {
-
-                        // case in which the patient's id has been edited
-                        var id_patient_to_remove = data.data.id_patient_to_remove;
-                        var patient_to_insert = data.data.patient_to_update;
-                        var relatives_to_update = data.data.relatives_to_update;
-
-                        patient_remove(id_patient_to_remove, function (result) {
-
-                            if (result) {
-
-                                patient_insert(patient_to_insert, function (result) {
-
-                                    if (result) {
-
-                                        patients_update(relatives_to_update, function (result) {
-
-                                            if (result) {
-
-                                                callback(true);
-
-                                            }
-
-                                        });
-
-
-                                    }
-
-                                })
-
-                            }
-                        });
-
-                    } else {
-
-                        var patient = data.data;
-
-                        patient_update(patient, function (result) {
-
-                            if (result) {
-
-                                callback(true);
-                            }
-
-                        });
-
-                    }
-
-                }
+                edit_patient(data,function(result){
+                    callback(result);
+                })
 
             } else if (data.action === "remove_patient") {
 
-                if ("data" in data) {
-
-                    if ("to_remove" in data.data) {
-
-                        var ids_patients_to_remove = data.data.to_remove;
-
-                        patients_remove(ids_patients_to_remove, function (result) {
-
-                            if (result) {
-
-                                if ("to_update" in data.data) {
-
-                                    var patients_to_update = data.data.to_update;
-
-                                    patients_update(patients_to_update, function (result) {
-
-                                        if (result) {
-
-                                            callback(true);
-
-                                        } else {
-
-                                            console.log("error updating patients");
-
-                                        }
-
-                                    });
-
-                                } else callback(true)
-
-                            } else {
-
-                                console.log("error deleting the patient");
-                            }
-
-                        });
-
-                    }
-
-                }
+                remove_patient(data,function(result){
+                    callback(result);
+                });
 
             } else if (data.action === "add_child_existing_family") {
 
-                if ("data" in data) {
-
-                    if ("id_father" && "id_mother" && "new_child" in data.data) {
-
-                        var id_father = data.data.id_father;
-                        var id_mother = data.data.id_mother;
-                        var new_child = data.data.new_child;
-
-                        // we update the "children" info of the parents
-                        patient_get(id_father, function (father_array) {
-
-                            if (!isObjectEmpty(father_array)) {
-
-                                var father = father_array[0];
-
-                                if (father.children !== undefined) father.children.push(new_child.id);
-                                else father.children = [new_child.id];
-
-                                patient_get(id_mother, function (mother_array) {
-
-                                    if (!isObjectEmpty(mother_array)) {
-
-                                        var mother = mother_array[0];
-
-                                        if (mother.children !== undefined) mother.children.push(new_child.id);
-                                        else mother.children = [new_child.id];
-
-                                        // we update the parents in the database
-                                        patients_update([father, mother], function (result) {
-
-                                            if (result) {
-
-                                                // and we insert the new child in the database
-                                                patient_insert(new_child, function (result) {
-
-                                                    if (result) {
-
-                                                        callback(true);
-
-                                                    } else console.log("error inserting the new child");
-
-                                                })
-
-                                            } else console.log("error updating the parents");
-
-                                        });
-
-                                    } else console.log("error retrieving the information of the mother");
-
-                                });
-
-                            } else console.log("error retrieving the information of the father");
-                        })
-
-                    }
-
-                }
+            
+                
 
             } else if (data.action === "add_child_new_family") {
 
@@ -648,6 +452,15 @@ export function perform_database_action(data, callback) {
 
 }
 
+
+
+export function format_patient_to_export(patient) {
+
+    var patient_to_export = omit(patient, "depth", "parent", "no_parent", "num_relatives", "relation", "x", "y");
+    return patient_to_export;
+
+}
+
 function patients_update(patients, callback) {
 
     var updated_patients_counter = 0;
@@ -728,48 +541,3 @@ function patients_remove(patients, callback) {
     }
 
 }
-
-export function format_patient_to_export(patient) {
-
-    var patient_to_export = omit(patient, "depth", "parent", "no_parent", "num_relatives", "relation", "x", "y");
-    return patient_to_export;
-
-}
-
-/*function load_zip_with_patient_and_family_tree(workbook_filename, pdf_filename, patient, family_tree) {
-
-    // INSTALL JSZip: npm install jszip;
-    // install jsPDF: npm install jspdf --save
-    // install html2pdf: npm install --save html2pdf.js
-    // INSTALL FileSaver: npm install file-saver --save
-
-
-    // import JSZip from "jszip";
-    // import jsPDF from "jspdf";
-    // import html2pdf from "html2pdf.js";
-    // import FileSaver from "file-saver";
-
-    
-    var zip = new JSZip();
-
-    // patient workbook
-    var patient_workbook = writeXlsxWoorkbook(patient);
-    zip.file(workbook_filename + ".xlsx", patient_workbook, { binary: true });
-
-    // family tree pdf
-    // basic example of jsPDF
-    //var family_tree_pdf = new jsPDF();
-    //family_tree_pdf.text("Hello world!", 10, 10);
-    //zip.file(pdf_filename + ".pdf", family_tree_pdf.output());
-
-    // test with html2pdf (not really working)
-    // var width = family_tree.offsetWidth;
-    // var height = family_tree.offsetHeight;
-    // zip.file(pdf_filename + ".pdf", html2pdf(family_tree).output());
-
-    zip.generateAsync({ type: "blob" })
-        .then(function (content) {
-            FileSaver.saveAs(content, workbook_filename + ".zip");
-        });
-
-}*/
