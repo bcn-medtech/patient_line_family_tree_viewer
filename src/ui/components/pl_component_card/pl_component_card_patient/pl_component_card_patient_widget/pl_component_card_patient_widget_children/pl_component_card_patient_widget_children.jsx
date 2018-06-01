@@ -356,6 +356,8 @@ export class PlComponentCardPatientWidgetChildren extends Component {
         var patient = this.props.patient;
         var mode_edit = this.props.mode_edit;
 
+        console.log(children);
+
         return (
             <div className="grid-block pl-component-card-patient-widget-children">
                 {this.render_card_patient_widget_children(children, patient, mode_edit)}

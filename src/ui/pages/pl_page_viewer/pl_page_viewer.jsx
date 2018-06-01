@@ -48,7 +48,7 @@ export default class PlPageViewer extends Component {
     this.state = {
       root: false,
       siblings: false,
-      show_legend: true,
+      show_legend: false,
       family: false,
       patient: false,
       father: false,
@@ -198,9 +198,6 @@ export default class PlPageViewer extends Component {
     var children = this.state.children;
     var root = this.state.root;
     var siblings = this.state.siblings;
-
-    //console.log(relatives);
-    console.log(root);
 
     var bottom_button_left =
       {

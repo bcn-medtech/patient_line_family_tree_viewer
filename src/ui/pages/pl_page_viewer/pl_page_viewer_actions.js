@@ -229,7 +229,6 @@ export function get_data(patient_id, relatives, callback) {
                                     data["relatives"] = array_patients_family;
                                     data["siblings"] = siblingsBuilder(array_patients_family);
 
-                                    console.log(data["root"]);
                                     callback(data);
 
                                 } else {
