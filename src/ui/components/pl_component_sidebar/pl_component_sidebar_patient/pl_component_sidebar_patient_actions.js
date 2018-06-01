@@ -10,6 +10,7 @@ export function create_table(patient, data_keys_selected) {
 
         if (data_keys_selected.includes(data_keys[i])) {
             var row = {};
+            
             row["key"] = data_keys[i];
             row["value"] = patient[data_keys[i]];
             table.push(row);
@@ -48,10 +49,11 @@ export function update_patient_from_table(patient, edited_table) {
 
 }
 
-export function update_patient_from_text_field_editable(edited_name, edited_id, original_id, patient, couple, children, father, mother) {
+export function update_patient_from_text_field_editable(edited_name, edited_id, /*edited_comments,*/ original_id, patient, couple, children, father, mother) {
 
     var new_data;
     patient.name = edited_name;
+    //patient.comments = edited_comments;
 
     if (original_id === edited_id) {
 

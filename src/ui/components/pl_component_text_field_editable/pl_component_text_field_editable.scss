@@ -3,40 +3,45 @@
 
 .pl_component_text_field_editable{
 
-    height:fit-content;
+    margin:0px;
+    width: 100%;
+
+    .pl_component_text_plain{
+
+        color:unset;
+        font-size: unset;
+        max-height:unset;
+        overflow:hidden;
+        padding-bottom:2px;
+    }
 
     .pl_component_form_item_input_text{
 
         margin:0px;
+        padding:0px;
         width:100%;
-        height:100%;
-        text-align:justify;
 
         form{
             input[type=text]{
-                margin-bottom:0px; 
+                margin:0px;
                 padding:0px;
                 padding-bottom:2px;
-                border:0px;
+                border:unset;
                 width:100%;
                 height:100%;
                 color:#8c83ea;
                 font-size:unset;
 
                 &:hover{
-                    border: 0px;
+                    border:unset;
                 }
     
                 &:focus{
-                    border: 0px;
+                    border:unset;
                 }
 
             }
         }
-    }
-
-    .pl_component_text_plain{
-        padding-bottom:2px;
     }
 
 }

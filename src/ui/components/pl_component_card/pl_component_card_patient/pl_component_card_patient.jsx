@@ -77,7 +77,8 @@ export class PlComponentCardPatient extends Component {
 
     on_click_card_component(type) {
 
-        if (type === "father" || type === "mother" || type === "children" || type === "relatives") {
+        if (type === "father" || type === "mother" || type === "children" || type === "relatives"
+            || type === "Data" || type === "Comments") {
 
             if (isObjectAFunction(this.props.on_click_action)) {
 
@@ -117,18 +118,25 @@ export class PlComponentCardPatient extends Component {
 
         var patient_num_relatives;
         var patient_num_children;
-        var gender;
+        //var gender;
+        var patient_comments;
         var mode_relatives = false;
         var mode_children = false;
         var mode_father = false;
         var mode_mother = false;
+        var mode_data = false;
+        var mode_comments = false;
 
         if ("num_relatives" in patient) {
             patient_num_relatives = patient.num_relatives;
         }
 
-        if ("gender" in patient) {
-            gender = patient.gender;
+        // if ("gender" in patient) {
+        //     gender = patient.gender;
+        // }
+
+        if ("comments" in patient) {
+            patient_comments = patient.comments;
         }
 
         if (!isObjectEmpty(children)) {
@@ -149,6 +157,10 @@ export class PlComponentCardPatient extends Component {
             mode_father = true;
         } else if (mode_menu === "mother") {
             mode_mother = true;
+        } else if (mode_menu === "Data") {
+            mode_data = true;
+        } else if (mode_menu === "Comments") {
+            mode_comments = true;
         }
 
         return (
@@ -167,7 +179,7 @@ export class PlComponentCardPatient extends Component {
                         on_click_component={this.on_click_card_component.bind(this)}
                         selected={mode_children} />
                 </div>
-                <div className="grid-block shrink card-item">
+                {/* <div className="grid-block shrink card-item">
                     <PlComponentCardPatientGenderCombobox
                         gender={gender}
                         ref="patient_gender"
@@ -181,7 +193,7 @@ export class PlComponentCardPatient extends Component {
                         ref="patient_status"
                         mode_edit={mode_edit}
                         perform_database_action={this.perform_database_action.bind(this)} />
-                </div>
+                </div> */}
                 <div className="grid-block shrink card-item">
                     <PlComponentCardPatientStatusButton
                         relative={father}
@@ -196,8 +208,39 @@ export class PlComponentCardPatient extends Component {
                         on_click_component={this.on_click_card_component.bind(this)}
                         selected={mode_mother} />
                 </div>
+                <div className="grid-block shrink card-item">
+                    <h4>
+                        <PlComponentCardPatientTextButton
+                            text={""}
+                            type="Data"
+                            on_click_component={this.on_click_card_component.bind(this)}
+                            selected={mode_data} />
+                    </h4>
+
+                </div>
+                <div className="grid-block shrink card-item">
+                    <h4>
+                        <PlComponentCardPatientTextButton
+                            text={""}
+                            type="Comments"
+                            on_click_component={this.on_click_card_component.bind(this)}
+                            selected={mode_comments} />
+                    </h4>
+                </div>
             </div>
         );
+    }
+
+    get_patient_id() {
+
+        return this.refs.patient_id.refs.FormItemInputText.state.input;
+
+    }
+
+    get_patient_name() {
+
+        return this.refs.patient_name.refs.FormItemInputText.state.input;
+
     }
 
     render() {
@@ -210,6 +253,8 @@ export class PlComponentCardPatient extends Component {
         var mode_menu = this.props.mode_menu;
         var patient_id;
         var patient_name;
+        var patient_gender;
+        var patient_status;
 
         var button_delete =
             {
@@ -238,27 +283,73 @@ export class PlComponentCardPatient extends Component {
             patient_name = patient.name;
         }
 
+        if ("gender" in patient) {
+            patient_gender = patient.gender;
+        }
+
+        if ("gender" in patient) {
+            patient_status = patient.status;
+        }
+
         return (
             <div className="grid-block vertical pl-component-card-patient">
                 <div className="grid-block card-header">
-                    <div className="grid-block vertical card-item">
-                        <div className="grid-block shrink">
-                            <h4>
-                                <PlComponentTextFieldEditable
-                                    text={patient_name}
-                                    isEditionMode={mode_edit ? true : false}
-                                    ref="patient_name"
-                                />
-                            </h4>
+                    <div className="grid-block vertical">
+                        <div className="grid-block">
+                            <div className="grid-block shrink vertical card-item">
+                                <div className="grid-block shrink">
+                                    <h4>
+                                        <PlComponentTextFieldEditable
+                                            text={patient_name}
+                                            isEditionMode={mode_edit ? true : false}
+                                            ref="patient_name"
+                                        />
+                                    </h4>
+                                </div>
+                                <div className="grid-block shrink">
+                                    <PlComponentTextFieldEditable
+                                        text={patient_id}
+                                        isEditionMode={mode_edit ? true : false}
+                                        ref="patient_id" />
+                                </div>
+                            </div>
+                            {/* <div className="grid-block align-spaced card-row-gender-status">
+                                <div className="grid-block shrink card-item">
+                                    <PlComponentCardPatientGenderCombobox
+                                        gender={patient_gender}
+                                        ref="patient_gender"
+                                        mode_edit={mode_edit}
+                                        perform_database_action={this.perform_database_action.bind(this)} />
+                                </div>
+                                <div className="grid-block shrink card-item">
+                                    <PlComponentCardPatientStatusCombobox
+                                        status={patient_status}
+                                        gender={patient_gender}
+                                        ref="patient_status"
+                                        mode_edit={mode_edit}
+                                        perform_database_action={this.perform_database_action.bind(this)} />
+                                </div>
+                            </div> */}
                         </div>
-                        <div className="grid-block shrink">
-                            <PlComponentTextFieldEditable
-                                text={patient_id}
-                                isEditionMode={mode_edit ? true : false}
-                                ref="patient_id" />
+                        <div className="grid-block align-spaced card-row-gender-status">
+                            <div className="grid-block shrink card-item">
+                                <PlComponentCardPatientGenderCombobox
+                                    gender={patient_gender}
+                                    ref="patient_gender"
+                                    mode_edit={mode_edit}
+                                    perform_database_action={this.perform_database_action.bind(this)} />
+                            </div>
+                            <div className="grid-block shrink card-item">
+                                <PlComponentCardPatientStatusCombobox
+                                    status={patient_status}
+                                    gender={patient_gender}
+                                    ref="patient_status"
+                                    mode_edit={mode_edit}
+                                    perform_database_action={this.perform_database_action.bind(this)} />
+                            </div>
                         </div>
                     </div>
-                    <div className="grid-block shrink">
+                    <div className="grid-block pl-component-card-patient-edition-buttons shrink">
                         <PlComponentButtonCircleSelectable
                             text={""}
                             icon={button_edit.icon}
@@ -273,8 +364,6 @@ export class PlComponentCardPatient extends Component {
                             borderselectedcolor={"#5C4EE5"}
                             selected={button_edit.selected}
                             onclickelement={this.on_edit_patient.bind(this, button_edit.name)} />
-                    </div>
-                    <div className="grid-block shrink">
                         <PlComponentButtonCircle
                             icon={button_delete.icon}
                             backgroundcolor={"transparent"}
@@ -284,8 +373,6 @@ export class PlComponentCardPatient extends Component {
                             bordercolor={"#5C4EE5"}
                             borderhovercolor={"#5C4EE5"}
                             onclickelement={this.on_remove_patient.bind(this, button_delete.name)} />
-                    </div>
-                    <div className="grid-block shrink">
                         <PlComponentButtonCircle
                             icon={button_export.icon}
                             backgroundcolor={"transparent"}

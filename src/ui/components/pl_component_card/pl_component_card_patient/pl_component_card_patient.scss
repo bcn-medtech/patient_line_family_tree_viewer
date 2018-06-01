@@ -16,10 +16,16 @@
     .card-header{
         margin-left: 10px;
         margin-right: 10px;
+
+        h4{
+            width:100%;
+            margin:0px;
+        }
     }
 
     .card-item{
-        padding-right: 5px;
+        padding-left: 2.5px;
+        padding-right: 2.5px;
     }
 
     .card-row{
@@ -29,27 +35,30 @@
         align-items:center;
     }
 
-    .pl_component_button_circle{
-        margin-top: 10px;
-        width: 35px;
-        height: 35px;
+    .card-row-gender-status{
+        background-color: $color_shadow_3;
+        margin-top: 15px;
+        align-items:center;
     }
 
-    .pl_component_button_circle_selectable{
-        margin-top: 10px;
-        width: 35px;
-        height: 35px;
-    }
-
-    .pl_component_text_field_editable {
-
-        .pl_component_text_plain{
-            color:unset;
-            font: unset;
-            max-height:unset;
-            overflow:hidden;
-        }
+    .pl-component-card-patient-edition-buttons{
         
+        align-items: center; // vertical centering
+        position:absolute;
+        right:0px;
+
+        .pl_component_button_circle{
+            margin-top: 10px;
+            width: 35px;
+            height: 35px;
+        }
+    
+        .pl_component_button_circle_selectable{
+            margin-top: 10px;
+            width: 35px;
+            height: 35px;
+        }
+
     }
     
 }

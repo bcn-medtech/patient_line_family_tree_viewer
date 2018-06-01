@@ -13,7 +13,7 @@
         input[type=date]{
             background-color: transparent;
             color: $color_main;
-            font-size: 20px;
+            font: 20px Helvetica; //"Helvetica Neue";
             height:41px;
             border: 1px solid rgba(58, 153, 216, 0.201);
             overflow:hidden;

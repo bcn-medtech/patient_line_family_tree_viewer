@@ -23,7 +23,7 @@
 */
 
 import React, { Component } from 'react';
-import { isObjectAFunction } from './../../../../../modules/rkt_module_object';
+import { isObjectAFunction, isObjectEmpty } from './../../../../../modules/rkt_module_object';
 
 export class PlComponentCardPatientTextButton extends Component {
 
@@ -33,6 +33,17 @@ export class PlComponentCardPatientTextButton extends Component {
         if (isObjectAFunction(this.props.on_click_component)) {
             this.props.on_click_component(type);
         }
+    }
+
+    render_text(text) {
+
+        if (!isObjectEmpty(text)) {
+
+            return(
+                <div className="grid-block align-center"><h4>{text}</h4></div>
+            );
+        }
+
     }
 
     render() {
@@ -55,7 +66,7 @@ export class PlComponentCardPatientTextButton extends Component {
 
         return (
             <a className={component_style} onClick={this.on_click_component.bind(this, type)}>
-                <div className="grid-block align-center"><h4>{text}</h4></div>
+                {this.render_text(text)}
                 <div className="grid-block align-center text">{type}</div>
             </a>
         );

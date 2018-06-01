@@ -23,7 +23,7 @@
 */
 
 export function isObjectEmpty(obj) {
-
+    
     // null and undefined are "empty"
     if (obj == null) return true;
 
@@ -31,6 +31,9 @@ export function isObjectEmpty(obj) {
     // that that property is correct.
     if (obj.length > 0) return false;
     if (obj.length === 0) return true;
+
+    // Check if object is numeric
+    if(isObjectNumeric(obj)) return false;
 
     // If it isn't an object at this point
     // it is empty, but it can't be anything *but* empty
@@ -111,4 +114,16 @@ export function getKeysFromObject(object) {
     }
 
     return arrayOfKeys;
+}
+
+export function isObjectNumeric(object){
+    
+    var numeric = false;
+
+    if(typeof(object)=="number"){
+        
+        numeric=true;
+    }
+    
+    return numeric;
 }

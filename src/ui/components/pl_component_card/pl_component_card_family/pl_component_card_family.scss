@@ -13,7 +13,8 @@
         margin-right: 10px;
 
         h4{
-            width: 100%;
+            width:100%;
+            margin:0px;
         }
     }
 
@@ -27,27 +28,12 @@
         margin-top: 15px;
         align-items:center;
     }
-    
-    .pl_component_text_field_editable {
-
-        width: 100%;
-        text-align:justify;
-
-        .pl_component_text_plain{
-            color:unset;
-            font: unset;
-            max-height:unset;
-            overflow:hidden;
-        }
-        
-    }
 
     .pl-component-card-family-edition-buttons{
         
         align-items: center; // vertical centering
         position:absolute;
         right:0px;
-        padding-right:10px;
 
         .pl_component_button_circle{
             margin-top: 10px;

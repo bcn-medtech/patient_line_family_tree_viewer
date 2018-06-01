@@ -3,8 +3,9 @@ export function update_family_from_text_field_editable(edited_name, edited_id, o
 
     var new_data;
     family.name = edited_name;
-    family.description = edited_description;
-    family.symptoms = edited_symptoms;
+
+    if (edited_symptoms !== "Description") family.description = edited_description;
+    if (edited_symptoms !== "Symptoms") family.symptoms = edited_symptoms;
 
     if (original_id === edited_id) {
 

@@ -30,12 +30,14 @@ import { PlComponentButtonRect } from './../../pl_component_button/pl_component_
 import { PlComponentCardPatient } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient';
 import { PlComponentCardPatientWidget } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget';
 import { PlComponentCardPatientWidgetChildren } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget_children/pl_component_card_patient_widget_children';
+//import { PlComponentCardPatientWidgetComments } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget_comments/pl_component_card_patient_widget_comments';
 import { PlComponentCardPatientWidgetParent } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget_parent/pl_component_card_patient_widget_parent';
 import { PlComponentCardPatientWidgetRelatives } from './../../pl_component_card/pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget_relatives/pl_component_card_patient_widget_relatives';
 import { PlComponentConfirmMessage } from './../../pl_component_comfirm_message/pl_component_confirm_message';
 import { PlComponentMenuTags } from './../../pl_component_menu/pl_component_menu_tags/pl_component_menu_tags';
 import { PlComponentModal } from './../../pl_component_modal/pl_component_modal';
 import { PlComponentTable } from './../../pl_component_table/pl_component_table';
+import { PlComponentTextFieldEditable } from './../../pl_component_text_field_editable/pl_component_text_field_editable';
 
 //actions
 import { create_table, update_patient_from_table, update_patient_from_text_field_editable } from './pl_component_sidebar_patient_actions';
@@ -52,9 +54,9 @@ export class PlComponentSidebarPatient extends Component {
             mode_menu: false,
             mode_edit: false,
             family_default_columns: ["id", "name", "description", "num_family_members"],
-            patient_default_columns: ["id", "name", "gender", "mother", "married_with", "family_id", "center", "num_relatives"],
+            patient_default_columns: ["married_with", "family_id", "center", "nhc"],
             family_columns_selected: ["id", "name", "description", "num_family_members"],
-            patient_columns_selected: ["id", "name", "gender", "mother", "married_with", "family_id", "center", "num_relatives"],
+            patient_columns_selected: ["married_with", "family_id", "center", "nhc"],
             to_remove_patient: false
         }
     }
@@ -124,15 +126,19 @@ export class PlComponentSidebarPatient extends Component {
             updated_patient = update_patient_from_table(patient, edited_table);
 
             // "text_field_editable"
-            var edited_name = this.refs.patient_card.refs.patient_name.refs.FormItemInputText.state.input;
-            var edited_id = this.refs.patient_card.refs.patient_id.refs.FormItemInputText.state.input;
+            var edited_name = this.refs.patient_card.get_patient_name();
+            var edited_id = this.refs.patient_card.get_patient_id();
+            //var edited_comments = this.refs.patient_widget.props.content.refs.patient_comments.get_patient_comments();
+            //var edited_comments = this.refs.patient_comments.refs.FormItemInputText.state.input;
+
+
             var couple_patient;
             if (!isObjectEmpty(patient.married_with)) couple_patient = findWhere(this.props.relatives, { "id": patient.married_with });
             var children = this.props.children;
             var father = this.props.father;
             var mother = this.props.mother;
 
-            var new_data = update_patient_from_text_field_editable(edited_name, edited_id, patient.id, updated_patient, couple_patient, children, father, mother);
+            var new_data = update_patient_from_text_field_editable(edited_name, edited_id, /*edited_comments,*/ patient.id, updated_patient, couple_patient, children, father, mother);
 
             // the changes in "table" and "text_field_editable" are saved
             if ("patient_to_update" in new_data) updated_patient = new_data.patient_to_update;
@@ -158,7 +164,7 @@ export class PlComponentSidebarPatient extends Component {
 
     }
 
-    on_ask_to_export_patient() {
+    on_ask_to_export_patient() {
 
         if (isObjectAFunction(this.props.export_patient)) {
 
@@ -220,7 +226,7 @@ export class PlComponentSidebarPatient extends Component {
                 }
 
                 new_data["to_remove"] = to_remove;
-                
+
                 var data = {
                     "action": "remove_patient",
                     "data": new_data,
@@ -303,10 +309,16 @@ export class PlComponentSidebarPatient extends Component {
         var mother = this.props.mother;
         var children = this.props.children;
         var relatives = this.props.relatives;
+        var patient_comments = this.props.patient_comments;
         var mode_menu = this.state.mode_menu;
         var mode_edit = this.state.mode_edit;
         var widget;
         var table_mode;
+
+        var data_tags_selected = this.state.patient_columns_selected;
+        var data_tags = omit(patient, "children", "depth", "gender", "father", "id", "mother", "name", "num_relatives", "parent", "relation", "status", "x", "y");
+        data_tags = [data_tags];
+        var data_table = create_table(patient, data_tags_selected);
 
         if (mode_edit) {
 
@@ -332,15 +344,58 @@ export class PlComponentSidebarPatient extends Component {
             } else if (mode_menu === "mother") {
 
                 widget_content = <PlComponentCardPatientWidgetParent parent={mother} type_parent={mode_menu} mode_edit={mode_edit} perform_database_action={this.props.perform_database_action} />
+
+            } else if (mode_menu === "Data") {
+
+                widget_content =
+                    <div>
+                        <div className="pl_component_sidebar_patient_element">
+                            <PlComponentMenuTags
+                                data={data_tags}
+                                keys_selected={data_tags_selected}
+                                on_select_tag={this.on_select_tag.bind(this)}
+                                on_un_selected_tag={this.on_unselect_tag.bind(this)} />
+                        </div>
+                        <div className="grid-block pl_component_sidebar_patient_element">
+                            <PlComponentTable ref="patient_table" data={data_table} table_mode={table_mode} />
+                        </div>
+                    </div>
+
+            } else if (mode_menu === "Comments") {
+
+                // widget_content = <PlComponentCardPatientWidgetComments ref="patient_comments" mode_edit={mode_edit} />
+                var message;
+
+                if (!isObjectEmpty(patient_comments)) {
+
+                    message = patient_comments;
+                        
+
+                } else {
+
+                    message = "There are not comments defined yet"
+                    
+                }
+
+                widget_content = 
+                    <div className="grid-block" style={{"paddingBottom":"2px"}}>
+                        <PlComponentTextFieldEditable
+                            text={message}
+                            isEditionMode={mode_edit ? true : false}
+                            ref="patient_comments"
+                        />
+                    </div>
+                
             }
 
-            widget = <PlComponentCardPatientWidget tittle={mode_menu} content={widget_content} perform_database_action={this.props.perform_database_action} />
+            widget =
+                <PlComponentCardPatientWidget
+                    ref="patient_widget"
+                    tittle={mode_menu}
+                    content={widget_content}
+                    perform_database_action={this.props.perform_database_action} 
+                />
         }
-
-        var data_keys_selected = this.state.patient_columns_selected;
-        var data = [];
-        data.push(patient);
-        var data_table = create_table(patient, data_keys_selected);
 
         return (
             <div className="grid-block vertical pl-component-sidebar-patient">
@@ -356,16 +411,21 @@ export class PlComponentSidebarPatient extends Component {
                         mode_edit={mode_edit}
                         ref="patient_card"
                         perform_database_action={this.props.perform_database_action}
-                        on_ask_to_remove_patient={this.on_ask_to_remove_patient.bind(this)} 
-                        on_ask_to_export_patient={this.on_ask_to_export_patient.bind(this)}/>
+                        on_ask_to_remove_patient={this.on_ask_to_remove_patient.bind(this)}
+                        on_ask_to_export_patient={this.on_ask_to_export_patient.bind(this)} />
                 </div>
                 <div className="grid-block shrink">
+                    {/* <PlComponentCardPatientWidget
+                        ref="patient_widget"
+                        tittle={mode_menu}
+                        content={widget_content}
+                        perform_database_action={this.props.perform_database_action} /> */}
                     {widget}
                 </div>
                 <div className="pl_component_sidebar_patient_element scrollable-content">
                     <PlComponentMenuTags
-                        data={data}
-                        keys_selected={data_keys_selected}
+                        data={data_tags}
+                        keys_selected={data_tags_selected}
                         on_select_tag={this.on_select_tag.bind(this)}
                         on_un_selected_tag={this.on_unselect_tag.bind(this)} />
                 </div>
