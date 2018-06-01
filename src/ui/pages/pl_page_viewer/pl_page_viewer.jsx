@@ -26,10 +26,8 @@ import React, { Component } from 'react';
 //actions
 import {
   get_data,
-  get_family,
-  get_patient,
-  format_patient_to_export,
-  perform_database_action
+  perform_database_action,
+  format_patient_to_export
 } from './pl_page_viewer_actions';
 //components
 import { PlComponentFamilyTreeViewer } from './../../components/pl_component_family_tree_viewer/pl_component_family_tree_viewer';
@@ -41,7 +39,6 @@ import { PlComponentTextPlain } from './../../components/pl_component_text/pl_co
 
 //modules
 import { url_getParameterByName } from './../../../modules/rkt_module_url';
-import { isObjectEmpty } from './../../../modules/rkt_module_object';
 
 export default class PlPageViewer extends Component {
 
@@ -61,11 +58,12 @@ export default class PlPageViewer extends Component {
     };
   }
 
-  update_component_state_from_database(family_id, patient_id) {
+  update_component_state_from_database(patient_id) {
 
     var myComponent = this;
+    var relatives = this.state.relatives;
 
-    get_data(family_id, patient_id, function (result) {
+    get_data(patient_id,relatives, function (result) {
 
       if (result) {
 
@@ -110,9 +108,8 @@ export default class PlPageViewer extends Component {
     if ("href" in location) {
 
       var location_url = location.href;
-      var family_id = url_getParameterByName("family_id", location_url);
       var patient_id = url_getParameterByName("patient_id", location_url);
-      this.update_component_state_from_database(family_id, patient_id);
+      this.update_component_state_from_database(patient_id);
 
     }
 
@@ -120,7 +117,7 @@ export default class PlPageViewer extends Component {
 
   explore_new_patient(id) {
 
-    this.update_component_state_from_database(this.state.family.id, id);
+    this.update_component_state_from_database(id);
 
   }
 
@@ -158,26 +155,14 @@ export default class PlPageViewer extends Component {
       if ("href" in location) {
 
         var location_url = location.href;
-
         var patient_id = url_getParameterByName("patient_id", location_url);
-        var family_id = url_getParameterByName("family_id", location_url);
 
-        if ("family_id" in data) family_id = data.family_id;
+      
+        if ("patient_id" in data) patient_id = data.patient_id;
+        if (patient_id === undefined) patient_id = myComponent.state.root.children[2].id; // family's root
+        myComponent.update_component_state_from_database(patient_id);
 
-        if (family_id === undefined) {
-
-          myComponent.on_click_button("go_back");
-
-        } else {
-
-          if ("patient_id" in data) patient_id = data.patient_id;
-
-          if (patient_id === undefined) patient_id = myComponent.state.root.children[2].id; // family's root
-
-          myComponent.update_component_state_from_database(family_id, patient_id);
-
-        }
-
+        //#TODO do something when family is removed
       }
 
     });
@@ -211,6 +196,11 @@ export default class PlPageViewer extends Component {
     var mother = this.state.mother;
     var relatives = this.state.relatives;
     var children = this.state.children;
+    var root = this.state.root;
+    var siblings = this.state.siblings;
+
+    //console.log(relatives);
+    //console.log(root);
 
     var bottom_button_left =
       {
@@ -227,9 +217,8 @@ export default class PlPageViewer extends Component {
 
     if (this.state.root !== false && this.state.siblings !== false) {
       tree_viewer = <PlComponentFamilyTreeViewer
-        ref={"FamilyTreeViewer"}
-        root={this.state.root}
-        siblings={this.state.siblings}
+        root={root}
+        siblings={siblings}
         set_patient={this.explore_new_patient.bind(this)}
         patient_id={patient.id}
       />;

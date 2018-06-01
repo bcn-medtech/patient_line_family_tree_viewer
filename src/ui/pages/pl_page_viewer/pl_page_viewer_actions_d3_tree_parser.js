@@ -1,145 +1,247 @@
-export function exploreChildrenTree(couplesArray, dataJson) {
-    
-    var children;
-    var childrenArray = getChildren(couplesArray, dataJson);
-    if (childrenArray.length == 0) {
-        if (isCouple(couplesArray)) {
-            children = addCouple(couplesArray, dataJson, "-2");
+import { isObjectEmpty } from "../../../modules/rkt_module_object";
+import {
+    findWhere,
+    flatten,
+    findIndex
+} from "underscore";
+
+import {
+    order_patients_by_couple
+} from './pl_page_viewer_actions/pl_page_viewer_actions_d3_tree_model/pl_page_viewer_action_d3_tree_model_organizer';
+
+import {
+    get_all_siblings_from_tree
+} from './pl_page_viewer_actions/pl_page_viewer_actions_d3_tree_model/pl_page_viewer_action_d3_tree_model_organizer_siblings';
+
+function get_children(patient_children, full_database) {
+
+    var couples = [];
+
+    for (var i = 0; i < patient_children.length; i++) {
+
+        var element = patient_children[i];
+
+        if (!isObjectEmpty(element.children)) {
+
+            for (var j = 0; j < element.children.length; j++) {
+
+                var child = findWhere(full_database, { id: element.children[j] });
+
+                var is_couple_duplicated = false;
+
+                for (var m = 0; m < couples.length; m++) {
+
+                    if (couples[m][0] === child.mother && couples[m][1] === child.father) {
+                        is_couple_duplicated = true;
+                    }
+                }
+
+                if (is_couple_duplicated === false) {
+
+                    var couple = [];
+                    couple.push(child.mother);
+                    couple.push(child.father);
+                    couples.push(couple);
+                }
+            }
+
         } else {
+
+            var couple = [];
+            couple.push(element.id);
+            couple.push("");
+            couples.push(couple);
+        }
+    }
+
+    return couples;
+
+}
+
+function getRootCouple(database) {
+
+    var rootCouples = [];
+    var couples = get_all_siblings_from_tree(database);
+    //console.log(couples);
+
+    for (var i = 0; i < couples.length; i++) {
+
+        var member_1 = findWhere(database, { id: couples[i].source.id });
+        var member_2 = findWhere(database, { id: couples[i].target.id });
+
+        if (!isObjectEmpty(member_1) && !isObjectEmpty(member_2)) {
+
+            if (isObjectEmpty(member_1.father) && isObjectEmpty(member_1.mother) && isObjectEmpty(member_2.father) && isObjectEmpty(member_2.mother)) {
+
+                var couple = [];
+                couple.push(member_1.id);
+                couple.push(member_2.id);
+                rootCouples.push(couple);
+            }
+        }
+    }
+
+    return rootCouples;
+
+}
+
+export function exploreChildrenTree(couplesArray, dataJson) {
+
+    var children;
+    var childrenArray = getChildren(couplesArray, dataJson);
+    
+
+    if (childrenArray.length === 0) {
+
+        if (isCouple(couplesArray)) {
+
+            children = addCouple(couplesArray, dataJson, "-2");
+
+        } else {
+
             children = addChildren(couplesArray, dataJson);
+            
         }
+
     } else {
+
         var couple = addCouple(couplesArray, dataJson, "-2");
-        couplesArray = getCouplesArray(childrenArray, dataJson);
-        for (var i in couplesArray) {
-            children = exploreChildrenTree(couplesArray[i], dataJson);
-            if (children.length == 3) {
+
+        var couple_temp_array = get_children(childrenArray, dataJson);
+
+        for (var i in couple_temp_array) {
+
+            children = exploreChildrenTree(couple_temp_array[i], dataJson);
+            
+            if (children.length === 3) {
+
                 for (var j in children) {
                     var coupleMember = children[j];
                     couple[1].children.push(coupleMember);
                 }
+
             } else {
+
                 couple[1].children.push(children);
             }
         }
-        children = couple;
-    }
 
-    return children;
-}
+        if (couple[1].children.length > 1) {
 
+            //Order data by patients couple
+            var patients_ordered_by_couple = order_patients_by_couple(couple[1].children);
 
-export function bloodRelatedCounter(couplesArray, dataJson, id) {
-    
-    var children;
-    var childrenArray = getChildren(couplesArray, dataJson);
-    if (childrenArray.length == 0) {
-        children = addChildren(couplesArray, dataJson);
-    } else {
-        var couple = addCouple(couplesArray, dataJson, "-2");
-        couplesArray = getCouplesArray(childrenArray, dataJson);
-        for (var i in couplesArray) {
-            children = exploreChildrenTree(couplesArray[i], dataJson);
-            if (children.length == 3) {
-                for (var j in children) {
-                    var coupleMember = children[j];
-                    couple[1].children.push(coupleMember);
+            //Push patients that are not present in patients_ordered_by_couple
+            for(i=0;i<couple[1].children.length;i++){
+
+                var patient_selected = couple[1].children[i];
+                
+                if(findIndex(patients_ordered_by_couple,{id:patient_selected.id})===-1){
+                    patients_ordered_by_couple.push(patient_selected);
                 }
-            } else {
-                couple[1].children.push(children);
+
             }
+
+            couple[1].children = patients_ordered_by_couple;
+         
         }
+
+               
         children = couple;
-    }
-    return children;
-}
 
-export function exploreSiblingsTree(couplesArray, dataJson) {
-    
-    var children;
-    var sibling = [];
-    var childrenArray = getChildren(couplesArray, dataJson);
-    couplesArray = getCouplesArray(childrenArray, dataJson);
-    //console.log("couplesArray: ", couplesArray);
-    for (var i in couplesArray) {
-        children = exploreSiblingsTree(couplesArray[i], dataJson);
-        //console.log("For couplesArray: ", children);
-        if (isCouple(couplesArray[i])) {
-            children = addSiblingObject(couplesArray[i]);
-            //console.log("If isCouple: ", children);
-            sibling = sibling.concat(children);
-            //console.log("If isCouple, sibling: ", sibling);
-
-        }
-        children = sibling;
+        //console.log(children);
     }
+
+   
+
+    //console.log(children);
+
     return children;
 }
 
 export function treeBuilder(dataJson) {
-    
+
     var familyTree = {};
+    var children = [];
     var couplesArray = getRootCouple(dataJson);
-    var children = exploreChildrenTree(couplesArray, dataJson);
+
+    if (couplesArray.length !== 0) {
+
+        for (var i = 0; i < couplesArray.length; i++) {
+
+            var root_couple = couplesArray[i];
+
+            children.push(exploreChildrenTree(root_couple, dataJson));
+
+        }
+
+
+    } else {
+
+        children.push(dataJson[0]);
+
+    }
+
+    children = flatten(children);
+    children = order_patients_by_couple(children);
     familyTree = addVoidNode("1");
     familyTree.children = children;
-    //var counter = bloodRelatedCounter(couplesArray, dataJson, "00103");
     return familyTree;
 }
 
-export function siblingsBuilder(dataJson) {
-    
-    var couplesArray = getRootCouple(dataJson);
-    var siblingsTree = [];
-    siblingsTree.push(addSiblingObject(couplesArray));
-    var siblings = exploreSiblingsTree(couplesArray, dataJson);
-    if (typeof siblings != 'undefined') {
-        for (var i in siblings) {
-            siblingsTree = siblingsTree.concat(siblings[i]);
-            //console.log("siblingsTree: ", siblingsTree);
+export function siblingsBuilder(family_patients) {
+
+    var couples = [];
+
+    for (var i = 0; i < family_patients.length; i++) {
+
+        var patient = family_patients[i];
+
+        if (!isObjectEmpty(patient.father) && !isObjectEmpty(patient.mother)) {
+
+            var couple = [];
+            couple.push(patient.father);
+            couple.push(patient.mother);
+            var siblings_object = addSiblingObject(couple);
+            var is_duplicated_couple = false;
+
+            for (var j = 0; j < couples.length; j++) {
+
+                var temp_couple = couples[j];
+
+                if (temp_couple.source.id === siblings_object.source.id && temp_couple.target.id === siblings_object.target.id) {
+                    is_duplicated_couple = true;
+                }
+
+            }
+
+            if (!is_duplicated_couple) {
+                couples.push(siblings_object);
+            }
+
+
         }
     }
-    //console.log("siblingsTree: ", siblingsTree);
-    return siblingsTree;
-}
 
-export function addChildrenToTree(children, dataJson, familyTree) {
-    
-    var children;
-    var id = "2" // TO DO: change this ID.
-    if (isCouple(children)) {
-        children = addCouple(children, dataJson, id);
-    } else {
-        children = addChildren(children, dataJson)
-    }
-}
-
-function addRootToTree(couplesArray, id, dataJson) {
-    
-    var familyItem = {};
-    familyItem["name"] = "";
-    familyItem["id"] = id;
-    familyItem["hidden"] = true;
-    familyItem["children"] = addCouple(couplesArray[0], dataJson, id);
-    return familyItem;
+    return couples;
 }
 
 function isCouple(couplesArray_loop) {
-    
+
     var ret = false;
-    if (couplesArray_loop[0] != "" && couplesArray_loop[1] != "") {
+    if (couplesArray_loop[0] !== "" && couplesArray_loop[1] !== "") {
         ret = true;
     }
     return ret;
 }
 
 function addCouple(couplesArray, dataJson, voidNodeId) {
-    
+
     var couple = [];
     var voidNode;
     var coupleMember;
     for (var i in dataJson) {
-        if (dataJson[i].id == couplesArray[0] || dataJson[i].id == couplesArray[1]) {
+        if (dataJson[i].id === couplesArray[0] || dataJson[i].id === couplesArray[1]) {
             coupleMember = dataJson[i];
             if (coupleMemberIsChild(coupleMember)) {
                 coupleMember["no_parent"] = false;
@@ -156,19 +258,19 @@ function addCouple(couplesArray, dataJson, voidNodeId) {
 }
 
 function coupleMemberIsChild(coupleMember) {
-    
+
     var ret = false;
-    if (coupleMember.father != "" || coupleMember.mother != "") {
+    if (coupleMember.father !== "" || coupleMember.mother !== "") {
         ret = true;
     }
     return ret;
 }
 
 function addChildren(couplesArray, dataJson) {
-    
+
     var children;
     for (var i in dataJson) {
-        if (dataJson[i].id == couplesArray[0] || dataJson[i].id == couplesArray[1]) {
+        if (dataJson[i].id === couplesArray[0] || dataJson[i].id === couplesArray[1]) {
             children = dataJson[i];
         }
     }
@@ -177,7 +279,7 @@ function addChildren(couplesArray, dataJson) {
 
 // Create a void node for children:
 function addChildVoidNode(id) {
-    
+
     var familyItem = {};
     familyItem["name"] = "";
     familyItem["id"] = id;
@@ -187,38 +289,8 @@ function addChildVoidNode(id) {
     return familyItem;
 }
 
-function getRootCouple(dataJson) {
-    
-    var rootArray = [];
-    for (var i in dataJson) {
-        var coupleMember1 = dataJson[i].id;
-        var coupleMember2 = getSpouse(coupleMember1, dataJson);
-        var couple = [coupleMember1, coupleMember2];
-        if (coupleIsRoot(couple, dataJson)) {
-            rootArray = couple;
-        }
-    }
-    return rootArray;
-}
 
 
-function coupleIsRoot(couple, dataJson) {
-    
-    var ret = false;
-    var count = 0;
-    for (var i in dataJson) {
-        ret = false;
-        if (dataJson[i].id == couple[0] || dataJson[i].id == couple[1]) {
-            if (dataJson[i].father == "" && dataJson[i].mother == "") {
-                count++;
-            }
-        }
-        if (count == 2) {
-            ret = true;
-        }
-    }
-    return ret;
-}
 
 function getChildren(parentsArray, dataJson) {
 
@@ -230,9 +302,9 @@ function getChildren(parentsArray, dataJson) {
             }
         }
     }
-    for (var i in dataJson) {
-        for (var j in childrenArray) {
-            if (dataJson[i].married_with == childrenArray[j].id) {
+    for (i in dataJson) {
+        for (j in childrenArray) {
+            if (dataJson[i].married_with === childrenArray[j].id) {
                 childrenArray.push(dataJson[i]);
             }
         }
@@ -241,19 +313,19 @@ function getChildren(parentsArray, dataJson) {
 }
 
 function areParents(childCandidate, parentsArray) {
-    
+
     var ret = false;
-    if ((childCandidate.father == parentsArray[0] || childCandidate.mother == parentsArray[0]) && (childCandidate.father == parentsArray[1] || childCandidate.mother == parentsArray[1])) {
+    if ((childCandidate.father === parentsArray[0] || childCandidate.mother === parentsArray[0]) && (childCandidate.father === parentsArray[1] || childCandidate.mother === parentsArray[1])) {
         ret = true;
     }
     return ret;
 }
 
 function notListed(childrenId, childrenArray) {
-    
+
     var ret = true
     for (var i in childrenArray) {
-        if (childrenId == childrenArray[i].id) {
+        if (childrenId === childrenArray[i].id) {
             ret = false;
         }
     }
@@ -261,7 +333,7 @@ function notListed(childrenId, childrenArray) {
 }
 
 function getCouplesArray(childrenArray, dataJson) {
-    
+
     var couplesArray = [];
     for (var j in childrenArray) {
         var coupleMember1 = childrenArray[j].id;
@@ -275,10 +347,10 @@ function getCouplesArray(childrenArray, dataJson) {
 }
 
 function getSpouse(coupleMember1, dataJson) {
-    
+
     var coupleMember2 = "";
     for (var i in dataJson) {
-        if (dataJson[i].married_with == coupleMember1) {
+        if (dataJson[i].married_with === coupleMember1) {
             coupleMember2 = dataJson[i].id;
         }
     }
@@ -286,10 +358,10 @@ function getSpouse(coupleMember1, dataJson) {
 }
 
 function coupleNotListed(couple, couplesArray) {
-    
+
     var ret = true;
     for (var i in couplesArray) {
-        if (couplesArray[i][0] == couple[0] || couplesArray[i][0] == couple[1]) {
+        if (couplesArray[i][0] === couple[0] || couplesArray[i][0] === couple[1]) {
             ret = false;
         }
     }
@@ -298,7 +370,7 @@ function coupleNotListed(couple, couplesArray) {
 
 // Add data to siblings:
 function addSiblingObject(couplesArray) {
-    
+
     var siblingsItem = {};
     var sourceItem = {};
     var targetItem = {};
@@ -313,12 +385,12 @@ function addSiblingObject(couplesArray) {
 
 // Create a void node:
 function addVoidNode(id) {
-    
+
     var familyItem = {};
     familyItem["name"] = "";
     familyItem["id"] = id;
     familyItem["hidden"] = true;
     familyItem["children"] = [];
     return familyItem;
-    
+
 }

@@ -98,17 +98,15 @@ export class PlComponentCardPatientGenderCombobox extends Component {
                         <div className="grid-block align-center">
                             {this.render_gender("female")}
                         </div>
-                        <div className="grid-block align-center">
+                        <div className="grid-block align-center shrink">
                             female
                         </div>
                     </div>
                     <div className="grid-block shrink vertical list-item" onClick={this.edit_gender.bind(this, "male")}>
                         <div className="grid-block align-center">
-                            <h4>
                                 {this.render_gender("male")}
-                            </h4>
                         </div>
-                        <div className="grid-block align-center text">
+                        <div className="grid-block align-center text shrink">
                             male
                         </div>
                     </div>
@@ -123,7 +121,7 @@ export class PlComponentCardPatientGenderCombobox extends Component {
                         <div className="grid-block align-center">
                             {this.render_gender("female")}
                         </div>
-                        <div className="grid-block align-center">
+                        <div className="grid-block align-center shrink">
                             female
                         </div>
                     </div>
@@ -131,7 +129,7 @@ export class PlComponentCardPatientGenderCombobox extends Component {
                         <div className="grid-block align-center">
                             {this.render_gender("male")}
                         </div>
-                        <div className="grid-block align-center text">
+                        <div className="grid-block align-center text shrink">
                             male
                         </div>
                     </div>
@@ -166,21 +164,6 @@ export class PlComponentCardPatientGenderCombobox extends Component {
     render_element(gender, svg) {
 
         return (
-            <div>
-                <div className="grid-block shrink vertical pl-component-card-patient-gender-combobox pl-component-card-patient-gender-combobox-tooltip ">
-                    <div className="grid-block align-center">
-                        {svg}
-                    </div>
-                    <div className="grid-block align-center text">{gender}</div>
-                </div>
-            </div>
-
-        )
-    }
-
-    render_element_edit_mode(gender, svg) {
-
-        return (
 
             <a className="grid-block shrink vertical pl-component-card-patient-gender-combobox pl-component-card-patient-gender-combobox-tooltip-selected">
                 <div className="grid-block align-center">
@@ -192,14 +175,11 @@ export class PlComponentCardPatientGenderCombobox extends Component {
                 <div className="grid-block align-center text">{gender}</div>
             </a>
         );
-
     }
 
     render() {
 
         var gender = this.state.gender;
-        var mode_edit = this.props.mode_edit;
-        var element;
 
         var svg;
 
@@ -218,15 +198,9 @@ export class PlComponentCardPatientGenderCombobox extends Component {
 
         }
 
-        if (mode_edit) {
-            element = this.render_element_edit_mode(gender, svg);
-        } else {
-            element = this.render_element(gender, svg);
-        }
-
         return (
             <div className="grid-block vertical">
-                {element}
+                {this.render_element(gender, svg)}
             </div>
         );
 

@@ -22,6 +22,8 @@
 # Sergio Sánchez Martínez
 */
 
+import {findWhere} from 'underscore';
+
 export function isObjectEmpty(obj) {
     
     // null and undefined are "empty"
@@ -89,6 +91,31 @@ export function deleteElementFromArray(element, array) {
 
     return array;
 
+}
+
+export function deleteDuplicatedElementsFromArray(array, duplicated_field, exception) {
+
+    var new_array = [];
+
+    for(var i=0;i<array.length;i++){
+
+        var element = array[i];
+
+        if(element[duplicated_field]!==exception){
+            
+            var str = {}
+            str[duplicated_field]=element[duplicated_field];
+            
+            if(isObjectEmpty(findWhere(new_array,str))){
+
+                new_array.push(element);
+            }
+        }else{
+            new_array.push(element);
+        }
+    }
+
+    return new_array;
 }
 
 export function deleteElementsFromArray(array_elements_to_delete, array) {

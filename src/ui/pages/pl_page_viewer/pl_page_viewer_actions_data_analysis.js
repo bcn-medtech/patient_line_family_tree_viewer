@@ -23,6 +23,7 @@
 */
 
 import {isObjectEmpty} from './../../../modules/rkt_module_object';
+import {findWhere} from 'underscore';
 
 function get_number_of_family_members(family,patients){
     
@@ -102,3 +103,17 @@ export function get_family_processed(patients, family){
 
     return family;
 }
+
+export function order_family_by_ids(family,ids){
+
+    var array = [];
+
+    for(var i=0;i<ids.length;i++){
+
+        var patient = findWhere(family,{id:ids[i]});
+        array.push(patient);
+    }
+
+    return array;
+}
+

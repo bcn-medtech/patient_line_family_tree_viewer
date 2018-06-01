@@ -335,11 +335,11 @@ export class PlComponentSidebarPatient extends Component {
 
             } else if (mode_menu === "children") {
 
-                widget_content = <PlComponentCardPatientWidgetChildren patient={patient} children={children} mode_edit={mode_edit} perform_database_action={this.props.perform_database_action} />
+                widget_content = <PlComponentCardPatientWidgetChildren patient={patient} children={children} mode_edit={true} perform_database_action={this.props.perform_database_action} />
 
             } else if (mode_menu === "father") {
 
-                widget_content = <PlComponentCardPatientWidgetParent parent={father} type_parent={mode_menu} mode_edit={mode_edit} perform_database_action={this.props.perform_database_action} />
+                widget_content = <PlComponentCardPatientWidgetParent parent={father} type_parent={mode_menu} mode_edit={true} perform_database_action={this.props.perform_database_action} />
 
             } else if (mode_menu === "mother") {
 
@@ -386,6 +386,7 @@ export class PlComponentSidebarPatient extends Component {
                         />
                     </div>
                 
+                widget_content = <PlComponentCardPatientWidgetParent parent={mother} type_parent={mode_menu} mode_edit={true} perform_database_action={this.props.perform_database_action} />
             }
 
             widget =
@@ -431,7 +432,7 @@ export class PlComponentSidebarPatient extends Component {
                 </div>
                 <div className="grid-block pl_component_sidebar_patient_element">
                     <PlComponentTable ref="patient_table" data={data_table} table_mode={table_mode} />
-                </div>
+        </div>
                 {this.render_edit_patient_button(mode_edit)}
                 {this.render_modal()}
             </div>

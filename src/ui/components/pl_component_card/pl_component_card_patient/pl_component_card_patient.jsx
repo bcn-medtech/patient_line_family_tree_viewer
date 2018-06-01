@@ -209,24 +209,24 @@ export class PlComponentCardPatient extends Component {
                         selected={mode_mother} />
                 </div>
                 <div className="grid-block shrink card-item">
-                    <h4>
+                  
                         <PlComponentCardPatientTextButton
                             text={""}
                             type="Data"
                             on_click_component={this.on_click_card_component.bind(this)}
                             selected={mode_data} />
-                    </h4>
+                    
 
                 </div>
                 <div className="grid-block shrink card-item">
-                    <h4>
+                    
                         <PlComponentCardPatientTextButton
                             text={""}
                             type="Comments"
                             on_click_component={this.on_click_card_component.bind(this)}
                             selected={mode_comments} />
-                    </h4>
-                </div>
+                    
+            </div>
             </div>
         );
     }

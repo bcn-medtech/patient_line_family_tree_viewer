@@ -13,7 +13,7 @@ export class PlComponentFamilyTreeViewer extends Component {
 
     drawTree(root, patient_id, siblings) {
 
-        if (!isObjectEmpty(root) && !isObjectEmpty(siblings)) {
+        if(!isObjectEmpty(root) /*&& !isObjectEmpty(siblings)*/){
 
             this.d3TreeCreator = new D3TreeCreator();
 
@@ -22,8 +22,8 @@ export class PlComponentFamilyTreeViewer extends Component {
             var width = el.clientWidth;
             var size = { width: width, height: height };
 
-            this.d3TreeCreator.create(el, size, root, siblings, patient_id, this.set_patient.bind(this));
-
+            //console.log(root);
+            this.d3TreeCreator.create(el,size,root,siblings,patient_id,this.set_patient.bind(this));
         }
     }
 
