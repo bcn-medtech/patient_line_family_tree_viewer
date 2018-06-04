@@ -1,6 +1,7 @@
 import {
     filter
 } from 'underscore';
+import { isObjectEmpty } from './../../../../modules/rkt_module_object';
 //Using global variables
 
 const d3 = window.d3;
@@ -180,15 +181,34 @@ export default class TreeDisplayer {
             .attr("x", -20)
             .attr("y", 50)
             .html(function (d) {
-                var x = -20;
-                var y = 70
-                
-                var name = d.name;
-                var nhc = "<tspan x=" + x + " y=" + y + ">" + d.nhc + "</tspan>";
-                return name + nhc;
+                var data_to_display = ["nhc", "dob", "symptoms"];
+                var text_labels = print_text_labels(d, data_to_display);
+                return text_labels;
             });
 
         
+        function print_text_labels(d, items) {
+
+            var name = d.name;
+            var text_labels = name;
+            
+            var x = -20;
+            var y = 80;
+            
+            for (var i=0; i<items.length; i++) {
+                
+                var item = items[i];
+                
+                if (!isObjectEmpty(d[item])) {
+                    text_labels = text_labels + "<tspan x=" + x + " y=" + y + ">" + d[item] + "</tspan>";
+                    y = y+30//25;
+                }
+                
+            }
+
+            return text_labels;
+
+        }
         /**
         This defines the line between siblings.
         **/
