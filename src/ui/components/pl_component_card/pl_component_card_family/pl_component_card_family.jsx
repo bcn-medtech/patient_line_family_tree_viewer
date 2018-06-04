@@ -37,25 +37,6 @@ import {
 
 export class PlComponentCardFamily extends Component {
 
-    on_edit_family() {
-
-        if (isObjectAFunction(this.props.on_set_mode_edit)) {
-
-            this.props.on_set_mode_edit();
-
-        }
-    }
-
-    on_remove_family() {
-
-        if (isObjectAFunction(this.props.on_ask_to_remove_family)) {
-
-            this.props.on_ask_to_remove_family();
-
-        }
-
-    }
-
     on_click_card_component(type) {
 
         if (type === "number of family members" || type === "mother" || type === "children" || type === "relatives") {
@@ -101,22 +82,10 @@ export class PlComponentCardFamily extends Component {
         var family_description;
         var family_symptoms;
 
-        var button_delete =
-            {
-                "name": "delete",
-                "icon": <svg width='10' height='18' viewBox='0 0 16 24' fillRule='evenodd'><path d='M4 0h8v2H4zM0 3v4h1v17h14V7h1V3H0zm13 18H3V8h10v13z'></path><path d='M5 10h2v9H5zm4 0h2v9H9z'></path></svg>
-            }
-
-        var button_edit =
-            {
-                "name": "edit",
-                "icon": <svg width='15' height='15' viewBox='0 0 16 16' fillRule='evenodd'><path d='M2.032 10.924l7.99-7.99 2.97 2.97-7.99 7.99zm9.014-8.91l1.98-1.98 2.97 2.97-1.98 1.98zM0 16l3-1-2-2z'></path></svg>,
-                "selected": mode_edit
-            }
-
         family_id = family.id;
         family_name = family.name;
         family_description = family.description;
+        
         if (isObjectEmpty(family_description)) family_description = "Description";
         family_symptoms = family.symptoms;
         if (isObjectEmpty(family_symptoms)) family_symptoms = "Symptoms";
@@ -154,32 +123,6 @@ export class PlComponentCardFamily extends Component {
                                 isEditionMode={mode_edit ? true : false}
                                 ref="family_symptoms" />
                         </div>
-                    </div>
-                    <div className="grid-block pl-component-card-family-edition-buttons shrink">
-                        <PlComponentButtonCircleSelectable
-                            text={""}
-                            icon={button_edit.icon}
-                            backgroundcolor={"transparent"}
-                            backgroundhovercolor={"#5C4EE5"}
-                            backgroundselectedcolor={"#5C4EE5"}
-                            fontcolor={"#5C4EE5"}
-                            fonthovercolor={"white"}
-                            fontselectedcolor={"white"}
-                            bordercolor={"#5C4EE5"}
-                            borderhovercolor={"#5C4EE5"}
-                            borderselectedcolor={"#5C4EE5"}
-                            selected={button_edit.selected}
-                            onclickelement={this.on_edit_family.bind(this, button_edit.name)} />
-
-                        <PlComponentButtonCircle
-                            icon={button_delete.icon}
-                            backgroundcolor={"transparent"}
-                            backgroundhovercolor={"#5C4EE5"}
-                            fontcolor={"#5C4EE5"}
-                            fonthovercolor={"white"}
-                            bordercolor={"#5C4EE5"}
-                            borderhovercolor={"#5C4EE5"}
-                            onclickelement={this.on_remove_family.bind(this, button_delete.name)} />
                     </div>
                 </div>
                 {this.render_menu(family, mode_menu)}

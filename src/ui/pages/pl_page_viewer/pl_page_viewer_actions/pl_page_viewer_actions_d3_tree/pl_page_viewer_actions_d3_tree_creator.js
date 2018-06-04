@@ -77,8 +77,8 @@ function getRootCouple(database) {
                 couple.push(member_2.id);
                 rootCouples.push(couple);
 
-                //member_1["is_root"]=true;
-                //member_2["is_root"]=true;
+                member_1["is_root"]=true;
+                member_2["is_root"]=true;
             }
 
         }

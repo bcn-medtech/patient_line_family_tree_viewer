@@ -34,7 +34,7 @@ import { filter } from "underscore";
 
 export class PlComponentCardPatientWidgetRelatives extends Component {
 
-    render_card_patient_widget_relatives(relatives, mode_edit) {
+    render_card_patient_widget_relatives(relatives) {
 
         if (!isObjectEmpty(relatives)) {
 
@@ -120,11 +120,10 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
     render() {
 
         var relatives = this.props.relatives;
-        var mode_edit = this.props.mode_edit;
 
         return (
             <div className="grid-block pl-component-card-patient-widget-relatives">
-                {this.render_card_patient_widget_relatives(relatives, mode_edit)}
+                {this.render_card_patient_widget_relatives(relatives)}
             </div>
         );
 

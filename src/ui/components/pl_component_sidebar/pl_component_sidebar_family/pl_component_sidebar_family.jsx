@@ -48,18 +48,6 @@ export class PlComponentSidebarFamily extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-
-        if (this.props !== nextProps) {
-
-            this.setState({
-                mode_edit: false
-            });
-
-        }
-
-    }
-
     on_set_mode_menu(mode) {
 
         if (this.state.mode_menu === mode) {
@@ -71,13 +59,6 @@ export class PlComponentSidebarFamily extends Component {
                 mode_menu: mode
             })
         }
-    }
-
-    on_set_mode_edit() {
-
-        this.setState({
-            mode_edit: !this.state.mode_edit
-        });
     }
 
     on_save_data_family() {
@@ -214,20 +195,19 @@ export class PlComponentSidebarFamily extends Component {
 
         var family = this.props.family;
         var mode_menu = this.state.mode_menu;
-        var mode_edit = this.state.mode_edit;
+        var mode_edit = this.props.mode_edit;
         
         return (
             <div className="grid-block vertical pl-component-sidebar-family">
                 <div className="grid-block shrink pl_component_sidebar_family_element">
                     <PlComponentCardFamily
+                        ref="family_card"
                         family={family}
                         on_click_action={this.on_set_mode_menu.bind(this)}
-                        on_set_mode_edit={this.on_set_mode_edit.bind(this)}
                         mode_menu={mode_menu}
                         mode_edit={mode_edit}
-                        ref="family_card"
                         perform_database_action={this.props.perform_database_action}
-                        on_ask_to_remove_family={this.on_ask_to_remove_family.bind(this)} />
+                    />
                 </div>
                 {this.render_edit_family_button(mode_edit)}
                 {this.render_modal()}

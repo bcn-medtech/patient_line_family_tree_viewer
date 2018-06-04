@@ -60,18 +60,6 @@ export class PlComponentSidebarPatient extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-
-        if (this.props !== nextProps) {
-
-            this.setState({
-                mode_edit: false
-            });
-
-        }
-
-    }
-
     on_set_mode_menu(mode) {
 
         if (this.state.mode_menu === mode) {
@@ -83,13 +71,6 @@ export class PlComponentSidebarPatient extends Component {
                 mode_menu: mode
             })
         }
-    }
-
-    on_set_mode_edit() {
-
-        this.setState({
-            mode_edit: !this.state.mode_edit
-        });
     }
 
     on_select_tag(tag) {
@@ -159,17 +140,6 @@ export class PlComponentSidebarPatient extends Component {
         this.setState({
             to_remove_patient: true
         });
-
-    }
-
-    on_ask_to_export_patient() {
-
-        if (isObjectAFunction(this.props.export_patient)) {
-
-            var patient = this.props.patient;
-            this.props.export_patient(patient);
-
-        }
 
     }
 
@@ -325,7 +295,7 @@ export class PlComponentSidebarPatient extends Component {
 
 
         var widget_style = { "display": "none" };
-        if (mode_menu === "Data") widget_style["display"] = "";
+        if (mode_menu === "data") widget_style["display"] = "";
 
         return (
             <div className="grid-block" style={widget_style}>
@@ -381,7 +351,7 @@ export class PlComponentSidebarPatient extends Component {
         }
 
         var widget_style = { "display": "none" };
-        if (mode_menu === "Comments") widget_style["display"] = "";
+        if (mode_menu === "comments") widget_style["display"] = "";
 
         return (
             <div className="grid-block" style={widget_style}>
@@ -406,7 +376,7 @@ export class PlComponentSidebarPatient extends Component {
         var data_tags_selected = this.state.patient_columns_selected;
 
         var mode_menu = this.state.mode_menu;
-        var mode_edit = this.state.mode_edit;
+        var mode_edit = this.props.mode_edit;
 
         var widget;
 
@@ -414,7 +384,7 @@ export class PlComponentSidebarPatient extends Component {
 
             var widget_content;
 
-            if ((mode_menu !== "Data") && (mode_menu !== "Comments")) {
+            if ((mode_menu !== "data") && (mode_menu !== "comments")) {
 
                 if (mode_menu === "relatives") {
 
@@ -422,15 +392,15 @@ export class PlComponentSidebarPatient extends Component {
 
                 } else if (mode_menu === "children") {
 
-                    widget_content = <PlComponentCardPatientWidgetChildren patient={patient} children={children} mode_edit={true} perform_database_action={this.props.perform_database_action} />
+                    widget_content = <PlComponentCardPatientWidgetChildren patient={patient} children={children} perform_database_action={this.props.perform_database_action} />
 
                 } else if (mode_menu === "father") {
 
-                    widget_content = <PlComponentCardPatientWidgetParent parent={father} type_parent={mode_menu} mode_edit={true} perform_database_action={this.props.perform_database_action} />
+                    widget_content = <PlComponentCardPatientWidgetParent parent={father} type_parent={mode_menu} />
 
                 } else if (mode_menu === "mother") {
 
-                    widget_content = <PlComponentCardPatientWidgetParent parent={mother} type_parent={mode_menu} mode_edit={mode_edit} perform_database_action={this.props.perform_database_action} />
+                    widget_content = <PlComponentCardPatientWidgetParent parent={mother} type_parent={mode_menu} />
 
                 }
 
@@ -454,13 +424,12 @@ export class PlComponentSidebarPatient extends Component {
                         mother={mother}
                         children={children}
                         on_click_action={this.on_set_mode_menu.bind(this)}
-                        on_set_mode_edit={this.on_set_mode_edit.bind(this)}
                         mode_menu={mode_menu}
                         mode_edit={mode_edit}
                         ref="patient_card"
                         perform_database_action={this.props.perform_database_action}
                         on_ask_to_remove_patient={this.on_ask_to_remove_patient.bind(this)}
-                        on_ask_to_export_patient={this.on_ask_to_export_patient.bind(this)} />
+                    />
                 </div>
                 <div className="grid-block vertical">
                     <div className="grid-block shrink">

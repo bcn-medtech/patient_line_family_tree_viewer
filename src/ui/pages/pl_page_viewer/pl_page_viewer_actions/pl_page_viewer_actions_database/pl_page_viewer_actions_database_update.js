@@ -408,17 +408,25 @@ export function export_patient(data){
 
     if ("data" in data) {
 
-        if ("patient" && "family_tree" in data.data) {
+        // if ("patient" && "family_tree" in data.data) {
+
+        //     var patient = data.data["patient"];
+        //     //var family_tree = data.data["family_tree"];
+
+        //     var id_patient = keys(data.data.patient)[0];
+        //     writeAndExportXlsxWoorkbook(patient, { "name": id_patient }); // for the moment, only a xlsx of the patient is exported
+        //     // var id_family = patient[id_patient][0].family_id;
+
+        //     // load_zip_with_patient_and_family_tree(id_patient, id_family, patient, family_tree);
+
+        // }
+        if ("patient" in data.data) {
 
             var patient = data.data["patient"];
-            //var family_tree = data.data["family_tree"];
 
             var id_patient = keys(data.data.patient)[0];
             writeAndExportXlsxWoorkbook(patient, { "name": id_patient }); // for the moment, only a xlsx of the patient is exported
-            // var id_family = patient[id_patient][0].family_id;
-
-            // load_zip_with_patient_and_family_tree(id_patient, id_family, patient, family_tree);
-
+            
         }
 
     }

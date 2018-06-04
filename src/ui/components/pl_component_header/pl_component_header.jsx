@@ -47,7 +47,7 @@ export default class PlHeader extends Component {
             <div className="grid-block menu-options-label">Options</div>
             <div className="grid-block menu-options-button">
                 <OverflowMenu className="some-class" floatingMenu>
-                    <OverflowMenuItem onClick={this.onLogout.bind(this)} className="some-class" itemText="Logout"/>
+                    <OverflowMenuItem onClick={this.onLogout.bind(this)} className="some-class" itemText="Logout" />
                 </OverflowMenu>
             </div>
             <div className="grid-block menu-options-label">{user_email}
@@ -78,7 +78,22 @@ export default class PlHeader extends Component {
         return (
             <div className="grid-block shrink pl_header">
                 <div className="grid-block vertical content">
-                    <h4 className="tittle">Patient line family tree viewer</h4>
+                    <div className="grid-block shrink">
+                        <svg className="grid-block shrink pl_header_logo" width="120" height="70" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <g transform="translate(-120,-35)">
+                                    <line strokeWidth="5" strokeLinecap="null" strokeLinejoin="null" id="svg_13" y2="63.583315" x2="165.749137" y1="96.082784" x1="138.582915" strokeOpacity="1" stroke="white" fill="none" />
+                                    <line strokeWidth="5" strokeLinecap="null" strokeLinejoin="null" id="svg_14" y2="63.583315" x2="219.75002" y1="96.082784" x1="192.583798" strokeOpacity="1" stroke="white" fill="none" />
+                                    <ellipse fill="#e27030" strokeWidth="0" strokeOpacity="null" cx="220.000053" cy="62.999989" id="svg_8" rx="5.999946" ry="6.249968" stroke="#000" />
+                                    <line transform="rotate(101 178.9170227050781,80.58304595947264) " strokeWidth="5" strokeLinecap="null" strokeLinejoin="null" id="svg_15" y2="64.333312" x2="192.500139" y1="96.832781" x1="165.333916" strokeOpacity="1" stroke="white" fill="none" />
+                                    <ellipse fill="#e2b933" strokeWidth="0" strokeOpacity="null" cx="192" cy="96.25018" id="svg_5" rx="5.999946" ry="6.249968" stroke="#000" />
+                                    <ellipse fill="#3ad840" strokeWidth="0" strokeOpacity="null" cx="166" cy="62.999989" id="svg_2" rx="5.999946" ry="6.249968" stroke="#000" />
+                                    <ellipse fill="#3a99d8" strokeWidth="0" strokeOpacity="null" fillOpacity="null" cx="138" cy="96.25018" id="svg_6" rx="5.999946" ry="6.249968" stroke="#000" />
+                                </g>
+                            </g>
+                        </svg>
+                        <h4 className="grid-block shrink tittle">Patient line family tree viewer</h4>
+                    </div>
                 </div>
             </div>
         );

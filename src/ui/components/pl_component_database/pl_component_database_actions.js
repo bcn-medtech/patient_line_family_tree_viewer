@@ -10,7 +10,7 @@ import {
 //actions
 import {
     treeBuilder
-} from './../../pages/pl_page_viewer/pl_page_viewer_actions/pl_page_viewer_actions_d3_tree_model/pl_page_viewer_actions_d3_tree_creator.js';
+} from './../../pages/pl_page_viewer/pl_page_viewer_actions/pl_page_viewer_actions_d3_tree/pl_page_viewer_actions_d3_tree_creator.js';
 
 import {
     isVariableNumeric
