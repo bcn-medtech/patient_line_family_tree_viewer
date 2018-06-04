@@ -100,10 +100,10 @@ export class PlComponentMenuTags extends Component {
     render() {
 
         var data = this.props.data;
-        
         var divStyle
 
-        var icon = <a><svg className="settings-icon" width='20' height='20' viewBox='0 0 24 24' fillRule='evenodd'><path d='M10.9 3c-.4-1.7-2-3-3.9-3S3.6 1.3 3.1 3H0v2h3.1c.4 1.7 2 3 3.9 3s3.4-1.3 3.9-3H24V3H10.9zM7 5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm10 3c-1.9 0-3.4 1.3-3.9 3H0v2h13.1c.4 1.7 2 3 3.9 3s3.4-1.3 3.9-3H24v-2h-3.1c-.5-1.7-2-3-3.9-3zm0 5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zM7 16c-1.9 0-3.4 1.3-3.9 3H0v2h3.1c.4 1.7 2 3 3.9 3s3.4-1.3 3.9-3H24v-2H10.9c-.5-1.7-2-3-3.9-3zm0 5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z'></path></svg></a>
+        //var icon = <a><svg className="settings-icon" width='20' height='20' viewBox='0 0 24 24' fillRule='evenodd'><path d='M10.9 3c-.4-1.7-2-3-3.9-3S3.6 1.3 3.1 3H0v2h3.1c.4 1.7 2 3 3.9 3s3.4-1.3 3.9-3H24V3H10.9zM7 5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm10 3c-1.9 0-3.4 1.3-3.9 3H0v2h13.1c.4 1.7 2 3 3.9 3s3.4-1.3 3.9-3H24v-2h-3.1c-.5-1.7-2-3-3.9-3zm0 5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zM7 16c-1.9 0-3.4 1.3-3.9 3H0v2h3.1c.4 1.7 2 3 3.9 3s3.4-1.3 3.9-3H24v-2H10.9c-.5-1.7-2-3-3.9-3zm0 5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z'></path></svg></a>
+        var icon = <svg className="settings-icon" width='20' height='20' viewBox='0 0 24 24' fillRule='evenodd'><path d='M10.9 3c-.4-1.7-2-3-3.9-3S3.6 1.3 3.1 3H0v2h3.1c.4 1.7 2 3 3.9 3s3.4-1.3 3.9-3H24V3H10.9zM7 5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm10 3c-1.9 0-3.4 1.3-3.9 3H0v2h13.1c.4 1.7 2 3 3.9 3s3.4-1.3 3.9-3H24v-2h-3.1c-.5-1.7-2-3-3.9-3zm0 5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zM7 16c-1.9 0-3.4 1.3-3.9 3H0v2h3.1c.4 1.7 2 3 3.9 3s3.4-1.3 3.9-3H24v-2H10.9c-.5-1.7-2-3-3.9-3zm0 5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z'></path></svg>
 
         if(this.state.expanded === false){
             divStyle = {
@@ -121,7 +121,7 @@ export class PlComponentMenuTags extends Component {
                     </div>
                 </div>
                 <div className="grid-block shrink right-bar">
-                    <div className="grid-block shrink item">{data.length + 1}</div>
+                    <div className="grid-block shrink item">{get_keys_from_data(data).length}</div>
                     <div className="grid-block shrink item"><a onClick={this.set_menu_expanded.bind(this)}>{icon}</a></div>
                 </div>
             </div>

@@ -47,7 +47,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
 
             if (action === "search") {
 
-                // TODO
+                // TODO?
 
             } else if (action === "add_child_existing_family") {
 
@@ -88,7 +88,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
         if (!isObjectEmpty(children)) {
 
             var families = process_children_by_parents(children); // family: (partner 1 + partner 2) with common children 
-            
+
             return (
                 <div className="grid-block vertical">
                     {this.render_families(families, mode_edit)}
@@ -98,41 +98,26 @@ export class PlComponentCardPatientWidgetChildren extends Component {
 
         } else {
 
-            if (!mode_edit) {
+
+            if (!isObjectEmpty(patient.gender)) {
 
                 return (
 
-                    <div className="grid-block pl-component-card-patient-widget-children-undefined-message">
-                        There are no children defined
+                    <div className="grid-block vertical">
+                        {this.render_extra_family_to_create(patient, mode_edit)}
                     </div>
 
                 );
 
             } else {
 
-                if (!isObjectEmpty(patient.gender)) {
+                return (
 
-                    return (
+                    <div className="grid-block pl-component-card-patient-widget-children-undefined-message">
+                        There are no children defined yet. To do so, first define the patient's gender.
+                    </div>
 
-                        <div className="grid-block vertical">
-                            {this.render_extra_family_to_create(patient, mode_edit)}
-                        </div>
-
-                    );
-
-                } else {
-
-                    return (
-
-                        <div className="grid-block pl-component-card-patient-widget-children-undefined-message">
-                            First define the patient's gender, please
-                        </div>
-
-                    );
-
-
-                }
-
+                );
 
             }
 

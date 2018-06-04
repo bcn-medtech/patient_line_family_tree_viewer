@@ -40,6 +40,8 @@ import { PlComponentTextPlain } from './../../components/pl_component_text/pl_co
 //modules
 import { url_getParameterByName } from './../../../modules/rkt_module_url';
 
+import { map } from 'underscore';
+
 export default class PlPageViewer extends Component {
 
   constructor() {
@@ -62,6 +64,12 @@ export default class PlPageViewer extends Component {
 
     var myComponent = this;
     var relatives = this.state.relatives;
+
+    // we update the id of the current patient in array "relatives" with the value "patient_id"
+    //relatives = map(relatives, function(relative){
+    //  if (relative["relation"] === "current patient") relative.id = patient_id;
+    //  return relative;
+    //});
 
     get_data(patient_id,relatives, function (result) {
 

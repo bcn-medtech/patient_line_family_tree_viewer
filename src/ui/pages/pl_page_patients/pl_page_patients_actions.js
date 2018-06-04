@@ -22,8 +22,6 @@ import { initialize_family, initialize_patient } from './../../../modules/rkt_mo
 import { create_random_string } from './../../../modules/rkt_module_string';
 import { isObjectEmpty } from '../../../modules/rkt_module_object';
 
-import config from './../../../config/config.json';
-
 function import_families_in_database(worbook_json_map, callback) {
 
     var counter = 0;
@@ -191,12 +189,15 @@ export function perform_database_action(data, browserHistory, callback) {
 
             } else if (data.action === "explore_patient") {
 
+                var url_to_navigate;
+                var family_id, patient_id;
+
                 if (!isObjectEmpty(data.data)) {
 
-                    var family_id = data.data.family_id;
-                    var patient_id = data.data.id;
+                    family_id = data.data.family_id;
+                    patient_id = data.data.id;
 
-                    var url_to_navigate = '/viewer?family_id=' + family_id + '&patient_id=' + patient_id;
+                    url_to_navigate = '/viewer?family_id=' + family_id + '&patient_id=' + patient_id;
                     browserHistory.push(url_to_navigate)
                 }
 
@@ -204,12 +205,11 @@ export function perform_database_action(data, browserHistory, callback) {
 
                 if (!isObjectEmpty(data.data)) {
 
-                    var family_id = data.data.id;
-                    var patient_id;
+                    family_id = data.data.id;
                     if (data.data.root_patient !== undefined) patient_id = data.data.root_patient.id;
                     else patient_id = undefined;
 
-                    var url_to_navigate = '/viewer?family_id=' + family_id + '&patient_id=' + patient_id;
+                     url_to_navigate = '/viewer?family_id=' + family_id + '&patient_id=' + patient_id;
                     browserHistory.push(url_to_navigate)
                 }
 

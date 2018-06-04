@@ -122,7 +122,7 @@ export function readXlsxWorkbook(file, callback) {
     
     var reader = new FileReader();
 
-    if (file.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || file.name.indexOf("xlsx") != -1) {
+    if (file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || file.name.indexOf("xlsx") !== -1) {
 
         reader.onload = function (e) {
             var data = e.target.result;

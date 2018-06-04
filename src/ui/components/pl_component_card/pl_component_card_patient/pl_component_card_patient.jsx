@@ -153,6 +153,21 @@ export class PlComponentCardPatient extends Component {
             mode_comments = true;
         }
 
+        var icon_data =
+            <svg width='25' height='25' viewBox='0 0 24 24' fillRule='evenodd'>
+                <path d='M0 0v24h24V0H0zm22.1 7l-7.2 8.9-9.2-3.8c-.2-.1-.4 0-.6.1L1 16.6V7h21.1zm.9 16H1v-4.9l4.6-5 9.2 3.8c.2.1.4 0 .6-.1L23 7.5V23zm0-17H1V1h22v5z'>
+                </path>
+            </svg>
+
+        var icon_comments = 
+            <svg width="25" height="25" viewBox="0 0 60 60" style={{"enableBackground":"new 0 0 485.211 485.211"}} xmlSpace="preserve">
+                <path d="M54,2H6C2.748,2,0,4.748,0,8v33c0,3.252,2.748,6,6,6h28.558l9.703,10.673C44.454,57.885,44.724,58,45,58
+                    c0.121,0,0.243-0.022,0.361-0.067C45.746,57.784,46,57.413,46,57V47h8c3.252,0,6-2.748,6-6V8C60,4.748,57.252,2,54,2z M58,41
+                    c0,2.168-1.832,4-4,4h-9c-0.552,0-1,0.448-1,1v8.414l-8.243-9.068l-4.998-5.811c-0.36-0.418-0.991-0.466-1.411-0.106
+                    c-0.418,0.36-0.466,0.992-0.106,1.41L32.821,45H6c-2.168,0-4-1.832-4-4V8c0-2.168,1.832-4,4-4h48c2.168,0,4,1.832,4,4V41z"
+                />
+            </svg>
+
         return (
             <div className="grid-block align-spaced card-row">
                 <div className="grid-block shrink card-item">
@@ -185,14 +200,14 @@ export class PlComponentCardPatient extends Component {
                 </div>
                 <div className="grid-block shrink card-item">
                     <PlComponentCardPatientTextButton
-                        text={""}
+                        text={icon_data}
                         type="Data"
                         on_click_component={this.on_click_card_component.bind(this)}
                         selected={mode_data} />
                 </div>
                 <div className="grid-block shrink card-item">
                     <PlComponentCardPatientTextButton
-                        text={""}
+                        text={icon_comments}
                         type="Comments"
                         on_click_component={this.on_click_card_component.bind(this)}
                         selected={mode_comments} />

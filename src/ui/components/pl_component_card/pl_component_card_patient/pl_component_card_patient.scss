@@ -38,9 +38,20 @@
     }
 
     .card-row-gender-status{
-        //background-color: $color_shadow_3;
         margin-right: 15px;
         align-items:center;
+
+        h4{
+            width:unset;
+        }
+    }
+
+    .pl_component_text_field_editable{
+        
+        .pl_component_form_item_input_text{
+            background-color: $color_shadow_3;
+        }
+
     }
 
     .pl-component-card-patient-edition-buttons{

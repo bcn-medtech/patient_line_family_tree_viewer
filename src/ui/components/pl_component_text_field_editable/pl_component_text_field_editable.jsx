@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { isObjectAFunction, isObjectEmpty } from './../../../modules/rkt_module_object';
 
 //components
 import { PlComponentFormItemInputText } from './../pl_component_form/pl_component_form_item/pl_component_form_item_input_text/pl_component_form_item_input_text';

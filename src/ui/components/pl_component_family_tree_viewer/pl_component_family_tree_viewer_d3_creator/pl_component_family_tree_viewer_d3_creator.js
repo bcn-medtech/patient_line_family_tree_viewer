@@ -85,6 +85,16 @@ export default class TreeDisplayer {
 
         });
 
+        var links = filter(links, function (link) {
+
+            if (typeof link.target !== "string") {
+                return true;
+            } else {
+                return false;
+            }
+
+        });
+
         // Create the link lines.
         svg.selectAll(".link")
             .data(links)
@@ -169,15 +179,8 @@ export default class TreeDisplayer {
             .attr("dy", "0em")
             .attr("x", -20)
             .attr("y", 50)
-            // .attr("y", function(d) {
-            //     if (d.gender !== "") return 40
-            //     else return 50
-            // })
             .html(function (d) {
                 var x = -20;
-                // var y;
-                // if (d.gender !== "") y = 60
-                // else y = 70
                 var y = 70
                 
                 var name = d.name;
@@ -194,7 +197,7 @@ export default class TreeDisplayer {
             //start point
             var start = allNodes.filter(function (v) {
 
-                if (d.source.id == v.id) {
+                if (d.source.id === v.id) {
                     return true;
                 } else {
                     return false;
@@ -203,7 +206,7 @@ export default class TreeDisplayer {
 
             //end point
             var end = allNodes.filter(function (v) {
-                if (d.target.id == v.id) {
+                if (d.target.id === v.id) {
                     return true;
                 } else {
                     return false;
@@ -247,7 +250,7 @@ export default class TreeDisplayer {
         /**
         This draws the lines between nodes.
         **/
-        function elbow(d, i) {
+        function elbow(d, i) { 
             if (d.target.no_parent) {
                 return "M0,0L0,0";
             }
@@ -265,7 +268,7 @@ export default class TreeDisplayer {
                 x: d.source.x,
                 y: d.source.y
             }]
-
+            
             var fun = d3.svg.line().x(function (d) {
                 return d.x;
             }).y(function (d) {
