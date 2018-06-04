@@ -22,38 +22,26 @@
 # Sergio Sánchez Martínez
 */
 
-//database_methods
-import {
-    family_insert,
-    family_update,
-    family_remove,
-    patient_get,
-    patients_get_list,
-    patient_insert,
-    patient_remove,
-    patient_update
-} from './../../../database/database';
-
-import {
-    writeAndExportXlsxWoorkbook,
-} from './../../../modules/rkt_pl_module_file_formats_xlsx';
-
 
 import{
     get_family_by_id,
     get_all_patients_and_all_families,
-    get_all_patients_from_family,
     get_patients_processed,
     get_family_processed,
     order_family_by_ids,
     label_patient_relatives,
     get_family_by_patient
-} from './pl_page_viewer_actions_database_get';
+} from './pl_page_viewer_actions/pl_page_viewer_actions_database/pl_page_viewer_actions_database_get';
 
 import{
     edit_patient,
-    remove_patient
-} from './pl_page_viewer_actions_database_update';
+    remove_patient,
+    add_child_existing_family,
+    add_child_new_family,
+    edit_family,
+    remove_family,
+    export_patient
+} from './pl_page_viewer_actions/pl_page_viewer_actions_database/pl_page_viewer_actions_database_update';
 
 //modules
 import { isObjectEmpty, isObjectAnArray } from '../../../modules/rkt_module_object';
@@ -62,9 +50,9 @@ import { isObjectEmpty, isObjectAnArray } from '../../../modules/rkt_module_obje
 import {
     treeBuilder,
     siblingsBuilder
-} from './pl_page_viewer_actions/pl_page_viewer_actions_d3_tree_model/pl_page_viewer_actions_d3_tree_creator';
+} from './pl_page_viewer_actions/pl_page_viewer_actions_d3_tree/pl_page_viewer_actions_d3_tree_creator';
 
-import { findWhere, keys, map, omit, pluck } from 'underscore';
+import { findWhere, omit, pluck } from 'underscore';
 
 
 export function get_data(patient_id, relatives, callback) {
@@ -226,225 +214,32 @@ export function perform_database_action(data, callback) {
             } else if (data.action === "add_child_existing_family") {
 
             
+                add_child_existing_family(data,function(result){
+                    callback(result);
+                });
                 
 
             } else if (data.action === "add_child_new_family") {
 
-                if ("data" in data) {
-
-                    if ("id_known_parent" && "new_child" && "new_parent" in data.data) {
-
-                        var id_known_parent = data.data.id_known_parent;
-                        var new_child = data.data.new_child;
-                        var new_parent = data.data.new_parent;
-
-                        // we update the "married_with" and "children" info of the known parent
-                        patient_get(id_known_parent, function (parent_array) {
-
-                            if (!isObjectEmpty(parent_array)) {
-
-                                var parent = parent_array[0];
-
-                                parent.married_with = new_parent.id;
-                                if (parent.children !== undefined) parent.children.push(new_child.id);
-                                else parent.children = [new_child.id];
-
-                                // we update this parent in the database
-                                patient_update(parent, function (result) {
-
-                                    if (result) {
-
-                                        // and we insert the new child and the new parent in the database
-                                        patients_insert([new_parent, new_child], function (result) {
-
-                                            if (result) {
-
-                                                callback(true);
-
-                                            } else console.log("error inserting the new child and the new parent");
-
-                                        })
-
-                                    } else console.log("error updating the parent");
-
-                                });
-
-                            } else console.log("error retrieving the information of the parent");
-
-                        });
-                    }
-
-                }
-
+                add_child_new_family(data,function(result){
+                    callback(result);
+                });
+                
             } else if (data.action === "edit_family") {
 
-                if ("data" in data) {
-
-                    if ("id_family_to_remove" && "family_to_update" in data.data) {
-
-                        // case in which the family's id has been edited
-                        var id_family_to_remove = data.data.id_family_to_remove;
-                        var family_to_insert = data.data.family_to_update;
-
-                        patients_get_list(function (patients) {
-
-                            if (patients) {
-
-                                var family_members = get_all_patients_from_family(id_family_to_remove, patients);
-
-                                if (!isObjectEmpty(family_members)) {
-
-                                    // the patients of this family have to be updated with the new id of the family:
-                                    map(family_members, function (family_member) {
-                                        family_member.family_id = family_to_insert.id;
-                                        return family_member;
-                                    });
-
-                                    patients_update(family_members, function (result) {
-
-                                        if (result) {
-
-                                            // then, the family can be updated
-                                            family_remove(id_family_to_remove, function (result) {
-
-                                                if (result) {
-
-                                                    family_insert(family_to_insert, function (result) {
-
-                                                        if (result) {
-
-                                                            callback(true);
-
-                                                        } else console.log("error updating the family");
-
-                                                    })
-
-                                                } else console.log("error remove the family");
-
-                                            });
-
-                                        } else console.log("error obtaining the family members");
-                                    });
-
-                                } else {
-
-                                    // if the family has not patients, the family is directly updated
-                                    family_remove(id_family_to_remove, function (result) {
-
-                                        if (result) {
-
-                                            family_insert(family_to_insert, function (result) {
-
-                                                if (result) {
-
-                                                    callback(true);
-
-                                                } else console.log("error updating the family");
-
-                                            });
-
-                                        } else console.log("error removing the family");
-
-                                    });
-
-                                }
-
-                            } else console.log("error obtaining the patients");
-
-                        });
-
-                    } else {
-
-                        var family = data.data;
-
-                        family_update(family, function (result) {
-
-                            if (result) {
-
-                                callback(true);
-
-                            } else console.log("error updating the family");
-
-                        });
-
-                    }
-
-                }
+                edit_family(data,function(result){
+                    callback(result);
+                });
 
             } else if (data.action === "remove_family") {
 
-                if ("data" in data) {
-
-                    var id_family_to_remove = data.data;
-
-                    patients_get_list(function (patients) {
-
-                        if (patients) {
-
-                            var family_members = get_all_patients_from_family(id_family_to_remove, patients);
-
-                            if (!isObjectEmpty(family_members)) {
-
-                                // first, the patients of this family are removed
-                                var ids_family_members = pluck(family_members, "id");
-
-                                patients_remove(ids_family_members, function (result) {
-
-                                    if (result) {
-
-                                        // then, the family is removed
-                                        family_remove(id_family_to_remove, function (result) {
-
-                                            if (result) {
-
-                                                callback(true);
-
-                                            } else console.log("error removing the family");
-
-                                        });
-
-                                    } else console.log("error removing the family members");
-
-                                });
-
-                            } else {
-
-                                // if the family has not patients, the family is directly removed
-                                family_remove(id_family_to_remove, function (result) {
-
-                                    if (result) {
-
-                                        callback(true);
-
-                                    } else console.log("error removing the family");
-
-                                });
-
-                            }
-
-                        } else console.log("error obtaining the patients");
-
-                    });
-                }
+                remove_family(data,function(result){
+                    callback(result);
+                });
 
             } else if (data.action === "export_patient") {
 
-                if ("data" in data) {
-
-                    if ("patient" && "family_tree" in data.data) {
-
-                        var patient = data.data["patient"];
-                        //var family_tree = data.data["family_tree"];
-
-                        var id_patient = keys(data.data.patient)[0];
-                        writeAndExportXlsxWoorkbook(patient, { "name": id_patient }); // for the moment, only a xlsx of the patient is exported
-                        // var id_family = patient[id_patient][0].family_id;
-
-                        // load_zip_with_patient_and_family_tree(id_patient, id_family, patient, family_tree);
-
-                    }
-
-                }
+                export_patient(data);
 
             }
         }
@@ -461,83 +256,3 @@ export function format_patient_to_export(patient) {
 
 }
 
-function patients_update(patients, callback) {
-
-    var updated_patients_counter = 0;
-
-    for (var i = 0; i < patients.length; i++) {
-
-        var patient = patients[i];
-
-        patient_update(patient, function (result) {
-
-            if (result) {
-
-                updated_patients_counter++;
-
-                if (updated_patients_counter === patients.length) {
-
-                    callback(true);
-
-                }
-
-            }
-
-        });
-    }
-
-}
-
-function patients_insert(patients, callback) {
-
-    var inserted_patients_counter = 0;
-
-    for (var i = 0; i < patients.length; i++) {
-
-        var patient = patients[i];
-
-        patient_insert(patient, function (result) {
-
-            if (result) {
-
-                inserted_patients_counter++;
-
-                if (inserted_patients_counter === patients.length) {
-
-                    callback(true);
-
-                }
-
-            }
-
-        });
-    }
-
-}
-
-function patients_remove(patients, callback) {
-
-    var removed_patients_counter = 0;
-
-    for (var i = 0; i < patients.length; i++) {
-
-        var patient = patients[i];
-
-        patient_remove(patient, function (result) {
-
-            if (result) {
-
-                removed_patients_counter++;
-
-                if (removed_patients_counter === patients.length) {
-
-                    callback(true);
-
-                }
-
-            }
-
-        });
-    }
-
-}

@@ -7,11 +7,11 @@ import {
 
 import {
     order_patients_by_couple
-} from './pl_page_viewer_action_d3_tree_model_organizer';
+} from './pl_page_viewer_actions_d3_tree_organizer';
 
 import {
     get_all_couples_from_array
-} from './pl_page_viewer_action_d3_tree_model_organizer_siblings';
+} from './pl_page_viewer_actions_d3_tree_organize_by_siblings';
 
 function get_children(patient_children, full_database) {
 
@@ -62,7 +62,6 @@ function getRootCouple(database) {
 
     var rootCouples = [];
     var couples = get_all_couples_from_array(database);
-    //console.log(couples);
 
     for (var i = 0; i < couples.length; i++) {
 
@@ -77,7 +76,11 @@ function getRootCouple(database) {
                 couple.push(member_1.id);
                 couple.push(member_2.id);
                 rootCouples.push(couple);
+
+                member_1["is_root"]=true;
+                member_2["is_root"]=true;
             }
+
         }
     }
 

@@ -4,7 +4,7 @@ import {
     families_get_list,
     patient_get,
     patients_get_list
-} from './../../../database/database';
+} from './../../../../../database/database';
 
 import { 
     filter,
@@ -13,7 +13,7 @@ import {
     findWhere
  } from 'underscore';
 
-import {isObjectEmpty} from './../../../modules/rkt_module_object';
+import {isObjectEmpty} from './../../../../../modules/rkt_module_object';
 
 /*
 
@@ -46,7 +46,6 @@ Functions:
 26) get_patients_processed
 27) get_family_processed
 28) order_family_by_ids
-
 */
 
 function get_patient_relatives(patient,patients){
