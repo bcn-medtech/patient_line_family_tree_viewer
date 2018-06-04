@@ -31,7 +31,6 @@ import { PlComponentTable } from './../pl_component_table/pl_component_table';
 import { PlComponentMenu } from './../pl_component_menu/pl_component_menu/pl_component_menu';
 import { PlComponentDatabaseHeader } from './pl_component_database_header/pl_component_database_header';
 import { PlComponentMenuTags } from './../pl_component_menu/pl_component_menu_tags/pl_component_menu_tags';
-import { PlComponentForm } from './../pl_component_form/pl_component_form';
 import { PlComponentConfirmMessage } from './../pl_component_comfirm_message/pl_component_confirm_message';
 import { PlComponentModal } from './../../components/pl_component_modal/pl_component_modal';
 //modules
@@ -307,7 +306,8 @@ export class PlComponentDatabase extends Component {
 
                 modal_title = "Delete Database";
                 var message_to_show = "Are you sure you want to delete the database?";
-                var modal_content =
+                
+                modal_content =
                     <PlComponentConfirmMessage
                         message={message_to_show}
                         extra_message={"You will not be able to undo it"}

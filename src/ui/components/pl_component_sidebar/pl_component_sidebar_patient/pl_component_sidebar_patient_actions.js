@@ -117,7 +117,7 @@ export function update_patient_from_text_field_editable(edited_name, edited_id, 
 
         }
 
-        var new_data = { "id_patient_to_remove": original_id, "patient_to_update": patient, "relatives_to_update": relatives_to_update };
+        new_data = { "id_patient_to_remove": original_id, "patient_to_update": patient, "relatives_to_update": relatives_to_update };
 
     }
 

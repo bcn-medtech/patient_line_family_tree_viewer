@@ -108,8 +108,7 @@ export default class PlPagePatients extends Component {
 
 
   componentDidMount() {
-
-    var location = window.location;
+    
     this.update_component_state_from_database();
 
   }

@@ -28,14 +28,12 @@ import React, { Component } from 'react';
 import { PlComponentButtonCircle } from './../../pl_component_button/pl_component_button_circle/pl_component_button_circle';
 import { PlComponentButtonCircleSelectable } from './../../pl_component_button/pl_component_button_circle_selectable/pl_component_button_circle_selectable';
 import { PlComponentCardFamilyTextButton } from './pl_component_card_family_text_button/pl_component_card_family_text_button';
-import { PlComponentTextPlain } from './../../pl_component_text/pl_component_text_plain/pl_component_text_plain';
 import { PlComponentTextFieldEditable } from './../../pl_component_text_field_editable/pl_component_text_field_editable';
 
 //modules
 import {
-    isObjectEmpty, isObjectAnArray, isObjectAFunction
+    isObjectEmpty, isObjectAFunction
 } from './../../../../modules/rkt_module_object';
-import { mapObject } from 'underscore';
 
 export class PlComponentCardFamily extends Component {
 
@@ -100,6 +98,8 @@ export class PlComponentCardFamily extends Component {
         var mode_menu = this.props.mode_menu;
         var family_id;
         var family_name;
+        var family_description;
+        var family_symptoms;
 
         var button_delete =
             {
@@ -114,11 +114,11 @@ export class PlComponentCardFamily extends Component {
                 "selected": mode_edit
             }
 
-        var family_id = family.id;
-        var family_name = family.name;
-        var family_description = family.description;
+        family_id = family.id;
+        family_name = family.name;
+        family_description = family.description;
         if (isObjectEmpty(family_description)) family_description = "Description";
-        var family_symptoms = family.symptoms;
+        family_symptoms = family.symptoms;
         if (isObjectEmpty(family_symptoms)) family_symptoms = "Symptoms";
 
         return (

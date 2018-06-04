@@ -1,5 +1,5 @@
 import { initialize_patient } from './../../../../../../modules/rkt_module_database';
-import { calculate_age, format_date } from './../../../../../../modules/rkt_module_date';
+import { format_date } from './../../../../../../modules/rkt_module_date';
 import { create_random_string } from './../../../../../../modules/rkt_module_string';
 import { isObjectAnArray } from './../../../../../../modules/rkt_module_object';
 import { findIndex, findWhere, sortBy } from 'underscore';

@@ -24,7 +24,6 @@
 
 import React, { Component } from 'react';
 import { OverflowMenu, OverflowMenuItem } from 'carbon-components-react';
-import { isObjectEmpty } from './../../../modules/rkt_module_object';
 
 export default class PlHeader extends Component {
 

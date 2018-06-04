@@ -147,7 +147,7 @@ export function isObjectNumeric(object){
     
     var numeric = false;
 
-    if(typeof(object)=="number"){
+    if(typeof(object)==="number"){
         
         numeric=true;
     }
