@@ -81,6 +81,7 @@ export default class PlPageViewer extends Component {
             root: result.root,
             siblings: result.siblings,
             family: result.family,
+            family_statistics: result.family_statistics,
             patient: result.patient,
             mother: result.mother,
             father: result.father,
@@ -199,6 +200,7 @@ export default class PlPageViewer extends Component {
     var viewer_legend;
     var patient = this.state.patient;
     var family = this.state.family;
+    var family_statistics = this.state.family_statistics;
     var father = this.state.father;
     var mother = this.state.mother;
     var relatives = this.state.relatives;
@@ -229,6 +231,7 @@ export default class PlPageViewer extends Component {
       sidebar = <PlComponentSidebar
         patient={patient}
         family={family}
+        family_statistics={family_statistics}
         father={father}
         mother={mother}
         children={children}

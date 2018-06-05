@@ -10,7 +10,10 @@ import {
     filter,
     flatten,
     difference,
-    findWhere
+    findWhere,
+    pluck,
+    countBy,
+    keys
  } from 'underscore';
 
 import {isObjectEmpty} from './../../../../../modules/rkt_module_object';
@@ -46,6 +49,7 @@ Functions:
 26) get_patients_processed
 27) get_family_processed
 28) order_family_by_ids
+29) get_family_statistics
 */
 
 function get_patient_relatives(patient,patients){
@@ -615,6 +619,37 @@ export function order_family_by_ids(family,ids){
     }
 
     return array;
+}
+
+export function get_family_statistics(family_id, callback) {
+    
+    var family_statistics = [];
+    
+    patients_get_list(function (result) {
+
+        if (!isObjectEmpty(result)) {
+                
+            var patients = result;
+
+            var family_members = get_all_patients_from_family(family_id, patients);
+            var family_statistics_counter = countBy(family_members, function(patient){
+                return patient.status;
+            });
+            
+            var family_statistics = [];
+            var family_statistics_counter_keys = keys(family_statistics_counter);
+            for (var i=0; i<family_statistics_counter_keys.length; i++) {
+                var current_status = family_statistics_counter_keys[i];
+                family_statistics.push({ "type": current_status, "text": family_statistics_counter[current_status] });
+            }
+            
+            callback(family_statistics);
+
+        }
+        
+    });
+
+
 }
 
 

@@ -101,6 +101,7 @@ export class PlComponentSidebar extends Component {
 
         var sidebar_header_items = ["patient", "family"];
         var family = this.props.family;
+        var family_statistics = this.props.family_statistics;
         var patient = this.props.patient;
         var father = this.props.father;
         var mother = this.props.mother;
@@ -129,6 +130,7 @@ export class PlComponentSidebar extends Component {
                 <PlComponentSidebarFamily
                     ref="sidebarFamily"
                     family={family}
+                    family_statistics={family_statistics}
                     mode_edit={mode_edit}
                     perform_database_action={this.props.perform_database_action} />
 

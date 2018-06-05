@@ -35,57 +35,94 @@ import {
     isObjectEmpty, isObjectAFunction
 } from './../../../../modules/rkt_module_object';
 
+//actions
+import { format_family_statistics } from './pl_component_card_family_actions';
+
 export class PlComponentCardFamily extends Component {
 
     on_click_card_component(type) {
 
-        if (type === "number of family members" || type === "mother" || type === "children" || type === "relatives") {
+        if (isObjectAFunction(this.props.on_click_action)) {
 
-            if (isObjectAFunction(this.props.on_click_action)) {
+            this.props.on_click_action(type);
 
-                this.props.on_click_action(type);
-
-            }
         }
     }
 
-    render_menu(family, mode_menu) {
+    render_menu(family, family_statistics, mode_menu) {
+
+        var myComponent = this;
 
         var family_num_members;
-
         if ("num_family_members" in family) family_num_members = family.num_family_members;
+        
+        family_statistics = format_family_statistics(family_statistics, family_num_members, 2);
 
-        var mode_family_members = false;
+        return this.render_table_family_stats(family_statistics, mode_menu);
 
-        if (mode_menu === "family members") mode_family_members = true;
+    }
+
+    render_table_family_stats(family_statistics, mode_menu) {
 
         return (
-            <div className="grid-block align-spaced card-row">
-                <div className="grid-block shrink card-item">
-                    <PlComponentCardFamilyTextButton
-                        text={family_num_members}
-                        type="family members"
-                        on_click_component={this.on_click_card_component.bind(this)}
-                        selected={mode_family_members} />
-                </div>
-            </div>
+            <table className="grid-block vertical">
+                <tbody>
+                    {
+                        family_statistics.map((group_stats, index) => {
+
+                            return this.render_row_table_family_stats(group_stats, index, mode_menu);
+
+                        })
+                    }
+                </tbody>
+            </table>
         );
+
+    }
+
+    render_row_table_family_stats(group_stats, index, mode_menu) {
+
+        return (
+
+            <tr className="grid-block shrink card-row" key={index}>
+                {
+                    group_stats.map((item, index) => {
+
+                        return (
+
+                            <td className="grid-block card-item" key={index}>
+                                <PlComponentCardFamilyTextButton
+                                    text={item.text}
+                                    type={item.type}
+                                    on_click_component={this.on_click_card_component.bind(this)}
+                                    selected={mode_menu === item.type ? true : false} />
+                            </td>
+
+                        );
+
+                    })
+                }
+
+            </tr>
+
+        );
+
     }
 
     render() {
 
         var family = this.props.family;
+        var family_statistics = this.props.family_statistics;
         var mode_edit = this.props.mode_edit;
         var mode_menu = this.props.mode_menu;
         var family_id;
         var family_name;
         var family_description;
         var family_symptoms;
-
         family_id = family.id;
         family_name = family.name;
         family_description = family.description;
-        
+
         if (isObjectEmpty(family_description)) family_description = "Description";
         family_symptoms = family.symptoms;
         if (isObjectEmpty(family_symptoms)) family_symptoms = "Symptoms";
@@ -109,7 +146,7 @@ export class PlComponentCardFamily extends Component {
                                 isEditionMode={mode_edit ? true : false}
                                 ref="family_id" />
                         </div>
-                        <div className="grid-block shrink" style={{ "paddingTop": "20px"}}>
+                        <div className="grid-block shrink" style={{ "paddingTop": "20px" }}>
                             <h4>
                                 <PlComponentTextFieldEditable
                                     text={family_description}
@@ -117,7 +154,7 @@ export class PlComponentCardFamily extends Component {
                                     ref="family_description" />
                             </h4>
                         </div>
-                        <div className="grid-block shrink" style={{"paddingBottom": "8px" }}>
+                        <div className="grid-block shrink" style={{ "paddingBottom": "8px" }}>
                             <PlComponentTextFieldEditable
                                 text={family_symptoms}
                                 isEditionMode={mode_edit ? true : false}
@@ -125,7 +162,7 @@ export class PlComponentCardFamily extends Component {
                         </div>
                     </div>
                 </div>
-                {this.render_menu(family, mode_menu)}
+                {this.render_menu(family, family_statistics, mode_menu)}
             </div>
         );
 

@@ -194,6 +194,7 @@ export class PlComponentSidebarFamily extends Component {
     render() {
 
         var family = this.props.family;
+        var family_statistics = this.props.family_statistics;
         var mode_menu = this.state.mode_menu;
         var mode_edit = this.props.mode_edit;
         
@@ -203,6 +204,7 @@ export class PlComponentSidebarFamily extends Component {
                     <PlComponentCardFamily
                         ref="family_card"
                         family={family}
+                        family_statistics={family_statistics}
                         on_click_action={this.on_set_mode_menu.bind(this)}
                         mode_menu={mode_menu}
                         mode_edit={mode_edit}
