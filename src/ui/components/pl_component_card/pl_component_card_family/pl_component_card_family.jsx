@@ -25,15 +25,12 @@
 import React, { Component } from 'react';
 
 //components
-import { PlComponentButtonCircle } from './../../pl_component_button/pl_component_button_circle/pl_component_button_circle';
-import { PlComponentButtonCircleSelectable } from './../../pl_component_button/pl_component_button_circle_selectable/pl_component_button_circle_selectable';
+import { PlComponentCardFamilyHeader} from './pl_component_card_family_header/pl_component_card_family_header';
 import { PlComponentCardFamilyTextButton } from './pl_component_card_family_text_button/pl_component_card_family_text_button';
 import { PlComponentTextFieldEditable } from './../../pl_component_text_field_editable/pl_component_text_field_editable';
 
 //modules
-import {
-    isObjectEmpty, isObjectAFunction
-} from './../../../../modules/rkt_module_object';
+import { isObjectAFunction } from './../../../../modules/rkt_module_object';
 
 //actions
 import { format_family_statistics } from './pl_component_card_family_actions';
@@ -109,59 +106,51 @@ export class PlComponentCardFamily extends Component {
 
     }
 
+    get_family_id() {
+
+        return this.refs.family_card_header.refs.family_id.refs.FormItemInputText.state.input;
+
+    }
+
+    get_family_name() {
+
+        return this.refs.family_card_header.refs.family_name.refs.FormItemInputText.state.input;
+
+    }
+
+    get_family_description() {
+
+        return this.refs.family_card_header.refs.family_description.refs.FormItemInputText.state.input;
+
+    }
+
+    get_family_diagnostic() {
+
+        return this.refs.family_card_header.refs.family_diagnostic.refs.FormItemInputText.state.input;
+
+    }
+
+    get_family_symptoms() {
+
+        return this.refs.family_card_header.refs.family_symptoms.refs.FormItemInputText.state.input;
+
+    }
+
     render() {
 
         var family = this.props.family;
         var family_statistics = this.props.family_statistics;
+        
         var mode_edit = this.props.mode_edit;
         var mode_menu = this.props.mode_menu;
-        var family_id;
-        var family_name;
-        var family_description;
-        var family_symptoms;
-        family_id = family.id;
-        family_name = family.name;
-        family_description = family.description;
-
-        if (isObjectEmpty(family_description)) family_description = "Description";
-        family_symptoms = family.symptoms;
-        if (isObjectEmpty(family_symptoms)) family_symptoms = "Symptoms";
 
         return (
             <div className="grid-block vertical pl-component-card-family">
-                <div className="grid-block card-header">
-                    <div className="grid-block vertical card-item">
-                        <div className="grid-block shrink">
-                            <h4>
-                                <PlComponentTextFieldEditable
-                                    text={family_name}
-                                    isEditionMode={mode_edit ? true : false}
-                                    ref="family_name"
-                                />
-                            </h4>
-                        </div>
-                        <div className="grid-block shrink">
-                            <PlComponentTextFieldEditable
-                                text={family_id}
-                                isEditionMode={mode_edit ? true : false}
-                                ref="family_id" />
-                        </div>
-                        <div className="grid-block shrink" style={{ "paddingTop": "20px" }}>
-                            <h4>
-                                <PlComponentTextFieldEditable
-                                    text={family_description}
-                                    isEditionMode={mode_edit ? true : false}
-                                    ref="family_description" />
-                            </h4>
-                        </div>
-                        <div className="grid-block shrink" style={{ "paddingBottom": "8px" }}>
-                            <PlComponentTextFieldEditable
-                                text={family_symptoms}
-                                isEditionMode={mode_edit ? true : false}
-                                ref="family_symptoms" />
-                        </div>
-                    </div>
-                </div>
+                <PlComponentCardFamilyHeader
+                    ref="family_card_header"
+                    family={family}
+                    mode_edit={mode_edit}
+                />
                 {this.render_menu(family, family_statistics, mode_menu)}
             </div>
         );

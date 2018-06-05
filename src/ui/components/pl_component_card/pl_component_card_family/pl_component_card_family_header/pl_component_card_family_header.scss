@@ -1,0 +1,31 @@
+@import './../../../pl_component_text_field_editable/pl_component_text_field_editable.scss';
+
+.pl-component-card-family-header{
+
+    margin-left: 10px;
+    margin-right: 10px;
+
+    h4{
+        color:$color-normal;
+        width:100%;
+        margin:0px;
+    }
+
+    .card-item {
+        padding-left: 2.5px;
+        padding-right: 2.5px;
+    }
+
+    .pl_component_text_field_editable{
+        
+        .pl_component_form_item_input_text{
+            background-color: $color_shadow_3;
+
+            &:hover{
+                border-left:5px solid $color-normal-5;
+            }
+        }
+
+    }
+
+}

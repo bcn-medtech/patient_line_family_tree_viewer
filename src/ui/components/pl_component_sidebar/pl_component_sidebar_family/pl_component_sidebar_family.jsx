@@ -79,10 +79,11 @@ export class PlComponentSidebarFamily extends Component {
             }
 
             // "text_field_editable"
-            var edited_name = this.refs.family_card.refs.family_name.refs.FormItemInputText.state.input;
-            var edited_id = this.refs.family_card.refs.family_id.refs.FormItemInputText.state.input;
-            var edited_description = this.refs.family_card.refs.family_description.refs.FormItemInputText.state.input;
-            var edited_symptoms = this.refs.family_card.refs.family_symptoms.refs.FormItemInputText.state.input;
+            var edited_name = this.refs.family_card.get_family_name();
+            var edited_id = this.refs.family_card.get_family_id();
+            var edited_description = this.refs.family_card.get_family_description();
+            //var edited_diagnostic = this.refs.family_card.get_family_diagnostic();
+            var edited_symptoms = this.refs.family_card.get_family_symptoms();
 
             var new_data = update_family_from_text_field_editable(edited_name, edited_id, family.id, edited_description, edited_symptoms, updated_family);
 

@@ -1,21 +1,10 @@
+@import './pl_component_card_family_header/pl_component_card_family_header.scss';
 @import './pl_component_card_family_text_button/pl_component_card_family_text_button.scss';
-@import './../../pl_component_text_field_editable/pl_component_text_field_editable.scss';
-@import './../../pl_component_text/pl_component_text_plain/pl_component_text_plain.scss';
 
 .pl-component-card-family{
     
     h4{
         color:$color-normal;
-    }
-
-    .card-header{
-        margin-left: 10px;
-        margin-right: 10px;
-
-        h4{
-            width:100%;
-            margin:0px;
-        }
     }
 
     .card-item{
@@ -47,18 +36,6 @@
         &:hover{
             background-color: $color_shadow-2;
         }
-    }
-
-    .pl_component_text_field_editable{
-        
-        .pl_component_form_item_input_text{
-            background-color: $color_shadow_3;
-
-            &:hover{
-                border-left:5px solid $color-normal-5;
-            }
-        }
-
     }
     
 }

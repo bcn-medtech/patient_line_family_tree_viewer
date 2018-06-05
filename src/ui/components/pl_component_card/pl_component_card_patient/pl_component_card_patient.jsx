@@ -25,13 +25,9 @@
 import React, { Component } from 'react';
 
 //components
-import { PlComponentButtonCircle } from './../../pl_component_button/pl_component_button_circle/pl_component_button_circle';
-import { PlComponentButtonCircleSelectable } from './../../pl_component_button/pl_component_button_circle_selectable/pl_component_button_circle_selectable';
-import { PlComponentCardPatientGenderCombobox } from './pl_component_card_patient_gender_combobox/pl_component_card_patient_gender_combobox';
-import { PlComponentCardPatientStatusCombobox } from './pl_component_card_patient_status_combobox/pl_component_card_patient_status_combobox';
+import { PlComponentCardPatientHeader } from './pl_component_card_patient_header/pl_component_card_patient_header';
 import { PlComponentCardPatientStatusButton } from './pl_component_card_patient_status_button/pl_component_card_patient_status_button';
 import { PlComponentCardPatientTextButton } from './pl_component_card_patient_text_button/pl_component_card_patient_text_button';
-import { PlComponentTextFieldEditable } from './../../pl_component_text_field_editable/pl_component_text_field_editable';
 
 //modules
 import {
@@ -51,32 +47,6 @@ export class PlComponentCardPatient extends Component {
                 this.props.on_click_action(type);
 
             }
-        }
-    }
-
-    perform_database_action(data_to_update) {
-
-        if (isObjectAFunction(this.props.perform_database_action)) {
-
-            var key_to_update = data_to_update.key;
-            var updated_value = data_to_update.value;
-
-            var patient = this.props.patient;
-            var updated_patient = mapObject(patient, function (value, key) {
-                return value;
-            });
-
-            updated_patient[key_to_update] = updated_value;
-
-            var data = {
-                "action": "edit_patient",
-                "data": updated_patient,
-                "patient_id": updated_patient.id,
-                "family_id": updated_patient.family_id
-            };
-
-            this.props.perform_database_action(data);
-
         }
     }
 
@@ -184,13 +154,13 @@ export class PlComponentCardPatient extends Component {
 
     get_patient_id() {
 
-        return this.refs.patient_id.refs.FormItemInputText.state.input;
+        return this.refs.patient_card_header.refs.patient_id.refs.FormItemInputText.state.input;
 
     }
 
     get_patient_name() {
 
-        return this.refs.patient_name.refs.FormItemInputText.state.input;
+        return this.refs.patient_card_header.refs.patient_name.refs.FormItemInputText.state.input;
 
     }
 
@@ -214,41 +184,12 @@ export class PlComponentCardPatient extends Component {
 
         return (
             <div className="grid-block vertical pl-component-card-patient">
-                <div className="grid-block card-header">
-                    <div className="grid-block align-spaced shrink card-row-gender-status">
-                        <div className="grid-block shrink card-item">
-                            <PlComponentCardPatientGenderCombobox
-                                gender={patient_gender}
-                                ref="patient_gender"
-                                perform_database_action={this.perform_database_action.bind(this)} />
-                        </div>
-                        <div className="grid-block shrink card-item">
-                            <PlComponentCardPatientStatusCombobox
-                                status={patient_status}
-                                gender={patient_gender}
-                                ref="patient_status"
-                                perform_database_action={this.perform_database_action.bind(this)} />
-                        </div>
-                    </div>
-                    <div className="grid-block shrink vertical card-item">
-                        <div className="grid-block shrink">
-                            <h4>
-                                <PlComponentTextFieldEditable
-                                    text={patient_name}
-                                    isEditionMode={mode_edit ? true : false}
-                                    ref="patient_name"
-                                />
-                            </h4>
-                        </div>
-                        <div className="grid-block shrink">
-                            <PlComponentTextFieldEditable
-                                text={patient_id}
-                                isEditionMode={mode_edit ? true : false}
-                                ref="patient_id" />
-                        </div>
-
-                    </div>
-                </div>
+                <PlComponentCardPatientHeader
+                    ref="patient_card_header"
+                    patient={patient}
+                    mode_edit={mode_edit}
+                    perform_database_action={this.props.perform_database_action}
+                />
                 {this.render_menu(patient, father, mother, children, mode_menu)}
             </div>
         );

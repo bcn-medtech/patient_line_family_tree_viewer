@@ -23,6 +23,8 @@
 */
 
 import React, { Component } from 'react';
+
+//components
 import { PlComponentCardPatientStatus } from './../pl_component_card_patient_status/pl_component_card_patient_status';
 
 import {
