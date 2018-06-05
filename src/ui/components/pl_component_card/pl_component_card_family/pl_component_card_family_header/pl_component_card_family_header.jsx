@@ -31,6 +31,9 @@ import { PlComponentTextFieldEditable } from './../../../pl_component_text_field
 import { isObjectAFunction, isObjectEmpty } from './../../../../../modules/rkt_module_object';
 import { mapObject } from 'underscore';
 
+import family_diagnostics_suggestions_json from './pl_component_card_family_header_jsons/pl_component_card_family_header_jsons_diagnostics.json';
+import family_genes_suggestions_json from './pl_component_card_family_header_jsons/pl_component_card_family_header_jsons_genes.json';
+
 export class PlComponentCardFamilyHeader extends Component {
 
     render() {
@@ -43,7 +46,9 @@ export class PlComponentCardFamilyHeader extends Component {
         var family_description;
         var family_symptoms;
         var family_diagnostic;
-
+        var family_genes;
+        var family_mutations;
+        
         family_id = family.id;
         family_name = family.name;
 
@@ -55,6 +60,12 @@ export class PlComponentCardFamilyHeader extends Component {
 
         family_diagnostic = family.diagnostic;
         if (isObjectEmpty(family_diagnostic)) family_diagnostic = "Diagnostic";
+
+        family_genes = family.genes;
+        if (isObjectEmpty(family_genes)) family_genes = "Genes";
+
+        family_mutations = family.mutations;
+        if (isObjectEmpty(family_mutations)) family_mutations = "Mutations";
 
         return (
             <div className="grid-block pl-component-card-family-header">
@@ -82,20 +93,39 @@ export class PlComponentCardFamilyHeader extends Component {
                                 ref="family_description" />
                         </h4>
                     </div>
-                    {/* <div className="grid-block shrink">
-                        <h4>
-                            <PlComponentTextFieldEditable
-                                text={family_diagnostic}
-                                isEditionMode={mode_edit ? true : false}
-                                isSearchBox={true}
-                                ref="family_diagnostic" />
-                        </h4>
-                    </div> */}
                     <div className="grid-block shrink" style={{ "paddingBottom": "8px" }}>
                         <PlComponentTextFieldEditable
                             text={family_symptoms}
                             isEditionMode={mode_edit ? true : false}
                             ref="family_symptoms" />
+                    </div>
+                    <div className="grid-block shrink" style={{ "paddingTop": "20px", "paddingBottom": "8px" }}>
+                        {/* <h4> */}
+                            <PlComponentTextFieldEditable
+                                text={family_diagnostic}
+                                isEditionMode={mode_edit ? true : false}
+                                isSearchBox={true}
+                                suggestions={family_diagnostics_suggestions_json}
+                                ref="family_diagnostic" />
+                        {/* </h4> */}
+                    </div>
+                    <div className="grid-block shrink" style={{ "paddingTop": "20px" }}>
+                        {/* <h4> */}
+                            <PlComponentTextFieldEditable
+                                text={family_genes}
+                                isEditionMode={mode_edit ? true : false}
+                                isSearchBox={true}
+                                suggestions={family_genes_suggestions_json}
+                                ref="family_genes" />
+                        {/* </h4> */}
+                    </div>
+                    <div className="grid-block shrink" style={{ "paddingBottom": "8px" }}>
+                        {/* <h4> */}
+                            <PlComponentTextFieldEditable
+                                text={family_mutations}
+                                isEditionMode={mode_edit ? true : false}
+                                ref="family_mutations" />
+                        {/* </h4> */}
                     </div>
                 </div>
             </div>
