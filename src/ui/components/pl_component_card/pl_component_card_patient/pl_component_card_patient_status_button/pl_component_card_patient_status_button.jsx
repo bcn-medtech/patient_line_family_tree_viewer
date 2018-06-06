@@ -37,10 +37,11 @@ export class PlComponentCardPatientStatusButton extends Component {
     }
 
     render() {
-
         var status = this.props.relative.status;
-        var type = this.props.type;
+        var phenotype = this.props.relative.phenotype;
+        var genotype = this.props.relative.genotype;
         var gender = this.props.relative.gender;
+        var type = this.props.type;
         var selected = this.props.selected;
 
         var component_style;
@@ -57,7 +58,9 @@ export class PlComponentCardPatientStatusButton extends Component {
 
         return (
             <a className={component_style} onClick={this.on_click_component.bind(this, type)}>
-                <div className="grid-block align-center"><PlComponentCardPatientStatus status={status} gender={gender} /></div>
+                <div className="grid-block align-center">
+                    <PlComponentCardPatientStatus status={status} phenotype={phenotype} genotype={genotype} gender={gender} />
+                </div>
                 <div className="grid-block align-center text">{type}</div>
             </a>
         );

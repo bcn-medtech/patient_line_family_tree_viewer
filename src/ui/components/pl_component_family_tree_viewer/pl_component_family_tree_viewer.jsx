@@ -81,7 +81,7 @@ export class PlComponentFamilyTreeViewer extends Component {
                     </g>
                     <g id="tree-muerte-subita-male">
                         <rect id="svg_5" width="40" height="40" x="-20" y="-20" fill="#000000" stroke="#000" strokeWidth="3" strokeOpacity="null" />
-                        <line id="svg_17" x1="-10" y1="50" x2="50" y2="-10" fill="none" fillOpacity="null" stroke="#000" strokeOpacity="null" strokeLinejoin="null" strokeLinecap="null" strokeWidth="2" />
+                        <line id="svg_13" x1="-25" y1="25" x2="25" y2="-25" fill="none" stroke="#000" strokeOpacity="null" fillOpacity="null" strokeLinejoin="null" strokeLinecap="null" strokeWidth="2" />
                     </g>
                     <g id="tree-ms-o-fv-recuperada-female">
                         <ellipse id="svg_6" rx="20" ry="20" fill="#000000" stroke="#000" strokeWidth="3" />

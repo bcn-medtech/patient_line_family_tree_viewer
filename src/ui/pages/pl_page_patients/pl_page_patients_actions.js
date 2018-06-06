@@ -46,18 +46,18 @@ function import_families_in_database(worbook_json_map, callback) {
     }
 }
 
-function import_patients_in_database(worbook_json_map, callback) {
-
+function import_patients_in_database(workbook_json_map, callback) {
+    
     var counter = 0;
 
-    if ("patients" in worbook_json_map) {
+    if ("patients" in workbook_json_map) {
 
-        for (var i = 0; i < worbook_json_map["patients"].length; i++) {
+        for (var i = 0; i < workbook_json_map["patients"].length; i++) {
 
-            patient_insert(worbook_json_map["patients"][i], function (result) {
+            patient_insert(workbook_json_map["patients"][i], function (result) {
                 counter++;
 
-                if (counter === worbook_json_map["patients"].length) {
+                if (counter === workbook_json_map["patients"].length) {
 
                     callback(true);
                 }
@@ -73,7 +73,7 @@ export function get_data_from_database(callback) {
     var data = {}
 
     patients_get_list(function (result) {
-
+        
         data["patients"] = result;
 
         families_get_list(function (result) {

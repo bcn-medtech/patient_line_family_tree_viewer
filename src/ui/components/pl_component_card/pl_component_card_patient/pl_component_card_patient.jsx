@@ -165,7 +165,7 @@ export class PlComponentCardPatient extends Component {
     }
 
     render() {
-
+        
         var patient = this.props.patient;
         var father = this.props.father;
         var mother = this.props.mother;

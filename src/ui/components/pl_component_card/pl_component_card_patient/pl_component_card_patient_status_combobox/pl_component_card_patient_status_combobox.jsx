@@ -44,10 +44,12 @@ export class PlComponentCardPatientStatusCombobox extends Component {
         }
     }
 
-    init_component(status, gender) {
+    init_component(status, phenotype, genotype, gender) {
 
         this.setState({
             status: status,
+            phenotype: phenotype,
+            genotype: genotype,
             gender: gender
         });
 
@@ -56,17 +58,21 @@ export class PlComponentCardPatientStatusCombobox extends Component {
     componentDidMount() {
 
         var status = this.props.status;
+        var phenotype = this.props.phenotype;
+        var genotype = this.props.genotype;
         var gender = this.props.gender;
-
-        this.init_component(status, gender);
+        
+        this.init_component(status, phenotype, genotype, gender);
     }
 
     componentWillReceiveProps(nextprops) {
 
         var status = nextprops.status;
+        var phenotype = nextprops.phenotype;
+        var genotype = nextprops.genotype;
         var gender = nextprops.gender;
         
-        this.init_component(status, gender);
+        this.init_component(status, phenotype, genotype, gender);
 
     }
 
@@ -81,7 +87,7 @@ export class PlComponentCardPatientStatusCombobox extends Component {
 
     }
 
-    render_list_items_status(current_status, gender) {
+    render_list_items_status(current_status, current_phenotype, current_genotype, gender) {
 
         var status_types = [
             {
@@ -277,16 +283,17 @@ export class PlComponentCardPatientStatusCombobox extends Component {
 
     }
 
-    render_element(status, gender) {
+    render_element(status, phenotype, genotype, gender) {
 
         return (
             <div>
                 <a className="grid-block vertical pl-component-card-patient-status-combobox tooltip">
                     <div className="grid-block align-center">
-                        <PlComponentCardPatientStatus status={status} gender={gender} />
+                        <PlComponentCardPatientStatus status={status} phenotype={phenotype} genotype={genotype} gender={gender} 
+                        />
                         <div className="grid-block tooltipcontent">
                             {
-                                this.render_list_items_status(status, gender)
+                                this.render_list_items_status(status, phenotype, genotype, gender)
                             }
                         </div>
                     </div>
@@ -301,11 +308,13 @@ export class PlComponentCardPatientStatusCombobox extends Component {
     render() {
 
         var status = this.state.status;
+        var phenotype = this.state.phenotype;
+        var genotype = this.state.genotype;
         var gender = this.state.gender;
 
         return (
             <div className="grid-block">
-                {this.render_element(status, gender)}
+                {this.render_element(status, phenotype, genotype, gender)}
             </div>
 
         );

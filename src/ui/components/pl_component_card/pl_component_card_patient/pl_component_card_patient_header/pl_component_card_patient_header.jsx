@@ -90,6 +90,23 @@ export class PlComponentCardPatientHeader extends Component {
                             gender={patient_gender}
                             ref="patient_status"
                             perform_database_action={this.perform_database_action.bind(this)} />
+                        {/* <PlComponentCardPatientStatusCombobox
+                            status={patient_status}
+                            gender={patient_gender}
+                            ref="patient_status"
+                            perform_database_action={this.perform_database_action.bind(this)} /> */}
+                    </div>
+                    <div className="grid-block shrink card-item">
+                        <PlComponentCardPatientStatusCombobox
+                            status={patient_status}
+                            gender={patient_gender}
+                            ref="patient_status"
+                            perform_database_action={this.perform_database_action.bind(this)} />
+                        {/* <PlComponentCardPatientStatusCombobox
+                            status={patient_status}
+                            gender={patient_gender}
+                            ref="patient_status"
+                            perform_database_action={this.perform_database_action.bind(this)} /> */}
                     </div>
                 </div>
                 <div className="grid-block shrink vertical card-item">

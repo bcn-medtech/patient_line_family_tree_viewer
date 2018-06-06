@@ -220,6 +220,8 @@ export class PlComponentCardPatientWidgetChildren extends Component {
                         var name = child.name;
 
                         var status = child.status;
+                        var phenotype = child.phenotype;
+                        var genotype = child.genotype;
                         var gender = child.gender;
 
                         var dob = child.dob;
@@ -228,7 +230,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
 
                             <tr className="grid-block shrink family-list-item" key={index}>
                                 <td className="grid-block family-list-item-element">
-                                    <PlComponentCardPatientStatus status={status} gender={gender} />
+                                    <PlComponentCardPatientStatus status={status} phenotype={phenotype} genotype={genotype} gender={gender} />
                                 </td>
                                 <td className="grid-block vertical family-list-item-element">
                                     <h6>{name}</h6>

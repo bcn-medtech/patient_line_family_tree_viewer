@@ -35,7 +35,7 @@
         }
 
         .pl_component_form_item_input_text_suggestion{
-            
+
             form{
 
                 input[type=text]{
@@ -59,6 +59,7 @@
                 border-right: 2px solid $color-normal-5;
                 border-left:5px solid $color-normal;
                 width:100%;
+                max-height:100px;
             }
 
             ul.react-autocomplete-input > li{ // element of the autocomplete option list

@@ -76,6 +76,8 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
                 var name = relative.name;
 
                 var status = relative.status;
+                var phenotype = relative.phenotype;
+                var genotype = relative.genotype;
                 var gender = relative.gender;
 
                 var dob = relative.dob;
@@ -85,7 +87,7 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
 
                     <tr className="grid-block shrink pl-component-card-patient-widget-relatives-item" key={index}>
                         <td className="grid-block pl-component-card-patient-widget-relatives-element">
-                            <PlComponentCardPatientStatus status={status} gender={gender} />
+                            <PlComponentCardPatientStatus status={status} phenotype={phenotype} genotype={genotype} gender={gender} />
                         </td>
                         <td className="grid-block vertical pl-component-card-patient-widget-relatives-element">
                             <h6>{name}</h6>
