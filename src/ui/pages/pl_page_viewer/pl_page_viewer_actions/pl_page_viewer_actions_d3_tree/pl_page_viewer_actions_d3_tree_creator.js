@@ -305,13 +305,13 @@ function getChildren(parentsArray, dataJson) {
             }
         }
     }
-    for (i in dataJson) {
-        for (j in childrenArray) {
-            if (dataJson[i].married_with === childrenArray[j].id) {
-                childrenArray.push(dataJson[i]);
-            }
-        }
-    }
+    // for (i in dataJson) {
+    //     for (j in childrenArray) {
+    //         if (dataJson[i].married_with === childrenArray[j].id) {
+    //             childrenArray.push(dataJson[i]);
+    //         }
+    //     }
+    // }
     return childrenArray;
 }
 

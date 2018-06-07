@@ -150,7 +150,7 @@ export default class PlPagePatients extends Component {
 
     var families = this.state.families;
     var patients = this.state.patients;
-
+    
     if (isObjectEmpty(families)) {
       body = <PlComponentDragAndDrop get_files_from_drag_and_drop={this.import_data.bind(this)} import_template_database={this.import_data.bind(this)} perform_database_action={this.perform_database_action.bind(this)}/>
     } else {

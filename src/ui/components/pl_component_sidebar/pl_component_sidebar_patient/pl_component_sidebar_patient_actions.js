@@ -49,7 +49,7 @@ export function update_patient_from_table(patient, edited_table) {
 
 }
 
-export function update_patient_from_text_field_editable(edited_name, edited_id, edited_comments, original_id, patient, couple, children, father, mother) {
+export function update_patient_from_text_field_editable(edited_name, edited_id, edited_comments, original_id, patient, children, father, mother) {
 
     var new_data;
     patient.name = edited_name;
@@ -106,14 +106,6 @@ export function update_patient_from_text_field_editable(edited_name, edited_id, 
             map(updated_children, function (child) {
                 relatives_to_update.push(child);
             });
-
-        }
-
-        // couple
-        if (!isObjectEmpty(couple)) {
-
-            couple.married_with = edited_id;
-            relatives_to_update.push(couple);
 
         }
 

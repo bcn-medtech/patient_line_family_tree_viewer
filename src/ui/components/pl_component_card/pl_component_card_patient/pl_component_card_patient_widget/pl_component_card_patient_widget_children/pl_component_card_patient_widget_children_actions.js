@@ -37,7 +37,6 @@ export function create_new_family(patient) {
     new_parent.id = "id_"+create_random_string(length_random_string);
     new_parent.name = "name_"+create_random_string(length_random_string);
     new_parent.family_id = patient.family_id;
-    new_parent.married_with = patient.id; // it is the only way to define a partner relationship with "patient"
     new_parent.children = [new_child.id];
 
     if (patient.gender === "male") {

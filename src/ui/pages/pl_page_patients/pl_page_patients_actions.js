@@ -248,11 +248,7 @@ function create_random_family() {
 
     }
 
-    // and the two first patients are couple
-    patients_to_insert[0].married_with = ids_patients_to_insert[1];
-    patients_to_insert[1].married_with = ids_patients_to_insert[0];
-
-    // and the third one is the family's child
+    // and the third patient is the family's child
     // parents
     patients_to_insert[0].children = [ids_patients_to_insert[2]];
     patients_to_insert[1].children = [ids_patients_to_insert[2]];

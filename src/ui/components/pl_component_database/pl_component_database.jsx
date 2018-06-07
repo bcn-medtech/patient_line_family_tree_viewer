@@ -53,9 +53,9 @@ export class PlComponentDatabase extends Component {
         this.state = {
             mode: "families",
             family_default_columns: ["id", "name", "description", "num_family_members", "symptoms", "comments"],
-            patient_default_columns: ["id", "name", "gender", "mother", "married_with", "family_id", "center", "num_relatives"],
+            patient_default_columns: ["id", "name", "gender", "mother", "family_id", "center", "num_relatives"],
             family_columns_selected: ["id", "name", "description", "num_family_members", "symptoms", "comments"],
-            patient_columns_selected: ["id", "name", "gender", "mother", "married_with", "family_id", "center", "num_relatives"],
+            patient_columns_selected: ["id", "name", "gender", "mother", "family_id", "center", "num_relatives"],
             data_to_display: [],
             menu_action: false,
         }

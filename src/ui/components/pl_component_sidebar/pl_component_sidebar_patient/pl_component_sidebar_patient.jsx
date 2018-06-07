@@ -53,9 +53,9 @@ export class PlComponentSidebarPatient extends Component {
             mode_menu: "relatives",
             mode_edit: false,
             family_default_columns: ["id", "name", "description", "num_family_members"],
-            patient_default_columns: ["married_with", "center", "nhc", "mutations", "diagnostic"],
+            patient_default_columns: ["center", "nhc", "mutations", "diagnostic"],
             family_columns_selected: ["id", "name", "description", "num_family_members"],
-            patient_columns_selected: ["married_with", "center", "nhc", "mutations", "diagnostic"],
+            patient_columns_selected: ["center", "nhc", "mutations", "diagnostic"],
             to_remove_patient: false
         }
     }
@@ -110,13 +110,11 @@ export class PlComponentSidebarPatient extends Component {
             var edited_id = this.refs.patient_card.get_patient_id();
             var edited_comments = this.refs.patient_comments.refs.FormItemInputText.state.input;
 
-            var couple_patient;
-            if (!isObjectEmpty(patient.married_with)) couple_patient = findWhere(this.props.relatives, { "id": patient.married_with });
             var children = this.props.children;
             var father = this.props.father;
             var mother = this.props.mother;
 
-            var new_data = update_patient_from_text_field_editable(edited_name, edited_id, edited_comments, patient.id, updated_patient, couple_patient, children, father, mother);
+            var new_data = update_patient_from_text_field_editable(edited_name, edited_id, edited_comments, patient.id, updated_patient, children, father, mother);
 
             // the changes in "table" and "text_field_editable" are saved
             if ("patient_to_update" in new_data) updated_patient = new_data.patient_to_update;
@@ -174,25 +172,7 @@ export class PlComponentSidebarPatient extends Component {
 
                 }
 
-                // in case this patient has a couple, should this couple be removed too?
-                if (!isObjectEmpty(patient.married_with)) {
-
-                    var couple_patient = findWhere(this.props.relatives, { "id": patient.married_with });
-                    if ((!couple_patient.father) && (!couple_patient.mother)) {
-
-                        to_remove.push(patient.married_with);
-
-                    } else {
-
-                        couple_patient.married_with = "";
-                        to_update.push(couple_patient);
-
-                        new_data["to_update"] = to_update;
-
-                    }
-
-                }
-
+                
                 new_data["to_remove"] = to_remove;
 
                 var data = {

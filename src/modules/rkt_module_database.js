@@ -20,14 +20,12 @@ export function initialize_patient() {
     patient.gender = "";
     patient.father = "";
     patient.mother = "";
-    patient.married_with = "";
     patient.family_id = "";
     patient.center = "";
     patient.nhc = "";
     patient.dob = " ";
     patient.mutations = "";
     patient.symptoms = "";
-    //patient.status = "nuevo-miembro-familia";
     patient.phenotype = "new-member-family";
     patient.genotype = "";
     patient.diagnostic = "";
