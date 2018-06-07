@@ -218,8 +218,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
 
                         var id = child.id;
                         var name = child.name;
-
-                        var status = child.status;
+                        
                         var phenotype = child.phenotype;
                         var genotype = child.genotype;
                         var gender = child.gender;
@@ -230,7 +229,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
 
                             <tr className="grid-block shrink family-list-item" key={index}>
                                 <td className="grid-block family-list-item-element">
-                                    <PlComponentCardPatientStatus status={status} phenotype={phenotype} genotype={genotype} gender={gender} />
+                                    <PlComponentCardPatientStatus phenotype={phenotype} genotype={genotype} gender={gender} />
                                 </td>
                                 <td className="grid-block vertical family-list-item-element">
                                     <h6>{name}</h6>
@@ -328,7 +327,7 @@ export class PlComponentCardPatientWidgetChildren extends Component {
 
                 return(
                     <div className="grid-block align-center pl-component-card-patient-widget-children-undefined-message">
-                        You cannot add children to this patient.
+                        You cannot add children of a new couple to this patient.
                     </div>
                 );
 

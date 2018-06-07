@@ -633,14 +633,14 @@ export function get_family_statistics(family_id, callback) {
 
             var family_members = get_all_patients_from_family(family_id, patients);
             var family_statistics_counter = countBy(family_members, function(patient){
-                return patient.status;
+                return patient.phenotype;
             });
             
             var family_statistics = [];
             var family_statistics_counter_keys = keys(family_statistics_counter);
             for (var i=0; i<family_statistics_counter_keys.length; i++) {
-                var current_status = family_statistics_counter_keys[i];
-                family_statistics.push({ "type": current_status, "text": family_statistics_counter[current_status] });
+                var current_phenotype = family_statistics_counter_keys[i];
+                family_statistics.push({ "type": current_phenotype, "text": family_statistics_counter[current_phenotype] });
             }
             
             callback(family_statistics);

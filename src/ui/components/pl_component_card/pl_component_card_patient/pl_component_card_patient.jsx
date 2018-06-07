@@ -172,15 +172,6 @@ export class PlComponentCardPatient extends Component {
         var children = this.props.children;
         var mode_edit = this.props.mode_edit;
         var mode_menu = this.props.mode_menu;
-        var patient_id;
-        var patient_name;
-        var patient_gender;
-        var patient_status;
-
-        if ("id" in patient) patient_id = patient.id;
-        if ("name" in patient) patient_name = patient.name;
-        if ("gender" in patient) patient_gender = patient.gender;
-        if ("gender" in patient) patient_status = patient.status;
 
         return (
             <div className="grid-block vertical pl-component-card-patient">

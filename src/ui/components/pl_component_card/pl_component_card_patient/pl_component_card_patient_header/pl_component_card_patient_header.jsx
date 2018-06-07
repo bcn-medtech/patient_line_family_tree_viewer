@@ -68,12 +68,14 @@ export class PlComponentCardPatientHeader extends Component {
         var patient_id;
         var patient_name;
         var patient_gender;
-        var patient_status;
+        var patient_phenotype;
+        var patient_genotype;
 
         if ("id" in patient) patient_id = patient.id;
         if ("name" in patient) patient_name = patient.name;
         if ("gender" in patient) patient_gender = patient.gender;
-        if ("gender" in patient) patient_status = patient.status;
+        if ("phenotype" in patient) patient_phenotype = patient.phenotype;
+        if ("genotype" in patient) patient_genotype = patient.genotype;
 
         return (
             <div className="grid-block pl-component-card-patient-header">
@@ -86,27 +88,19 @@ export class PlComponentCardPatientHeader extends Component {
                     </div>
                     <div className="grid-block shrink card-item">
                         <PlComponentCardPatientStatusCombobox
-                            status={patient_status}
                             gender={patient_gender}
-                            ref="patient_status"
+                            phenotype={patient_phenotype}
+                            type={"phenotype"}
+                            ref="patient_phenotype"
                             perform_database_action={this.perform_database_action.bind(this)} />
-                        {/* <PlComponentCardPatientStatusCombobox
-                            status={patient_status}
-                            gender={patient_gender}
-                            ref="patient_status"
-                            perform_database_action={this.perform_database_action.bind(this)} /> */}
                     </div>
                     <div className="grid-block shrink card-item">
                         <PlComponentCardPatientStatusCombobox
-                            status={patient_status}
                             gender={patient_gender}
-                            ref="patient_status"
+                            genotype={patient_genotype}
+                            type={"genotype"}
+                            ref="patient_genotype"
                             perform_database_action={this.perform_database_action.bind(this)} />
-                        {/* <PlComponentCardPatientStatusCombobox
-                            status={patient_status}
-                            gender={patient_gender}
-                            ref="patient_status"
-                            perform_database_action={this.perform_database_action.bind(this)} /> */}
                     </div>
                 </div>
                 <div className="grid-block shrink vertical card-item">
@@ -125,7 +119,6 @@ export class PlComponentCardPatientHeader extends Component {
                             isEditionMode={mode_edit ? true : false}
                             ref="patient_id" />
                     </div>
-
                 </div>
             </div>
         );

@@ -59,8 +59,7 @@ export class PlComponentCardPatientWidgetParent extends Component {
     }
 
     render_parent(parent) {
-
-        var status = parent.status;
+        
         var phenotype = parent.phenotype;
         var genotype = parent.genotype;
         var gender = parent.gender;
@@ -73,7 +72,7 @@ export class PlComponentCardPatientWidgetParent extends Component {
         return (
             <div className="grid-block shrink pl-component-card-patient-widget-parent-item">
                 <div className="grid-block shrink pl-component-card-patient-widget-parent-element">
-                    <PlComponentCardPatientStatus status={status} phenotype={phenotype} genotype={genotype} gender={gender} />
+                    <PlComponentCardPatientStatus phenotype={phenotype} genotype={genotype} gender={gender} />
                 </div>
                 <div className="grid-block vertical pl-component-card-patient-widget-parent-element">
                     <h6>{name}</h6>

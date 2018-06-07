@@ -120,11 +120,16 @@ export default class TreeDisplayer {
             .attr("transform", function (d) {
                 return "translate(" + d.x + "," + d.y + ")"
             })
-            
-        // add the svg shapes of the nodes
-        var node_shapes = node_containers.append("use")
-            .attr("xlink:href", function(d) { return "#tree-" + d.status + "-" + d.gender })
             .attr("id", function (d) { return d.id; })
+            
+        // add the svg status of the nodes --> status = phenotype (shape, color and/or line) + genotype (symbol)
+        // phenotype
+        var node_phenotypes = node_containers.append("use")
+            .attr("xlink:href", function(d) { return "#tree-" + d.phenotype + "-shape-" + d.gender })
+
+        // genotype
+        var node_genotypes = node_containers.append("use")
+            .attr("xlink:href", function(d) { return "#tree-" + d.genotype + "-symbol" })
         
         // and add a border to the node that reacts when hovering/selecting the nodes
         var node_borders = node_containers.each(function(d) {

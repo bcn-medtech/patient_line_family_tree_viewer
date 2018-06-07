@@ -27,7 +27,9 @@ export function initialize_patient() {
     patient.dob = " ";
     patient.mutations = "";
     patient.symptoms = "";
-    patient.status = "nuevo-miembro-familia";
+    //patient.status = "nuevo-miembro-familia";
+    patient.phenotype = "new-member-family";
+    patient.genotype = "";
     patient.diagnostic = "";
     patient.diagnostic_status = "";
     patient.probando = "";

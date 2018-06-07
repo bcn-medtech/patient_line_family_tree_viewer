@@ -272,7 +272,7 @@ export class PlComponentSidebarPatient extends Component {
 
     render_widget_patient_data(patient, data_tags_selected, mode_menu, mode_edit) {
 
-        var data_tags = omit(patient, "children", "depth", "gender", "father", "id", "mother", "name", "num_relatives", "parent", "relation", "status", "x", "y");
+        var data_tags = omit(patient, "children", "depth", "gender", "father", "id", "mother", "name", "num_relatives", "parent", "relation", "genotype", "phenotype", "x", "y");
         data_tags = [data_tags];
 
         var table_mode;
