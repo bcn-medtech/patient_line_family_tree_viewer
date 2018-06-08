@@ -13,13 +13,18 @@
         margin:0px;
     }
 
+    h5{
+        color:$color-normal;
+        margin-top:8px;
+        margin-bottom:3px;
+    }
+
     .card-item {
         padding-left: 2.5px;
         padding-right: 2.5px;
     }
 
     .card-row-family-members{
-        margin-right: 15px;
         align-items:center;
         padding: 10px;
         overflow: hidden;

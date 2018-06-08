@@ -3,9 +3,9 @@ export function update_family_from_text_field_editable(edited_name, edited_id, o
 
     var new_data;
     family.name = edited_name;
-
-    if (edited_description !== "Description") family.description = edited_description;
-    if (edited_symptoms !== "Symptoms") family.symptoms = edited_symptoms;
+    
+    if (edited_description !== "There is not any descrition defined yet") family.description = edited_description;
+    if (edited_symptoms !== "There are not any symptoms defined yet") family.symptoms = edited_symptoms;
     if (edited_diagnosis !== "There are not diagnosis defined yet") family.diagnosis = edited_diagnosis;
     if (edited_genes !== "There are not genes defined yet") family.genes = edited_genes;
     if (edited_mutations !== "There are not mutations defined yet") family.mutations = edited_mutations;

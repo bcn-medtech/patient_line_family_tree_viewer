@@ -30,7 +30,7 @@ import { PlComponentCardFamilyTextButton } from './pl_component_card_family_text
 import { PlComponentTextFieldEditable } from './../../pl_component_text_field_editable/pl_component_text_field_editable';
 
 //modules
-import { isObjectAFunction, isObjectEmpty } from './../../../../modules/rkt_module_object';
+import { isObjectAFunction, isObjectAnArray, isObjectEmpty } from './../../../../modules/rkt_module_object';
 
 //actions
 import { format_family_statistics } from './pl_component_card_family_actions';
@@ -60,12 +60,38 @@ export class PlComponentCardFamily extends Component {
 
         if ("diagnosis" in family) family_diagnosis = family.diagnosis;
         if (!isObjectEmpty(family_diagnosis)) {
+            
+            if (isObjectAnArray(family_diagnosis)) {
+
+                family_diagnosis = family_diagnosis.length;
+
+            } else {
+
+                family_diagnosis = 1;
+            }
+            
+        } else {
+            
             family_diagnosis = 0;
+        
         }
         
         if ("mutations" in family) family_mutations = family.mutations;
         if (!isObjectEmpty(family_mutations)) {
+            
+            if (isObjectAnArray(family_mutations)) {
+
+                family_mutations = family_mutations.length;
+
+            } else {
+
+                family_mutations = 1;
+            }
+            
+        } else {
+            
             family_mutations = 0;
+        
         }
 
         if (mode_menu === "diagnosis") {
@@ -87,8 +113,7 @@ export class PlComponentCardFamily extends Component {
             <div className="grid-block align-spaced card-row">
                 <div className="grid-block shrink card-item">
                     <PlComponentCardFamilyTextButton
-                        // text={family_diagnosis}
-                        text={1} // number of diagnosis (length)
+                        text={family_diagnosis}
                         type="diagnosis"
                         on_click_component={this.on_click_card_component.bind(this)}
                         selected={mode_diagnosis}
@@ -96,8 +121,7 @@ export class PlComponentCardFamily extends Component {
                 </div>
                 <div className="grid-block shrink card-item">
                     <PlComponentCardFamilyTextButton
-                        // text={family_mutations}
-                        text={1} // number of mutations (length)
+                        text={family_mutations}
                         type="mutations"
                         on_click_component={this.on_click_card_component.bind(this)}
                         selected={mode_mutations}

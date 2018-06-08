@@ -18,25 +18,5 @@
         margin-top: 15px;
         align-items:center;
     }
-
-    table {
-        margin-top:15px;
-    }
-    
-    tr, td{
-        width:100%;
-    }
-
-    tr{
-        margin-top: 0px;
-        margin-bottom: 0px;
-        padding-bottom: 7px;
-        padding-top: 7px;
-        border-bottom: 1px solid $color-normal;
-
-        &:hover{
-            background-color: $color_shadow-2;
-        }
-    }
     
 }

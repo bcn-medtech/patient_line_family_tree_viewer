@@ -49,10 +49,10 @@ export class PlComponentCardFamilyHeader extends Component {
         family_name = family.name;
 
         family_description = family.description;
-        if (isObjectEmpty(family_description)) family_description = "Description";
+        if (isObjectEmpty(family_description)) family_description = "There is not any descrition defined yet";
 
         family_symptoms = family.symptoms;
-        if (isObjectEmpty(family_symptoms)) family_symptoms = "Symptoms";
+        if (isObjectEmpty(family_symptoms)) family_symptoms = "There are not any symptoms defined yet";
 
         return (
 
@@ -61,11 +61,7 @@ export class PlComponentCardFamilyHeader extends Component {
                 <div className="grid-block vertical card-item">
 
                     <div className="grid-block" style={{"alignItems":"center"}}>
-                        <div className="grid-block shrink vertical card-row-family-members">
-                            <div className="grid-block shrink align-center"><h4>{family_num_members}</h4></div>
-                            <div className="grid-block shrink align-center text">{"family members"}</div>
-                        </div>
-                        <div className="grid-block vertical card-item">
+                        <div className="grid-block vertical card-item" style={{"paddingTop":"10px", "paddingBottom":"10px"}}>
                             <div className="grid-block shrink">
                                 <h4>
                                     <PlComponentTextFieldEditable
@@ -82,17 +78,22 @@ export class PlComponentCardFamilyHeader extends Component {
                                     ref="family_id" />
                             </div>
                         </div>
+
+                        <div className="grid-block shrink vertical card-row-family-members">
+                            <div className="grid-block shrink align-center"><h4>{family_num_members}</h4></div>
+                            <div className="grid-block shrink align-center text">{"family members"}</div>
+                        </div>
                     </div>
 
-                    <div className="grid-block shrink" style={{ "paddingTop": "20px" }}>
-                        <h4>
-                            <PlComponentTextFieldEditable
+                    <div className="grid-block vertical shrink" style={{ "paddingTop": "8px" }}>
+                        <h5>{"Description"}</h5>
+                        <PlComponentTextFieldEditable
                                 text={family_description}
                                 isEditionMode={mode_edit ? true : false}
                                 ref="family_description" />
-                        </h4>
                     </div>
-                    <div className="grid-block shrink" style={{ "paddingBottom": "8px" }}>
+                    <div className="grid-block vertical shrink" style={{ "paddingBottom": "8px" }}>
+                        <h5>{"Symptoms"}</h5>
                         <PlComponentTextFieldEditable
                             text={family_symptoms}
                             isEditionMode={mode_edit ? true : false}

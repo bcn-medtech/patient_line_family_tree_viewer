@@ -79,6 +79,25 @@ export class PlComponentCardPatientHeader extends Component {
 
         return (
             <div className="grid-block pl-component-card-patient-header">
+
+                <div className="grid-block vertical card-item" style={{"paddingTop":"10px", "paddingBottom":"10px"}}>
+                    <div className="grid-block">
+                        <h4>
+                            <PlComponentTextFieldEditable
+                                text={patient_name}
+                                isEditionMode={mode_edit ? true : false}
+                                ref="patient_name"
+                            />
+                        </h4>
+                    </div>
+                    <div className="grid-block">
+                        <PlComponentTextFieldEditable
+                            text={patient_id}
+                            isEditionMode={mode_edit ? true : false}
+                            ref="patient_id" />
+                    </div>
+                </div>
+
                 <div className="grid-block align-spaced shrink card-row-gender-status">
                     <div className="grid-block shrink card-item">
                         <PlComponentCardPatientGenderCombobox
@@ -103,23 +122,7 @@ export class PlComponentCardPatientHeader extends Component {
                             perform_database_action={this.perform_database_action.bind(this)} />
                     </div>
                 </div>
-                <div className="grid-block shrink vertical card-item">
-                    <div className="grid-block shrink">
-                        <h4>
-                            <PlComponentTextFieldEditable
-                                text={patient_name}
-                                isEditionMode={mode_edit ? true : false}
-                                ref="patient_name"
-                            />
-                        </h4>
-                    </div>
-                    <div className="grid-block shrink">
-                        <PlComponentTextFieldEditable
-                            text={patient_id}
-                            isEditionMode={mode_edit ? true : false}
-                            ref="patient_id" />
-                    </div>
-                </div>
+            
             </div>
         );
 

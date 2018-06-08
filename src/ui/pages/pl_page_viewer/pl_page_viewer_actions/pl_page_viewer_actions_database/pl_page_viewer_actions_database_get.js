@@ -13,7 +13,8 @@ import {
     findWhere,
     pluck,
     countBy,
-    keys
+    keys,
+    where
  } from 'underscore';
 
 import {isObjectEmpty} from './../../../../../modules/rkt_module_object';
@@ -644,7 +645,8 @@ export function get_family_statistics(family_id, callback) {
                 var current_phenotype = family_statistics_counter_keys[i];
                 family_statistics.push({ 
                         "phenotype": current_phenotype,
-                        "counter": family_statistics_counter[current_phenotype]
+                        "counter": family_statistics_counter[current_phenotype],
+                        "relatives": where(family_members, { phenotype: current_phenotype })
                     });
             }
             
