@@ -7,6 +7,7 @@
 
     tr, td{
         width:100%;
+        align-items: center;
     }
 
     tr{
@@ -17,9 +18,15 @@
     }
     
     .pl-component-card-family-widget-statistics-item{
-
-        background-color: $color_shadow-2;
+        
         border-bottom: 1px solid $color-normal;
+
+        &:hover{
+            background-color: $color_shadow-2;
+            // .pl-component-card-family-widget-statistics-item-content{
+            //     display: block;
+            // }
+        }
 
         color:white;
         align-items: center;
@@ -38,24 +45,21 @@
             padding-right:15px;
         }
 
+        // td{
+        //     align-items: center;
+        // }
+
         .centered{
             align-items: center;
-        }
-
-        &:hover{
-
-            .pl-component-card-family-widget-statistics-item-content{
-                display: block;
-            }
-
-
         }
 
     }
 
     .pl-component-card-family-widget-statistics-item-content{
-        display: none;
+        //display: none;
         overflow: hidden;
+        padding-left:10px;
+        padding-right:10px;
 
         .pl-component-card-patient-widget-relatives {
 
@@ -68,11 +72,5 @@
 
         }
     }
-
-    
-
-    // .pl-component-card-family-widget-statistics-undefined-message{
-    //     padding-bottom:2px;
-    // }
 
 }

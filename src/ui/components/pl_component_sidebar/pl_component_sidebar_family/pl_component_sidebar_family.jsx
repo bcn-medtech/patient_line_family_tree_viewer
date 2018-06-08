@@ -355,7 +355,7 @@ export class PlComponentSidebarFamily extends Component {
 
             if (mode_menu === "statistics") {
 
-                widget_content = <PlComponentCardFamilyWidgetStatistics family={family} family_statistics={family_statistics} />
+                widget_content = <PlComponentCardFamilyWidgetStatistics family_statistics={family_statistics} />
 
                 widget =
                     <PlComponentCardFamilyWidget

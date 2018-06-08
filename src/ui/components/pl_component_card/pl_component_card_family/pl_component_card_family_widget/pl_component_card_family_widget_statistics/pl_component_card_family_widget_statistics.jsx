@@ -37,6 +37,31 @@ import { filter } from "underscore";
 
 export class PlComponentCardFamilyWidgetStatistics extends Component {
 
+    constructor() {
+
+        super();
+
+        this.state = {
+            index_item_to_open: false
+        }
+
+    }
+
+    open_close_row_content(index) {
+        
+        if ((this.state.index_item_to_open !== false) && (this.state.index_item_to_open === index)) {
+
+            index = false; // to close when clicking an opened item
+
+        }
+
+        this.setState({
+
+            index_item_to_open: index
+
+        })
+    }
+
     render_card_family_widget_statistics(statistics) {
 
         if (!isObjectEmpty(statistics)) {
@@ -57,23 +82,35 @@ export class PlComponentCardFamilyWidgetStatistics extends Component {
 
     render_list_of_statistics(statistics) {
 
+        var index_item_to_open = this.state.index_item_to_open;
         var sorted_statistics = sort_statistics(statistics);
 
         return (
 
             sorted_statistics.map((stat, index) => {
-
+                
                 var phenotype = stat["phenotype"];
                 var counter = stat["counter"];
-                var relatives = stat["relatives"];
+                var counter_males = stat["counter_males"];
+                var counter_females = stat["counter_females"];
+
+                var row_content;
+                var style;
+                if ((index_item_to_open !== false) && (index_item_to_open === index)) {
+
+                    var relatives = stat["relatives"];
+                    row_content = this.render_row_content(relatives);
+                    style={"backgroundColor":"#00000047"};
+
+                }
 
                 return (
-                    <tr className="grid-block vertical pl-component-card-family-widget-statistics-item">
-                        <td>
+                    <tr className="grid-block vertical pl-component-card-family-widget-statistics-item" style={style} key={index}>
+                        <td className="grid-block">
                             <table className="grid-block vertical">
                                 <tbody className="grid-block vertical">
-                                    {this.render_row(phenotype, counter)}
-                                    {this.render_row_content(relatives)}
+                                    {this.render_row(phenotype, counter, counter_males, counter_females, index)}
+                                    {row_content}
                                 </tbody>
                             </table>
                         </td>
@@ -86,13 +123,19 @@ export class PlComponentCardFamilyWidgetStatistics extends Component {
 
     }
 
-    render_row(phenotype, counter) {
+    render_row(phenotype, counter, counter_males, counter_females, index) {
 
         return (
-            <tr className="grid-block shrink">
+            <tr className="grid-block shrink" onClick={this.open_close_row_content.bind(this, index)}>
                 <td className="grid-block pl-component-card-family-widget-statistics-element">
-                    <PlComponentCardPatientStatus phenotype={phenotype} gender={"male"} />
-                    <PlComponentCardPatientStatus phenotype={phenotype} gender={"female"} />
+                    <div className="grid-block vertical shrink centered">
+                        <PlComponentCardPatientStatus phenotype={phenotype} gender={"male"} />
+                        {counter_males}
+                    </div>
+                    <div className="grid-block vertical shrink centered">
+                        <PlComponentCardPatientStatus phenotype={phenotype} gender={"female"} />
+                        {counter_females}
+                    </div>
                 </td>
                 <td className="grid-block vertical pl-component-card-family-widget-statistics-element">
                     <div className="grid-block shrink text">{format_phenotype(phenotype)}</div>
@@ -111,7 +154,9 @@ export class PlComponentCardFamilyWidgetStatistics extends Component {
         return (
 
             <tr className="pl-component-card-family-widget-statistics-item-content">
-                <PlComponentCardPatientWidgetRelatives relatives={relatives} />
+                <td className="grid-block">
+                    <PlComponentCardPatientWidgetRelatives relatives={relatives} />
+                </td>
             </tr>
 
         );
@@ -123,7 +168,6 @@ export class PlComponentCardFamilyWidgetStatistics extends Component {
         var family_statistics = this.props.family_statistics;
 
         return (
-            //<div></div>
             <a className="grid-block pl-component-card-family-widget-statistics">
                 {this.render_card_family_widget_statistics(family_statistics)}
             </a>

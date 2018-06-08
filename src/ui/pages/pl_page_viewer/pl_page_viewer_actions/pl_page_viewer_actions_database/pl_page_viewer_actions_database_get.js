@@ -643,10 +643,14 @@ export function get_family_statistics(family_id, callback) {
             for (var i=0; i<family_statistics_counter_keys.length; i++) {
                 
                 var current_phenotype = family_statistics_counter_keys[i];
+                var relatives_with_current_phenotype = where(family_members, { phenotype: current_phenotype });
+                
                 family_statistics.push({ 
                         "phenotype": current_phenotype,
                         "counter": family_statistics_counter[current_phenotype],
-                        "relatives": where(family_members, { phenotype: current_phenotype })
+                        "relatives": relatives_with_current_phenotype,
+                        "counter_males": where(relatives_with_current_phenotype, { gender: "male"}).length,
+                        "counter_females": where(relatives_with_current_phenotype, { gender: "female"}).length
                     });
             }
             
