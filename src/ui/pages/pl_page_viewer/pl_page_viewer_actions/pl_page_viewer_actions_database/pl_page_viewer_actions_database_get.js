@@ -638,9 +638,14 @@ export function get_family_statistics(family_id, callback) {
             
             var family_statistics = [];
             var family_statistics_counter_keys = keys(family_statistics_counter);
+            
             for (var i=0; i<family_statistics_counter_keys.length; i++) {
+                
                 var current_phenotype = family_statistics_counter_keys[i];
-                family_statistics.push({ "type": current_phenotype, "text": family_statistics_counter[current_phenotype] });
+                family_statistics.push({ 
+                        "phenotype": current_phenotype,
+                        "counter": family_statistics_counter[current_phenotype]
+                    });
             }
             
             callback(family_statistics);

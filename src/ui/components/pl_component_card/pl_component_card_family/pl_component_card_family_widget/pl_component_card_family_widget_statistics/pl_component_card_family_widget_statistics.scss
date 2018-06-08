@@ -1,0 +1,52 @@
+@import './../../../pl_component_card_patient/pl_component_card_patient_status/pl_component_card_patient_status.scss';
+
+.pl-component-card-family-widget-statistics{
+
+    //max-height:200px;
+    overflow-y:auto;
+
+    tr, td{
+        width:100%;
+    }
+
+    tr{
+        margin-top: 0px;
+        margin-bottom: 0px;
+        padding-bottom: 7px;
+        padding-top: 7px;
+        border-bottom: 1px solid $color-normal;
+
+        &:hover{
+            background-color: $color_shadow-2;
+        }
+    }
+    
+    .pl-component-card-family-widget-statistics-item{
+
+        align-items: center;
+        
+        h6{
+            margin-top:0px;
+            color:$color-normal;
+        }
+
+        .text{
+            padding-bottom:2px;
+        }
+
+        .pl-component-card-family-widget-statistics-element{
+            padding-left:10px;//15px;
+            padding-right:15px;
+        }
+
+        .centered{
+            align-items: center;
+        }
+
+    }
+
+    // .pl-component-card-family-widget-statistics-undefined-message{
+    //     padding-bottom:2px;
+    // }
+
+}

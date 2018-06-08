@@ -5,6 +5,8 @@
     margin-left: 10px;
     margin-right: 10px;
 
+    align-items: center;
+
     h4{
         color:$color-normal;
         width:100%;
@@ -14,6 +16,17 @@
     .card-item {
         padding-left: 2.5px;
         padding-right: 2.5px;
+    }
+
+    .card-row-family-members{
+        margin-right: 15px;
+        align-items:center;
+        padding: 10px;
+        overflow: hidden;
+
+        h4{
+            width:unset;
+        }
     }
 
     .pl_component_text_field_editable{
@@ -32,51 +45,6 @@
             &:hover{
                 border-left:5px solid $color-normal-5;
             }
-        }
-
-        .pl_component_form_item_input_text_suggestion{
-
-            form{
-
-                input[type=text]{
-
-                    background-color: $color_shadow_3;
-                    color:$color-normal-2;
-    
-                    &:hover{
-                        border-left:5px solid $color-normal-5;
-                    }
-    
-                }
-
-            }
-
-            // elements in 'react-autocomplete-input'
-            ul.react-autocomplete-input{ // autocomplete option list of 'react-autocomplete-input'
-                border:unset;
-                border-top: 2px solid $color-normal-5;
-                border-bottom: 2px solid $color-normal-5;
-                border-right: 2px solid $color-normal-5;
-                border-left:5px solid $color-normal;
-                width:100%;
-                max-height:100px;
-            }
-
-            ul.react-autocomplete-input > li{ // element of the autocomplete option list
-                background-color: $rkt-viewer-background-color;
-                color:$color-normal-2;//$color_main;
-                border-top: 1px solid $color-normal-5;
-                border-bottom: 1px solid $color-normal-5;
-            }
-
-            ul.react-autocomplete-input > li.active{ // active element of the autocomplete option list
-                background-color:$color_shadow_3;
-                color:white;//$color-normal-2;
-                border-top: 1px solid $color-normal-5;
-                border-bottom: 1px solid $color-normal-5;
-            }
-            
-            
         }
 
     }

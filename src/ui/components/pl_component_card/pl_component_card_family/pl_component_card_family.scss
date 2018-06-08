@@ -1,5 +1,6 @@
 @import './pl_component_card_family_header/pl_component_card_family_header.scss';
 @import './pl_component_card_family_text_button/pl_component_card_family_text_button.scss';
+@import './pl_component_card_family_widget/pl_component_card_family_widget.scss';
 
 .pl-component-card-family{
     
@@ -14,7 +15,7 @@
     .card-row{
         padding:10px;
         background-color: $color_shadow_3;
-        //margin-top: 15px;
+        margin-top: 15px;
         align-items:center;
     }
 

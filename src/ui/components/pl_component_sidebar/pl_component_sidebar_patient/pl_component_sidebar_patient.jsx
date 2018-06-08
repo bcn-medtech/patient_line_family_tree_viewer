@@ -53,9 +53,9 @@ export class PlComponentSidebarPatient extends Component {
             mode_menu: "relatives",
             mode_edit: false,
             family_default_columns: ["id", "name", "description", "num_family_members"],
-            patient_default_columns: ["center", "nhc", "mutations", "diagnostic"],
+            patient_default_columns: ["center", "nhc", "mutations", "diagnosis"],
             family_columns_selected: ["id", "name", "description", "num_family_members"],
-            patient_columns_selected: ["center", "nhc", "mutations", "diagnostic"],
+            patient_columns_selected: ["center", "nhc", "mutations", "diagnosis"],
             to_remove_patient: false
         }
     }
@@ -283,7 +283,6 @@ export class PlComponentSidebarPatient extends Component {
                     ref="patient_widget_data"
                     tittle={mode_menu}
                     content={widget_content}
-                    perform_database_action={this.props.perform_database_action}
                 />
             </div>
         );
@@ -338,7 +337,6 @@ export class PlComponentSidebarPatient extends Component {
                 <PlComponentCardPatientWidget
                     tittle={mode_menu}
                     content={widget_content}
-                    perform_database_action={this.props.perform_database_action}
                 />
             </div>
         );

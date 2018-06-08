@@ -28,8 +28,8 @@ export function initialize_patient() {
     patient.symptoms = "";
     patient.phenotype = "new-member-family";
     patient.genotype = "";
-    patient.diagnostic = "";
-    patient.diagnostic_status = "";
+    patient.diagnosis = "";
+    patient.diagnosis_status = "";
     patient.probando = "";
     patient.children = undefined;
     patient.num_relatives = undefined;

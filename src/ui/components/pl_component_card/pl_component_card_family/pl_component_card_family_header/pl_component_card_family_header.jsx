@@ -31,24 +31,20 @@ import { PlComponentTextFieldEditable } from './../../../pl_component_text_field
 import { isObjectAFunction, isObjectEmpty } from './../../../../../modules/rkt_module_object';
 import { mapObject } from 'underscore';
 
-import family_diagnostics_suggestions_json from './pl_component_card_family_header_jsons/pl_component_card_family_header_jsons_diagnostics.json';
-import family_genes_suggestions_json from './pl_component_card_family_header_jsons/pl_component_card_family_header_jsons_genes.json';
-
 export class PlComponentCardFamilyHeader extends Component {
-
+    
     render() {
 
         var family = this.props.family;
         var mode_edit = this.props.mode_edit;
-
+        var family_num_members;
         var family_id;
         var family_name;
         var family_description;
         var family_symptoms;
-        var family_diagnostic;
-        var family_genes;
-        var family_mutations;
-        
+
+
+        family_num_members = family.num_family_members
         family_id = family.id;
         family_name = family.name;
 
@@ -58,33 +54,36 @@ export class PlComponentCardFamilyHeader extends Component {
         family_symptoms = family.symptoms;
         if (isObjectEmpty(family_symptoms)) family_symptoms = "Symptoms";
 
-        family_diagnostic = family.diagnostic;
-        if (isObjectEmpty(family_diagnostic)) family_diagnostic = "Diagnostic";
-
-        family_genes = family.genes;
-        if (isObjectEmpty(family_genes)) family_genes = "Genes";
-
-        family_mutations = family.mutations;
-        if (isObjectEmpty(family_mutations)) family_mutations = "Mutations";
-
         return (
+
             <div className="grid-block pl-component-card-family-header">
+                
                 <div className="grid-block vertical card-item">
-                    <div className="grid-block shrink">
-                        <h4>
-                            <PlComponentTextFieldEditable
-                                text={family_name}
-                                isEditionMode={mode_edit ? true : false}
-                                ref="family_name"
-                            />
-                        </h4>
+
+                    <div className="grid-block" style={{"alignItems":"center"}}>
+                        <div className="grid-block shrink vertical card-row-family-members">
+                            <div className="grid-block shrink align-center"><h4>{family_num_members}</h4></div>
+                            <div className="grid-block shrink align-center text">{"family members"}</div>
+                        </div>
+                        <div className="grid-block vertical card-item">
+                            <div className="grid-block shrink">
+                                <h4>
+                                    <PlComponentTextFieldEditable
+                                        text={family_name}
+                                        isEditionMode={mode_edit ? true : false}
+                                        ref="family_name"
+                                    />
+                                </h4>
+                            </div>
+                            <div className="grid-block shrink">
+                                <PlComponentTextFieldEditable
+                                    text={family_id}
+                                    isEditionMode={mode_edit ? true : false}
+                                    ref="family_id" />
+                            </div>
+                        </div>
                     </div>
-                    <div className="grid-block shrink">
-                        <PlComponentTextFieldEditable
-                            text={family_id}
-                            isEditionMode={mode_edit ? true : false}
-                            ref="family_id" />
-                    </div>
+
                     <div className="grid-block shrink" style={{ "paddingTop": "20px" }}>
                         <h4>
                             <PlComponentTextFieldEditable
@@ -99,35 +98,9 @@ export class PlComponentCardFamilyHeader extends Component {
                             isEditionMode={mode_edit ? true : false}
                             ref="family_symptoms" />
                     </div>
-                    <div className="grid-block shrink" style={{ "paddingTop": "20px", "paddingBottom": "8px" }}>
-                        {/* <h4> */}
-                            <PlComponentTextFieldEditable
-                                text={family_diagnostic}
-                                isEditionMode={mode_edit ? true : false}
-                                isSearchBox={true}
-                                suggestions={family_diagnostics_suggestions_json}
-                                ref="family_diagnostic" />
-                        {/* </h4> */}
-                    </div>
-                    <div className="grid-block shrink" style={{ "paddingTop": "20px" }}>
-                        {/* <h4> */}
-                            <PlComponentTextFieldEditable
-                                text={family_genes}
-                                isEditionMode={mode_edit ? true : false}
-                                isSearchBox={true}
-                                suggestions={family_genes_suggestions_json}
-                                ref="family_genes" />
-                        {/* </h4> */}
-                    </div>
-                    <div className="grid-block shrink" style={{ "paddingBottom": "8px" }}>
-                        {/* <h4> */}
-                            <PlComponentTextFieldEditable
-                                text={family_mutations}
-                                isEditionMode={mode_edit ? true : false}
-                                ref="family_mutations" />
-                        {/* </h4> */}
-                    </div>
+
                 </div>
+
             </div>
         );
 

@@ -25,12 +25,12 @@
 import React, { Component } from 'react';
 
 //components
-import { PlComponentCardFamilyHeader} from './pl_component_card_family_header/pl_component_card_family_header';
+import { PlComponentCardFamilyHeader } from './pl_component_card_family_header/pl_component_card_family_header';
 import { PlComponentCardFamilyTextButton } from './pl_component_card_family_text_button/pl_component_card_family_text_button';
 import { PlComponentTextFieldEditable } from './../../pl_component_text_field_editable/pl_component_text_field_editable';
 
 //modules
-import { isObjectAFunction } from './../../../../modules/rkt_module_object';
+import { isObjectAFunction, isObjectEmpty } from './../../../../modules/rkt_module_object';
 
 //actions
 import { format_family_statistics } from './pl_component_card_family_actions';
@@ -39,71 +39,80 @@ export class PlComponentCardFamily extends Component {
 
     on_click_card_component(type) {
 
-        if (isObjectAFunction(this.props.on_click_action)) {
+        if (type === "diagnosis" || type === "mutations" || type === "statistics") {
 
-            this.props.on_click_action(type);
+            if (isObjectAFunction(this.props.on_click_action)) {
 
+                this.props.on_click_action(type);
+
+            }
         }
+
     }
 
-    render_menu(family, family_statistics, mode_menu) {
+    render_menu(family, mode_menu) {
 
-        var myComponent = this;
+        var family_diagnosis;
+        var family_mutations;
+        var mode_diagnosis = false;
+        var mode_mutations = false;
+        var mode_statistics = false;
 
-        var family_num_members;
-        if ("num_family_members" in family) family_num_members = family.num_family_members;
+        if ("diagnosis" in family) family_diagnosis = family.diagnosis;
+        if (!isObjectEmpty(family_diagnosis)) {
+            family_diagnosis = 0;
+        }
         
-        family_statistics = format_family_statistics(family_statistics, family_num_members, 2);
+        if ("mutations" in family) family_mutations = family.mutations;
+        if (!isObjectEmpty(family_mutations)) {
+            family_mutations = 0;
+        }
 
-        return this.render_table_family_stats(family_statistics, mode_menu);
+        if (mode_menu === "diagnosis") {
+            mode_diagnosis = true;
+        } else if (mode_menu === "mutations") {
+            mode_mutations = true;
+        } else if (mode_menu === "statistics") {
+            mode_statistics = true;
+        }
 
-    }
-
-    render_table_family_stats(family_statistics, mode_menu) {
-
-        return (
-            <table className="grid-block vertical">
-                <tbody>
-                    {
-                        family_statistics.map((group_stats, index) => {
-
-                            return this.render_row_table_family_stats(group_stats, index, mode_menu);
-
-                        })
-                    }
-                </tbody>
-            </table>
-        );
-
-    }
-
-    render_row_table_family_stats(group_stats, index, mode_menu) {
+        // TODO: find icon
+        var icon_statistics =
+            <svg width='25' height='25' viewBox='0 0 24 24' fillRule='evenodd'>
+                <path d='M0 0v24h24V0H0zm22.1 7l-7.2 8.9-9.2-3.8c-.2-.1-.4 0-.6.1L1 16.6V7h21.1zm.9 16H1v-4.9l4.6-5 9.2 3.8c.2.1.4 0 .6-.1L23 7.5V23zm0-17H1V1h22v5z'>
+                </path>
+            </svg>
 
         return (
-
-            <tr className="grid-block shrink card-row" key={index}>
-                {
-                    group_stats.map((item, index) => {
-
-                        return (
-
-                            <td className="grid-block card-item" key={index}>
-                                <PlComponentCardFamilyTextButton
-                                    text={item.text}
-                                    type={item.type}
-                                    on_click_component={this.on_click_card_component.bind(this)}
-                                    selected={mode_menu === item.type ? true : false} />
-                            </td>
-
-                        );
-
-                    })
-                }
-
-            </tr>
-
+            <div className="grid-block align-spaced card-row">
+                <div className="grid-block shrink card-item">
+                    <PlComponentCardFamilyTextButton
+                        // text={family_diagnosis}
+                        text={1} // number of diagnosis (length)
+                        type="diagnosis"
+                        on_click_component={this.on_click_card_component.bind(this)}
+                        selected={mode_diagnosis}
+                    />
+                </div>
+                <div className="grid-block shrink card-item">
+                    <PlComponentCardFamilyTextButton
+                        // text={family_mutations}
+                        text={1} // number of mutations (length)
+                        type="mutations"
+                        on_click_component={this.on_click_card_component.bind(this)}
+                        selected={mode_mutations}
+                    />
+                </div>
+                <div className="grid-block shrink card-item">
+                    <PlComponentCardFamilyTextButton
+                        text={icon_statistics}
+                        type="statistics"
+                        on_click_component={this.on_click_card_component.bind(this)}
+                        selected={mode_statistics}
+                    />
+                </div>
+            </div>
         );
-
     }
 
     get_family_id() {
@@ -124,12 +133,6 @@ export class PlComponentCardFamily extends Component {
 
     }
 
-    get_family_diagnostic() {
-
-        return this.refs.family_card_header.refs.family_diagnostic.refs.FormItemInputText.state.input;
-
-    }
-
     get_family_symptoms() {
 
         return this.refs.family_card_header.refs.family_symptoms.refs.FormItemInputText.state.input;
@@ -139,8 +142,7 @@ export class PlComponentCardFamily extends Component {
     render() {
 
         var family = this.props.family;
-        var family_statistics = this.props.family_statistics;
-        
+
         var mode_edit = this.props.mode_edit;
         var mode_menu = this.props.mode_menu;
 
@@ -151,7 +153,7 @@ export class PlComponentCardFamily extends Component {
                     family={family}
                     mode_edit={mode_edit}
                 />
-                {this.render_menu(family, family_statistics, mode_menu)}
+                {this.render_menu(family, mode_menu)}
             </div>
         );
 
