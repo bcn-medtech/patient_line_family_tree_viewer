@@ -11,6 +11,23 @@
 
     }
 
+    .pl_component_sidebar_family_diagnosis{
+        margin-top:20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid $color_main;//rgba(92, 78, 229, 0.57);
+    }
+
+    .pl_component_sidebar_family_mutation{
+        padding-bottom: 20px;
+        border-bottom: 1px solid $color_main;//rgba(92, 78, 229, 0.57);
+        
+        h5{
+            color:$color-normal;
+            margin-top:8px;
+            margin-bottom:3px;
+        }
+    }
+
     .pl_component_sidebar_family_undefined_message {
         padding-bottom: 2px;
     }

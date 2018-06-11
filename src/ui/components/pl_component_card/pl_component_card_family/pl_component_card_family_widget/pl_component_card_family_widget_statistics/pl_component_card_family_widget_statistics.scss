@@ -1,4 +1,6 @@
+@import './../../../../pl_component_button/pl_component_button_icon/pl_component_button_icon.scss';
 @import './../../../pl_component_card_patient/pl_component_card_patient_status/pl_component_card_patient_status.scss';
+@import './../../../pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget_relatives/pl_component_card_patient_widget_relatives.scss';
 
 .pl-component-card-family-widget-statistics{
 
@@ -44,6 +46,11 @@
         .pl-component-card-family-widget-statistics-element{
             padding-left:10px;
             padding-right:15px;
+
+            .pl_component_button_icon{
+                width:fit-content;
+                height:fit-content;
+            }
         }
 
         // td{

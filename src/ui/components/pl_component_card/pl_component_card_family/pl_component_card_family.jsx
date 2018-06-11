@@ -58,42 +58,9 @@ export class PlComponentCardFamily extends Component {
         var mode_mutations = false;
         var mode_statistics = false;
 
-        if ("diagnosis" in family) family_diagnosis = family.diagnosis;
-        if (!isObjectEmpty(family_diagnosis)) {
-            
-            if (isObjectAnArray(family_diagnosis)) {
-
-                family_diagnosis = family_diagnosis.length;
-
-            } else {
-
-                family_diagnosis = 1;
-            }
-            
-        } else {
-            
-            family_diagnosis = 0;
+        if ("diagnosis" in family) family_diagnosis = family.diagnosis.length;
+        if ("mutations" in family) family_mutations = family.mutations.length;
         
-        }
-        
-        if ("mutations" in family) family_mutations = family.mutations;
-        if (!isObjectEmpty(family_mutations)) {
-            
-            if (isObjectAnArray(family_mutations)) {
-
-                family_mutations = family_mutations.length;
-
-            } else {
-
-                family_mutations = 1;
-            }
-            
-        } else {
-            
-            family_mutations = 0;
-        
-        }
-
         if (mode_menu === "diagnosis") {
             mode_diagnosis = true;
         } else if (mode_menu === "mutations") {
@@ -102,7 +69,6 @@ export class PlComponentCardFamily extends Component {
             mode_statistics = true;
         }
 
-        // TODO: find icon
         var icon_statistics =
             <svg width='25' height='25' viewBox='0 0 24 24' fillRule='evenodd'>
                 <path d='M0 0v24h24V0H0zm22.1 7l-7.2 8.9-9.2-3.8c-.2-.1-.4 0-.6.1L1 16.6V7h21.1zm.9 16H1v-4.9l4.6-5 9.2 3.8c.2.1.4 0 .6-.1L23 7.5V23zm0-17H1V1h22v5z'>
@@ -141,25 +107,25 @@ export class PlComponentCardFamily extends Component {
 
     get_family_id() {
 
-        return this.refs.family_card_header.refs.family_id.refs.FormItemInputText.state.input;
+        return this.refs.family_card_header.refs.family_id.refs.FormItemInputText.state.input.trim();
 
     }
 
     get_family_name() {
 
-        return this.refs.family_card_header.refs.family_name.refs.FormItemInputText.state.input;
+        return this.refs.family_card_header.refs.family_name.refs.FormItemInputText.state.input.trim();
 
     }
 
     get_family_description() {
 
-        return this.refs.family_card_header.refs.family_description.refs.FormItemInputText.state.input;
+        return this.refs.family_card_header.refs.family_description.refs.FormItemInputText.state.input.trim();
 
     }
 
     get_family_symptoms() {
 
-        return this.refs.family_card_header.refs.family_symptoms.refs.FormItemInputText.state.input;
+        return this.refs.family_card_header.refs.family_symptoms.refs.FormItemInputText.state.input.trim();
 
     }
 

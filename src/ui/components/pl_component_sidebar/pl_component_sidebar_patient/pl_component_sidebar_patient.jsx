@@ -60,6 +60,12 @@ export class PlComponentSidebarPatient extends Component {
         }
     }
 
+    get_patient_comments() {
+
+        return this.refs.patient_comments.refs.FormItemInputText.state.input.trim();
+
+    }
+
     on_set_mode_menu(mode) {
 
         if (this.state.mode_menu === mode) {
@@ -106,15 +112,16 @@ export class PlComponentSidebarPatient extends Component {
             updated_patient = update_patient_from_table(patient, edited_table);
 
             // "text_field_editable"
-            var edited_name = this.refs.patient_card.get_patient_name();
-            var edited_id = this.refs.patient_card.get_patient_id();
-            var edited_comments = this.refs.patient_comments.refs.FormItemInputText.state.input;
+            var edited_inputs = {};
+            edited_inputs["name"] = this.refs.patient_card.get_patient_name();
+            edited_inputs["id"] = this.refs.patient_card.get_patient_id();
+            edited_inputs["comments"] = this.get_patient_comments();
 
             var children = this.props.children;
             var father = this.props.father;
             var mother = this.props.mother;
 
-            var new_data = update_patient_from_text_field_editable(edited_name, edited_id, edited_comments, patient.id, updated_patient, children, father, mother);
+            var new_data = update_patient_from_text_field_editable(edited_inputs, patient.id, updated_patient, children, father, mother);
 
             // the changes in "table" and "text_field_editable" are saved
             if ("patient_to_update" in new_data) updated_patient = new_data.patient_to_update;

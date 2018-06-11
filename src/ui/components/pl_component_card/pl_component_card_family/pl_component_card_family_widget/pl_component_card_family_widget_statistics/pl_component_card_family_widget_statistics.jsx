@@ -25,6 +25,7 @@
 import React, { Component } from 'react';
 
 //components
+import { PlComponentButtonIcon } from "./../../../../pl_component_button/pl_component_button_icon/pl_component_button_icon";
 import { PlComponentCardPatientStatus } from './../../../pl_component_card_patient/pl_component_card_patient_status/pl_component_card_patient_status';
 import { PlComponentCardPatientWidgetRelatives } from './../../../pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget_relatives/pl_component_card_patient_widget_relatives';
 //modules
@@ -95,15 +96,16 @@ export class PlComponentCardFamilyWidgetStatistics extends Component {
                 var counter_females = stat["counter_females"];
 
                 var chevron_down =
-                    <svg width="15" height="15" viewBox="0 0 12 7" fill="#5C4EE5">
+                    <svg width="15" height="15" viewBox="0 0 12 7">
                         <path d="M6.002 5.55L11.27 0l.726.685L6.003 7 0 .685.726 0z"></path>
                     </svg>
 
 
                 var chevron_up =
-                    <svg width="15" height="15" viewBox="0 0 12 7" fill="#5C4EE5">
+                    <svg width="15" height="15" viewBox="0 0 12 7">
                         <path d="M5.994 1.45L.726 7 0 6.315 5.994 0l6.002 6.315L11.27 7z"></path>
                     </svg>
+
 
                 var row_content;
                 var style;
@@ -161,9 +163,16 @@ export class PlComponentCardFamilyWidgetStatistics extends Component {
                     <div className="grid-block shrink text">{counter}</div>
                 </td>
                 <td className="grid-block align-right pl-component-card-family-widget-statistics-element">
-                    <a onClick={this.open_close_row_content.bind(this, index)}>
-                        {icon_button}
-                    </a>
+                    <PlComponentButtonIcon
+                        icon={icon_button}
+                        backgroundcolor={"transparent"}
+                        backgroundhovercolor={"transparent"}
+                        fontcolor={"#5C4EE5"}
+                        fonthovercolor={"#8c83ea"}
+                        bordercolor={"transparent"}
+                        borderhovercolor={"transparent"}
+                        onclickelement={this.open_close_row_content.bind(this, index)}
+                    />
                 </td>
             </tr>
         );

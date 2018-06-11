@@ -7,6 +7,7 @@ import { PlComponentSidebarPatient } from './pl_component_sidebar_patient/pl_com
 
 //modules
 import { isObjectAFunction, isObjectEmpty } from './../../../modules/rkt_module_object';
+import { format_date } from '../../../modules/rkt_module_date';
 
 export class PlComponentSidebar extends Component {
 
@@ -91,6 +92,8 @@ export class PlComponentSidebar extends Component {
         if (isObjectAFunction(this.props.export_patient)) {
 
             var patient = this.props.patient;
+            if ("dob" in patient) patient["dob"] = format_date(patient["dob"]);
+            
             this.props.export_patient(patient);
 
         }

@@ -21,8 +21,7 @@ export class PlComponentFamilyTreeViewer extends Component {
             var height = el.clientHeight;
             var width = el.clientWidth;
             var size = { width: width, height: height };
-
-            //console.log(root);
+            
             this.d3TreeCreator.create(el,size,root,siblings,patient_id,this.set_patient.bind(this));
         }
     }

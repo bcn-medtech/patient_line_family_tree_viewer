@@ -49,20 +49,22 @@ export function update_patient_from_table(patient, edited_table) {
 
 }
 
-export function update_patient_from_text_field_editable(edited_name, edited_id, edited_comments, original_id, patient, children, father, mother) {
-
+export function update_patient_from_text_field_editable(edited_inputs, original_id, patient, children, father, mother){
+    
     var new_data;
-    patient.name = edited_name;
-    if (edited_comments !== "There are not comments defined yet") patient.comments = edited_comments;
+    
+    patient.name = edited_inputs["name"];
+    if (edited_inputs["comments"] !== "There are not comments defined yet") patient.comments = edited_inputs["comments"];
 
-    if (original_id === edited_id) {
+
+    if (original_id === edited_inputs["id"]) {
 
         patient.id = original_id;
         new_data = patient;
 
-    } else if (original_id !== edited_id) {
+    } else if (original_id !== edited_inputs["id"]) {
 
-        patient.id = edited_id;
+        patient.id = edited_inputs["id"];
         new_data = { "patient_to_update": patient };
 
         // if we change the patient's id, we have to take into account their parents, children and couple info:
@@ -73,7 +75,7 @@ export function update_patient_from_text_field_editable(edited_name, edited_id, 
 
             var father_children = map(father.children, function(child_id){
                
-                if (child_id === original_id) return edited_id;
+                if (child_id === original_id) return edited_inputs["id"];
                 else return child_id;
                 
             });
@@ -88,7 +90,7 @@ export function update_patient_from_text_field_editable(edited_name, edited_id, 
 
             var mother_children = map(mother.children, function(child_id){
                
-                if (child_id === original_id) return edited_id;
+                if (child_id === original_id) return edited_inputs["id"];
                 else return child_id;
                 
             });
@@ -101,7 +103,7 @@ export function update_patient_from_text_field_editable(edited_name, edited_id, 
         // children
         if (!isObjectEmpty(children)) {
 
-            var updated_children = update_children_of_patient(original_id, edited_id, children);
+            var updated_children = update_children_of_patient(original_id, edited_inputs["id"], children);
             
             map(updated_children, function (child) {
                 relatives_to_update.push(child);

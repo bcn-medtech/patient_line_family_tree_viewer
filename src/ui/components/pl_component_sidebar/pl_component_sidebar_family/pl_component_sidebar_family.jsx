@@ -24,7 +24,7 @@
 
 import React, { Component } from 'react';
 //modules
-import { isObjectAFunction, isObjectEmpty } from "./../../../../modules/rkt_module_object";
+import { isObjectAFunction, isObjectAnArray, isObjectEmpty } from "./../../../../modules/rkt_module_object";
 //components
 import { PlComponentButtonRect } from "./../../pl_component_button/pl_component_button_rect/pl_component_button_rect";
 import { PlComponentCardFamily } from "./../../pl_component_card/pl_component_card_family/pl_component_card_family";
@@ -36,7 +36,7 @@ import { PlComponentTextFieldEditable } from "./../../pl_component_text_field_ed
 //actions
 import { update_family_from_text_field_editable } from './pl_component_sidebar_family_actions';
 
-import { keys } from "underscore";
+import { keys, map } from "underscore";
 
 import family_diagnosis_suggestions_json from './../../pl_component_card/pl_component_card_family/pl_component_card_family_jsons/pl_component_card_family_diagnosis_suggestions.json';
 import family_genes_suggestions_json from './../../pl_component_card/pl_component_card_family/pl_component_card_family_jsons/pl_component_card_family_genes_suggestions.json';
@@ -48,10 +48,64 @@ export class PlComponentSidebarFamily extends Component {
         super();
 
         this.state = {
-            mode_menu: false,
+            mode_menu: "statistics",
             mode_edit: false,
             to_remove_family: false
         }
+    }
+
+    get_family_diagnosis() {
+
+        var diagnosis = [];
+
+        if ("family_diagnosis_0" in this.refs) {
+
+            var diagnosis_0 = this.refs.family_diagnosis_0.refs.FormItemInputText.state.input;
+            if (!isObjectEmpty(diagnosis_0) && diagnosis_0 !== "Write a diagnosis") diagnosis.push(diagnosis_0.trim());
+
+        }
+
+        if ("family_diagnosis_1" in this.refs) {
+
+            var diagnosis_1 = this.refs.family_diagnosis_1.refs.FormItemInputText.state.input;
+            if (!isObjectEmpty(diagnosis_1) && diagnosis_1 !== "Write a diagnosis") diagnosis.push(diagnosis_1.trim());
+
+        }
+
+        return diagnosis;
+
+    }
+
+    get_family_mutations() {
+
+        var mutations = [];
+
+        if ("family_genes_0" && "family_mutations_0" in this.refs) {
+
+            var gene_0 = this.refs.family_genes_0.refs.FormItemInputText.state.input.trim();
+            var mutation_0 = this.refs.family_mutations_0.refs.FormItemInputText.state.input.trim();
+            
+            if ((!isObjectEmpty(gene_0) && (gene_0 !== "Specify a gene")) && 
+                (!isObjectEmpty(mutation_0) && (mutation_0 !== "Specify a mutation"))) {
+                    mutations.push(gene_0.trim() + " + " + mutation_0.trim());
+            }
+
+        }
+
+        if ("family_genes_1" && "family_mutations_1" in this.refs) {
+
+            var gene_1 = this.refs.family_genes_1.refs.FormItemInputText.state.input.trim();
+            var mutation_1 = this.refs.family_mutations_1.refs.FormItemInputText.state.input.trim();
+            
+            if ((!isObjectEmpty(gene_1) && (gene_1 !== "Specify a gene")) && 
+                (!isObjectEmpty(mutation_1) && (mutation_1 !== "Specify a mutation"))) {
+                    mutations.push(gene_1.trim() + " + " + mutation_1.trim());
+            }
+
+        }
+
+        return mutations;
+
     }
 
     on_set_mode_menu(mode) {
@@ -85,15 +139,15 @@ export class PlComponentSidebarFamily extends Component {
             }
 
             // "text_field_editable"
-            var edited_name = this.refs.family_card.get_family_name();
-            var edited_id = this.refs.family_card.get_family_id();
-            var edited_description = this.refs.family_card.get_family_description();
-            var edited_symptoms = this.refs.family_card.get_family_symptoms();
-            var edited_diagnosis = this.refs.family_diagnosis.refs.FormItemInputText.state.input;
-            var edited_genes = this.refs.family_genes.refs.FormItemInputText.state.input;
-            var edited_mutations = this.refs.family_mutations.refs.FormItemInputText.state.input;
+            var edited_inputs = {};
+            edited_inputs["name"] = this.refs.family_card.get_family_name();
+            edited_inputs["id"] = this.refs.family_card.get_family_id();
+            edited_inputs["description"] = this.refs.family_card.get_family_description();
+            edited_inputs["symptoms"] = this.refs.family_card.get_family_symptoms();
+            edited_inputs["diagnosis"] = this.get_family_diagnosis();
+            edited_inputs["mutations"] = this.get_family_mutations();
 
-            var new_data = update_family_from_text_field_editable(edited_name, edited_id, family.id, edited_description, edited_symptoms, edited_diagnosis, edited_genes, edited_mutations, updated_family);
+            var new_data = update_family_from_text_field_editable(edited_inputs, family.id, updated_family);
 
             // the changes in "table" and "text_field_editable" are saved
             if ("family_to_update" in new_data) updated_family = new_data.family_to_update;
@@ -179,39 +233,56 @@ export class PlComponentSidebarFamily extends Component {
 
         if (!isObjectEmpty(diagnosis)) {
 
-            widget_content =
+            if ((diagnosis.length === 1) && (mode_edit)) diagnosis.push("Diagnosis");
 
-                <PlComponentTextFieldEditable
-                    text={diagnosis}
-                    isEditionMode={mode_edit ? true : false}
-                    isSearchBox={true}
-                    suggestions={family_diagnosis_suggestions_json}
-                    ref="family_diagnosis"
-                />
+            widget_content =
+                map(diagnosis, (item, index) => {
+                    return (
+                        <div className="grid-block vertical shrink pl_component_sidebar_family_diagnosis" key={"mutation_" + index} >
+                            <PlComponentTextFieldEditable
+                                text={item}
+                                isEditionMode={mode_edit ? true : false}
+                                isSearchBox={true}
+                                suggestions={family_diagnosis_suggestions_json}
+                                ref={"family_diagnosis_" + index}
+                            />
+                        </div>
+                    );
+
+                })
 
         } else {
 
             var message;
             if (!mode_edit) {
 
-                message = "There are not diagnosis defined yet";
+                message = "There are not any diagnosis defined yet";
 
             } else {
 
                 message =
-                    <PlComponentTextFieldEditable
-                        text={"There are not diagnosis defined yet"}
-                        isEditionMode={mode_edit ? true : false}
-                        isSearchBox={true}
-                        suggestions={family_diagnosis_suggestions_json}
-                        ref="family_diagnosis"
-                    />
+                    map(["Write a diagnosis", "Write a diagnosis"], (item, index) => {
+                        return (
+                            <div className="grid-block vertical shrink pl_component_sidebar_family_diagnosis" key={"mutation_" + index}>
+                            
+                                <PlComponentTextFieldEditable
+                                    key={index}
+                                    text={item}
+                                    isEditionMode={mode_edit ? true : false}
+                                    isSearchBox={true}
+                                    suggestions={family_diagnosis_suggestions_json}
+                                    ref={"family_diagnosis_" + index}
+                                />
+                            </div>
+                        );
+
+                    })
 
             }
 
             widget_content =
 
-                <div className="grid-block pl_component_sidebar_family_undefined_message">
+                <div className="grid-block vertical pl_component_sidebar_family_undefined_message">
                     {message}
                 </div>
 
@@ -230,30 +301,40 @@ export class PlComponentSidebarFamily extends Component {
         );
     }
 
-    render_widget_family_mutations(genes, mutations, mode_menu, mode_edit) {
+    render_widget_family_mutations(mutations, mode_menu, mode_edit) {
 
         var widget_content;
 
         if (!isObjectEmpty(mutations)) {
 
-            widget_content =
-                <div className="grid-block vertical">
-                    <div className="grid-block">
-                        <PlComponentTextFieldEditable
-                            text={genes}
-                            isEditionMode={mode_edit ? true : false}
-                            isSearchBox={true}
-                            suggestions={family_genes_suggestions_json}
-                            ref="family_genes" />
+            if ((mutations.length === 1) && (mode_edit)) mutations.push("Specify a gene + Specify a mutation");
 
-                    </div>
-                    <div className="grid-block">
-                        <PlComponentTextFieldEditable
-                            text={mutations}
-                            isEditionMode={mode_edit ? true : false}
-                            ref="family_mutations" />
-                    </div>
-                </div>
+            widget_content =
+                map(mutations, (mutation, index) => {
+                    
+                    var mutation_elements = mutation.split("+");
+                    var gene = mutation_elements[0].trim();
+                    var mutation = mutation_elements[1].trim();
+
+                    return (
+                        <div className="grid-block vertical shrink pl_component_sidebar_family_mutation" key={"mutation_" + index}>
+                            <h5>{"Gene"}</h5>
+                            <PlComponentTextFieldEditable
+                                text={gene}
+                                isEditionMode={mode_edit ? true : false}
+                                isSearchBox={true}
+                                suggestions={family_genes_suggestions_json}
+                                ref={"family_genes_" + index} />
+
+                            <h5>{"Mutation"}</h5>
+                            <PlComponentTextFieldEditable
+                                text={mutation}
+                                isEditionMode={mode_edit ? true : false}
+                                ref={"family_mutations_" + index} />
+                        </div>
+                    );
+
+                })
 
 
         } else {
@@ -261,34 +342,42 @@ export class PlComponentSidebarFamily extends Component {
             var message;
             if (!mode_edit) {
 
-                message = "There are not mutations defined yet";
+                message = "There are not any mutations defined yet";
 
             } else {
 
                 message =
-                <div className="grid-block vertical">
-                    <div className="grid-block">
-                        <PlComponentTextFieldEditable
-                            text={"There are not genes defined yet"}
-                            isEditionMode={mode_edit ? true : false}
-                            isSearchBox={true}
-                            suggestions={family_genes_suggestions_json}
-                            ref="family_genes" />
+                    map(["Specify a gene + Specify a mutation", "Specify a gene + Specify a mutation"], (mutation, index) => {
+                        
+                        var mutation_elements = mutation.split("+");
+                        var gene = mutation_elements[0].trim();
+                        var mutation = mutation_elements[1].trim();
 
-                    </div>
-                    <div className="grid-block">
-                        <PlComponentTextFieldEditable
-                            text={"There are not mutations defined yet"}
-                            isEditionMode={mode_edit ? true : false}
-                            ref="family_mutations" />
-                    </div>
-                </div>
+                        return (
+                            <div className="grid-block vertical shrink pl_component_sidebar_family_mutation" key={"mutation_" + index}>
+                                <h5>{"Gene"}</h5>
+                                <PlComponentTextFieldEditable
+                                    text={gene}
+                                    isEditionMode={mode_edit ? true : false}
+                                    isSearchBox={true}
+                                    suggestions={family_genes_suggestions_json}
+                                    ref={"family_genes_" + index} />
+
+                                <h5>{"Mutation"}</h5>
+                                <PlComponentTextFieldEditable
+                                    text={mutation}
+                                    isEditionMode={mode_edit ? true : false}
+                                    ref={"family_mutations_" + index} />
+                            </div>
+                        );
+
+                    })
 
             }
 
             widget_content =
 
-                <div className="grid-block pl_component_sidebar_family_undefined_message">
+                <div className="grid-block vertical pl_component_sidebar_family_undefined_message">
                     {message}
                 </div>
 
@@ -342,7 +431,6 @@ export class PlComponentSidebarFamily extends Component {
         var family_statistics = this.props.family_statistics;
         var family_diagnosis = family.diagnosis;
         var family_mutations = family.mutations;
-        var family_genes = family.genes;
 
         var mode_menu = this.state.mode_menu;
         var mode_edit = this.props.mode_edit;
@@ -383,7 +471,7 @@ export class PlComponentSidebarFamily extends Component {
                     <div className="grid-block shrink">
                         {widget}
                         {this.render_widget_family_diagnosis(family_diagnosis, mode_menu, mode_edit)}
-                        {this.render_widget_family_mutations(family_genes, family_mutations, mode_menu, mode_edit)}
+                        {this.render_widget_family_mutations(family_mutations, mode_menu, mode_edit)}
                     </div>
                 </div>
                 {this.render_edit_family_button(mode_edit)}

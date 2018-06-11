@@ -152,13 +152,8 @@ export function exploreChildrenTree(couplesArray, dataJson) {
                
         children = couple;
 
-        //console.log(children);
     }
-
-   
-
-    //console.log(children);
-
+    
     return children;
 }
 

@@ -45,6 +45,7 @@ import {
 } from './pl_page_viewer_actions/pl_page_viewer_actions_database/pl_page_viewer_actions_database_update';
 
 //modules
+import { format_date } from '../../../modules/rkt_module_date';
 import { isObjectEmpty, isObjectAnArray } from '../../../modules/rkt_module_object';
 
 //actions
@@ -80,6 +81,7 @@ export function get_data(patient_id, relatives, callback) {
                                 if (!isObjectEmpty(patient_id)) {
 
                                     var patient = findWhere(patients, { id: patient_id });
+                                    if ("dob" in patient) patient["dob"] = format_date(patient["dob"]); 
 
                                     if (!isObjectEmpty(patient)) {
 
@@ -252,6 +254,7 @@ export function perform_database_action(data, callback) {
 export function format_patient_to_export(patient) {
 
     var patient_to_export = omit(patient, "depth", "parent", "no_parent", "num_relatives", "relation", "x", "y");
+    if ("dob" in patient_to_export) patient_to_export["dob"] = format_date(patient_to_export["dob"]);
     return patient_to_export;
 
 }

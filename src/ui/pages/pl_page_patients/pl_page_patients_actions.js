@@ -19,8 +19,11 @@ import {
 } from './../../../database/database';
 
 import { initialize_family, initialize_patient } from './../../../modules/rkt_module_database';
+import { format_date } from '../../../modules/rkt_module_date';
+import { isObjectAnArray, isObjectEmpty } from '../../../modules/rkt_module_object';
 import { create_random_string } from './../../../modules/rkt_module_string';
-import { isObjectEmpty } from '../../../modules/rkt_module_object';
+
+import { map } from "underscore";
 
 function import_families_in_database(worbook_json_map, callback) {
 
@@ -98,7 +101,7 @@ export function import_data_to_app(file, callback) {
             var worbook_json_map = convertCSVMapInJSONMap(worbook_csv_map);
             var worbook_json_map_with_patients = manipulate_family_data_to_righ_format(worbook_json_map);
             var worbook_json_map_with_patients_with_children = set_patients_children(worbook_json_map_with_patients);
-
+            
             import_families_in_database(worbook_json_map_with_patients_with_children, function (result) {
 
                 import_patients_in_database(worbook_json_map_with_patients_with_children, function (result) {
@@ -119,6 +122,27 @@ export function import_data_to_app(file, callback) {
 export function export_data() {
 
     get_data_from_database(function (data) {
+
+        data["families"] = map(data["families"], function(family){
+            
+            if ("diagnosis" in family && isObjectAnArray(family["diagnosis"])) {
+                family["diagnosis"] = family["diagnosis"].join();
+            }
+            if ("mutations" in family && isObjectAnArray(family["mutations"])) {
+                family["mutations"] = family["mutations"].join();
+            }
+
+            return family;
+        });
+
+        data["patients"] = map(data["patients"], function(patient){
+            
+            if ("dob" in patient) {
+                patient["dob"] = format_date(patient["dob"]);
+            }
+
+            return patient;
+        });
 
         writeAndExportXlsxWoorkbook(data);
 
