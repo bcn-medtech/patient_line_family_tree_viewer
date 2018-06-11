@@ -7,6 +7,7 @@
 
     tr, td{
         width:100%;
+        overflow:hidden;
         align-items: center;
     }
 
@@ -66,7 +67,8 @@
             background-color: $rkt-viewer-background-color;
 
             tr{
-                border-bottom: 0px;
+                //border-bottom: //0px;
+                border-bottom:1px solid rgba(92, 78, 229, 0.57);
                 background-color: transparent;
             }
 

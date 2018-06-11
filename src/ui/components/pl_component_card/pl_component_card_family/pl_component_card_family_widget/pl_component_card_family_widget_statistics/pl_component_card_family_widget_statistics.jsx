@@ -48,7 +48,7 @@ export class PlComponentCardFamilyWidgetStatistics extends Component {
     }
 
     open_close_row_content(index) {
-        
+
         if ((this.state.index_item_to_open !== false) && (this.state.index_item_to_open === index)) {
 
             index = false; // to close when clicking an opened item
@@ -88,19 +88,36 @@ export class PlComponentCardFamilyWidgetStatistics extends Component {
         return (
 
             sorted_statistics.map((stat, index) => {
-                
+
                 var phenotype = stat["phenotype"];
                 var counter = stat["counter"];
                 var counter_males = stat["counter_males"];
                 var counter_females = stat["counter_females"];
 
+                var chevron_down =
+                    <svg width="15" height="15" viewBox="0 0 12 7" fill="#5C4EE5">
+                        <path d="M6.002 5.55L11.27 0l.726.685L6.003 7 0 .685.726 0z"></path>
+                    </svg>
+
+
+                var chevron_up =
+                    <svg width="15" height="15" viewBox="0 0 12 7" fill="#5C4EE5">
+                        <path d="M5.994 1.45L.726 7 0 6.315 5.994 0l6.002 6.315L11.27 7z"></path>
+                    </svg>
+
                 var row_content;
                 var style;
+                var icon_button;
                 if ((index_item_to_open !== false) && (index_item_to_open === index)) {
 
                     var relatives = stat["relatives"];
                     row_content = this.render_row_content(relatives);
-                    style={"backgroundColor":"#00000047"};
+                    style = { "backgroundColor": "#00000047" };
+                    icon_button = chevron_up;
+
+                } else {
+
+                    icon_button = chevron_down;
 
                 }
 
@@ -109,7 +126,7 @@ export class PlComponentCardFamilyWidgetStatistics extends Component {
                         <td className="grid-block">
                             <table className="grid-block vertical">
                                 <tbody className="grid-block vertical">
-                                    {this.render_row(phenotype, counter, counter_males, counter_females, index)}
+                                    {this.render_row(phenotype, counter, counter_males, counter_females, icon_button, index)}
                                     {row_content}
                                 </tbody>
                             </table>
@@ -123,10 +140,10 @@ export class PlComponentCardFamilyWidgetStatistics extends Component {
 
     }
 
-    render_row(phenotype, counter, counter_males, counter_females, index) {
+    render_row(phenotype, counter, counter_males, counter_females, icon_button, index) {
 
         return (
-            <tr className="grid-block shrink" onClick={this.open_close_row_content.bind(this, index)}>
+            <tr className="grid-block shrink">
                 <td className="grid-block pl-component-card-family-widget-statistics-element">
                     <div className="grid-block vertical shrink centered">
                         <PlComponentCardPatientStatus phenotype={phenotype} gender={"male"} />
@@ -143,7 +160,11 @@ export class PlComponentCardFamilyWidgetStatistics extends Component {
                 <td className="grid-block vertical pl-component-card-family-widget-statistics-element">
                     <div className="grid-block shrink text">{counter}</div>
                 </td>
-
+                <td className="grid-block align-right pl-component-card-family-widget-statistics-element">
+                    <a onClick={this.open_close_row_content.bind(this, index)}>
+                        {icon_button}
+                    </a>
+                </td>
             </tr>
         );
 
@@ -155,7 +176,7 @@ export class PlComponentCardFamilyWidgetStatistics extends Component {
 
             <tr className="pl-component-card-family-widget-statistics-item-content">
                 <td className="grid-block">
-                    <PlComponentCardPatientWidgetRelatives relatives={relatives} toDisplayCurrentPatient={true}/>
+                    <PlComponentCardPatientWidgetRelatives relatives={relatives} toDisplayCurrentPatient={true} />
                 </td>
             </tr>
 
@@ -168,9 +189,9 @@ export class PlComponentCardFamilyWidgetStatistics extends Component {
         var family_statistics = this.props.family_statistics;
 
         return (
-            <a className="grid-block pl-component-card-family-widget-statistics">
+            <div className="grid-block pl-component-card-family-widget-statistics">
                 {this.render_card_family_widget_statistics(family_statistics)}
-            </a>
+            </div>
         );
 
     }

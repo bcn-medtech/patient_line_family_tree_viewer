@@ -53,9 +53,9 @@ export class PlComponentSidebarPatient extends Component {
             mode_menu: "relatives",
             mode_edit: false,
             family_default_columns: ["id", "name", "description", "num_family_members"],
-            patient_default_columns: ["center", "nhc", "mutations", "diagnosis"],
+            patient_default_columns: ["center", "nhc", "mutations", "diagnosis", "symptoms"],
             family_columns_selected: ["id", "name", "description", "num_family_members"],
-            patient_columns_selected: ["center", "nhc", "mutations", "diagnosis"],
+            patient_columns_selected: ["center", "nhc", "mutations", "diagnosis", "symptoms"],
             to_remove_patient: false
         }
     }
@@ -252,7 +252,7 @@ export class PlComponentSidebarPatient extends Component {
 
     render_widget_patient_data(patient, data_tags_selected, mode_menu, mode_edit) {
 
-        var data_tags = omit(patient, "children", "depth", "gender", "father", "id", "mother", "name", "num_relatives", "parent", "relation", "genotype", "phenotype", "x", "y");
+        var data_tags = omit(patient, "children", "comments", "depth", "gender", "father", "id", "mother", "name", "num_relatives", "parent", "relation", "genotype", "phenotype", "x", "y");
         data_tags = [data_tags];
 
         var table_mode;

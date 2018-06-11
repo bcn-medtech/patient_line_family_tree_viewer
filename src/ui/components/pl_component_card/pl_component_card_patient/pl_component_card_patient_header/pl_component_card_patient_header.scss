@@ -28,22 +28,5 @@
             width:unset;
         }
     }
-
-    .pl_component_text_field_editable{
-        
-        .pl_component_form_item_input_text{
-            background-color: $color_shadow_3;
-
-            form{
-                input[type=text] {
-                    color:$color-normal-2;
-                }
-            }
-
-            &:hover{
-                border-left:5px solid $color-normal-5;
-            }
-        }
-
-    }
+    
 }
