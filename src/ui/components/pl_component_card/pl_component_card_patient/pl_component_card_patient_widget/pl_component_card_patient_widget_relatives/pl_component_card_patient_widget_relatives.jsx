@@ -30,17 +30,29 @@ import { PlComponentCardPatientStatus } from './../../pl_component_card_patient_
 //actions
 import { sort_relatives_by_dob } from './pl_component_card_patient_widget_relatives_actions';
 
-import { filter } from "underscore";
+import { filter, map } from "underscore";
 
 export class PlComponentCardPatientWidgetRelatives extends Component {
 
-    render_card_patient_widget_relatives(relatives) {
+    render_card_patient_widget_relatives(relatives, toDisplayCurrentPatient) {
 
-        if (!isObjectEmpty(relatives)) {
+        if (!isObjectEmpty(relatives, toDisplayCurrentPatient)) {
 
-            var relatives_to_display = filter(relatives, function(relative) {
-                return relative.relation !== "current patient";
-            });
+            var relatives_to_display;
+            if (!toDisplayCurrentPatient) {
+
+                var relatives_to_display = filter(relatives, function(relative) {
+                    return relative.relation !== "current patient";
+                });
+
+            } else {
+
+                var relatives_to_display = map(relatives, function(relative) {
+                    return relative;
+                });
+
+            }
+            
 
             return (
                 <table className="grid-block vertical">
@@ -121,10 +133,11 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
     render() {
 
         var relatives = this.props.relatives;
+        var toDisplayCurrentPatient = this.props.toDisplayCurrentPatient;
 
         return (
             <div className="grid-block pl-component-card-patient-widget-relatives">
-                {this.render_card_patient_widget_relatives(relatives)}
+                {this.render_card_patient_widget_relatives(relatives, toDisplayCurrentPatient)}
             </div>
         );
 

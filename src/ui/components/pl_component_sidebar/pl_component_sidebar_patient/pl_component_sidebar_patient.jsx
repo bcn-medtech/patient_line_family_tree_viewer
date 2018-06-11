@@ -366,7 +366,7 @@ export class PlComponentSidebarPatient extends Component {
 
                 if (mode_menu === "relatives") {
 
-                    widget_content = <PlComponentCardPatientWidgetRelatives relatives={relatives} />
+                    widget_content = <PlComponentCardPatientWidgetRelatives relatives={relatives} toDisplayCurrentPatient={false}/>
 
                 } else if (mode_menu === "children") {
 

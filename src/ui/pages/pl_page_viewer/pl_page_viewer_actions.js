@@ -77,14 +77,6 @@ export function get_data(patient_id, relatives, callback) {
 
                         if (data["family"].num_family_members > 0) {
 
-                            get_family_statistics(patient.family_id, function (family_statistics) {
-
-                                if (!isObjectEmpty(family_statistics)) {
-
-                                    data["family_statistics"] = family_statistics;
-
-                                }
-
                                 if (!isObjectEmpty(patient_id)) {
 
                                     var patient = findWhere(patients, { id: patient_id });
@@ -162,9 +154,9 @@ export function get_data(patient_id, relatives, callback) {
 
                                             array_patients_family = get_family_by_patient(patient, result.patients);
                                         }
-
+                                        
                                         label_patient_relatives(patient, array_patients_family);
-
+                                        data["family_statistics"] = get_family_statistics(array_patients_family);
                                         data["root"] = treeBuilder(array_patients_family);
                                         data["relatives"] = array_patients_family;
                                         data["siblings"] = siblingsBuilder(array_patients_family);
@@ -179,9 +171,6 @@ export function get_data(patient_id, relatives, callback) {
 
                                     callback(data);
                                 }
-
-
-                            });
 
                         } else {
                             console.log("error");

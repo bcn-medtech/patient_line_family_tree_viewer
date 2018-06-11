@@ -155,7 +155,7 @@ export class PlComponentCardFamilyWidgetStatistics extends Component {
 
             <tr className="pl-component-card-family-widget-statistics-item-content">
                 <td className="grid-block">
-                    <PlComponentCardPatientWidgetRelatives relatives={relatives} />
+                    <PlComponentCardPatientWidgetRelatives relatives={relatives} toDisplayCurrentPatient={true}/>
                 </td>
             </tr>
 
