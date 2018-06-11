@@ -1,3 +1,4 @@
+import { isObjectEmpty } from "./rkt_module_object";
 
 export function calculate_age(dob) {
     // Input: 'dob' ('date of birth') --> yyyy-dd-mm ('ISO Date')
@@ -17,46 +18,50 @@ export function calculate_age(dob) {
 
 export function format_date(stringDate, desiredDateFormat) {
     // Input: stringDate (dd/mm/yy)
-    var date = new Date(stringDate);
 
+    if (!isObjectEmpty(stringDate)) {
 
-    if (date !== undefined) {
+        var date = new Date(stringDate);
 
-        var today = new Date();
-        var formatted_date, y, m, d;
+        //if (date !== undefined) {
 
-        y = date.getFullYear(); // to avoid the 'year 2000 problem', 'y' has always 4 numbers
-        if (y > today.getFullYear()) y = y - 100;
+            var today = new Date();
+            var formatted_date, y, m, d;
 
-        m = date.getMonth() + 1; // 1-12
-        d = date.getDate(); // 1-31
+            y = date.getFullYear(); // to avoid the 'year 2000 problem', 'y' has always 4 numbers
+            if (y > today.getFullYear()) y = y - 100;
 
-        switch (desiredDateFormat) {
+            m = date.getMonth() + 1; // 1-12
+            d = date.getDate(); // 1-31
 
-            case 'yyyy-mm-dd':
-            case 'ISO':
-            case undefined:
-                formatted_date = y + "-" + m + "-" + d;
-                break;
+            switch (desiredDateFormat) {
 
-            case 'mm/dd/yyyy':
-            case 'Short':
-                formatted_date = m + "/" + d + "/" + y;
-                break;
+                case 'yyyy-mm-dd':
+                case 'ISO':
+                case undefined:
+                    formatted_date = y + "-" + m + "-" + d;
+                    break;
 
-            case 'dd/mm/yyyy':
-                formatted_date = d + "/" + m + "/" + y;
-                break;
+                case 'mm/dd/yyyy':
+                case 'Short':
+                    formatted_date = m + "/" + d + "/" + y;
+                    break;
 
-            default:
-                alert("unidentified date format");
-                formatted_date = date;
-                break;
+                case 'dd/mm/yyyy':
+                    formatted_date = d + "/" + m + "/" + y;
+                    break;
 
-        }
+                default:
+                    alert("unidentified date format");
+                    formatted_date = date;
+                    break;
 
-        return formatted_date;
+            }
 
-    }
+            return formatted_date;
+
+        //}
+
+    } else return "";
 
 }

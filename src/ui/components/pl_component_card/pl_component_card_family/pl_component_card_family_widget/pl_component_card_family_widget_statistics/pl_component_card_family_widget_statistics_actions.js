@@ -1,4 +1,3 @@
-import { format_date } from './../../../../../../modules/rkt_module_date';
 import { isObjectAnArray } from './../../../../../../modules/rkt_module_object';
 import { sortBy } from 'underscore';
 
@@ -18,23 +17,23 @@ export function sort_statistics(statistics) {
 
 export function format_phenotype(phenotype) {
 
-    if (phenotype === "death-from-other-causes") return "Death from other causes";
-    else if (phenotype === "sudden-cardiac-death") return "Sudden cardiac death";
-    else if (phenotype === "ressucitated-scd-or-vf") return "Ressucitated SCD or VF";
-    else if (phenotype === "phenotypic-manifestation") return "Phenotypic manifestation";
-    else if (phenotype === "no-phenotypic-manifestation") return "No phenotypic manifestation";
+    // if (phenotype === "death-from-other-causes") return "Death from other causes";
+    // else if (phenotype === "sudden-cardiac-death") return "Sudden cardiac death";
+    // else if (phenotype === "ressucitated-scd-or-vf") return "Ressucitated SCD or VF";
+    // else if (phenotype === "phenotypic-manifestation") return "Phenotypic manifestation";
+    // else if (phenotype === "no-phenotypic-manifestation") return "No phenotypic manifestation";
 
 
-    // var formatted_phenotypes = {
+    var formatted_phenotypes = {
 
-    //     "death-from-other-causes": "Death from other causes",
-    //     "sudden-cardiac-death": "Sudden cardiac death",
-    //     "ressucitated-scd-or-vf": "Ressucitated SCD or VF",
-    //     "phenotypic-manifestation": "Phenotypic manifestation",
-    //     "no-phenotypic-manifestation": "No phenotypic manifestation"
+        "death-from-other-causes": "Death from other causes",
+        "sudden-cardiac-death": "Sudden cardiac death",
+        "ressucitated-scd-or-vf": "Ressucitated SCD or VF",
+        "phenotypic-manifestation": "Phenotypic manifestation",
+        "no-phenotypic-manifestation": "No phenotypic manifestation"
     
-    // }
+    }
 
-    // return formatted_phenotypes[phenotype];
+    return formatted_phenotypes[phenotype];
 
 }
