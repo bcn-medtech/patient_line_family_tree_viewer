@@ -35,6 +35,7 @@ export function initialize_patient() {
     patient.diagnosis = "";
     patient.diagnosis_status = "";
     patient.probando = "";
+    patient.comments = "";
     patient.children = undefined;
     patient.num_relatives = undefined;
 

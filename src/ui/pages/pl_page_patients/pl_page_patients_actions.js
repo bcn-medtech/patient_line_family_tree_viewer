@@ -23,7 +23,7 @@ import { format_date } from '../../../modules/rkt_module_date';
 import { isObjectAnArray, isObjectEmpty } from '../../../modules/rkt_module_object';
 import { create_random_string } from './../../../modules/rkt_module_string';
 
-import { map } from "underscore";
+import { map, omit, pick } from "underscore";
 
 function import_families_in_database(worbook_json_map, callback) {
 
@@ -123,28 +123,31 @@ export function export_data() {
 
     get_data_from_database(function (data) {
 
-        data["families"] = map(data["families"], function(family){
-            
+        var data_to_export = {"Family":[], "general":[], "clinical values": []};
+
+        data_to_export["Family"] = map(data["families"], function(family){
+
             if ("diagnosis" in family && isObjectAnArray(family["diagnosis"])) {
                 family["diagnosis"] = family["diagnosis"].join();
             }
+
             if ("mutations" in family && isObjectAnArray(family["mutations"])) {
                 family["mutations"] = family["mutations"].join();
             }
 
-            return family;
+            return omit(family, "num_family_members");
         });
 
-        data["patients"] = map(data["patients"], function(patient){
-            
-            if ("dob" in patient) {
-                patient["dob"] = format_date(patient["dob"]);
-            }
+        map(data["patients"], function(patient){
 
-            return patient;
+            if ("dob" in patient) patient["dob"] = format_date(patient["dob"]);
+
+            data_to_export["general"].push(pick(patient, "id", "name", "gender", "father", "mother", "family_id", "center"));
+            data_to_export["clinical values"].push(pick(patient, "id", "nhc", "dob", "mutations", "symptoms", "phenotype", "genotype", "diagnosis_status", "diagnosis", "probando", "comments"));
+
         });
-
-        writeAndExportXlsxWoorkbook(data);
+        
+        writeAndExportXlsxWoorkbook(data_to_export, {"name":"pl_viewer_family_tree_database"});
 
     })
 
@@ -233,7 +236,7 @@ export function perform_database_action(data, browserHistory, callback) {
                     if (data.data.root_patient !== undefined) patient_id = data.data.root_patient.id;
                     else patient_id = undefined;
 
-                     url_to_navigate = '/viewer?family_id=' + family_id + '&patient_id=' + patient_id;
+                    url_to_navigate = '/viewer?family_id=' + family_id + '&patient_id=' + patient_id;
                     browserHistory.push(url_to_navigate)
                 }
 
