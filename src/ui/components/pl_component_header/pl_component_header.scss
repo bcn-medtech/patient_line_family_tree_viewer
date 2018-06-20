@@ -43,4 +43,18 @@
         }
         padding: 5px;
     }
+
+
+    .pl-signin-message{
+        padding-top: 30px;
+        a{
+            width: fit-content;
+            height: fit-content;
+            font-style: bold;
+            //color:$rkt_viewer_patient_line_header_bg_color;
+            &:hover{
+                color:$color-normal-2
+            }
+        }
+    }
 }

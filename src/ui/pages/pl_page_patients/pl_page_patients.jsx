@@ -29,6 +29,7 @@ import PlHeader from './../../components/pl_component_header/pl_component_header
 import { PlComponentDragAndDrop } from './../../components/pl_component_drag_and_drop/pl_component_drag_and_drop';
 import { PlComponentDatabase } from './../../components/pl_component_database/pl_component_database.jsx';
 
+//actions
 import {
   get_data_from_database,
   import_data_to_app,
@@ -41,8 +42,12 @@ import {
 } from './pl_page_patients_data_analisis';
 
 //modules
+// import { initClient } from './../../../modules/rkt_module_google_apis';
 import { isObjectEmpty } from './../../../modules/rkt_module_object';
 
+
+//config
+import config from './../../../config/config.json';
 
 export default class PlPagePatients extends Component {
 
@@ -54,7 +59,56 @@ export default class PlPagePatients extends Component {
       families: [],
       patients: [],
       isModalOpen: false,
+      isUserSignedIn: false
     }
+
+    var initClient = this.initClient.bind(this);
+    window.gapi.load("client:auth2", initClient);
+
+  }
+
+  initClient() {
+    
+    // Initialize the JavaScript client library.
+    var myComponent = this;
+    
+    window.gapi.client.init(
+      config.google.params
+    ).then(function(){
+
+        // Listen for sign-in state changes.
+        window.gapi.auth2.getAuthInstance().isSignedIn.listen(myComponent.updateSigningStatus.bind(myComponent));
+
+        // Handle the initial sign-in state.
+        myComponent.updateSigningStatus(window.gapi.auth2.getAuthInstance().isSignedIn.get(), myComponent);
+
+    });
+
+  }
+
+  updateSigningStatus(isSignedIn) {
+
+      // When signin status changes, this function is called.
+      // If the signin status is changed to signedIn, we make an API call.
+
+      // if (isSignedIn) makeApiCall();
+
+      this.setState({
+        isUserSignedIn: isSignedIn
+      })
+
+  }
+
+  handle_authentication(action) {
+
+    if (action === "sign in") window.gapi.auth2.getAuthInstance().signIn();
+    else if (action === "sign out") window.gapi.auth2.getAuthInstance().signOut();
+
+  }
+
+  on_log_out() {
+
+
   }
 
   setUrl(url) {
@@ -147,9 +201,10 @@ export default class PlPagePatients extends Component {
   render() {
 
     var body;
-
+    
     var families = this.state.families;
     var patients = this.state.patients;
+    var isUserSignedIn = this.state.isUserSignedIn;
     
     if (isObjectEmpty(families)) {
       body = <PlComponentDragAndDrop get_files_from_drag_and_drop={this.import_data.bind(this)} import_template_database={this.import_data.bind(this)} perform_database_action={this.perform_database_action.bind(this)}/>
@@ -164,7 +219,7 @@ export default class PlPagePatients extends Component {
     return (
       <div className="grid-frame pl-page-patients" >
         <div className="grid-block vertical">
-          <PlHeader />
+          <PlHeader isUserSignedIn={isUserSignedIn} handle_authentication={this.handle_authentication.bind(this)}/>
           {body}
         </div>
       </div>

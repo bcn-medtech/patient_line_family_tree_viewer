@@ -20,10 +20,11 @@ import {
 
 import { initialize_family, initialize_patient } from './../../../modules/rkt_module_database';
 import { format_date } from '../../../modules/rkt_module_date';
+import { writeAndExportXlsxWorkbookToDrive } from '../../../modules/rkt_module_google_sheet_api';
 import { isObjectAnArray, isObjectEmpty } from '../../../modules/rkt_module_object';
 import { create_random_string } from './../../../modules/rkt_module_string';
 
-import { map, omit, pick } from "underscore";
+import { map, omit, pick, keys, values } from "underscore";
 
 function import_families_in_database(worbook_json_map, callback) {
 
@@ -50,7 +51,7 @@ function import_families_in_database(worbook_json_map, callback) {
 }
 
 function import_patients_in_database(workbook_json_map, callback) {
-    
+
     var counter = 0;
 
     if ("patients" in workbook_json_map) {
@@ -76,7 +77,7 @@ export function get_data_from_database(callback) {
     var data = {}
 
     patients_get_list(function (result) {
-        
+
         data["patients"] = result;
 
         families_get_list(function (result) {
@@ -101,7 +102,7 @@ export function import_data_to_app(file, callback) {
             var worbook_json_map = convertCSVMapInJSONMap(worbook_csv_map);
             var worbook_json_map_with_patients = manipulate_family_data_to_righ_format(worbook_json_map);
             var worbook_json_map_with_patients_with_children = set_patients_children(worbook_json_map_with_patients);
-            
+
             import_families_in_database(worbook_json_map_with_patients_with_children, function (result) {
 
                 import_patients_in_database(worbook_json_map_with_patients_with_children, function (result) {
@@ -123,9 +124,9 @@ export function export_data() {
 
     get_data_from_database(function (data) {
 
-        var data_to_export = {"Family":[], "general":[], "clinical values": []};
+        var data_to_export = { "Family": [], "general": [], "clinical values": [] };
 
-        data_to_export["Family"] = map(data["families"], function(family){
+        data_to_export["Family"] = map(data["families"], function (family) {
 
             if ("diagnosis" in family && isObjectAnArray(family["diagnosis"])) {
                 family["diagnosis"] = family["diagnosis"].join();
@@ -138,7 +139,7 @@ export function export_data() {
             return omit(family, "num_family_members");
         });
 
-        map(data["patients"], function(patient){
+        map(data["patients"], function (patient) {
 
             if ("dob" in patient) patient["dob"] = format_date(patient["dob"]);
 
@@ -147,7 +148,21 @@ export function export_data() {
 
         });
         
-        writeAndExportXlsxWoorkbook(data_to_export, {"name":"pl_viewer_family_tree_database"});
+        writeAndExportXlsxWoorkbook(data_to_export, { "name": "pl_viewer_family_tree_database" });
+
+        // Google Sheets API
+        // the user must have log in in their Google Account
+        var isUserSignedIn = window.gapi.auth2.getAuthInstance().isSignedIn.get();
+
+        if (!isUserSignedIn) {
+
+            alert("Sign in your Google Account to export the data to your Drive");
+
+        } else {
+
+            writeAndExportXlsxWorkbookToDrive(data_to_export);
+            
+        }
 
     })
 
