@@ -1,30 +1,12 @@
-// modules
-import { isObjectEmpty } from "./rkt_module_object";
-
 import { map, keys, values } from "underscore";
 
-/* global variables */
 var gapi = window.gapi;
-
-/* main functions */
-// reading of spreadsheets
-export function readSpreadsheetFromDrive(id_spreasdsheet, callback) {
-
-    readEntireSpreadsheetFromDrive_API_call(id_spreasdsheet, function (sheets_data) {
-        
-        var parsed_data = parseSheetsData(sheets_data);
-        callback(parsed_data);
-
-    });
-
-}
 
 // writing of spreadsheets
 export function writeAndExportXlsxWorkbookToDrive(data, title) {
     // Input:
     // · data = { "Title_Sheet_1": [{}, ..., {}], ..., "Title_Sheet_N": [{}, ..., {}] }
     // · title = string, title of the new spreadsheet
-    
 
     // necessary info to CREATE a new spreadsheet:
     var spreadsheetBody = {
@@ -66,7 +48,6 @@ export function writeAndExportXlsxWorkbookToDrive(data, title) {
 
     // we CREATE a new spreadsheet
     createSpreadSheet_API_call(spreadsheetBody, function (res) {
-        
         var spreadsheetId = res["result"]["spreadsheetId"];
 
         // we UPDATE the values of the sheets of the new spreadsheet
