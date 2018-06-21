@@ -25,6 +25,9 @@
 import React, { Component } from 'react';
 import { OverflowMenu, OverflowMenuItem } from 'carbon-components-react';
 
+//modules
+import { isObjectEmpty } from './../../../modules/rkt_module_object';
+
 export default class PlHeader extends Component {
 
     constructor(props) {
@@ -41,13 +44,38 @@ export default class PlHeader extends Component {
 
     }*/
 
+    handleAuthenticationClick(action) {
+        
+        this.props.handle_authentication(action);
+        //window.gapi.auth2.getAuthInstance().signIn();
+
+    }
+
+    // handleSignOutClick() {
+
+    //     this.props.on_log_out();
+    //     window.gapi.auth2.getAuthInstance().signOut();
+
+    // }
+
+    render_user_no_authenticated() {
+        return (
+            <div className="grid-block menu-options-label">
+                <a onClick={this.handleAuthenticationClick.bind(this, "sign in")}>
+                    <i className="fi-torso"></i>
+                    Login
+                </a>
+            </div>
+        );
+    }
+
     render_user_authenticated(user_email) {
 
         return (<div className="grid-block">
             <div className="grid-block menu-options-label">Options</div>
             <div className="grid-block menu-options-button">
                 <OverflowMenu className="some-class" floatingMenu>
-                    <OverflowMenuItem onClick={this.onLogout.bind(this)} className="some-class" itemText="Logout" />
+                    <OverflowMenuItem onClick={this.handleAuthenticationClick.bind(this, "sign out")} className="some-class" itemText="Log out" />
                 </OverflowMenu>
             </div>
             <div className="grid-block menu-options-label">{user_email}
@@ -55,15 +83,11 @@ export default class PlHeader extends Component {
         </div>)
     }
 
-    render_user_no_authenticated() {
-        return (<div className="grid-block menu-options-label"> <a href="https://localhost:3000/auth/google"><i className="fi-torso"></i>Login</a> </div>);
-    }
-
     render() {
 
-        /*var user_header;
+        var user_header;
 
-        if (isObjectEmpty(this.props.user_email)) {
+        if (!this.props.isUserSignedIn) {
 
             user_header = this.render_user_no_authenticated(); 
             
@@ -72,7 +96,7 @@ export default class PlHeader extends Component {
 
             user_header = this.render_user_authenticated(this.props.user_email);
 
-        }*/
+        }
 
 
         return (
@@ -95,6 +119,12 @@ export default class PlHeader extends Component {
                         <h4 className="grid-block shrink tittle">Patient line family tree viewer</h4>
                     </div>
                 </div>
+                {/* <div id="sign-in-button" className="grid-block shrink align-center text-center pl-signin-message">
+                    <p>
+                        <a onClick={this.handleSignInClick.bind(this)}>LOG IN</a> 
+                    </p>
+                </div> */}
+                {user_header}
             </div>
         );
     }

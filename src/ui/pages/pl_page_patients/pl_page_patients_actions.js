@@ -20,10 +20,11 @@ import {
 
 import { initialize_family, initialize_patient } from './../../../modules/rkt_module_database';
 import { format_date } from '../../../modules/rkt_module_date';
+import { readSpreadsheetFromDrive, writeAndExportXlsxWorkbookToDrive } from '../../../modules/rkt_module_google_sheet_api';
 import { isObjectAnArray, isObjectEmpty } from '../../../modules/rkt_module_object';
 import { create_random_string } from './../../../modules/rkt_module_string';
 
-import { map } from "underscore";
+import { map, omit, pick, keys, values } from "underscore";
 
 function import_families_in_database(worbook_json_map, callback) {
 
@@ -50,7 +51,7 @@ function import_families_in_database(worbook_json_map, callback) {
 }
 
 function import_patients_in_database(workbook_json_map, callback) {
-    
+
     var counter = 0;
 
     if ("patients" in workbook_json_map) {
@@ -76,7 +77,7 @@ export function get_data_from_database(callback) {
     var data = {}
 
     patients_get_list(function (result) {
-        
+
         data["patients"] = result;
 
         families_get_list(function (result) {
@@ -97,14 +98,14 @@ export function import_data_to_app(file, callback) {
 
         if (result) {
 
-            var worbook_csv_map = convertWorkbookToCSVMap(result);
-            var worbook_json_map = convertCSVMapInJSONMap(worbook_csv_map);
-            var worbook_json_map_with_patients = manipulate_family_data_to_righ_format(worbook_json_map);
-            var worbook_json_map_with_patients_with_children = set_patients_children(worbook_json_map_with_patients);
-            
-            import_families_in_database(worbook_json_map_with_patients_with_children, function (result) {
+            var workbook_csv_map = convertWorkbookToCSVMap(result);
+            var workbook_json_map = convertCSVMapInJSONMap(workbook_csv_map);
+            var workbook_json_map_with_patients = manipulate_family_data_to_righ_format(workbook_json_map);
+            var workbook_json_map_with_patients_with_children = set_patients_children(workbook_json_map_with_patients);
 
-                import_patients_in_database(worbook_json_map_with_patients_with_children, function (result) {
+            import_families_in_database(workbook_json_map_with_patients_with_children, function (result) {
+
+                import_patients_in_database(workbook_json_map_with_patients_with_children, function (result) {
 
                     callback(true);
 
@@ -119,32 +120,89 @@ export function import_data_to_app(file, callback) {
 
 }
 
-export function export_data() {
+export function export_data(callback) {
 
     get_data_from_database(function (data) {
 
-        data["families"] = map(data["families"], function(family){
-            
+        var data_to_export = { "Family": [], "general": [], "clinical values": [] };
+
+        data_to_export["Family"] = map(data["families"], function (family) {
+
             if ("diagnosis" in family && isObjectAnArray(family["diagnosis"])) {
                 family["diagnosis"] = family["diagnosis"].join();
             }
+
             if ("mutations" in family && isObjectAnArray(family["mutations"])) {
                 family["mutations"] = family["mutations"].join();
             }
 
-            return family;
+            return omit(family, "num_family_members");
         });
 
-        data["patients"] = map(data["patients"], function(patient){
-            
-            if ("dob" in patient) {
-                patient["dob"] = format_date(patient["dob"]);
-            }
+        map(data["patients"], function (patient) {
 
-            return patient;
+            if ("dob" in patient) patient["dob"] = format_date(patient["dob"]);
+
+            data_to_export["general"].push(pick(patient, "id", "name", "gender", "father", "mother", "family_id", "center"));
+            data_to_export["clinical values"].push(pick(patient, "id", "nhc", "dob", "mutations", "symptoms", "phenotype", "genotype", "diagnosis_status", "diagnosis", "probando", "comments"));
+
         });
+        
+        writeAndExportXlsxWoorkbook(data_to_export, { "name": "pl_viewer_family_tree_database" });
+        
+        // GOOGLE SHEETS API
 
-        writeAndExportXlsxWoorkbook(data);
+        // the user must have log in in their Google Account
+        var isUserSignedIn = window.gapi.auth2.getAuthInstance().isSignedIn.get();
+
+        if (!isUserSignedIn) {
+
+            alert("Sign in your Google Account to export the data to your Drive");
+
+        } else {
+
+            // EXPORT DATABASE TO GOOGLE SPREADSHEET
+            var today = new Date();
+            var title = "PL Viewer Family Tree DB - " + today.toDateString();
+            writeAndExportXlsxWorkbookToDrive(data_to_export, title);
+
+            // IMPORT GOOGLE SPREADSHEET INTO DATABASE
+            // clear_database(function (result) {
+
+            //     if (result) {
+
+            //         var id_spreadsheet = "1KU3TmH8Be9ePlOsQBwqloQy4YGF28p7cgKHWNhWCy4Y";
+                    
+            //         readSpreadsheetFromDrive(id_spreadsheet, function (exported_data) {
+
+            //             var workbook_json_map = [];
+            //             var names_sheets = keys(exported_data);
+
+            //             for (var i = 0; i < names_sheets.length; i++) {
+
+            //                 var name = names_sheets[i];
+            //                 workbook_json_map[name.toLowerCase()] = exported_data[name];
+
+            //             }
+
+            //             console.log(workbook_json_map);
+                        
+            //             // var workbook_json_map_with_patients = manipulate_family_data_to_righ_format(workbook_json_map);
+            //             // var workbook_json_map_with_patients_with_children = set_patients_children(workbook_json_map_with_patients);
+
+            //             // import_families_in_database(workbook_json_map_with_patients_with_children, function (result) {
+
+            //             //     import_patients_in_database(workbook_json_map_with_patients_with_children, function (result) {
+
+            //                      callback(true);
+
+            //             //     });
+            //             // });
+
+            //         });
+            //     }
+            // });
+        }
 
     })
 
@@ -197,7 +255,9 @@ export function perform_database_action(data, browserHistory, callback) {
 
             } else if (data.action === "export") {
 
-                export_data();
+                export_data(function (result) {
+                    //console.log(result);
+                });
 
             } else if (data.action === "delete_database") {
 
@@ -233,7 +293,7 @@ export function perform_database_action(data, browserHistory, callback) {
                     if (data.data.root_patient !== undefined) patient_id = data.data.root_patient.id;
                     else patient_id = undefined;
 
-                     url_to_navigate = '/viewer?family_id=' + family_id + '&patient_id=' + patient_id;
+                    url_to_navigate = '/viewer?family_id=' + family_id + '&patient_id=' + patient_id;
                     browserHistory.push(url_to_navigate)
                 }
 

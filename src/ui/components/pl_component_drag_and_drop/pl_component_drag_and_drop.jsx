@@ -25,9 +25,7 @@
 import React, { Component } from 'react';
 import { download_resource } from './../../../modules/rkt_module_downloader';
 import { isObjectAFunction, isObjectEmpty } from './../../../modules/rkt_module_object';
-import {
-    blob_getNumberOfFiles,
-} from './../../../modules/rkt_module_blob';
+import { blob_getNumberOfFiles } from './../../../modules/rkt_module_blob';
 import config from './../../../config/config.json';
 
 export class PlComponentDragAndDrop extends Component {
@@ -89,7 +87,7 @@ export class PlComponentDragAndDrop extends Component {
         e.preventDefault();
 
         let blob = e;
-
+        
         if (blob_getNumberOfFiles(blob) === 1) {
 
             var files = blob.dataTransfer.files;
