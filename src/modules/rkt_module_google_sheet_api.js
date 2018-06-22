@@ -1,6 +1,22 @@
 import { map, keys, values } from "underscore";
 
+// modules
+import { isObjectEmpty } from "./rkt_module_object";
+
 var gapi = window.gapi;
+
+/* main functions */
+// reading of spreadsheets
+export function readSpreadsheetFromDrive(id_spreasdsheet, callback) {
+
+    readEntireSpreadsheetFromDrive_API_call(id_spreasdsheet, function (sheets_data) {
+
+        var parsed_data = parseSheetsData(sheets_data);
+        callback(parsed_data);
+
+    });
+
+}
 
 // writing of spreadsheets
 export function writeAndExportXlsxWorkbookToDrive(data, title) {

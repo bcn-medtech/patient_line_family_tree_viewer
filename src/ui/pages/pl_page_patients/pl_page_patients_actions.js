@@ -20,11 +20,7 @@ import {
 
 import { initialize_family, initialize_patient } from './../../../modules/rkt_module_database';
 import { format_date } from '../../../modules/rkt_module_date';
-<<<<<<< HEAD
 import { readSpreadsheetFromDrive, writeAndExportXlsxWorkbookToDrive } from '../../../modules/rkt_module_google_sheet_api';
-=======
-import { writeAndExportXlsxWorkbookToDrive } from '../../../modules/rkt_module_google_sheet_api';
->>>>>>> be3858ee84237c34c2ad8fc2d3559ee067d088e2
 import { isObjectAnArray, isObjectEmpty } from '../../../modules/rkt_module_object';
 import { create_random_string } from './../../../modules/rkt_module_string';
 
