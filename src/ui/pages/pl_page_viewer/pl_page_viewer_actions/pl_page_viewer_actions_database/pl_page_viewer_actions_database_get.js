@@ -655,4 +655,43 @@ export function get_family_statistics(family_members) {
 
 }
 
+export function is_this_child_unique(id_child,id_parent_1,id_parent_2,callback){
+
+    var data={}
+    data["child_unique"]=false;
+    data["child_unique_one_father"]=false;
+
+    get_all_patients_and_all_families(function(result){
+
+        if(!isObjectEmpty(result)){
+
+            var patients = result.patients;
+
+            var children_parent_1 = get_patient_children_by_id_father_or_mother(id_parent_1,patients);
+            var children_parent_2 = get_patient_children_by_id_father_or_mother(id_parent_2,patients);
+
+            if(children_parent_1.length === 1 && children_parent_2.length === 1){
+
+                data["child_unique"]=children_parent_1[0].family_id;
+
+            }else if(children_parent_1.length === 1 || children_parent_2.length === 1){
+
+                if(children_parent_1.length === 1 ){
+
+                    data["child_unique_one_father"]=id_parent_1;
+
+                }else if(children_parent_2.length === 1){
+                    
+                    data["child_unique_one_father"]=id_parent_2;
+
+                }
+            }
+        }
+
+        callback(data);
+    })
+
+
+}
+
 

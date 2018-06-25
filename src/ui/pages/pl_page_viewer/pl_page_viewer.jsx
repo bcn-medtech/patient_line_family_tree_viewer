@@ -65,6 +65,8 @@ export default class PlPageViewer extends Component {
     var myComponent = this;
     var relatives = this.state.relatives;
 
+    //console.log(relatives);
+
     // we update the id of the current patient in array "relatives" with the value "patient_id"
     //relatives = map(relatives, function(relative){
     //  if (relative["relation"] === "current patient") relative.id = patient_id;
@@ -159,6 +161,8 @@ export default class PlPageViewer extends Component {
 
     perform_database_action(data, function (result) {
 
+      console.log(result);
+
       var location = window.location;
 
       if ("href" in location) {
@@ -166,10 +170,27 @@ export default class PlPageViewer extends Component {
         var location_url = location.href;
         var patient_id = url_getParameterByName("patient_id", location_url);
 
-        if ("patient_id" in data) patient_id = data.patient_id;
-        if (patient_id === undefined) patient_id = myComponent.state.root.children[2].id; // family's root
-        myComponent.update_component_state_from_database(patient_id);
 
+        if(result.hasOwnProperty("family_removed")) {
+
+          if(result.family_removed === true){
+            var browserHistory = myComponent.props.history;
+            browserHistory.push("/patients");
+          }
+          
+        }else if(result.hasOwnProperty("patient_id")){
+          
+          patient_id = result.patient_id;
+          myComponent.update_component_state_from_database(patient_id);
+          
+        }else if ("patient_id" in data){
+          patient_id = data.patient_id;
+          //console.log(patient_id);
+          myComponent.update_component_state_from_database(patient_id);
+        }else if (patient_id === undefined){
+          patient_id = myComponent.state.root.children[2].id;// family's root
+          myComponent.update_component_state_from_database(patient_id);
+        } 
         //#TODO do something when family is removed
       }
 

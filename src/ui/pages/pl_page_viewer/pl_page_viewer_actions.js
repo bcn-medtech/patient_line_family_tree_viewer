@@ -31,7 +31,8 @@ import {
     order_family_by_ids,
     label_patient_relatives,
     get_family_by_patient,
-    get_family_statistics
+    get_family_statistics,
+    is_this_child_unique
 } from './pl_page_viewer_actions/pl_page_viewer_actions_database/pl_page_viewer_actions_database_get';
 
 import {
@@ -54,8 +55,7 @@ import {
     siblingsBuilder
 } from './pl_page_viewer_actions/pl_page_viewer_actions_d3_tree/pl_page_viewer_actions_d3_tree_creator';
 
-import { findWhere, omit, pluck } from 'underscore';
-
+import { findWhere,filter,omit, pluck } from 'underscore';
 
 export function get_data(patient_id, relatives, callback) {
 
@@ -73,7 +73,7 @@ export function get_data(patient_id, relatives, callback) {
                     if (family.length > 0) {
 
                         var data = {};
-                        //data["family"] = family[0];
+                   
                         data["family"] = get_family_processed(patients, family[0]);
 
                         if (data["family"].num_family_members > 0) {
@@ -209,9 +209,61 @@ export function perform_database_action(data, callback) {
 
             } else if (data.action === "remove_patient") {
 
-                remove_patient(data, function (result) {
-                    callback(result);
+                //console.log(data);
+                //console.log(data.data);
+
+                is_this_child_unique(data.data.to_remove[0], data.data.to_update[0].id,data.data.to_update[1].id,function(result){
+                    
+                    console.log(result);
+
+                    if(!isObjectEmpty(result)){
+
+                        if(result.child_unique){
+
+                            //Remove all the family of a patient
+                            remove_family(result.child_unique, function (result) {
+                                callback(result);
+                            });
+                            
+                        }else if(result.child_unique_one_father){
+
+                            //Remove one parent and kit
+                            var data_2 = data.data;
+                            data_2.to_remove.push(result.child_unique_one_father);
+                            data_2.to_update = filter(data_2.to_update,function(item){
+                                if(item.id !== result.child_unique_one_father){
+                                    return true;
+                                }
+                            });
+
+                            var next_patient_to_explore;
+
+                            if(data.data.to_update[0].id === result.child_unique_one_father){
+                                next_patient_to_explore = data.data.to_update[1].id;
+                            }else{
+                                next_patient_to_explore = data.data.to_update[0].id;
+                            }
+
+                            remove_patient(data_2, function (result) {
+
+                                callback({"patient_id":next_patient_to_explore});
+                            });
+
+                        }else{
+
+                            //remove child
+
+                            var next_patient_to_explore = data.data.to_update[0].id;
+
+                            remove_patient(data.data, function (result) {
+                                
+                                callback({"patient_id":next_patient_to_explore});
+                            });
+                        }
+                    }
+
                 });
+                /**/
 
             } else if (data.action === "add_child_existing_family") {
 
@@ -235,8 +287,9 @@ export function perform_database_action(data, callback) {
 
             } else if (data.action === "remove_family") {
 
-                remove_family(data, function (result) {
+                remove_family(data.data, function (result) {
                     callback(result);
+
                 });
 
             } else if (data.action === "export_patient") {

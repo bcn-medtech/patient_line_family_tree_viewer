@@ -1,33 +1,71 @@
 ![alt text](https://github.com/bcnmedtech/rocket_viewer/blob/master/assets/logo.png "Logo Title Text 1")
 
-# Rocket Viewer
+# Patient line family tree viewer
 [![DOI](https://zenodo.org/badge/118635567.svg)](https://zenodo.org/badge/latestdoi/118635567)
 
-This simple and generic viewer allows you to visualize different kinds of data such as medical and biological images, 3D surfaces, electric signals (ECGs) and documents.
-
-**Rocket viewer** allows visualizing data from the web or loading information from the local file system by simply dragging and dropping a file into the browser. 
+Clinical platform for managing and processing family data from patients with inherit disorders.
 
 
-**Rocket viewer** is **© Universitat Pompeu Fabra 2017**. 
-Original Developers: *Carlos Yagüe Méndez, María del Pilar García, Daniele Pezzatini.* 
-Contributors: *Sergio Sánchez Martínez, Oscar Cámara, Bart Bijnens.*
+**Patient line family tree viewer** allows visualizing data from the local file system by simply dragging and dropping a file into the browser. We use Excel to model and create our families, only dragging and droping it to the interface, the user can visualize and modify the family playing with the [pedigree tree](https://en.wikipedia.org/wiki/Pedigree_chart).
+
+
+**Patient line family tree viewer** is **© Universitat Pompeu Fabra 2017**. 
+Original Developers: *Carlos Yagüe Méndez, Paula Bassagañas, María del Pilar García* 
+Contributors: *Begoña Benito, Oscar Cámara, Bart Bijnens.*
 
 *This work is partly funded by the Spanish Ministry of Economy and Competitiveness under the María de Maeztu Units of Excellence Program (MDM-2015-0502).*
 
-### Compatible formats
-
-* Medical images:DICOM (one frame = 2D visualization, multi-frame = 2D visualization + t)
-* Biological images: TIFF
-* Signals: PDF
-* Surfaces: VTK (3D Visualization), PLY (3D Visualization)
-* Surfaces + Medical images: NRRD (3D Visualization)
-* Electric signals: CSV files
-
-### Try the viewer [here](http://rkt-viewer.surge.sh/)
+### Play with platform [here](http://rkt-viewer.surge.sh/)
 
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/EGo5Roh2fcA/0.jpg)](http://www.youtube.com/watch?v=EGo5Roh2fcA "Video Title")
 
+### Compatible formats
 
+Excel file (with a specific format). All the family data internally is model NonSQL format but for importing and exporting we use excel workbooks. You can download and excel template using the following url.
+
+Excel workbook format:
+
+Tabs:
+
+* Family
+* General
+* clinical values
+
+**Family tab fields (Data about families):**
+
+* id
+* name
+* description
+* symptoms
+* diagnosis
+* mutations
+
+**General tab fields (Generic data about patients or members of a family):**
+
+* id
+* name
+* gender
+* father
+* mother
+* family_id
+* center
+
+**Clinical values (Clinical data about patients or members of a family)**
+
+* id
+* nhc
+* mutations
+* symptoms
+* phenotype 
+* genotype
+* diagnosis_status
+* diagnosis
+* probando
+* comments
+
+All the fields mentioned before are required. This means that if you remove some fields in the excel file the tool could not work as is desired. Feel free to add new fields in the tab clinical values.
+
+### Do you want to contribute in the development? 
 ### Quick start
 
 ```
@@ -56,13 +94,6 @@ npm run production
 
 ![alt text](https://github.com/bcnmedtech/rocket_viewer/blob/master/assets/folder_black.png "Logo Title Text 1")
 
-* [Microscope image (Tif)](https://github.com/bcnmedtech/rocket_viewer/blob/master/sample_data/microscopy_image.tif)
-* [Electronic Signals (txt)](https://github.com/bcnmedtech/rocket_viewer/blob/master/sample_data/signals.txt)
-* [Head volume 3D (nrrd)](https://github.com/bcnmedtech/rocket_viewer/blob/master/sample_data/volume_3D_nrrd_head.nrrd)
-* [Heart volume 3D (ply)](https://github.com/bcnmedtech/rocket_viewer/blob/master/sample_data/volume_3D_ply.ply)
-* [Heart volume 3D with labels wit field data format (vtk)](https://github.com/bcnmedtech/rocket_viewer/blob/master/sample_data/volume_3D_vtk_field_data.vtk)
-* [Heart volume 3D with labels wit field scalars format (vtk)](https://github.com/bcnmedtech/rocket_viewer/blob/master/sample_data/volume_3D_vtk_scalars.vtk)
-
 ### Videos
 
 * [Demo](https://www.youtube.com/watch?v=EGo5Roh2fcA&feature=youtu.be)
@@ -72,7 +103,7 @@ npm run production
 :(   Available soon ......
 
 ## License
-**Rocket viewer** *is free software: you can redistribute it and/or modify
+**Patient line family tree viewer** *is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.*

@@ -103,19 +103,21 @@ export function edit_patient(data, callback) {
 
 export function remove_patient(data,callback){
 
-    if ("data" in data) {
+    //if ("data" in data) {
 
-        if ("to_remove" in data.data) {
+    console.log(data);
 
-            var ids_patients_to_remove = data.data.to_remove;
+        if ("to_remove" in data) {
+
+            var ids_patients_to_remove = data.to_remove;
 
             patients_remove(ids_patients_to_remove, function (result) {
 
                 if (result) {
 
-                    if ("to_update" in data.data) {
+                    if ("to_update" in data) {
 
-                        var patients_to_update = data.data.to_update;
+                        var patients_to_update = data.to_update;
 
                         patients_update(patients_to_update, function (result) {
 
@@ -141,8 +143,7 @@ export function remove_patient(data,callback){
             });
 
         }
-
-    }
+    //}
 }
 
 export function add_child_existing_family(data,callback){
@@ -346,11 +347,11 @@ export function edit_family(data,callback){
     }
 }
 
-export function remove_family(data,callback){
+export function remove_family(id_family_to_remove,callback){
 
-    if ("data" in data) {
+    //if ("data" in data) {
 
-        var id_family_to_remove = data.data;
+        //var id_family_to_remove = data.data;
 
         patients_get_list(function (patients) {
 
@@ -372,7 +373,7 @@ export function remove_family(data,callback){
 
                                 if (result) {
 
-                                    callback(true);
+                                    callback({"family_removed":true});
 
                                 } else console.log("error removing the family");
 
@@ -389,7 +390,7 @@ export function remove_family(data,callback){
 
                         if (result) {
 
-                            callback(true);
+                            callback({"family_removed":true});
 
                         } else console.log("error removing the family");
 
@@ -400,7 +401,7 @@ export function remove_family(data,callback){
             } else console.log("error obtaining the patients");
 
         });
-    }
+    //}
 }
 
 export function export_patient(data){
