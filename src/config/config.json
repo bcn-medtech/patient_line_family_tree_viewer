@@ -4,5 +4,13 @@
     "url_api":"http://localhost:4000",
     "url_app":"http://localhost:3000",
     "_comment_url_app":"http://patientlineimageviewer.surge.sh",
-    "url_template_xlsx_workbook": "https://www.dl.dropboxusercontent.com/s/86g61c5pnxz5yeq/patient_line_family_tree_database_template.xlsx?dl=0"
+    "url_template_xlsx_workbook": "https://www.dl.dropboxusercontent.com/s/86g61c5pnxz5yeq/patient_line_family_tree_database_template.xlsx?dl=0",
+    "google":{
+        "params":{
+            "discoveryDocs": ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
+            "clientId": "408279810619-ppl6nqb0ta4mc3n3pv3h46sn6dl8egjb.apps.googleusercontent.com",
+            "secret":"iqI4Y6H_lv517wMgeMa7kKLM",
+            "scope":"https://www.googleapis.com/auth/spreadsheets"
+        }
+    }
 }

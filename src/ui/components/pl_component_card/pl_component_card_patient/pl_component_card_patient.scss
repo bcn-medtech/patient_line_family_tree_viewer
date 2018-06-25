@@ -1,28 +1,12 @@
-@import './../../pl_component_button/pl_component_button_circle/pl_component_button_circle.scss';
-@import './../../pl_component_button/pl_component_button_circle_selectable/pl_component_button_circle_selectable.scss';
-@import './pl_component_card_patient_gender_combobox/pl_component_card_patient_gender_combobox.scss';
+@import './pl_component_card_patient_header/pl_component_card_patient_header.scss';
 @import './pl_component_card_patient_status_button/pl_component_card_patient_status_button.scss';
-@import './pl_component_card_patient_status_combobox/pl_component_card_patient_status_combobox.scss';
 @import './pl_component_card_patient_text_button/pl_component_card_patient_text_button.scss';
 @import './pl_component_card_patient_widget/pl_component_card_patient_widget.scss';
-@import './../../pl_component_text_field_editable/pl_component_text_field_editable.scss';
 
 .pl-component-card-patient{
     
     h4{
         color:$color-normal;
-    }
-
-    .card-header{
-        margin-left: 10px;
-        margin-right: 10px;
-
-        align-items: center;
-
-        h4{
-            width:100%;
-            margin:0px;
-        }
     }
 
     .card-item{
@@ -35,43 +19,6 @@
         background-color: $color_shadow_3;
         margin-top: 15px;
         align-items:center;
-    }
-
-    .card-row-gender-status{
-        margin-right: 15px;
-        align-items:center;
-
-        h4{
-            width:unset;
-        }
-    }
-
-    .pl_component_text_field_editable{
-        
-        .pl_component_form_item_input_text{
-            background-color: $color_shadow_3;
-        }
-
-    }
-
-    .pl-component-card-patient-edition-buttons{
-        
-        align-items: center; // vertical centering
-        position:absolute;
-        right:0px;
-    
-        .pl_component_button_circle{
-            margin-top: 10px;
-            width: 35px;
-            height: 35px;
-        }
-
-        .pl_component_button_circle_selectable{
-            margin-top: 10px;
-            width: 35px;
-            height: 35px;
-        }
-
     }
     
 }

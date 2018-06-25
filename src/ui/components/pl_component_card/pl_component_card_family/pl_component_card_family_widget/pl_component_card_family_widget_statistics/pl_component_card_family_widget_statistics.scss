@@ -1,0 +1,85 @@
+@import './../../../../pl_component_button/pl_component_button_icon/pl_component_button_icon.scss';
+@import './../../../pl_component_card_patient/pl_component_card_patient_status/pl_component_card_patient_status.scss';
+@import './../../../pl_component_card_patient/pl_component_card_patient_widget/pl_component_card_patient_widget_relatives/pl_component_card_patient_widget_relatives.scss';
+
+.pl-component-card-family-widget-statistics{
+
+    //max-height:200px;
+    overflow-y:auto;
+
+    tr, td{
+        width:100%;
+        overflow:hidden;
+        align-items: center;
+    }
+
+    tr{
+        margin-top: 0px;
+        margin-bottom: 0px;
+        padding-bottom: 7px;
+        padding-top: 7px;
+    }
+    
+    .pl-component-card-family-widget-statistics-item{
+        
+        border-bottom: 1px solid $color-normal;
+
+        &:hover{
+            background-color: $color_shadow-2;
+            // .pl-component-card-family-widget-statistics-item-content{
+            //     display: block;
+            // }
+        }
+
+        color:white;
+        align-items: center;
+        
+        h6{
+            margin-top:0px;
+            color:$color-normal;
+        }
+
+        .text{
+            padding-bottom:2px;
+        }
+
+        .pl-component-card-family-widget-statistics-element{
+            padding-left:10px;
+            padding-right:15px;
+
+            .pl_component_button_icon{
+                width:fit-content;
+                height:fit-content;
+            }
+        }
+
+        // td{
+        //     align-items: center;
+        // }
+
+        .centered{
+            align-items: center;
+        }
+
+    }
+
+    .pl-component-card-family-widget-statistics-item-content{
+        //display: none;
+        overflow: hidden;
+        padding-left:10px;
+        padding-right:10px;
+
+        .pl-component-card-patient-widget-relatives {
+
+            background-color: $rkt-viewer-background-color;
+
+            tr{
+                //border-bottom: //0px;
+                border-bottom:1px solid rgba(92, 78, 229, 0.57);
+                background-color: transparent;
+            }
+
+        }
+    }
+
+}

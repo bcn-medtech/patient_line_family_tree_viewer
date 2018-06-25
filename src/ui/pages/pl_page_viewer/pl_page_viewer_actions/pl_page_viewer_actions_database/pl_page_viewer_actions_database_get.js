@@ -6,14 +6,18 @@ import {
     patients_get_list
 } from './../../../../../database/database';
 
-import { 
+import {
     filter,
     flatten,
     difference,
-    findWhere
- } from 'underscore';
+    findWhere,
+    pluck,
+    countBy,
+    keys,
+    where
+} from 'underscore';
 
-import {isObjectEmpty} from './../../../../../modules/rkt_module_object';
+import { isObjectEmpty } from './../../../../../modules/rkt_module_object';
 
 /*
 
@@ -46,13 +50,14 @@ Functions:
 26) get_patients_processed
 27) get_family_processed
 28) order_family_by_ids
+29) get_family_statistics
 */
 
-function get_patient_relatives(patient,patients){
+function get_patient_relatives(patient, patients) {
 
     var patient_relatives = [];
     var patient_parents = get_patient_parents(patient, patients);
-    var patient_children = get_patient_children_by_id_father_or_mother(patient.id,patients);
+    var patient_children = get_patient_children_by_id_father_or_mother(patient.id, patients);
     patient_relatives.push(patient_parents);
     patient_relatives.push(patient_children);
     patient_relatives = flatten(patient_relatives);
@@ -110,7 +115,7 @@ export function get_patient_couple_ids(patient, relatives) {
             if (!isObjectEmpty(current_relative.father)) {
 
                 patient_couples_ids.push(current_relative.father);
-                
+
             }
 
         }
@@ -141,7 +146,7 @@ export function get_patient_children(father_id, mother_id, relatives) {
     return children;
 }
 
-export function get_patient_children_by_id_father_or_mother(father_mother_id,relatives){
+export function get_patient_children_by_id_father_or_mother(father_mother_id, relatives) {
 
     var children = [];
 
@@ -162,19 +167,19 @@ export function get_patient_children_by_id_father_or_mother(father_mother_id,rel
     return children;
 }
 
-export function get_patient_uncles(patient,relatives){
+export function get_patient_uncles(patient, relatives) {
 
     var patient_uncles = [];
-    var parents = get_patient_parents(patient,relatives);
+    var parents = get_patient_parents(patient, relatives);
 
-    if(!isObjectEmpty(parents)){
+    if (!isObjectEmpty(parents)) {
 
-        for(var i=0;i<parents.length;i++){
+        for (var i = 0; i < parents.length; i++) {
 
             var parent = parents[i];
-            var parent_brothers = get_patient_brothers(parent,relatives);
-            
-            if(!isObjectEmpty(parent_brothers)){
+            var parent_brothers = get_patient_brothers(parent, relatives);
+
+            if (!isObjectEmpty(parent_brothers)) {
 
                 patient_uncles.push(parent_brothers);
 
@@ -190,26 +195,26 @@ export function get_patient_uncles(patient,relatives){
 
 }
 
-export function get_patient_grand_children(patient,relatives){
+export function get_patient_grand_children(patient, relatives) {
 
-    var patient_grand_children=[];
-    var children = get_patient_children_by_id_father_or_mother(patient.id,relatives);
+    var patient_grand_children = [];
+    var children = get_patient_children_by_id_father_or_mother(patient.id, relatives);
 
-    if(!isObjectEmpty(children)){
+    if (!isObjectEmpty(children)) {
 
-        for(var i=0;i<children.length;i++){
+        for (var i = 0; i < children.length; i++) {
 
             var current_child = children[i];
-            var current_child_children = get_patient_children_by_id_father_or_mother(current_child.id,relatives);
+            var current_child_children = get_patient_children_by_id_father_or_mother(current_child.id, relatives);
 
-            if(!isObjectEmpty(current_child_children)){
+            if (!isObjectEmpty(current_child_children)) {
                 patient_grand_children.push(current_child_children);
-                
+
             }
         }
     }
 
-    patient_grand_children=flatten(patient_grand_children);
+    patient_grand_children = flatten(patient_grand_children);
     return patient_grand_children;
 }
 
@@ -385,17 +390,17 @@ export function is_patient_couples(patient, current_relative, relatives) {
 
     var is_patient_couple = false;
 
-    var patient_couples_ids = get_patient_couple_ids(patient,relatives);
+    var patient_couples_ids = get_patient_couple_ids(patient, relatives);
 
-    if(!isObjectEmpty(patient_couples_ids)){
+    if (!isObjectEmpty(patient_couples_ids)) {
 
-        for(var i=0;i<patient_couples_ids.length;i++){
+        for (var i = 0; i < patient_couples_ids.length; i++) {
 
             var patient_couple_id = patient_couples_ids[i];
 
-            if(patient_couple_id === current_relative.id){
-                
-                is_patient_couple=true;
+            if (patient_couple_id === current_relative.id) {
+
+                is_patient_couple = true;
 
             }
         }
@@ -405,17 +410,17 @@ export function is_patient_couples(patient, current_relative, relatives) {
 
 }
 
-export function is_patient_grand_children(patient,current_relative,relatives){
+export function is_patient_grand_children(patient, current_relative, relatives) {
 
     var is_patient_grand_child = false;
 
-    var patient_grand_children = get_patient_grand_children(patient,relatives);
+    var patient_grand_children = get_patient_grand_children(patient, relatives);
 
-    for(var i=0;i<patient_grand_children.length;i++){
+    for (var i = 0; i < patient_grand_children.length; i++) {
 
         var patient_grand_child = patient_grand_children[i];
 
-        if(current_relative.id === patient_grand_child.id){
+        if (current_relative.id === patient_grand_child.id) {
 
             is_patient_grand_child = true;
         }
@@ -425,19 +430,19 @@ export function is_patient_grand_children(patient,current_relative,relatives){
 
 }
 
-export function is_patient_uncle(patient,current_relative,relatives){
+export function is_patient_uncle(patient, current_relative, relatives) {
 
     var is_patient_uncle = false;
 
-    var patient_uncles = get_patient_uncles(patient,relatives);
+    var patient_uncles = get_patient_uncles(patient, relatives);
 
-    for(var i=0;i<patient_uncles.length;i++){
+    for (var i = 0; i < patient_uncles.length; i++) {
 
         var patient_uncle = patient_uncles[i];
 
-        if(patient_uncle.id === current_relative.id ){
-            
-            is_patient_uncle= true;
+        if (patient_uncle.id === current_relative.id) {
+
+            is_patient_uncle = true;
 
         }
     }
@@ -451,11 +456,11 @@ export function label_patient_relatives(patient, relatives) {
 
         var current_relative = relatives[i];
 
-        if(patient.id === current_relative.id){
+        if (patient.id === current_relative.id) {
 
             current_relative["relation"] = "current patient";
 
-        }else if (is_patient_father(patient, current_relative)) {
+        } else if (is_patient_father(patient, current_relative)) {
 
             current_relative["relation"] = "father";
 
@@ -479,69 +484,69 @@ export function label_patient_relatives(patient, relatives) {
 
             current_relative["relation"] = "couple";
 
-        } else if(is_patient_grand_children(patient,current_relative,relatives)){
+        } else if (is_patient_grand_children(patient, current_relative, relatives)) {
 
             current_relative["relation"] = "grand child";
-        
-        } else if(is_patient_uncle(patient,current_relative,relatives)){
+
+        } else if (is_patient_uncle(patient, current_relative, relatives)) {
 
             current_relative["relation"] = "uncle";
 
-        }else {
+        } else {
 
             current_relative["relation"] = "other";
         }
     }
 }
 
-function get_all_patients_from_a_family_given_specific_patient(patient,patients,array_patients_to_explore,family){
+function get_all_patients_from_a_family_given_specific_patient(patient, patients, array_patients_to_explore, family) {
 
-    if(isObjectEmpty(family) && isObjectEmpty(array_patients_to_explore)){
+    if (isObjectEmpty(family) && isObjectEmpty(array_patients_to_explore)) {
 
         family.push(patient);
-        array_patients_to_explore = get_patient_relatives(patient,patients);
+        array_patients_to_explore = get_patient_relatives(patient, patients);
 
-        get_all_patients_from_a_family_given_specific_patient(array_patients_to_explore[0],patients,array_patients_to_explore,family);
-        
-    }else{
+        get_all_patients_from_a_family_given_specific_patient(array_patients_to_explore[0], patients, array_patients_to_explore, family);
 
-        if(!isObjectEmpty(array_patients_to_explore)){
-            
+    } else {
+
+        if (!isObjectEmpty(array_patients_to_explore)) {
+
             family.push(patient);
-            array_patients_to_explore.push(get_patient_relatives(patient,patients));
+            array_patients_to_explore.push(get_patient_relatives(patient, patients));
             array_patients_to_explore = flatten(array_patients_to_explore);
-            array_patients_to_explore = difference(array_patients_to_explore,family);
-            get_all_patients_from_a_family_given_specific_patient(array_patients_to_explore[0],patients,array_patients_to_explore,family);
+            array_patients_to_explore = difference(array_patients_to_explore, family);
+            get_all_patients_from_a_family_given_specific_patient(array_patients_to_explore[0], patients, array_patients_to_explore, family);
 
         }
     }
 }
 
-export function get_family_by_patient(patient,database){
+export function get_family_by_patient(patient, database) {
 
     var array_patients_to_explore = [];
     var array_family = [];
-    get_all_patients_from_a_family_given_specific_patient(patient,database,array_patients_to_explore,array_family);
+    get_all_patients_from_a_family_given_specific_patient(patient, database, array_patients_to_explore, array_family);
     return array_family;
 }
 
-function get_number_of_family_members(family,patients){
-    
+function get_number_of_family_members(family, patients) {
+
     var num_family_members = 0;
 
-    if("id" in family){
+    if ("id" in family) {
 
-        if(!isObjectEmpty(family.id)){
-            
-            for(var i=0;i<patients.length;i++){
+        if (!isObjectEmpty(family.id)) {
+
+            for (var i = 0; i < patients.length; i++) {
 
                 var patient_to_compare = patients[i];
 
-                if("family_id" in patient_to_compare){
+                if ("family_id" in patient_to_compare) {
 
-                    if(!isObjectEmpty(patient_to_compare.family_id)){
+                    if (!isObjectEmpty(patient_to_compare.family_id)) {
 
-                        if(family.id === patient_to_compare.family_id){
+                        if (family.id === patient_to_compare.family_id) {
 
                             num_family_members++;
 
@@ -556,23 +561,23 @@ function get_number_of_family_members(family,patients){
 
 }
 
-function get_number_of_relatives(patient,patients){
+function get_number_of_relatives(patient, patients) {
 
     var num_relatives = 0;
 
-    if("family_id" in patient){
+    if ("family_id" in patient) {
 
-        if(!isObjectEmpty(patient.family_id)){
-            
-            for(var i=0;i<patients.length;i++){
+        if (!isObjectEmpty(patient.family_id)) {
+
+            for (var i = 0; i < patients.length; i++) {
 
                 var patient_to_compare = patients[i];
 
-                if("family_id" in patient_to_compare){
+                if ("family_id" in patient_to_compare) {
 
-                    if(!isObjectEmpty(patient_to_compare.family_id)){
+                    if (!isObjectEmpty(patient_to_compare.family_id)) {
 
-                        if(patient.family_id === patient_to_compare.family_id){
+                        if (patient.family_id === patient_to_compare.family_id) {
 
                             num_relatives++;
 
@@ -586,35 +591,68 @@ function get_number_of_relatives(patient,patients){
     return num_relatives;
 }
 
-export function get_patients_processed(patients){
-    
-    for(var i=0;i<patients.length;i++){
+export function get_patients_processed(patients) {
+
+    for (var i = 0; i < patients.length; i++) {
 
         var patient = patients[i];
-        patient["num_relatives"] = get_number_of_relatives(patient,patients);
+        patient["num_relatives"] = get_number_of_relatives(patient, patients);
     }
 
     return patients;
 }
 
-export function get_family_processed(patients, family){
-    
-    family["num_family_members"] = get_number_of_family_members(family,patients);
+export function get_family_processed(patients, family) {
+
+    family["num_family_members"] = get_number_of_family_members(family, patients);
 
     return family;
 }
 
-export function order_family_by_ids(family,ids){
+export function order_family_by_ids(family, ids) {
 
     var array = [];
 
-    for(var i=0;i<ids.length;i++){
+    for (var i = 0; i < ids.length; i++) {
 
-        var patient = findWhere(family,{id:ids[i]});
+        var patient = findWhere(family, { id: ids[i] });
         array.push(patient);
     }
 
     return array;
+}
+
+export function get_family_statistics(family_members) {
+
+    var family_statistics = [];
+
+    family_members = filter(family_members, function(patient){
+        return patient.phenotype !== "new-member-family";
+    });
+    
+    var family_statistics_counter = countBy(family_members, function (patient) {
+        return patient.phenotype;
+    });
+
+    var family_statistics = [];
+    var family_statistics_counter_keys = keys(family_statistics_counter);
+
+    for (var i = 0; i < family_statistics_counter_keys.length; i++) {
+
+        var current_phenotype = family_statistics_counter_keys[i];
+        var relatives_with_current_phenotype = where(family_members, { phenotype: current_phenotype });
+        
+        family_statistics.push({
+            "phenotype": current_phenotype,
+            "counter": family_statistics_counter[current_phenotype],
+            "relatives": relatives_with_current_phenotype,
+            "counter_males": where(relatives_with_current_phenotype, { gender: "male" }).length,
+            "counter_females": where(relatives_with_current_phenotype, { gender: "female" }).length
+        });
+    }
+
+    return family_statistics;
+
 }
 
 

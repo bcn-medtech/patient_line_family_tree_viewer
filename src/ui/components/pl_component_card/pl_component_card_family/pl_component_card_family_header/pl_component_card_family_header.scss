@@ -1,0 +1,38 @@
+@import './../../../pl_component_text_field_editable/pl_component_text_field_editable.scss';
+
+.pl-component-card-family-header{
+
+    margin-left: 10px;
+    margin-right: 10px;
+
+    align-items: center;
+
+    h4{
+        color:$color-normal;
+        width:100%;
+        margin:0px;
+    }
+
+    h5{
+        color:$color-normal;
+        margin-top:8px;
+        margin-bottom:3px;
+    }
+
+    .card-item {
+        padding-left: 2.5px;
+        padding-right: 2.5px;
+    }
+
+    .card-row-family-members{
+        align-items:center;
+        padding: 10px;
+        overflow: hidden;
+
+        h4{
+            width:unset;
+        }
+    }
+
+
+}

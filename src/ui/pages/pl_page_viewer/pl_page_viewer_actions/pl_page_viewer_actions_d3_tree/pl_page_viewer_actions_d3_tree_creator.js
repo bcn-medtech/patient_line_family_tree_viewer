@@ -77,8 +77,8 @@ function getRootCouple(database) {
                 couple.push(member_2.id);
                 rootCouples.push(couple);
 
-                //member_1["is_root"]=true;
-                //member_2["is_root"]=true;
+                member_1["is_root"]=true;
+                member_2["is_root"]=true;
             }
 
         }
@@ -152,13 +152,8 @@ export function exploreChildrenTree(couplesArray, dataJson) {
                
         children = couple;
 
-        //console.log(children);
     }
-
-   
-
-    //console.log(children);
-
+    
     return children;
 }
 
@@ -305,13 +300,13 @@ function getChildren(parentsArray, dataJson) {
             }
         }
     }
-    for (i in dataJson) {
-        for (j in childrenArray) {
-            if (dataJson[i].married_with === childrenArray[j].id) {
-                childrenArray.push(dataJson[i]);
-            }
-        }
-    }
+    // for (i in dataJson) {
+    //     for (j in childrenArray) {
+    //         if (dataJson[i].married_with === childrenArray[j].id) {
+    //             childrenArray.push(dataJson[i]);
+    //         }
+    //     }
+    // }
     return childrenArray;
 }
 

@@ -23,7 +23,6 @@
 */
 
 import React, { Component } from 'react';
-//import { isObjectAFunction } from './../../../../../../modules/rkt_module_object';
 import { calculate_age } from './../../../../../../modules/rkt_module_date';
 
 //components
@@ -33,7 +32,7 @@ import { PlComponentCardPatientStatus } from './../../pl_component_card_patient_
 
 export class PlComponentCardPatientWidgetParent extends Component {
 
-    render_card_patient_widget_parent(parent, type_parent, mode_edit) {
+    render_card_patient_widget_parent(parent, type_parent) {
 
         if (parent) {
 
@@ -60,8 +59,9 @@ export class PlComponentCardPatientWidgetParent extends Component {
     }
 
     render_parent(parent) {
-
-        var status = parent.status;
+        
+        var phenotype = parent.phenotype;
+        var genotype = parent.genotype;
         var gender = parent.gender;
 
         var name = parent.name;
@@ -72,7 +72,7 @@ export class PlComponentCardPatientWidgetParent extends Component {
         return (
             <div className="grid-block shrink pl-component-card-patient-widget-parent-item">
                 <div className="grid-block shrink pl-component-card-patient-widget-parent-element">
-                    <PlComponentCardPatientStatus status={status} gender={gender} />
+                    <PlComponentCardPatientStatus phenotype={phenotype} genotype={genotype} gender={gender} />
                 </div>
                 <div className="grid-block vertical pl-component-card-patient-widget-parent-element">
                     <h6>{name}</h6>
@@ -100,11 +100,10 @@ export class PlComponentCardPatientWidgetParent extends Component {
 
         var parent = this.props.parent;
         var type_parent = this.props.type_parent;
-        var mode_edit = this.props.mode_edit;
 
         return (
             <div className="grid-block pl-component-card-patient-widget-parent">
-                {this.render_card_patient_widget_parent(parent, type_parent, mode_edit)}
+                {this.render_card_patient_widget_parent(parent, type_parent)}
             </div>
         );
 

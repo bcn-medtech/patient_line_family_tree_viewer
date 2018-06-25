@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 //components
 import { PlComponentFormItemInputText } from './../pl_component_form/pl_component_form_item/pl_component_form_item_input_text/pl_component_form_item_input_text';
+import { PlComponentFormItemInputTextSuggestion } from './../pl_component_form/pl_component_form_item/pl_component_form_item_input_text_suggestion/pl_component_form_item_input_text_suggestion';
 import { PlComponentTextPlain } from './../pl_component_text/pl_component_text_plain/pl_component_text_plain';
 
 export class PlComponentTextFieldEditable extends Component {
@@ -44,14 +45,31 @@ export class PlComponentTextFieldEditable extends Component {
 
         } else {
             
-            return (
-                <PlComponentFormItemInputText
-                    ref="FormItemInputText"
-                    value={text}
-                    placeholder={text}
-                    required_input={""}
-                />
-            );
+            if (!this.props.isSearchBox) {
+
+                return (
+                    <PlComponentFormItemInputText
+                        ref="FormItemInputText"
+                        value={text}
+                        placeholder={text}
+                        required_input={""}
+                    />
+                );
+
+            } else if ((this.props.isSearchBox) && (this.props.suggestions)) {
+                
+                return (
+                    <PlComponentFormItemInputTextSuggestion
+                        ref="FormItemInputText"
+                        suggestions={this.props.suggestions}
+                        value={text}
+                        placeholder={text}
+                        required_input={""}
+                    />
+                );
+
+            }
+            
 
         }
 

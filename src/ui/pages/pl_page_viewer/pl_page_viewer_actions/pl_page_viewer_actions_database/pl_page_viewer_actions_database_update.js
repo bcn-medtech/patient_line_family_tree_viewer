@@ -214,14 +214,13 @@ export function add_child_new_family(data,callback){
             var new_child = data.data.new_child;
             var new_parent = data.data.new_parent;
 
-            // we update the "married_with" and "children" info of the known parent
+            // we update the "children" info of the known parent
             patient_get(id_known_parent, function (parent_array) {
 
                 if (!isObjectEmpty(parent_array)) {
 
                     var parent = parent_array[0];
 
-                    parent.married_with = new_parent.id;
                     if (parent.children !== undefined) parent.children.push(new_child.id);
                     else parent.children = [new_child.id];
 
@@ -407,18 +406,14 @@ export function remove_family(data,callback){
 export function export_patient(data){
 
     if ("data" in data) {
-
-        if ("patient" && "family_tree" in data.data) {
+        
+        if ("patient" in data.data) {
 
             var patient = data.data["patient"];
-            //var family_tree = data.data["family_tree"];
-
+            
             var id_patient = keys(data.data.patient)[0];
             writeAndExportXlsxWoorkbook(patient, { "name": id_patient }); // for the moment, only a xlsx of the patient is exported
-            // var id_family = patient[id_patient][0].family_id;
-
-            // load_zip_with_patient_and_family_tree(id_patient, id_family, patient, family_tree);
-
+            
         }
 
     }

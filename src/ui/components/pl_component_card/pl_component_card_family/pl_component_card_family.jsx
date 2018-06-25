@@ -25,40 +25,21 @@
 import React, { Component } from 'react';
 
 //components
-import { PlComponentButtonCircle } from './../../pl_component_button/pl_component_button_circle/pl_component_button_circle';
-import { PlComponentButtonCircleSelectable } from './../../pl_component_button/pl_component_button_circle_selectable/pl_component_button_circle_selectable';
+import { PlComponentCardFamilyHeader } from './pl_component_card_family_header/pl_component_card_family_header';
 import { PlComponentCardFamilyTextButton } from './pl_component_card_family_text_button/pl_component_card_family_text_button';
 import { PlComponentTextFieldEditable } from './../../pl_component_text_field_editable/pl_component_text_field_editable';
 
 //modules
-import {
-    isObjectEmpty, isObjectAFunction
-} from './../../../../modules/rkt_module_object';
+import { isObjectAFunction, isObjectAnArray, isObjectEmpty } from './../../../../modules/rkt_module_object';
+
+//actions
+import { format_family_statistics } from './pl_component_card_family_actions';
 
 export class PlComponentCardFamily extends Component {
 
-    on_edit_family() {
-
-        if (isObjectAFunction(this.props.on_set_mode_edit)) {
-
-            this.props.on_set_mode_edit();
-
-        }
-    }
-
-    on_remove_family() {
-
-        if (isObjectAFunction(this.props.on_ask_to_remove_family)) {
-
-            this.props.on_ask_to_remove_family();
-
-        }
-
-    }
-
     on_click_card_component(type) {
 
-        if (type === "number of family members" || type === "mother" || type === "children" || type === "relatives") {
+        if (type === "diagnosis" || type === "mutations" || type === "statistics") {
 
             if (isObjectAFunction(this.props.on_click_action)) {
 
@@ -66,122 +47,102 @@ export class PlComponentCardFamily extends Component {
 
             }
         }
+
     }
 
     render_menu(family, mode_menu) {
 
-        var family_num_members;
+        var family_diagnosis;
+        var family_mutations;
+        var mode_diagnosis = false;
+        var mode_mutations = false;
+        var mode_statistics = false;
 
-        if ("num_family_members" in family) family_num_members = family.num_family_members;
+        if ("diagnosis" in family) family_diagnosis = family.diagnosis.length;
+        if ("mutations" in family) family_mutations = family.mutations.length;
+        
+        if (mode_menu === "diagnosis") {
+            mode_diagnosis = true;
+        } else if (mode_menu === "mutations") {
+            mode_mutations = true;
+        } else if (mode_menu === "statistics") {
+            mode_statistics = true;
+        }
 
-        var mode_family_members = false;
-
-        if (mode_menu === "family members") mode_family_members = true;
+        var icon_statistics =
+            <svg width='25' height='25' viewBox='0 0 24 24' fillRule='evenodd'>
+                <path d='M0 0v24h24V0H0zm22.1 7l-7.2 8.9-9.2-3.8c-.2-.1-.4 0-.6.1L1 16.6V7h21.1zm.9 16H1v-4.9l4.6-5 9.2 3.8c.2.1.4 0 .6-.1L23 7.5V23zm0-17H1V1h22v5z'>
+                </path>
+            </svg>
 
         return (
             <div className="grid-block align-spaced card-row">
                 <div className="grid-block shrink card-item">
                     <PlComponentCardFamilyTextButton
-                        text={family_num_members}
-                        type="family members"
+                        text={family_diagnosis}
+                        type="diagnosis"
                         on_click_component={this.on_click_card_component.bind(this)}
-                        selected={mode_family_members} />
+                        selected={mode_diagnosis}
+                    />
+                </div>
+                <div className="grid-block shrink card-item">
+                    <PlComponentCardFamilyTextButton
+                        text={family_mutations}
+                        type="mutations"
+                        on_click_component={this.on_click_card_component.bind(this)}
+                        selected={mode_mutations}
+                    />
+                </div>
+                <div className="grid-block shrink card-item">
+                    <PlComponentCardFamilyTextButton
+                        text={icon_statistics}
+                        type="statistics"
+                        on_click_component={this.on_click_card_component.bind(this)}
+                        selected={mode_statistics}
+                    />
                 </div>
             </div>
         );
     }
 
+    get_family_id() {
+
+        return this.refs.family_card_header.refs.family_id.refs.FormItemInputText.state.input.trim();
+
+    }
+
+    get_family_name() {
+
+        return this.refs.family_card_header.refs.family_name.refs.FormItemInputText.state.input.trim();
+
+    }
+
+    get_family_description() {
+
+        return this.refs.family_card_header.refs.family_description.refs.FormItemInputText.state.input.trim();
+
+    }
+
+    get_family_symptoms() {
+
+        return this.refs.family_card_header.refs.family_symptoms.refs.FormItemInputText.state.input.trim();
+
+    }
+
     render() {
 
         var family = this.props.family;
+
         var mode_edit = this.props.mode_edit;
         var mode_menu = this.props.mode_menu;
-        var family_id;
-        var family_name;
-        var family_description;
-        var family_symptoms;
-
-        var button_delete =
-            {
-                "name": "delete",
-                "icon": <svg width='10' height='18' viewBox='0 0 16 24' fillRule='evenodd'><path d='M4 0h8v2H4zM0 3v4h1v17h14V7h1V3H0zm13 18H3V8h10v13z'></path><path d='M5 10h2v9H5zm4 0h2v9H9z'></path></svg>
-            }
-
-        var button_edit =
-            {
-                "name": "edit",
-                "icon": <svg width='15' height='15' viewBox='0 0 16 16' fillRule='evenodd'><path d='M2.032 10.924l7.99-7.99 2.97 2.97-7.99 7.99zm9.014-8.91l1.98-1.98 2.97 2.97-1.98 1.98zM0 16l3-1-2-2z'></path></svg>,
-                "selected": mode_edit
-            }
-
-        family_id = family.id;
-        family_name = family.name;
-        family_description = family.description;
-        if (isObjectEmpty(family_description)) family_description = "Description";
-        family_symptoms = family.symptoms;
-        if (isObjectEmpty(family_symptoms)) family_symptoms = "Symptoms";
 
         return (
             <div className="grid-block vertical pl-component-card-family">
-                <div className="grid-block card-header">
-                    <div className="grid-block vertical card-item">
-                        <div className="grid-block shrink">
-                            <h4>
-                                <PlComponentTextFieldEditable
-                                    text={family_name}
-                                    isEditionMode={mode_edit ? true : false}
-                                    ref="family_name"
-                                />
-                            </h4>
-                        </div>
-                        <div className="grid-block shrink">
-                            <PlComponentTextFieldEditable
-                                text={family_id}
-                                isEditionMode={mode_edit ? true : false}
-                                ref="family_id" />
-                        </div>
-                        <div className="grid-block shrink" style={{ "paddingTop": "20px"}}>
-                            <h4>
-                                <PlComponentTextFieldEditable
-                                    text={family_description}
-                                    isEditionMode={mode_edit ? true : false}
-                                    ref="family_description" />
-                            </h4>
-                        </div>
-                        <div className="grid-block shrink" style={{"paddingBottom": "8px" }}>
-                            <PlComponentTextFieldEditable
-                                text={family_symptoms}
-                                isEditionMode={mode_edit ? true : false}
-                                ref="family_symptoms" />
-                        </div>
-                    </div>
-                    <div className="grid-block pl-component-card-family-edition-buttons shrink">
-                        <PlComponentButtonCircleSelectable
-                            text={""}
-                            icon={button_edit.icon}
-                            backgroundcolor={"transparent"}
-                            backgroundhovercolor={"#5C4EE5"}
-                            backgroundselectedcolor={"#5C4EE5"}
-                            fontcolor={"#5C4EE5"}
-                            fonthovercolor={"white"}
-                            fontselectedcolor={"white"}
-                            bordercolor={"#5C4EE5"}
-                            borderhovercolor={"#5C4EE5"}
-                            borderselectedcolor={"#5C4EE5"}
-                            selected={button_edit.selected}
-                            onclickelement={this.on_edit_family.bind(this, button_edit.name)} />
-
-                        <PlComponentButtonCircle
-                            icon={button_delete.icon}
-                            backgroundcolor={"transparent"}
-                            backgroundhovercolor={"#5C4EE5"}
-                            fontcolor={"#5C4EE5"}
-                            fonthovercolor={"white"}
-                            bordercolor={"#5C4EE5"}
-                            borderhovercolor={"#5C4EE5"}
-                            onclickelement={this.on_remove_family.bind(this, button_delete.name)} />
-                    </div>
-                </div>
+                <PlComponentCardFamilyHeader
+                    ref="family_card_header"
+                    family={family}
+                    mode_edit={mode_edit}
+                />
                 {this.render_menu(family, mode_menu)}
             </div>
         );

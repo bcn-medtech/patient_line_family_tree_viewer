@@ -30,17 +30,29 @@ import { PlComponentCardPatientStatus } from './../../pl_component_card_patient_
 //actions
 import { sort_relatives_by_dob } from './pl_component_card_patient_widget_relatives_actions';
 
-import { filter } from "underscore";
+import { filter, map } from "underscore";
 
 export class PlComponentCardPatientWidgetRelatives extends Component {
 
-    render_card_patient_widget_relatives(relatives, mode_edit) {
+    render_card_patient_widget_relatives(relatives, toDisplayCurrentPatient) {
 
-        if (!isObjectEmpty(relatives)) {
+        if (!isObjectEmpty(relatives, toDisplayCurrentPatient)) {
 
-            var relatives_to_display = filter(relatives, function(relative) {
-                return relative.relation !== "current patient";
-            });
+            var relatives_to_display;
+            if (!toDisplayCurrentPatient) {
+
+                var relatives_to_display = filter(relatives, function(relative) {
+                    return relative.relation !== "current patient";
+                });
+
+            } else {
+
+                var relatives_to_display = map(relatives, function(relative) {
+                    return relative;
+                });
+
+            }
+            
 
             return (
                 <table className="grid-block vertical">
@@ -75,7 +87,8 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
                 var id = relative.id;
                 var name = relative.name;
 
-                var status = relative.status;
+                var phenotype = relative.phenotype;
+                var genotype = relative.genotype;
                 var gender = relative.gender;
 
                 var dob = relative.dob;
@@ -85,7 +98,7 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
 
                     <tr className="grid-block shrink pl-component-card-patient-widget-relatives-item" key={index}>
                         <td className="grid-block pl-component-card-patient-widget-relatives-element">
-                            <PlComponentCardPatientStatus status={status} gender={gender} />
+                            <PlComponentCardPatientStatus phenotype={phenotype} genotype={genotype} gender={gender} />
                         </td>
                         <td className="grid-block vertical pl-component-card-patient-widget-relatives-element">
                             <h6>{name}</h6>
@@ -120,11 +133,11 @@ export class PlComponentCardPatientWidgetRelatives extends Component {
     render() {
 
         var relatives = this.props.relatives;
-        var mode_edit = this.props.mode_edit;
+        var toDisplayCurrentPatient = this.props.toDisplayCurrentPatient;
 
         return (
             <div className="grid-block pl-component-card-patient-widget-relatives">
-                {this.render_card_patient_widget_relatives(relatives, mode_edit)}
+                {this.render_card_patient_widget_relatives(relatives, toDisplayCurrentPatient)}
             </div>
         );
 

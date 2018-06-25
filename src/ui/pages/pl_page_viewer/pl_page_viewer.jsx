@@ -71,7 +71,7 @@ export default class PlPageViewer extends Component {
     //  return relative;
     //});
 
-    get_data(patient_id,relatives, function (result) {
+    get_data(patient_id, relatives, function (result) {
 
       if (result) {
 
@@ -81,6 +81,7 @@ export default class PlPageViewer extends Component {
             root: result.root,
             siblings: result.siblings,
             family: result.family,
+            family_statistics: result.family_statistics,
             patient: result.patient,
             mother: result.mother,
             father: result.father,
@@ -143,10 +144,10 @@ export default class PlPageViewer extends Component {
     var id_patient = patient_to_export.id;
 
     // family tree
-    var family_tree = this.refs.FamilyTreeViewer.get_family_tree();
+    //var family_tree = this.refs.FamilyTreeViewer.get_family_tree(); // this refs do not exist for the moment
 
     data["data"]["patient"][id_patient] = [patient_to_export];
-    data["data"]["family_tree"] = family_tree;
+    //data["data"]["family_tree"] = family_tree;
 
     myComponent.perform_database_action(data);
 
@@ -165,7 +166,6 @@ export default class PlPageViewer extends Component {
         var location_url = location.href;
         var patient_id = url_getParameterByName("patient_id", location_url);
 
-      
         if ("patient_id" in data) patient_id = data.patient_id;
         if (patient_id === undefined) patient_id = myComponent.state.root.children[2].id; // family's root
         myComponent.update_component_state_from_database(patient_id);
@@ -200,6 +200,7 @@ export default class PlPageViewer extends Component {
     var viewer_legend;
     var patient = this.state.patient;
     var family = this.state.family;
+    var family_statistics = this.state.family_statistics;
     var father = this.state.father;
     var mother = this.state.mother;
     var relatives = this.state.relatives;
@@ -230,6 +231,7 @@ export default class PlPageViewer extends Component {
       sidebar = <PlComponentSidebar
         patient={patient}
         family={family}
+        family_statistics={family_statistics}
         father={father}
         mother={mother}
         children={children}
@@ -240,7 +242,10 @@ export default class PlPageViewer extends Component {
     }
 
     if (this.state.show_legend) {
-      viewer_legend = <PlComponentLegend />;
+      viewer_legend =
+        <div className="grid-block shrink legend">
+          <PlComponentLegend />;
+        </div>
     }
 
     return (
@@ -279,9 +284,7 @@ export default class PlPageViewer extends Component {
               selected={bottom_button_right.selected}
               onclickelement={this.on_click_button.bind(this, bottom_button_right.name)} />
           </div>
-          <div className="grid-block shrink legend">
-            {viewer_legend}
-          </div>
+          {viewer_legend}
         </div>
         <div className="grid-block medium-4">
           {sidebar}

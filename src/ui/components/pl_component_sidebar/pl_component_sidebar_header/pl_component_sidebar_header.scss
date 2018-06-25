@@ -1,6 +1,10 @@
+@import './../../pl_component_button/pl_component_button_circle/pl_component_button_circle.scss';
+@import './../../pl_component_button/pl_component_button_circle_selectable/pl_component_button_circle_selectable.scss';
+
 .pl-component-sidebar-header{
     
     margin: 10px;
+    align-items: center; // vertical centering
 
     h3{
         padding-right:10px;
@@ -14,5 +18,28 @@
     
     .mode_unselected{
         color:$color-un-selected
+    }
+
+    .pl-component-sidebar-header-edition-buttons{
+        
+        align-items: center; // vertical centering
+        position:absolute;
+        top:0px;
+        right:0px;
+    
+        .pl_component_button_circle{
+            margin-top:3.2px;
+            margin-bottom:8px;
+            width: 35px;
+            height: 35px;
+        }
+
+        .pl_component_button_circle_selectable{
+            margin-top:3.2px;
+            margin-bottom:8px;
+            width: 35px;
+            height: 35px;
+        }
+
     }
 }

@@ -3,13 +3,11 @@
     background-color: $rkt_viewer_patient_line_header_bg_color;
     color:$rkt_viewer_patient_line_header_color;
     padding: 10px;
-    padding-bottom:20px;
     
     .tittle{
         color:$rkt_viewer_patient_line_header_color;
-        padding:10px;
-        padding-left:20px;
-        padding-top:30px;
+        padding-left: 15px;
+        padding-top: 5px;
     }
 
     .menu{
@@ -42,5 +40,24 @@
             color:white;
         }
         padding: 5px;
+    }
+
+
+    .pl-signin-message{
+        padding-top: 30px;
+        a{
+            width: fit-content;
+            height: fit-content;
+            font-style: bold;
+            //color:$rkt_viewer_patient_line_header_bg_color;
+            &:hover{
+                color:$color-normal-2
+            }
+        }
+    }
+
+    svg{
+        width: 60px;
+        height: 50px;
     }
 }

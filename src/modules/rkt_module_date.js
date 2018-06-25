@@ -1,3 +1,4 @@
+import { isObjectEmpty } from "./rkt_module_object";
 
 export function calculate_age(dob) {
     // Input: 'dob' ('date of birth') --> yyyy-dd-mm ('ISO Date')
@@ -17,10 +18,9 @@ export function calculate_age(dob) {
 
 export function format_date(stringDate, desiredDateFormat) {
     // Input: stringDate (dd/mm/yy)
-    var date = new Date(stringDate);
 
-
-    if (date !== undefined) {
+    if (!isObjectEmpty(stringDate)) {
+        var date = new Date(stringDate);
 
         var today = new Date();
         var formatted_date, y, m, d;
@@ -54,8 +54,12 @@ export function format_date(stringDate, desiredDateFormat) {
                 break;
 
         }
-
+        
         return formatted_date;
+
+    } else {
+        
+        return "";
 
     }
 

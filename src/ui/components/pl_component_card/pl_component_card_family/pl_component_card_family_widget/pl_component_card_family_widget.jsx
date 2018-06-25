@@ -23,40 +23,23 @@
 */
 
 import React, { Component } from 'react';
-import { isObjectAFunction } from './../../../../../modules/rkt_module_object';
 
-export class PlComponentCardFamilyTextButton extends Component {
-    
-    on_click_component(type) {
+export class PlComponentCardFamilyWidget extends Component {
 
-        if (isObjectAFunction(this.props.on_click_component)) {
-            this.props.on_click_component(type);
-        }
+    capitalize_first_letter(s) {
+        return s && s[0].toUpperCase() + s.slice(1);
     }
 
     render() {
 
-        var text = this.props.text;
-        var type = this.props.type;
-        var selected = this.props.selected;
-        var component_style;
-
-        if(selected){
-
-            component_style = "grid-block vertical pl-component-card-family-text-button selected";
-
-        }else{
-
-            component_style = "grid-block vertical pl-component-card-family-text-button";
-
-        }
-
+        var tittle = this.props.tittle;
+        var content = this.props.content;
 
         return (
-            <a className={component_style} onClick={this.on_click_component.bind(this, type)}>
-                <div className="grid-block align-center"><h4>{text}</h4></div>
-                <div className="grid-block align-center text">{type}</div>
-            </a>
+            <div className="grid-block vertical pl-component-card-family-widget">
+                <h5>{this.capitalize_first_letter(tittle)}</h5>
+                {content}
+            </div>
         );
 
     }

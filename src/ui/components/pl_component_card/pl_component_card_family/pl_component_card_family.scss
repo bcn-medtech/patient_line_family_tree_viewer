@@ -1,21 +1,11 @@
+@import './pl_component_card_family_header/pl_component_card_family_header.scss';
 @import './pl_component_card_family_text_button/pl_component_card_family_text_button.scss';
-@import './../../pl_component_text_field_editable/pl_component_text_field_editable.scss';
-@import './../../pl_component_text/pl_component_text_plain/pl_component_text_plain.scss';
+@import './pl_component_card_family_widget/pl_component_card_family_widget.scss';
 
 .pl-component-card-family{
     
     h4{
         color:$color-normal;
-    }
-
-    .card-header{
-        margin-left: 10px;
-        margin-right: 10px;
-
-        h4{
-            width:100%;
-            margin:0px;
-        }
     }
 
     .card-item{
@@ -27,34 +17,6 @@
         background-color: $color_shadow_3;
         margin-top: 15px;
         align-items:center;
-    }
-
-    .pl_component_text_field_editable{
-        
-        .pl_component_form_item_input_text{
-            background-color: $color_shadow_3;
-        }
-
-    }
-    
-    .pl-component-card-family-edition-buttons{
-        
-        align-items: center; // vertical centering
-        position:absolute;
-        right:0px;
-
-        .pl_component_button_circle{
-            margin-top: 10px;
-            width: 35px;
-            height: 35px;
-        }
-    
-        .pl_component_button_circle_selectable{
-            margin-top: 10px;
-            width: 35px;
-            height: 35px;
-        }
-
     }
     
 }
