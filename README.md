@@ -6,12 +6,12 @@
 Clinical platform for managing and processing family data from patients with inherit disorders.
 
 
-**Patient line family tree viewer** allows visualizing data from the local file system by simply dragging and dropping a file into the browser. We use Excel to model and create our families, only dragging and droping it to the interface, the user can visualize and modify the family playing with the [pedigree tree](https://en.wikipedia.org/wiki/Pedigree_chart).
+**Patient line family tree viewer** allows visualizing data from the local file system by simply dragging and dropping a file into the browser. An Excel file is used to model and create family data, which can be dragged and dropped into the interface. The user can then visualize and modify family data interacting with the [pedigree tree](https://en.wikipedia.org/wiki/Pedigree_chart).
 
 
-**Patient line family tree viewer** is **© Universitat Pompeu Fabra 2017**. 
+**Patient line family tree viewer** is **© Universitat Pompeu Fabra 2018**. 
 Original Developers: *Carlos Yagüe Méndez, Paula Bassagañas, María del Pilar García* 
-Contributors: *Begoña Benito, Oscar Cámara, Bart Bijnens.*
+Contributors: *Begoña Benito, Bart Bijnens, Oscar Camara.*
 
 *This work is partly funded by the Spanish Ministry of Economy and Competitiveness under the María de Maeztu Units of Excellence Program (MDM-2015-0502).*
 
@@ -97,10 +97,6 @@ npm run production
 ### Videos
 
 * [Demo](https://www.youtube.com/watch?v=EGo5Roh2fcA&feature=youtu.be)
-
-### Tutorials
-
-:(   Available soon ......
 
 ## License
 **Patient line family tree viewer** *is free software: you can redistribute it and/or modify
