@@ -36,8 +36,9 @@ export class PlComponentTable extends Component {
 
     onClickRow(item) {
         
-        this.props.on_click_row(item);
-
+        if(isObjectAFunction(this.props.on_click_row)){
+            this.props.on_click_row(item);
+        }
     }
 
     on_remove_element(element) {

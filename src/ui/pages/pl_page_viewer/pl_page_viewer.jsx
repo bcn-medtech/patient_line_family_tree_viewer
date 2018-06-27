@@ -181,19 +181,17 @@ export default class PlPageViewer extends Component {
           }
           
         }else if(result.hasOwnProperty("patient_id")){
-          
           patient_id = result.patient_id;
           myComponent.update_component_state_from_database(patient_id);
-          
         }else if ("patient_id" in data){
           patient_id = data.patient_id;
-          //console.log(patient_id);
           myComponent.update_component_state_from_database(patient_id);
         }else if (patient_id === undefined){
           patient_id = myComponent.state.root.children[2].id;// family's root
           myComponent.update_component_state_from_database(patient_id);
-        } 
-        //#TODO do something when family is removed
+        }else if (result){
+          myComponent.update_component_state_from_database(patient_id);
+        }
       }
 
     });

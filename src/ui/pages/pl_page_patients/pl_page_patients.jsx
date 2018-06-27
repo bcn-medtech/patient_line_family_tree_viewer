@@ -88,8 +88,8 @@ export default class PlPagePatients extends Component {
       isUserSignedIn: false
     }
 
-    var initClient = this.initClient.bind(this);
-    window.gapi.load("client:auth2", initClient);
+    //var initClient = this.initClient.bind(this);
+    //window.gapi.load("client:auth2", initClient);
     
   }
 

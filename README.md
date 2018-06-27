@@ -15,9 +15,9 @@ Contributors: *Begoña Benito, Bart Bijnens, Oscar Camara.*
 
 *This work is partly funded by the Spanish Ministry of Economy and Competitiveness under the María de Maeztu Units of Excellence Program (MDM-2015-0502).*
 
-### Play with platform [here](http://rkt-viewer.surge.sh/)
+### Play with the platform [here](http://patientlinefamilytreeviewer.surge.sh/)
 
-[![IMAGE ALT TEXT](http://img.youtube.com/vi/EGo5Roh2fcA/0.jpg)](http://www.youtube.com/watch?v=EGo5Roh2fcA "Video Title")
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/b8NmVSGRbhw/0.jpg)](http://www.youtube.com/watch?v=b8NmVSGRbhw "Video Title")
 
 ### Compatible formats
 
@@ -81,13 +81,13 @@ npm install
 Running the app
 
 ```
-npm run start-dev
+npm start
 ```
 
 Create website for production
 
 ```
-npm run production
+npm run build
 ```
 
 ### Sample data
@@ -96,7 +96,7 @@ npm run production
 
 ### Videos
 
-* [Demo](https://www.youtube.com/watch?v=EGo5Roh2fcA&feature=youtu.be)
+* [Demo](http://www.youtube.com/watch?v=b8NmVSGRbhw)
 
 ## License
 **Patient line family tree viewer** *is free software: you can redistribute it and/or modify
