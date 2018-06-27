@@ -1,7 +1,7 @@
 **Affero General Public License. This licensing file applies to the Rocket viewer software library.**
 
 Patient line family tree viewer is **© Universitat Pompeu Fabra 2018**. 
-Original Developers: *Carlos Yagüe Méndez, Paula Bassagañas, María del Pilar García* 
+Original Developers: *[Carlos Yagüe Méndez](https://www.linkedin.com/in/carlos-yag%C3%BCe-m%C3%A9ndez-521859119/), Paula Bassagañas, María del Pilar García* 
 Contributors: *Begoña Benito, Bart Bijnens, Oscar Camara*
 
 **Patient line family tree viewer** is free software: you can redistribute it and/or modify
@@ -9,7 +9,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-Rocket viewer is distributed in the hope that it will be useful,
+Patient line family tree viewer is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
